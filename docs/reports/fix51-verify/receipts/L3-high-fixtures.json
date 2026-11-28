@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L3",
   "tier": "high",
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
@@ -63,8 +63,8 @@
             "npc.bathrobe-neighbor": 2,
             "npc.bbq-dad": 4,
             "npc.cashier": 2,
-            "npc.delivery-driver": 1,
-            "npc.jogger": 8,
+            "npc.delivery-driver": 2,
+            "npc.jogger": 7,
             "npc.officer": 5,
             "npc.suburban-mom": 3
           },
@@ -92,13 +92,13 @@
             "yard-cover": 7
           },
           "bySpecies": {
-            "npc.bathrobe-neighbor": 3,
-            "npc.bbq-dad": 5,
-            "npc.cashier": 5,
-            "npc.delivery-driver": 5,
-            "npc.jogger": 4,
+            "npc.bathrobe-neighbor": 5,
+            "npc.bbq-dad": 6,
+            "npc.cashier": 4,
+            "npc.delivery-driver": 4,
+            "npc.jogger": 6,
             "npc.officer": 7,
-            "npc.suburban-mom": 6
+            "npc.suburban-mom": 3
           },
           "stationPoliceLook": 7,
           "station": 7,
@@ -115,9 +115,9 @@
       "id": "L3-09",
       "clause": "native L3 human speed and admitted sprinter fraction",
       "value": {
-        "count": 920,
-        "sprinters": 46,
-        "fraction": 0.05,
+        "count": 1069,
+        "sprinters": 53,
+        "fraction": 0.04957904583723106,
         "regularMax": 5.823837400916081,
         "outcome": "complete",
         "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
@@ -150,58 +150,56 @@
           {
             "seed": 1,
             "outcome": "complete",
-            "deaths": 3,
+            "deaths": 1,
             "atFallback": 4,
-            "atCheckpoint": 1,
-            "segmentEnds": [
-              4,
-              3,
-              3
-            ],
-            "lossCauses": [
-              "bite",
-              "bite",
-              "bite"
-            ]
-          },
-          {
-            "seed": 2,
-            "outcome": "complete",
-            "deaths": 3,
-            "atFallback": 4,
-            "atCheckpoint": 2,
-            "segmentEnds": [
-              4,
-              3,
-              2
-            ],
-            "lossCauses": [
-              "bite",
-              "bite"
-            ]
-          },
-          {
-            "seed": 3,
-            "outcome": "complete",
-            "deaths": 3,
-            "atFallback": 4,
-            "atCheckpoint": 1,
+            "atCheckpoint": 3,
             "segmentEnds": [
               4,
               4,
               4
             ],
             "lossCauses": [
-              "bite",
+              "kill"
+            ]
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "deaths": 0,
+            "atFallback": 4,
+            "atCheckpoint": 3,
+            "segmentEnds": [
+              4,
+              4,
+              3
+            ],
+            "lossCauses": [
+              "bite"
+            ]
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "deaths": 5,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              4,
+              3,
+              0
+            ],
+            "lossCauses": [
               "kill",
-              "separated"
+              "bite",
+              "bite",
+              "bite"
             ]
           }
         ],
-        "atArmyAtLeast2": "1/3"
+        "atArmyAtLeast2": "2/3"
       },
       "target": "forms3–4;nonincreasing;≥2 atcheckpoint (PO 2026-11-07);loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
-      "status": "FAIL",
+      "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
@@ -215,31 +213,31 @@
             "seed": 1,
             "outcome": "complete",
             "completed": true,
-            "officerHits": 260,
-            "officerKills": 52,
-            "playerKills": 19,
-            "damage": 20,
-            "deaths": 3
+            "officerHits": 308,
+            "officerKills": 66,
+            "playerKills": 18,
+            "damage": 10,
+            "deaths": 1
           },
           {
             "seed": 2,
             "outcome": "complete",
             "completed": true,
-            "officerHits": 171,
-            "officerKills": 32,
-            "playerKills": 22,
+            "officerHits": 186,
+            "officerKills": 42,
+            "playerKills": 15,
             "damage": 0,
-            "deaths": 3
+            "deaths": 0
           },
           {
             "seed": 3,
             "outcome": "complete",
             "completed": true,
-            "officerHits": 217,
-            "officerKills": 41,
-            "playerKills": 28,
+            "officerHits": 193,
+            "officerKills": 42,
+            "playerKills": 12,
             "damage": 20,
-            "deaths": 3
+            "deaths": 5
           }
         ],
         "vote": "3/3"
@@ -263,8 +261,8 @@
               710
             ],
             "near30": [
-              10,
-              31,
+              11,
+              37,
               43
             ],
             "maxConcurrent": 140,
@@ -279,8 +277,8 @@
             ],
             "near30": [
               8,
-              34,
-              41
+              32,
+              37
             ],
             "maxConcurrent": 140,
             "cap": 140
@@ -290,12 +288,12 @@
             "prepopulated": [
               125,
               240,
-              678
+              710
             ],
             "near30": [
-              14,
-              24,
-              43
+              6,
+              33,
+              37
             ],
             "maxConcurrent": 140,
             "cap": 140
@@ -351,22 +349,22 @@
           {
             "seed": 1,
             "outcome": "complete",
-            "share": 0.012286890064667842
+            "share": 0.015375673676423967
           },
           {
             "seed": 2,
             "outcome": "complete",
-            "share": 0.010617185949593173
+            "share": 0.01119533527696793
           },
           {
             "seed": 3,
             "outcome": "complete",
-            "share": 0.012659798932605187
+            "share": 0.015535393306513738
           }
         ],
         "vote": "3/3",
         "deaths": 3,
-        "simulatedSeconds": 289.48333333333335
+        "simulatedSeconds": 321.4166666666667
       },
       "target": "≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass",
       "status": "PASS",
@@ -524,470 +522,855 @@
       "clause": "native idle pressure schedule and offscreen source band",
       "value": [
         {
-          "tick": 4966,
+          "tick": 5417,
           "afterLastAdvanceS": 20,
-          "furthest": -79.76264953613281,
+          "furthest": -79.71331024169922,
           "queued": [
             {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.25073161771334,
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
               "offscreen": true
             },
             {
-              "door": "refuge-door-4",
+              "door": "refuge-door-3",
               "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.19340392540566,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.027450463867197,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 22.242743219839255,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.027450463867197,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.25073161771334,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 19.21168975830078,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.19340392540566,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.886100845336927,
+              "behindLineM": 18.93544013977052,
               "offscreen": true
             },
             {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
               "offscreen": true
             },
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.49385046386719,
+              "behindLineM": 16.543189758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
-              "door": "refuge-door-10",
-              "x": -101.95605346153847,
-              "z": 32,
-              "behindLineM": 22.19340392540566,
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
               "offscreen": true
             },
             {
               "door": "refuge-door-9",
               "x": -104.04075,
               "z": 3.6,
-              "behindLineM": 24.27810046386719,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             },
             {
               "door": "refuge-door-6",
               "x": -109.30000019073486,
               "z": -3.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             }
           ]
         },
         {
-          "tick": 5566,
+          "tick": 6017,
           "afterLastAdvanceS": 30,
-          "furthest": -79.76264953613281,
+          "furthest": -79.71331024169922,
           "queued": [
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 16.543189758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-3",
               "x": -111.825,
               "z": -23.4,
-              "behindLineM": 32.06235046386719,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
               "door": "refuge-door-4",
               "x": -111.825,
               "z": 3.6,
-              "behindLineM": 32.06235046386719,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.886100845336927,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             }
           ]
@@ -1004,9 +1387,9 @@
       "clause": "native idle pressure actual admissions per full ten-second window",
       "value": [
         {
-          "tick": 4966,
+          "tick": 5417,
           "seconds": 10,
-          "actualAdmissions": 40
+          "actualAdmissions": 50
         }
       ],
       "target": "25–75 actual admissions per10s, distinct from pending demand",
@@ -1019,12 +1402,12 @@
       "id": "L3-10",
       "clause": "native pressure queued admissions stop on advance",
       "value": {
-        "tick": 6028,
+        "tick": 6479,
         "player": {
-          "x": -79.27266693115234,
+          "x": -79.20629119873047,
           "y": 0.8500000238418579,
-          "z": 24.223100662231445,
-          "yaw": -6.283111584510037
+          "z": 25.411714553833008,
+          "yaw": 6.2826130112085234
         },
         "pressureAt": 0,
         "queued": 0
@@ -1377,11 +1760,11 @@
         "street": "auto",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 318.93333333333334,
-        "deaths": 3,
+        "simSeconds": 238.05,
+        "deaths": 1,
         "kills": 0,
-        "knockdowns": 132,
-        "damage": 510.1319999999989,
+        "knockdowns": 77,
+        "damage": 279.09099999999944,
         "timeline": [
           {
             "type": "l3.handgun",
@@ -1413,7 +1796,7 @@
           },
           {
             "type": "l3.segment",
-            "t": 45.38333333333333
+            "t": 46.2
           },
           {
             "type": "l3.wave",
@@ -1421,43 +1804,31 @@
           },
           {
             "type": "l3.segment",
-            "t": 87.81666666666666
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 136.85
+            "t": 101.15
           },
           {
             "type": "l3.segment",
-            "t": 211.9
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 246.26666666666668
+            "t": 174.88333333333333
           },
           {
             "type": "l3.segment",
-            "t": 269.5
+            "t": 193.61666666666667
           },
           {
             "type": "l3.squad-lost",
-            "t": 272.05
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 287
+            "t": 195.31666666666666
           },
           {
             "type": "l3.crossed",
-            "t": 298.93333333333334
+            "t": 218.05
           },
           {
             "type": "objective:checkpoint",
-            "t": 313.93333333333334
+            "t": 233.05
           }
         ],
         "handgunS": 4.45,
-        "handgunShots": 355,
+        "handgunShots": 225,
         "attack": {
           "officers": 10,
           "directions": [
@@ -1476,36 +1847,28 @@
           "atFallback": 4,
           "segmentEnds": [
             4,
-            3,
-            3
+            4,
+            4
           ],
-          "atCheckpoint": 1,
+          "atCheckpoint": 3,
           "losses": [
             {
-              "cause": "bite",
-              "t": 136.85
-            },
-            {
-              "cause": "bite",
-              "t": 272.05
-            },
-            {
-              "cause": "bite",
-              "t": 287
+              "cause": "kill",
+              "t": 195.31666666666666
             }
           ],
-          "turnedInCorridor": 3,
+          "turnedInCorridor": 0,
           "protected": 0,
-          "maxJumpM": 0.3639573666628439,
+          "maxJumpM": 0.23143885499893777,
           "near8Share": 1,
           "followRange": []
         },
         "s1": {
           "completed": true,
-          "officerHits": 260,
-          "officerKills": 52,
-          "playerKills": 19,
-          "damage": 20
+          "officerHits": 308,
+          "officerKills": 66,
+          "playerKills": 18,
+          "damage": 10
         },
         "killDistances": {
           "gun": [
@@ -1514,67 +1877,45 @@
             5.326863266568162,
             8.715866134784502,
             2.729497728476022,
-            3.241846958245009,
-            6.698800901108375,
-            7.844016148852752,
-            6.51859908964019,
-            7.193002310544407,
-            7.066586882830041,
-            6.674963067035475,
-            6.279207898140732,
-            6.049043987516967,
-            4.4360496068717,
-            6.151315705811957,
-            6.39018178817953,
-            6.986554047305066,
-            5.843250014232857,
-            6.489448703209345,
-            7.596526093534372,
-            3.1098608721943513,
-            3.8634049053342774,
-            2.8335788421066006,
-            7.327328923767091,
-            3.2150255299364816,
-            5.60332387347428,
-            4.635722615153698,
-            5.51776487356571,
-            3.8003329088786377,
-            7.1417123464496015,
-            7.1214112210903915,
-            4.03440404859159,
-            4.84334575761264,
-            4.55880178752494,
-            5.59607251317948,
-            5.253332157812105,
-            5.43098496310828,
-            4.590469832310111,
-            4.951870345080514,
-            5.6344196870459795,
-            7.560710136361799,
-            3.190135161656396,
-            4.645447058434352,
-            3.733444338366421,
-            8.141669798349822,
-            6.858038816648356,
-            4.979826506568247,
-            5.993186555842932,
-            3.1410486184033863,
-            6.606703529620199,
-            5.878869060999705,
-            6.272620422182424,
-            5.62518607836505,
-            4.7526403601292575,
-            3.782208584899587,
-            2.440077385633461,
-            6.733666001993797,
-            3.38700014533531,
-            4.046808205774035,
-            5.797273958546212,
-            5.599110321267179,
-            4.602175964394006,
-            3.4588788015165854,
-            2.6395523867781376,
-            8.132530742352222
+            2.6188328078521144,
+            6.724034839973219,
+            5.33647574306224,
+            5.0082438549716555,
+            6.770747751229538,
+            4.445173249068721,
+            4.763292408963618,
+            2.413104259212217,
+            5.4225806556442295,
+            7.734196258127624,
+            4.402252860431179,
+            5.429493404201751,
+            5.909728320720505,
+            6.961831324030844,
+            5.29259987747975,
+            8.191116225446123,
+            5.585496666122629,
+            5.279539544575079,
+            7.919649812479008,
+            7.833762496515745,
+            5.723280273975885,
+            5.91107848737043,
+            5.987339801780755,
+            6.064935472459707,
+            4.660769597728086,
+            5.2628366716371975,
+            3.6592639105688374,
+            6.259783922097553,
+            7.308587352569499,
+            6.3158708453818075,
+            7.070810769317519,
+            5.8539017399444155,
+            4.073707277032331,
+            6.540507315447465,
+            6.34267938127895,
+            6.328965763892275,
+            2.5700054748709835,
+            5.072228287152197,
+            1.4258150428336334
           ],
           "melee": [
             1.0869310574635065,
@@ -1587,65 +1928,32 @@
             1.809005619494104,
             1.1509335303264314,
             1.080000000000003,
-            1.5800000000000232,
-            1.6775770328068802,
-            1.602841945428359,
-            1.8186315002549314,
-            1.5800000000000012,
-            1.3326666666666696,
-            1.1271390697186967,
-            1.3394919902773161,
-            1.1985907243959308,
-            1.283170060966054,
-            1.7825558721403951,
-            1.7867559587825652,
-            1.2240898312708228,
-            1.8771268668467866,
-            1.491461542789172,
-            1.864855999479838,
-            1.5799999999999943,
-            1.0991094685507274,
-            1.1436472040129635,
-            1.520924383308245,
-            1.3038685948386988,
-            1.532255384518531,
-            1.7799999999999987,
-            1.6956552334480006,
-            1.4320158702196635,
-            1.0693158777035843,
-            1.0907304480905615,
-            1.0618245011208831,
-            1.0570517017383876,
-            1.08,
-            1.0800000000000038,
-            1.0800000000000012,
-            1.3465661498146737,
-            1.449002945522191,
-            1.8599550717051299,
-            1.5312416865164087,
-            1.008284648198348,
-            1.1978072781037186,
-            1.0582618737095826,
-            1.8487874140902758,
-            1.4022854380055207,
-            1.657186225096267,
-            1.0786668239952344,
-            1.1001959319449346,
-            1.2055852748997642,
-            1.0439624181185616,
-            1.863068974998912,
-            1.3428261956884704,
-            1.6370226417985814,
-            0.731539548750802,
-            0.6261296113218199,
-            1.7057982486748642,
-            0.6381083017379959,
-            1.4564343353927005,
-            0.6608183426472884,
-            0.6389708887927488
+            1.0799999999999947,
+            1.5132323995559187,
+            1.5675431878879604,
+            1.5566710715010341,
+            1.0999999999999994,
+            1.5770645066813422,
+            1.2031472833995456,
+            1.0844985177575794,
+            1.0396196328945926,
+            1.1870017927230925,
+            1.0794593424716201,
+            1.0750587544152168,
+            1.532096661104679,
+            1.3310294877280002,
+            1.0083211761293966,
+            1.659348856298244,
+            1.0082817482744775,
+            1.0463884963687418,
+            1.0449570107779624,
+            0.9848379675238537,
+            0.9799080292266101,
+            0.6260942972243343,
+            0.6694904948773271
           ]
         },
-        "regressionM": 5.7342376708984375,
+        "regressionM": 3.868011474609375,
         "streets": [
           "commerce",
           "oak",
@@ -1658,25 +1966,23 @@
             710
           ],
           "near30": [
-            10,
-            31,
+            11,
+            37,
             43
           ],
           "maxConcurrent": 140,
           "cap": 140
         },
-        "medkits": 6,
-        "lowHpShare": 0.01043830217819673,
+        "medkits": 7,
+        "lowHpShare": 0.005083309799491669,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 72,
-          "emerged": 461,
+          "nonSightAlerts": 47,
+          "emerged": 832,
           "emergeSeen": 0
         },
         "deathsAt": [
-          "189s@36,-23/corridor",
-          "231s@86,-27/corridor",
-          "249s@104,-23/corridor"
+          "153s@43,-6/corridor"
         ]
       }
     },
@@ -1735,8 +2041,8 @@
           "npc.bathrobe-neighbor": 2,
           "npc.bbq-dad": 4,
           "npc.cashier": 2,
-          "npc.delivery-driver": 1,
-          "npc.jogger": 8,
+          "npc.delivery-driver": 2,
+          "npc.jogger": 7,
           "npc.officer": 5,
           "npc.suburban-mom": 3
         },
@@ -1764,13 +2070,13 @@
           "yard-cover": 7
         },
         "bySpecies": {
-          "npc.bathrobe-neighbor": 3,
-          "npc.bbq-dad": 5,
-          "npc.cashier": 5,
-          "npc.delivery-driver": 5,
-          "npc.jogger": 4,
+          "npc.bathrobe-neighbor": 5,
+          "npc.bbq-dad": 6,
+          "npc.cashier": 4,
+          "npc.delivery-driver": 4,
+          "npc.jogger": 6,
           "npc.officer": 7,
-          "npc.suburban-mom": 6
+          "npc.suburban-mom": 3
         },
         "stationPoliceLook": 7,
         "station": 7,
@@ -1781,92 +2087,9 @@
       {
         "seed": 1,
         "outcome": "complete",
-        "deaths": 3,
+        "deaths": 1,
         "atFallback": 4,
-        "atCheckpoint": 1,
-        "segmentEnds": [
-          4,
-          3,
-          3
-        ],
-        "losses": [
-          {
-            "cause": "bite",
-            "t": 136.85
-          },
-          {
-            "cause": "bite",
-            "t": 272.05
-          },
-          {
-            "cause": "bite",
-            "t": 287
-          }
-        ],
-        "followRange": []
-      },
-      {
-        "seed": 2,
-        "outcome": "complete",
-        "deaths": 3,
-        "atFallback": 4,
-        "atCheckpoint": 2,
-        "segmentEnds": [
-          4,
-          3,
-          2
-        ],
-        "losses": [
-          {
-            "cause": "bite",
-            "t": 118.56666666666666
-          },
-          {
-            "cause": "bite",
-            "t": 250.95
-          }
-        ],
-        "followRange": [
-          {
-            "id": 30,
-            "samples": 14,
-            "within3to6": 12,
-            "minM": 4.423892137164067,
-            "medianM": 4.824802006879684,
-            "maxM": 6.601106844273692
-          },
-          {
-            "id": 31,
-            "samples": 14,
-            "within3to6": 14,
-            "minM": 3.362624559316565,
-            "medianM": 3.8657706539598244,
-            "maxM": 5.3449768431108255
-          },
-          {
-            "id": 32,
-            "samples": 14,
-            "within3to6": 14,
-            "minM": 3.7040202140108054,
-            "medianM": 4.170278507329498,
-            "maxM": 4.780761502171468
-          },
-          {
-            "id": 33,
-            "samples": 14,
-            "within3to6": 14,
-            "minM": 4.0704173281049245,
-            "medianM": 4.561042359845745,
-            "maxM": 5.835096212634389
-          }
-        ]
-      },
-      {
-        "seed": 3,
-        "outcome": "complete",
-        "deaths": 3,
-        "atFallback": 4,
-        "atCheckpoint": 1,
+        "atCheckpoint": 3,
         "segmentEnds": [
           4,
           4,
@@ -1874,16 +2097,27 @@
         ],
         "losses": [
           {
-            "cause": "bite",
-            "t": 265.4
-          },
-          {
             "cause": "kill",
-            "t": 267.93333333333334
-          },
+            "t": 195.31666666666666
+          }
+        ],
+        "followRange": []
+      },
+      {
+        "seed": 2,
+        "outcome": "complete",
+        "deaths": 0,
+        "atFallback": 4,
+        "atCheckpoint": 3,
+        "segmentEnds": [
+          4,
+          4,
+          3
+        ],
+        "losses": [
           {
-            "cause": "separated",
-            "t": 270.3
+            "cause": "bite",
+            "t": 154.23333333333332
           }
         ],
         "followRange": [
@@ -1891,33 +2125,97 @@
             "id": 30,
             "samples": 7,
             "within3to6": 7,
-            "minM": 4.3808543691020025,
-            "medianM": 4.402132590753539,
-            "maxM": 4.761812676430781
+            "minM": 4.920048554970394,
+            "medianM": 5.8596298335091355,
+            "maxM": 5.859630913885667
           },
           {
             "id": 31,
             "samples": 7,
             "within3to6": 7,
-            "minM": 3.6696779514063764,
-            "medianM": 3.973009530559701,
-            "maxM": 4.138471806961909
+            "minM": 4.117285840602335,
+            "medianM": 5.148578915189054,
+            "maxM": 5.2505836184001415
           },
           {
             "id": 32,
             "samples": 7,
             "within3to6": 7,
-            "minM": 4.025788559406812,
-            "medianM": 4.135944219180664,
-            "maxM": 4.165754097011563
+            "minM": 4.01621798727948,
+            "medianM": 5.184333907168328,
+            "maxM": 5.184334452891672
           },
           {
             "id": 33,
             "samples": 7,
             "within3to6": 7,
-            "minM": 4.674913345192387,
-            "medianM": 4.789324683257785,
-            "maxM": 4.813982210582648
+            "minM": 4.749610442017988,
+            "medianM": 5.823269347525516,
+            "maxM": 5.867658009124377
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "outcome": "complete",
+        "deaths": 5,
+        "atFallback": 4,
+        "atCheckpoint": 0,
+        "segmentEnds": [
+          4,
+          3,
+          0
+        ],
+        "losses": [
+          {
+            "cause": "kill",
+            "t": 108.43333333333334
+          },
+          {
+            "cause": "bite",
+            "t": 223.55
+          },
+          {
+            "cause": "bite",
+            "t": 223.65
+          },
+          {
+            "cause": "bite",
+            "t": 224.46666666666667
+          }
+        ],
+        "followRange": [
+          {
+            "id": 30,
+            "samples": 1,
+            "within3to6": 1,
+            "minM": 4.857308489551202,
+            "medianM": 4.857308489551202,
+            "maxM": 4.857308489551202
+          },
+          {
+            "id": 31,
+            "samples": 1,
+            "within3to6": 1,
+            "minM": 4.115900689973425,
+            "medianM": 4.115900689973425,
+            "maxM": 4.115900689973425
+          },
+          {
+            "id": 32,
+            "samples": 1,
+            "within3to6": 1,
+            "minM": 4.180528658324363,
+            "medianM": 4.180528658324363,
+            "maxM": 4.180528658324363
+          },
+          {
+            "id": 33,
+            "samples": 1,
+            "within3to6": 1,
+            "minM": 4.847486259103676,
+            "medianM": 4.847486259103676,
+            "maxM": 4.847486259103676
           }
         ]
       }
@@ -1934,11 +2232,11 @@
         "street": "auto",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 289.48333333333335,
+        "simSeconds": 321.4166666666667,
         "deaths": 3,
         "kills": 0,
-        "knockdowns": 98,
-        "damage": 464.1686666666661,
+        "knockdowns": 120,
+        "damage": 478.5389999999993,
         "timeline": [
           {
             "type": "l3.handgun",
@@ -1970,95 +2268,63 @@
           },
           {
             "type": "l3.segment",
-            "t": 46.3
+            "t": 45.8
           },
           {
             "type": "l3.wave",
             "t": 49.516666666666666
           },
           {
-            "type": "l3.segment",
-            "t": 94.45
-          },
-          {
             "type": "l3.squad-lost",
-            "t": 137
+            "t": 97.5
           },
           {
             "type": "l3.segment",
-            "t": 159.75
+            "t": 111.81666666666666
           },
           {
             "type": "l3.squad-lost",
-            "t": 186.63333333333333
+            "t": 140.25
           },
           {
             "type": "l3.squad-lost",
-            "t": 187.55
+            "t": 144.95
           },
           {
             "type": "l3.squad-lost",
-            "t": 187.65
+            "t": 145.06666666666666
           },
           {
             "type": "l3.segment",
-            "t": 187.8
+            "t": 194.25
           },
           {
             "type": "l3.squad-lost",
-            "t": 201.35
+            "t": 209.11666666666667
           },
           {
             "type": "l3.squad-lost",
-            "t": 207.41666666666666
+            "t": 219.13333333333333
           },
           {
             "type": "l3.squad-lost",
-            "t": 210.73333333333332
+            "t": 221
           },
           {
             "type": "l3.segment",
-            "t": 212.25
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 212.63333333333333
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 225.5
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 231.3
-          },
-          {
-            "type": "l3.segment",
-            "t": 236.5
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 237.05
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 255
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 260.93333333333334
+            "t": 270.75
           },
           {
             "type": "l3.crossed",
-            "t": 269.48333333333335
+            "t": 301.4166666666667
           },
           {
             "type": "objective:checkpoint",
-            "t": 284.48333333333335
+            "t": 316.4166666666667
           }
         ],
         "handgunS": 4.516666666666667,
-        "handgunShots": 212,
+        "handgunShots": 310,
         "attack": {
           "officers": 10,
           "directions": [
@@ -2076,74 +2342,29 @@
         "squad": {
           "atFallback": 4,
           "segmentEnds": [
-            4,
-            4,
+            3,
+            3,
             3
           ],
-          "atCheckpoint": 0,
+          "atCheckpoint": 3,
           "losses": [
             {
               "cause": "bite",
-              "t": 231.3
-            },
-            {
-              "cause": "kill",
-              "t": 237.05
-            },
-            {
-              "cause": "bite",
-              "t": 255
-            },
-            {
-              "cause": "bite",
-              "t": 260.93333333333334
+              "t": 97.5
             }
           ],
-          "turnedInCorridor": 8,
+          "turnedInCorridor": 1,
           "protected": 0,
-          "maxJumpM": 0.2091565519998553,
+          "maxJumpM": 0.416940723938193,
           "near8Share": 1,
-          "followRange": [
-            {
-              "id": 30,
-              "samples": 7,
-              "within3to6": 7,
-              "minM": 4.615033663390033,
-              "medianM": 4.7800516068484535,
-              "maxM": 4.935304524276281
-            },
-            {
-              "id": 31,
-              "samples": 7,
-              "within3to6": 7,
-              "minM": 3.9990231544353856,
-              "medianM": 4.125691955379975,
-              "maxM": 4.280155187722821
-            },
-            {
-              "id": 32,
-              "samples": 7,
-              "within3to6": 7,
-              "minM": 3.4643792203507293,
-              "medianM": 3.7727590819932093,
-              "maxM": 4.4336491735552075
-            },
-            {
-              "id": 33,
-              "samples": 7,
-              "within3to6": 7,
-              "minM": 4.171663568131126,
-              "medianM": 4.646909592901657,
-              "maxM": 5.08772730921772
-            }
-          ]
+          "followRange": []
         },
         "s1": {
           "completed": true,
-          "officerHits": 277,
-          "officerKills": 56,
-          "playerKills": 22,
-          "damage": 10
+          "officerHits": 341,
+          "officerKills": 71,
+          "playerKills": 25,
+          "damage": 20
         },
         "killDistances": {
           "gun": [
@@ -2155,101 +2376,123 @@
             5.997918461780931,
             4.608262582018891,
             6.329981621772086,
-            8.337626190679089,
             5.584619106896469,
-            6.697078612376028,
-            6.692383133241202,
-            6.321165913918631,
-            5.4210293061885,
-            4.8086364587646235,
+            7.851701544240521,
+            5.93004979498916,
             2.63702503928498,
-            5.867426884340794,
-            5.4965920579725,
-            5.351937799978807,
-            6.281692459461386,
-            6.315707650087263,
-            6.468293298637205,
-            6.515075430662408,
-            7.647036330959768,
-            7.1530299719783965,
-            4.36124626181012,
-            7.6752887674738695,
-            5.735778648432426,
-            5.957264340869544,
-            2.423474276676658,
-            6.2764442885904055,
-            8.84891417231809,
-            5.4652708754016865,
-            4.652170588523654,
-            5.824311030192733,
-            4.910593350806623,
-            3.2706392652032514,
-            3.786937454364276,
-            4.976775572172787,
-            7.552527027658485,
-            5.375976953990137,
-            6.132792194086919,
-            4.749643977380362,
-            6.637966598340426,
-            6.889592281284911,
-            6.003117135530441,
-            2.4423999614257315,
-            7.163338439357031,
-            2.6506819172355853,
-            2.5991922924176314
+            5.901282683264584,
+            4.421706459285683,
+            4.4587118368366445,
+            4.9113230862499435,
+            5.488106911709808,
+            4.7704126080272635,
+            6.882135919888462,
+            6.347470038028644,
+            4.689334808308661,
+            4.67556933162945,
+            5.669263122128797,
+            7.2360275260027445,
+            8.881248302521083,
+            5.852451551949959,
+            8.682384968618306,
+            4.349367898768633,
+            4.989324425120803,
+            4.950568897639194,
+            5.402311562268902,
+            5.793953643141777,
+            6.415552374652678,
+            4.509526347996366,
+            1.4358991838663135,
+            4.484467499551709,
+            3.9323894449400814,
+            6.547894083276647,
+            5.450129711338948,
+            7.937528341691804,
+            7.231942084641194,
+            4.664711903117841,
+            2.294808134422164,
+            7.159861117698821,
+            2.01172112441859,
+            6.237841699967582,
+            6.905863958584788,
+            4.384826023348816,
+            2.8135146687503476,
+            1.6007082434967748,
+            2.7454445084710426,
+            4.813153295549874,
+            3.713249448675159,
+            2.523875513793579,
+            6.243763008273625,
+            2.8929329825348744,
+            6.925953316186706,
+            4.939466963736862,
+            3.9520147781493784,
+            3.2801963936415963,
+            4.221510709915517,
+            4.9977087161397655
           ],
           "melee": [
             1.4329825593880388,
-            1.3378888888888985,
-            1.5026438324787958,
-            1.8843674392659306,
-            1.3326666666666644,
-            1.3224117202941108,
-            1.6365383315445872,
-            1.0568313339637727,
-            1.076557110601187,
-            1.0806062538039996,
+            1.3574360865400672,
+            1.355247575312635,
+            1.2080635386707952,
+            1.4919366810368557,
+            1.7587755433553354,
+            1.6557164910497844,
+            1.2492960550847092,
+            1.8761471913208307,
+            1.3326666666666647,
+            1.3326666666666684,
+            1.3034444444444404,
+            1.6143801475422006,
             1.0799999999999998,
-            1.7321146706827826,
-            1.80539285536064,
-            1.0805535913456021,
-            1.1141474207618454,
-            1.080000000000001,
-            1.1186544407194583,
-            1.4931017158395337,
-            1.3764798119069424,
-            0.9883202880573151,
-            0.9645925605388773,
-            1.2875945724710796,
-            0.9755021775286296,
-            1.037560798275952,
-            1.413946295054062,
-            1.0772046489573506,
-            1.0678733995039165,
-            1.0786710387501965,
-            1.0060846823876264,
-            1.2340920448913304,
-            1.0799999999999976,
-            1.0800000000000027,
-            1.080000000000002,
-            1.248656305513557,
-            1.7910042171819875,
-            1.3609807198763109,
-            1.4740000000000026,
-            1.0800000000000025,
-            1.4350191814040898,
-            1.0263026726320055,
-            1.824657364283985,
-            1.899782008224679,
-            1.7367777777777307,
-            1.703968281438857,
-            1.4928228283841234,
-            0.7000008723670668,
-            1.1958164967349707,
-            1.5256890705516284
+            1.0800000000000014,
+            1.0834847929592388,
+            1.3297777777777775,
+            1.3100066666666654,
+            1.0800000000000007,
+            1.4425716830525082,
+            1.4585803638565706,
+            1.2814759455152214,
+            1.3260300426124674,
+            1.3145047723819814,
+            1.3336325022541315,
+            1.0799999999999994,
+            1.0900282113400734,
+            0.9915786139608931,
+            1.0800000000000038,
+            1.2508497959687508,
+            1.2261640404289202,
+            1.0799999999999998,
+            1.0749243243356843,
+            1.0799999999999998,
+            1.4957007026615212,
+            1.6714705423992933,
+            1.4860852370405357,
+            1.5497777594221787,
+            1.6540167432649984,
+            1.0312247088911999,
+            1.0925134671514922,
+            0.7881203402930688,
+            0.8443011484411355,
+            1.0797777777777764,
+            1.28064700462272,
+            1.3306619450321535,
+            1.0799999999999974,
+            1.8859647918749567,
+            1.8439290512108033,
+            1.0777777777777724,
+            1.7665154958734859,
+            1.6632839937144956,
+            1.3190161766453306,
+            1.0704444444444454,
+            1.080000000000005,
+            1.728867716712901,
+            0.7048842717943337,
+            0.6999967153219845
           ]
         },
-        "regressionM": 8.11590576171875,
+        "regressionM": 8.966514587402344,
         "streets": [
           "commerce",
           "oak",
@@ -2259,28 +2502,28 @@
           "prepopulated": [
             125,
             240,
-            710
+            678
           ],
           "near30": [
-            15,
-            37,
-            43
+            17,
+            26,
+            42
           ],
           "maxConcurrent": 140,
           "cap": 140
         },
-        "medkits": 9,
-        "lowHpShare": 0.012286890064667842,
+        "medkits": 10,
+        "lowHpShare": 0.015375673676423967,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 105,
-          "emerged": 726,
+          "nonSightAlerts": 75,
+          "emerged": 397,
           "emergeSeen": 0
         },
         "deathsAt": [
-          "141s@36,-10/corridor",
-          "205s@132,-3/corridor",
-          "229s@146,2/corridor"
+          "147s@-13,-23/corridor",
+          "228s@107,-24/corridor",
+          "248s@105,-23/corridor"
         ]
       }
     },
@@ -2332,23 +2575,23 @@
           },
           {
             "type": "objective:defend",
-            "t": 69.38333333333334
+            "t": 69.08333333333333
           },
           {
             "type": "l3.squad-lost",
-            "t": 70.21666666666667
+            "t": 69.91666666666667
           },
           {
             "type": "l3.wave",
-            "t": 72.01666666666667
+            "t": 71.71666666666667
           },
           {
             "type": "objective:defend",
-            "t": 87.4
+            "t": 87.05
           },
           {
             "type": "l3.wave",
-            "t": 90.03333333333333
+            "t": 89.68333333333334
           }
         ],
         "handgunS": null,
@@ -2378,14 +2621,14 @@
           "losses": [],
           "turnedInCorridor": 3,
           "protected": 0,
-          "maxJumpM": 0.10333919089786671,
+          "maxJumpM": 0.3964216707138279,
           "near8Share": 1,
           "followRange": []
         },
         "s1": {
           "completed": false,
-          "officerHits": 312,
-          "officerKills": 50,
+          "officerHits": 283,
+          "officerKills": 48,
           "playerKills": 0,
           "damage": 200
         },
@@ -2393,7 +2636,7 @@
           "gun": [],
           "melee": []
         },
-        "regressionM": 0.018035888671875,
+        "regressionM": 0.01727294921875,
         "streets": [],
         "density": {
           "prepopulated": [
@@ -2410,10 +2653,10 @@
           "cap": 140
         },
         "medkits": 0,
-        "lowHpShare": 0.020993589743589742,
+        "lowHpShare": 0.023076923076923078,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 7,
+          "nonSightAlerts": 8,
           "emerged": 0,
           "emergeSeen": 0
         },
@@ -2443,501 +2686,886 @@
       "protected": true,
       "countOnly": true,
       "start": {
-        "tick": 3748,
+        "tick": 4200,
         "player": {
-          "x": -79.92765045166016,
+          "x": -79.93678283691406,
           "y": 0.8500000238418579,
-          "z": 24.222734451293945,
-          "yaw": -0.0013186132085986257
+          "z": 25.41455841064453,
+          "yaw": 0.0952699162161762
         },
-        "furthest": -80.3026351928711,
-        "furthestAt": 3748
+        "furthest": -80.23542785644531,
+        "furthestAt": 4200
       },
       "holdStart": {
-        "tick": 3808,
+        "tick": 4260,
         "player": {
-          "x": -83.37751007080078,
+          "x": -83.37327575683594,
           "y": 0.8500000238418579,
-          "z": 24.223424911499023,
-          "yaw": -3.141592653589793
+          "z": 25.36876106262207,
+          "yaw": 3.141592653589794
         }
       },
       "afterHold": {
-        "tick": 5968,
+        "tick": 6420,
         "player": {
-          "x": -83.52750396728516,
+          "x": -83.3861312866211,
           "y": 0.8500000238418579,
-          "z": 24.223424911499023,
-          "yaw": -3.141592653589793
+          "z": 25.409345626831055,
+          "yaw": 3.141592653589794
         },
-        "pending": 0
+        "pending": 10
       },
       "batches": [
         {
-          "tick": 4966,
+          "tick": 5417,
           "afterLastAdvanceS": 20,
-          "furthest": -79.76264953613281,
+          "furthest": -79.71331024169922,
           "queued": [
             {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.25073161771334,
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
               "offscreen": true
             },
             {
-              "door": "refuge-door-4",
+              "door": "refuge-door-3",
               "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.19340392540566,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.027450463867197,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 22.242743219839255,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.027450463867197,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.25073161771334,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 19.21168975830078,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.19340392540566,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.886100845336927,
+              "behindLineM": 18.93544013977052,
               "offscreen": true
             },
             {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
               "offscreen": true
             },
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.49385046386719,
+              "behindLineM": 16.543189758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
-              "door": "refuge-door-10",
-              "x": -101.95605346153847,
-              "z": 32,
-              "behindLineM": 22.19340392540566,
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
               "offscreen": true
             },
             {
               "door": "refuge-door-9",
               "x": -104.04075,
               "z": 3.6,
-              "behindLineM": 24.27810046386719,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             },
             {
               "door": "refuge-door-6",
               "x": -109.30000019073486,
               "z": -3.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
               "offscreen": true
             },
             {
               "door": "refuge-door-11",
               "x": -98.925,
               "z": -23.4,
-              "behindLineM": 19.162350463867185,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
               "offscreen": true
             }
           ]
         },
         {
-          "tick": 5566,
+          "tick": 6017,
           "afterLastAdvanceS": 30,
-          "furthest": -79.76264953613281,
+          "furthest": -79.71331024169922,
           "queued": [
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 16.543189758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-3",
               "x": -111.825,
               "z": -23.4,
-              "behindLineM": 32.06235046386719,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.25073161771334,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
-              "z": -32.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.886100845336927,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.49385046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.27810046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.612350463867188,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.53735065460205,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             },
             {
               "door": "refuge-door-4",
               "x": -111.825,
               "z": 3.6,
-              "behindLineM": 32.06235046386719,
+              "behindLineM": 32.111689758300784,
               "offscreen": true
             },
             {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.06235046386719,
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.886100845336927,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.111689758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.21168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.66168975830078,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.327439758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.543189758300784,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.242743219839255,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.586689949035645,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.07678975830079,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.93544013977052,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.300070912146936,
               "offscreen": true
             }
           ]
@@ -2945,802 +3573,1354 @@
       ],
       "admissions": [
         {
-          "tick": 4968,
+          "tick": 5418,
           "phase": "hold",
-          "batchTick": 4966,
-          "id": 265,
-          "x": -112.01338115384615,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 32.25073161771334,
-          "pending": 39,
-          "live": 31
-        },
-        {
-          "tick": 4971,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 267,
-          "x": -111.825,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 38,
-          "live": 32
-        },
-        {
-          "tick": 4974,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 269,
-          "x": -98.64875038146974,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 37,
-          "live": 33
-        },
-        {
-          "tick": 4977,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 271,
-          "x": -98.925,
-          "z": -22.4,
-          "seen": false,
-          "behindLineM": 19.162350463867185,
-          "pending": 36,
-          "live": 34
-        },
-        {
-          "tick": 4980,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 273,
-          "x": -101.95605346153847,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 22.19340392540566,
-          "pending": 35,
-          "live": 35
-        },
-        {
-          "tick": 4983,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 275,
+          "batchTick": 5417,
+          "id": 259,
           "x": -107.79010000000001,
           "z": 24,
           "seen": false,
-          "behindLineM": 28.027450463867197,
-          "pending": 34,
+          "behindLineM": 28.07678975830079,
+          "pending": 49,
+          "live": 32
+        },
+        {
+          "tick": 5421,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 261,
+          "x": -111.825,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 48,
+          "live": 33
+        },
+        {
+          "tick": 5424,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 263,
+          "x": -98.925,
+          "z": -22.4,
+          "seen": false,
+          "behindLineM": 19.21168975830078,
+          "pending": 47,
+          "live": 34
+        },
+        {
+          "tick": 5427,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 265,
+          "x": -111.825,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 46,
+          "live": 35
+        },
+        {
+          "tick": 5430,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 267,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 45,
           "live": 36
         },
         {
-          "tick": 4986,
+          "tick": 5433,
           "phase": "hold",
-          "batchTick": 4966,
-          "id": 277,
-          "x": -109.30000019073486,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 33,
-          "live": 37
-        },
-        {
-          "tick": 4989,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 279,
+          "batchTick": 5417,
+          "id": 269,
           "x": -99.38693976625564,
           "z": -24.791341716182544,
           "seen": false,
-          "behindLineM": 19.624290230122824,
-          "pending": 32,
+          "behindLineM": 19.673629524556418,
+          "pending": 44,
+          "live": 37
+        },
+        {
+          "tick": 5436,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 271,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 43,
           "live": 38
         },
         {
-          "tick": 4992,
+          "tick": 5439,
           "phase": "hold",
-          "batchTick": 4966,
-          "id": 281,
-          "x": -111.825,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 31,
-          "live": 39
-        },
-        {
-          "tick": 4995,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 283,
-          "x": -107.79010000000001,
-          "z": 22.8,
-          "seen": false,
-          "behindLineM": 28.027450463867197,
-          "pending": 30,
-          "live": 40
-        },
-        {
-          "tick": 4998,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 285,
-          "x": -109.30000019073486,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 29,
-          "live": 41
-        },
-        {
-          "tick": 5001,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 287,
-          "x": -111.825,
-          "z": -23.4,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 28,
-          "live": 42
-        },
-        {
-          "tick": 5004,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 289,
-          "x": -96.2565,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 27,
-          "live": 43
-        },
-        {
-          "tick": 5007,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 291,
-          "x": -97.94164360028319,
-          "z": -33.09289321881346,
-          "seen": false,
-          "behindLineM": 18.178994064150373,
-          "pending": 26,
-          "live": 44
-        },
-        {
-          "tick": 5010,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 293,
-          "x": -111.825,
-          "z": 4.8,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 25,
-          "live": 45
-        },
-        {
-          "tick": 5013,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 295,
-          "x": -105.375,
-          "z": -23.4,
-          "seen": false,
-          "behindLineM": 25.612350463867188,
-          "pending": 24,
-          "live": 46
-        },
-        {
-          "tick": 5016,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 297,
-          "x": -109.30000019073486,
-          "z": -4.8,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 23,
-          "live": 47
-        },
-        {
-          "tick": 5019,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 299,
-          "x": -104.04075,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 24.27810046386719,
-          "pending": 22,
-          "live": 48
-        },
-        {
-          "tick": 5022,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 301,
-          "x": -112.01338115384615,
-          "z": 30.8,
-          "seen": false,
-          "behindLineM": 32.25073161771334,
-          "pending": 21,
-          "live": 49
-        },
-        {
-          "tick": 5025,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 303,
-          "x": -111.825,
-          "z": -24.599999999999998,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 20,
-          "live": 50
-        },
-        {
-          "tick": 5028,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 305,
-          "x": -104.04075,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 24.27810046386719,
-          "pending": 19,
-          "live": 51
-        },
-        {
-          "tick": 5031,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 307,
-          "x": -111.825,
-          "z": 1.2000000000000002,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 18,
-          "live": 52
-        },
-        {
-          "tick": 5034,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 309,
-          "x": -109.30000019073486,
-          "z": -2.4000000000000004,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 17,
-          "live": 53
-        },
-        {
-          "tick": 5037,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 311,
-          "x": -104.66789321881345,
-          "z": -23.89289321881345,
-          "seen": false,
-          "behindLineM": 24.905243682680634,
-          "pending": 16,
-          "live": 54
-        },
-        {
-          "tick": 5040,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 313,
-          "x": -111.825,
-          "z": -22.2,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 15,
-          "live": 55
-        },
-        {
-          "tick": 5043,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 315,
-          "x": -98.64875038146974,
-          "z": -31.400000000000002,
-          "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 14,
-          "live": 56
-        },
-        {
-          "tick": 5046,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 317,
-          "x": -96.2565,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 13,
-          "live": 57
-        },
-        {
-          "tick": 5049,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 319,
-          "x": -109.30000019073486,
-          "z": -1.2000000000000002,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 12,
-          "live": 58
-        },
-        {
-          "tick": 5052,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 321,
-          "x": -109.30000019073486,
-          "z": -33.800000000000004,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 11,
-          "live": 59
-        },
-        {
-          "tick": 5055,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 323,
-          "x": -101.95605346153847,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 22.19340392540566,
-          "pending": 10,
-          "live": 60
-        },
-        {
-          "tick": 5058,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 325,
-          "x": -98.64875038146974,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 9,
-          "live": 61
-        },
-        {
-          "tick": 5061,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 327,
-          "x": -98.925,
-          "z": -25.799999999999997,
-          "seen": false,
-          "behindLineM": 19.162350463867185,
-          "pending": 8,
-          "live": 62
-        },
-        {
-          "tick": 5064,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 329,
-          "x": -112.01338115384615,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 32.25073161771334,
-          "pending": 7,
-          "live": 63
-        },
-        {
-          "tick": 5067,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 331,
-          "x": -109.30000019073486,
-          "z": -31.400000000000002,
-          "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 6,
-          "live": 64
-        },
-        {
-          "tick": 5070,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 333,
-          "x": -96.2565,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 5,
-          "live": 65
-        },
-        {
-          "tick": 5073,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 335,
-          "x": -112.36693454443943,
-          "z": 32.846446609406726,
-          "seen": false,
-          "behindLineM": 32.60428500830662,
-          "pending": 4,
-          "live": 66
-        },
-        {
-          "tick": 5076,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 337,
-          "x": -101.95605346153847,
-          "z": 30.8,
-          "seen": false,
-          "behindLineM": 22.19340392540566,
-          "pending": 3,
-          "live": 67
-        },
-        {
-          "tick": 5079,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 339,
-          "x": -104.04075,
-          "z": 4.8,
-          "seen": false,
-          "behindLineM": 24.27810046386719,
-          "pending": 2,
-          "live": 68
-        },
-        {
-          "tick": 5082,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 341,
-          "x": -98.57144660940672,
-          "z": -20.646446609406727,
-          "seen": false,
-          "behindLineM": 18.808797073273908,
-          "pending": 1,
-          "live": 69
-        },
-        {
-          "tick": 5193,
-          "phase": "hold",
-          "batchTick": 4966,
-          "id": 343,
-          "x": -109.10865847455231,
-          "z": -5.538060233744357,
-          "seen": false,
-          "behindLineM": 29.3460089384195,
-          "pending": 0,
-          "live": 70
-        },
-        {
-          "tick": 5568,
-          "phase": "hold",
-          "batchTick": 5566,
-          "id": 345,
-          "x": -96.2565,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 24,
-          "live": 71
-        },
-        {
-          "tick": 5571,
-          "phase": "hold",
-          "batchTick": 5566,
-          "id": 347,
-          "x": -96.2565,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 23,
-          "live": 72
-        },
-        {
-          "tick": 5574,
-          "phase": "hold",
-          "batchTick": 5566,
-          "id": 349,
+          "batchTick": 5417,
+          "id": 273,
           "x": -109.30000019073486,
           "z": -32.6,
           "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 22,
-          "live": 73
+          "behindLineM": 29.586689949035645,
+          "pending": 42,
+          "live": 39
         },
         {
-          "tick": 5577,
+          "tick": 5442,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 351,
-          "x": -111.825,
-          "z": -23.4,
+          "batchTick": 5417,
+          "id": 275,
+          "x": -98.64875038146974,
+          "z": -3.6,
           "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 21,
-          "live": 74
+          "behindLineM": 18.93544013977052,
+          "pending": 41,
+          "live": 40
         },
         {
-          "tick": 5580,
+          "tick": 5445,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 353,
+          "batchTick": 5417,
+          "id": 277,
+          "x": -111.825,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 40,
+          "live": 41
+        },
+        {
+          "tick": 5448,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 279,
           "x": -112.01338115384615,
           "z": 32,
           "seen": false,
-          "behindLineM": 32.25073161771334,
+          "behindLineM": 32.300070912146936,
+          "pending": 39,
+          "live": 42
+        },
+        {
+          "tick": 5451,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 281,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 38,
+          "live": 43
+        },
+        {
+          "tick": 5454,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 283,
+          "x": -98.925,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 19.21168975830078,
+          "pending": 37,
+          "live": 44
+        },
+        {
+          "tick": 5457,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 285,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 36,
+          "live": 45
+        },
+        {
+          "tick": 5460,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 287,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 35,
+          "live": 46
+        },
+        {
+          "tick": 5463,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 289,
+          "x": -112.36693454443943,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 32.65362430274021,
+          "pending": 34,
+          "live": 47
+        },
+        {
+          "tick": 5466,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 291,
+          "x": -98.64875038146974,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 33,
+          "live": 48
+        },
+        {
+          "tick": 5469,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 293,
+          "x": -97.94164360028319,
+          "z": -4.092893218813452,
+          "seen": false,
+          "behindLineM": 18.228333358583967,
+          "pending": 32,
+          "live": 49
+        },
+        {
+          "tick": 5472,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 295,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 31,
+          "live": 50
+        },
+        {
+          "tick": 5475,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 297,
+          "x": -98.64875038146974,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 30,
+          "live": 51
+        },
+        {
+          "tick": 5478,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 299,
+          "x": -102.30960685213175,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 22.596296610432532,
+          "pending": 29,
+          "live": 52
+        },
+        {
+          "tick": 5481,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 301,
+          "x": -112.01338115384615,
+          "z": 29.6,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 28,
+          "live": 53
+        },
+        {
+          "tick": 5484,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 303,
+          "x": -109.30000019073486,
+          "z": -33.800000000000004,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 27,
+          "live": 54
+        },
+        {
+          "tick": 5487,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 305,
+          "x": -109.30000019073486,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 26,
+          "live": 55
+        },
+        {
+          "tick": 5490,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 307,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.228333358583967,
+          "pending": 25,
+          "live": 56
+        },
+        {
+          "tick": 5493,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 309,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 24,
+          "live": 57
+        },
+        {
+          "tick": 5496,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 311,
+          "x": -107.79010000000001,
+          "z": 24,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 23,
+          "live": 58
+        },
+        {
+          "tick": 5499,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 313,
+          "x": -109.30000019073486,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 22,
+          "live": 59
+        },
+        {
+          "tick": 5502,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 315,
+          "x": -104.04075,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 21,
+          "live": 60
+        },
+        {
+          "tick": 5505,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 317,
+          "x": -105.375,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 25.66168975830078,
           "pending": 20,
+          "live": 61
+        },
+        {
+          "tick": 5508,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 319,
+          "x": -98.57144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 18.858136367707502,
+          "pending": 19,
+          "live": 62
+        },
+        {
+          "tick": 5511,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 321,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 18,
+          "live": 63
+        },
+        {
+          "tick": 5514,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 323,
+          "x": -111.825,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 17,
+          "live": 64
+        },
+        {
+          "tick": 5517,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 325,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 16,
+          "live": 65
+        },
+        {
+          "tick": 5520,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 327,
+          "x": -104.66789321881345,
+          "z": -23.89289321881345,
+          "seen": false,
+          "behindLineM": 24.954582977114228,
+          "pending": 15,
+          "live": 66
+        },
+        {
+          "tick": 5523,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 329,
+          "x": -105.375,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 25.66168975830078,
+          "pending": 14,
+          "live": 67
+        },
+        {
+          "tick": 5526,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 331,
+          "x": -109.30000019073486,
+          "z": -4.8,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 13,
+          "live": 68
+        },
+        {
+          "tick": 5529,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 333,
+          "x": -112.36693454443943,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 32.65362430274021,
+          "pending": 12,
+          "live": 69
+        },
+        {
+          "tick": 5532,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 335,
+          "x": -107.79010000000001,
+          "z": 25.2,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 11,
+          "live": 70
+        },
+        {
+          "tick": 5535,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 337,
+          "x": -109.30000019073486,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 10,
+          "live": 71
+        },
+        {
+          "tick": 5538,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 339,
+          "x": -97.94164360028319,
+          "z": -4.092893218813452,
+          "seen": false,
+          "behindLineM": 18.228333358583967,
+          "pending": 9,
+          "live": 72
+        },
+        {
+          "tick": 5541,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 341,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 8,
+          "live": 73
+        },
+        {
+          "tick": 5544,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 343,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 7,
+          "live": 74
+        },
+        {
+          "tick": 5547,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 345,
+          "x": -112.01338115384615,
+          "z": 29.6,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 6,
           "live": 75
+        },
+        {
+          "tick": 5550,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 347,
+          "x": -105.02144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 25.308136367707505,
+          "pending": 5,
+          "live": 76
+        },
+        {
+          "tick": 5553,
+          "phase": "hold",
+          "batchTick": 5417,
+          "id": 349,
+          "x": -109.30000019073486,
+          "z": -1.2000000000000002,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 4,
+          "live": 77
         },
         {
           "tick": 5583,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 355,
-          "x": -98.64875038146974,
-          "z": -32.6,
+          "batchTick": 5417,
+          "id": 351,
+          "x": -112.01338115384615,
+          "z": 30.8,
           "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 19,
-          "live": 76
-        },
-        {
-          "tick": 5586,
-          "phase": "hold",
-          "batchTick": 5566,
-          "id": 357,
-          "x": -98.64875038146974,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 18,
-          "live": 77
-        },
-        {
-          "tick": 5589,
-          "phase": "hold",
-          "batchTick": 5566,
-          "id": 359,
-          "x": -111.825,
-          "z": -24.599999999999998,
-          "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 17,
+          "behindLineM": 32.300070912146936,
+          "pending": 3,
           "live": 78
         },
         {
-          "tick": 5592,
+          "tick": 5667,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 361,
-          "x": -97.94164360028319,
-          "z": -33.09289321881346,
+          "batchTick": 5417,
+          "id": 353,
+          "x": -98.925,
+          "z": -22.4,
           "seen": false,
-          "behindLineM": 18.178994064150373,
-          "pending": 16,
+          "behindLineM": 19.21168975830078,
+          "pending": 2,
           "live": 79
         },
         {
-          "tick": 5595,
+          "tick": 5721,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 363,
-          "x": -96.2565,
-          "z": 4.8,
+          "batchTick": 5417,
+          "id": 355,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
           "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 15,
+          "behindLineM": 19.673629524556418,
+          "pending": 1,
           "live": 80
         },
         {
-          "tick": 5598,
+          "tick": 5835,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 365,
-          "x": -97.94164360028319,
-          "z": -4.092893218813452,
+          "batchTick": 5417,
+          "id": 357,
+          "x": -98.925,
+          "z": -25.799999999999997,
           "seen": false,
-          "behindLineM": 18.178994064150373,
-          "pending": 14,
+          "behindLineM": 19.21168975830078,
+          "pending": 0,
           "live": 81
         },
         {
-          "tick": 5601,
+          "tick": 6018,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 367,
-          "x": -98.64875038146974,
-          "z": -2.4000000000000004,
+          "batchTick": 6017,
+          "id": 359,
+          "x": -96.2565,
+          "z": 3.6,
           "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 13,
+          "behindLineM": 16.543189758300784,
+          "pending": 69,
           "live": 82
         },
         {
-          "tick": 5604,
+          "tick": 6021,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 369,
-          "x": -96.2565,
-          "z": 1.2000000000000002,
+          "batchTick": 6017,
+          "id": 361,
+          "x": -111.825,
+          "z": -23.4,
           "seen": false,
-          "behindLineM": 16.49385046386719,
-          "pending": 12,
+          "behindLineM": 32.111689758300784,
+          "pending": 68,
           "live": 83
         },
         {
-          "tick": 5607,
+          "tick": 6024,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 371,
+          "batchTick": 6017,
+          "id": 363,
           "x": -105.375,
-          "z": -22.2,
+          "z": -23.4,
           "seen": false,
-          "behindLineM": 25.612350463867188,
-          "pending": 11,
+          "behindLineM": 25.66168975830078,
+          "pending": 67,
           "live": 84
         },
         {
-          "tick": 5610,
+          "tick": 6027,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 373,
-          "x": -109.30000019073486,
-          "z": -33.800000000000004,
+          "batchTick": 6017,
+          "id": 365,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
           "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 10,
+          "behindLineM": 16.543189758300784,
+          "pending": 66,
           "live": 85
         },
         {
-          "tick": 5613,
+          "tick": 6030,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 375,
-          "x": -104.04075,
-          "z": 3.6,
+          "batchTick": 6017,
+          "id": 367,
+          "x": -96.2565,
+          "z": 4.8,
           "seen": false,
-          "behindLineM": 24.27810046386719,
-          "pending": 9,
+          "behindLineM": 16.543189758300784,
+          "pending": 65,
           "live": 86
         },
         {
-          "tick": 5616,
+          "tick": 6033,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 377,
-          "x": -95.90294660940673,
-          "z": 6.353553390593274,
+          "batchTick": 6017,
+          "id": 369,
+          "x": -109.30000019073486,
+          "z": -3.6,
           "seen": false,
-          "behindLineM": 16.140297073273913,
-          "pending": 8,
+          "behindLineM": 29.586689949035645,
+          "pending": 64,
           "live": 87
         },
         {
-          "tick": 5619,
+          "tick": 6036,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 379,
-          "x": -104.04075,
-          "z": 2.4000000000000004,
+          "batchTick": 6017,
+          "id": 371,
+          "x": -111.825,
+          "z": -24.599999999999998,
           "seen": false,
-          "behindLineM": 24.27810046386719,
-          "pending": 7,
+          "behindLineM": 32.111689758300784,
+          "pending": 63,
           "live": 88
         },
         {
-          "tick": 5622,
+          "tick": 6039,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 381,
+          "batchTick": 6017,
+          "id": 373,
           "x": -109.30000019073486,
-          "z": -31.400000000000002,
+          "z": -32.6,
           "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 6,
+          "behindLineM": 29.586689949035645,
+          "pending": 62,
           "live": 89
         },
         {
-          "tick": 5625,
+          "tick": 6042,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 383,
-          "x": -105.02144660940672,
-          "z": -20.646446609406727,
+          "batchTick": 6017,
+          "id": 375,
+          "x": -98.64875038146974,
+          "z": -32.6,
           "seen": false,
-          "behindLineM": 25.25879707327391,
-          "pending": 5,
+          "behindLineM": 18.93544013977052,
+          "pending": 61,
           "live": 90
         },
         {
-          "tick": 5628,
+          "tick": 6045,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 385,
-          "x": -111.825,
-          "z": -22.2,
+          "batchTick": 6017,
+          "id": 377,
+          "x": -98.64875038146974,
+          "z": -3.6,
           "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 4,
+          "behindLineM": 18.93544013977052,
+          "pending": 60,
           "live": 91
         },
         {
-          "tick": 5631,
+          "tick": 6048,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 387,
-          "x": -109.30000019073486,
-          "z": -30.200000000000003,
+          "batchTick": 6017,
+          "id": 379,
+          "x": -97.94164360028319,
+          "z": -4.092893218813452,
           "seen": false,
-          "behindLineM": 29.53735065460205,
-          "pending": 3,
+          "behindLineM": 18.228333358583967,
+          "pending": 59,
           "live": 92
         },
         {
-          "tick": 5634,
+          "tick": 6051,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 389,
-          "x": -111.825,
-          "z": 3.6,
+          "batchTick": 6017,
+          "id": 381,
+          "x": -101.95605346153847,
+          "z": 32,
           "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 2,
+          "behindLineM": 22.242743219839255,
+          "pending": 58,
           "live": 93
         },
         {
-          "tick": 5637,
+          "tick": 6054,
           "phase": "hold",
-          "batchTick": 5566,
-          "id": 391,
-          "x": -111.825,
-          "z": -25.799999999999997,
+          "batchTick": 6017,
+          "id": 383,
+          "x": -96.2565,
+          "z": 1.2000000000000002,
           "seen": false,
-          "behindLineM": 32.06235046386719,
-          "pending": 1,
+          "behindLineM": 16.543189758300784,
+          "pending": 57,
           "live": 94
         },
         {
-          "tick": 5640,
+          "tick": 6057,
           "phase": "hold",
-          "batchTick": 5566,
+          "batchTick": 6017,
+          "id": 385,
+          "x": -109.30000019073486,
+          "z": -4.8,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 56,
+          "live": 95
+        },
+        {
+          "tick": 6060,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 387,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 55,
+          "live": 95
+        },
+        {
+          "tick": 6063,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 389,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 54,
+          "live": 96
+        },
+        {
+          "tick": 6066,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 391,
+          "x": -111.825,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 53,
+          "live": 97
+        },
+        {
+          "tick": 6069,
+          "phase": "hold",
+          "batchTick": 6017,
           "id": 393,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 52,
+          "live": 98
+        },
+        {
+          "tick": 6072,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 395,
+          "x": -98.64875038146974,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 51,
+          "live": 99
+        },
+        {
+          "tick": 6075,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 397,
+          "x": -105.375,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 25.66168975830078,
+          "pending": 50,
+          "live": 100
+        },
+        {
+          "tick": 6078,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 399,
+          "x": -109.30000019073486,
+          "z": -33.800000000000004,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 49,
+          "live": 101
+        },
+        {
+          "tick": 6081,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 401,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.228333358583967,
+          "pending": 48,
+          "live": 102
+        },
+        {
+          "tick": 6084,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 403,
           "x": -98.64875038146974,
           "z": -1.2000000000000002,
           "seen": false,
-          "behindLineM": 18.886100845336927,
-          "pending": 0,
-          "live": 95
+          "behindLineM": 18.93544013977052,
+          "pending": 47,
+          "live": 103
+        },
+        {
+          "tick": 6087,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 405,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 46,
+          "live": 104
+        },
+        {
+          "tick": 6090,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 407,
+          "x": -98.64875038146974,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 45,
+          "live": 105
+        },
+        {
+          "tick": 6093,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 409,
+          "x": -111.825,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 44,
+          "live": 106
+        },
+        {
+          "tick": 6096,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 411,
+          "x": -109.30000019073486,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 43,
+          "live": 107
+        },
+        {
+          "tick": 6099,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 413,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 42,
+          "live": 108
+        },
+        {
+          "tick": 6102,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 415,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 41,
+          "live": 109
+        },
+        {
+          "tick": 6105,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 417,
+          "x": -109.30000019073486,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 40,
+          "live": 110
+        },
+        {
+          "tick": 6108,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 419,
+          "x": -111.825,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 39,
+          "live": 111
+        },
+        {
+          "tick": 6111,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 421,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 38,
+          "live": 112
+        },
+        {
+          "tick": 6114,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 423,
+          "x": -97.94164360028319,
+          "z": -4.092893218813452,
+          "seen": false,
+          "behindLineM": 18.228333358583967,
+          "pending": 37,
+          "live": 113
+        },
+        {
+          "tick": 6117,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 425,
+          "x": -109.30000019073486,
+          "z": -30.200000000000003,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 36,
+          "live": 114
+        },
+        {
+          "tick": 6120,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 427,
+          "x": -98.925,
+          "z": -22.4,
+          "seen": false,
+          "behindLineM": 19.21168975830078,
+          "pending": 35,
+          "live": 115
+        },
+        {
+          "tick": 6123,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 429,
+          "x": -98.64875038146974,
+          "z": -30.200000000000003,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 34,
+          "live": 116
+        },
+        {
+          "tick": 6126,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 431,
+          "x": -111.825,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 33,
+          "live": 117
+        },
+        {
+          "tick": 6129,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 433,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 32,
+          "live": 118
+        },
+        {
+          "tick": 6132,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 435,
+          "x": -111.47144660940673,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 31.758136367707507,
+          "pending": 31,
+          "live": 119
+        },
+        {
+          "tick": 6135,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 437,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
+          "seen": false,
+          "behindLineM": 19.673629524556418,
+          "pending": 30,
+          "live": 120
+        },
+        {
+          "tick": 6138,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 439,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 29,
+          "live": 121
+        },
+        {
+          "tick": 6141,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 441,
+          "x": -107.79010000000001,
+          "z": 24,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 28,
+          "live": 122
+        },
+        {
+          "tick": 6144,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 443,
+          "x": -98.64875038146974,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 18.93544013977052,
+          "pending": 27,
+          "live": 123
+        },
+        {
+          "tick": 6147,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 445,
+          "x": -111.825,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 26,
+          "live": 124
+        },
+        {
+          "tick": 6150,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 447,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 25,
+          "live": 125
+        },
+        {
+          "tick": 6153,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 449,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 24,
+          "live": 126
+        },
+        {
+          "tick": 6156,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 451,
+          "x": -111.825,
+          "z": 1.2000000000000002,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 23,
+          "live": 127
+        },
+        {
+          "tick": 6159,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 453,
+          "x": -109.30000019073486,
+          "z": -1.2000000000000002,
+          "seen": false,
+          "behindLineM": 29.586689949035645,
+          "pending": 22,
+          "live": 128
+        },
+        {
+          "tick": 6162,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 455,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 21,
+          "live": 129
+        },
+        {
+          "tick": 6165,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 457,
+          "x": -96.2565,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 20,
+          "live": 130
+        },
+        {
+          "tick": 6168,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 459,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 19,
+          "live": 131
+        },
+        {
+          "tick": 6171,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 461,
+          "x": -101.95605346153847,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 22.242743219839255,
+          "pending": 18,
+          "live": 132
+        },
+        {
+          "tick": 6174,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 463,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.327439758300784,
+          "pending": 17,
+          "live": 133
+        },
+        {
+          "tick": 6177,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 465,
+          "x": -96.2565,
+          "z": 1.2000000000000002,
+          "seen": false,
+          "behindLineM": 16.543189758300784,
+          "pending": 16,
+          "live": 134
+        },
+        {
+          "tick": 6180,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 467,
+          "x": -98.925,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 19.21168975830078,
+          "pending": 15,
+          "live": 135
+        },
+        {
+          "tick": 6183,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 469,
+          "x": -98.57144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 18.858136367707502,
+          "pending": 14,
+          "live": 136
+        },
+        {
+          "tick": 6186,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 471,
+          "x": -102.30960685213175,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 22.596296610432532,
+          "pending": 13,
+          "live": 137
+        },
+        {
+          "tick": 6189,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 473,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 12,
+          "live": 138
+        },
+        {
+          "tick": 6192,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 475,
+          "x": -107.79010000000001,
+          "z": 25.2,
+          "seen": false,
+          "behindLineM": 28.07678975830079,
+          "pending": 11,
+          "live": 139
+        },
+        {
+          "tick": 6195,
+          "phase": "hold",
+          "batchTick": 6017,
+          "id": 477,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.300070912146936,
+          "pending": 10,
+          "live": 140
+        },
+        {
+          "tick": 6423,
+          "phase": "advance",
+          "batchTick": 6017,
+          "id": 479,
+          "x": -111.825,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 32.111689758300784,
+          "pending": 9,
+          "live": 140
         }
       ],
       "resumed": {
-        "tick": 6028,
+        "tick": 6479,
         "player": {
-          "x": -79.27266693115234,
+          "x": -79.20629119873047,
           "y": 0.8500000238418579,
-          "z": 24.223100662231445,
-          "yaw": -6.283111584510037
+          "z": 25.411714553833008,
+          "yaw": 6.2826130112085234
         },
         "pressureAt": 0,
         "queued": 0
       },
       "windows": [
         {
-          "tick": 4966,
+          "tick": 5417,
           "seconds": 10,
-          "actualAdmissions": 40
+          "actualAdmissions": 50
         }
       ],
       "queuedPass": true,

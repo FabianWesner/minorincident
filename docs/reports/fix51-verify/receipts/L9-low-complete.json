@@ -4,16 +4,16 @@
   "tier": "low",
   "policy": "complete",
   "seed": 1,
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
-  "observerHash": "d5cde71e96dc06637bd84b03207ce9d21a5e36c5eb4d6f6d3c9313fff03b1431",
-  "revision": "4cd042a286a621f8266d79803741ce707b3bb26c",
-  "generatedAt": "2026-11-27T17:35:21.916Z",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "4d3932b0bd4aaa5c21cf941662a3acfcf2da479b",
+  "generatedAt": "2026-11-28T00:06:33.374Z",
   "run": {
     "level": "L9",
     "policy": "complete",
     "seed": 1,
     "completed": true,
-    "time": 198.33333333333334,
+    "time": 184.7,
     "deaths": 0,
     "kills": 0,
     "damageTaken": 0,
@@ -21,11 +21,11 @@
     "objectiveTimeline": [
       {
         "id": "approach",
-        "t": 182.91666666666666
+        "t": 169.7
       },
       {
         "id": "reach-outskirts",
-        "t": 198.33333333333334
+        "t": 184.7
       }
     ],
     "furthestObjective": "reach-outskirts",
@@ -37,7 +37,7 @@
     "collision": {
       "failures": 0,
       "pending": 0,
-      "admitted": 209,
+      "admitted": 229,
       "deferred": 0,
       "requests": [],
       "offenders": []
@@ -644,7 +644,7 @@
       ]
     },
     "final": {
-      "tick": 11900,
+      "tick": 11082,
       "mission": {
         "id": "L9",
         "phase": "result",
@@ -670,42 +670,46 @@
               816,
               815,
               819,
-              814,
-              817,
               828,
+              829,
               832,
               678,
-              831,
               679,
               836,
-              681,
               680,
-              829,
+              831,
+              681,
               830,
               835,
               812,
-              810,
               808,
-              805,
-              883,
-              882,
-              887,
+              810,
+              884,
+              885,
               898,
-              905,
-              904,
-              837
+              897,
+              896,
+              901,
+              837,
+              839,
+              856,
+              909,
+              923,
+              882,
+              883,
+              924
             ],
             "events": {
               "l9.setpiece.pack-1:*": 1,
               "l9.setpiece.smash-1:*": 1,
-              "combat.kill:*": 34,
+              "combat.kill:*": 39,
               "l9.route.road:*": 1,
               "l9.setpiece.leapers-1:*": 1,
               "l9.mega-sighting-1:*": 1,
-              "l9.leaper-crouch:*": 6,
-              "l9.leaper-pounce:*": 6,
-              "l9.leaper-landed:*": 6,
-              "l9.leaper-shaken:*": 5,
+              "l9.leaper-crouch:*": 5,
+              "l9.leaper-pounce:*": 5,
+              "l9.leaper-landed:*": 4,
+              "l9.leaper-shaken:*": 4,
               "l9.setpiece.thrower-1:*": 1,
               "l9.mega-sighting-2:*": 1,
               "l9.setpiece.smash-2:*": 1,
@@ -721,30 +725,41 @@
               "l9.gate-countdown:*": 1,
               "l9.setpiece.stall-ambush:*": 1,
               "l9.rail-stall:*": 1,
+              "l9.leaper-missed:*": 1,
               "l9.setpiece.stall-rush:*": 1,
               "l9.engine-restarted:*": 1,
+              "l9.bus-ram-windup:*": 2,
+              "l9.bus-ram-missed:*": 1,
               "l9.evacuation-started:*": 1,
+              "vehicle.exited:*": 5,
+              "l9.corgi-goodbye:*": 1,
               "l9.gate-closed:*": 1,
-              "vehicle.exited:*": 4,
-              "civilian.saved:*": 3,
+              "vehicle.entered:*": 1,
               "l9.survivor-evacuated:*": 4,
               "l9.evacuation-complete:*": 1,
-              "l9.bus-ram-windup:*": 1,
               "l9.crash-approach:*": 1
             },
             "interaction": 0
           },
           "reach-outskirts": {
             "status": "completed",
-            "started": 11180,
+            "started": 10362,
             "kills": [
-              920
+              839,
+              909,
+              896,
+              912,
+              882,
+              908,
+              904,
+              887,
+              805
             ],
             "events": {
+              "combat.kill:*": 9,
               "l9.dazed:*": 1,
               "l9.rise:*": 1,
               "l9.mega-exits-wreck:*": 1,
-              "combat.kill:*": 1,
               "l9.ending-finished:*": 1
             },
             "interaction": 720
@@ -767,21 +782,21 @@
         "cinematic": null,
         "failure": null,
         "stats": {
-          "time": 198.33333333333334,
+          "time": 184.7,
           "kills": 0,
-          "knockdowns": 15,
+          "knockdowns": 14,
           "damage": 0,
           "deaths": 0,
-          "rescued": 3,
+          "rescued": 0,
           "optionalObjectives": []
         },
         "result": {
-          "time": 198.33333333333334,
+          "time": 184.7,
           "kills": 0,
-          "knockdowns": 15,
+          "knockdowns": 14,
           "damage": 0,
           "deaths": 0,
-          "rescued": 3,
+          "rescued": 0,
           "optionalObjectives": []
         }
       },
@@ -834,18 +849,18 @@
           "variant": "female",
           "gearTier": 4,
           "animation": "idle",
-          "animationTick": 11420,
+          "animationTick": 10602,
           "velocity": {
             "x": 0,
             "z": 0
           },
           "grounded": true,
-          "invulnerableUntil": 12020,
+          "invulnerableUntil": 11202,
           "checkpoint": {
-            "x": 482.14984130859375,
-            "y": 0.9954229593276978,
-            "z": 1.7615073919296265,
-            "yaw": 0.38825679831162896
+            "x": 482.1734313964844,
+            "y": 0.9954222440719604,
+            "z": 3.1710031032562256,
+            "yaw": 0.5963983365606029
           },
           "diedAt": null
         },
@@ -907,8 +922,8 @@
         {
           "id": 667,
           "archetype": "vehicle.military-apc",
-          "x": 530.7099209703669,
-          "z": 8.814920446456634,
+          "x": 530.6737047046397,
+          "z": 8.787251146799592,
           "hp": 0,
           "maxHp": 1000,
           "civilian": false,
@@ -935,8 +950,8 @@
         {
           "id": 669,
           "archetype": "npc.cashier",
-          "x": 447.53703088845293,
-          "z": 19.696649365409694,
+          "x": 452.45903249064617,
+          "z": 20.804255380568684,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -949,8 +964,8 @@
         {
           "id": 670,
           "archetype": "npc.cashier",
-          "x": 446.8174349636879,
-          "z": 19.487929805290932,
+          "x": 461.4730379595866,
+          "z": 20.812264207913067,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -963,8 +978,8 @@
         {
           "id": 671,
           "archetype": "npc.cashier",
-          "x": 447.3154546574502,
-          "z": 19.728411221152722,
+          "x": 470.51126477891216,
+          "z": 20.80372289069006,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -977,8 +992,8 @@
         {
           "id": 672,
           "archetype": "npc.cashier",
-          "x": 447.51169553694655,
-          "z": 19.42287487151314,
+          "x": 452.5051135036958,
+          "z": 21.909664219142577,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1005,8 +1020,8 @@
         {
           "id": 674,
           "archetype": "infected.alpha",
-          "x": 582.7099209703669,
-          "z": 0.8149204464566342,
+          "x": 582.6737047046397,
+          "z": 0.7872511467995924,
           "hp": 3000,
           "maxHp": 3000,
           "civilian": false,
@@ -1019,9 +1034,9 @@
         {
           "id": 675,
           "archetype": "vehicle.school-bus",
-          "x": 457.3558349609375,
-          "z": 2.2275874614715576,
-          "hp": 1200,
+          "x": 455.99847412109375,
+          "z": 1.5709782838821411,
+          "hp": 571.7982742445345,
           "maxHp": 1200,
           "civilian": false,
           "role": null,
@@ -1033,8 +1048,8 @@
         {
           "id": 685,
           "archetype": "npc.soldier",
-          "x": 444.6885068340912,
-          "z": -7.730455310482886,
+          "x": 446.1750648799588,
+          "z": -8.267062374738435,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1047,8 +1062,8 @@
         {
           "id": 686,
           "archetype": "npc.soldier",
-          "x": 447.21782529655655,
-          "z": -8.687099410821967,
+          "x": 447.9758187274106,
+          "z": -8.901004073502357,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1061,8 +1076,8 @@
         {
           "id": 687,
           "archetype": "npc.soldier",
-          "x": 450.8889354798546,
-          "z": -73.81330000000037,
+          "x": 452.98389404960216,
+          "z": -10.787913602098563,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1075,8 +1090,8 @@
         {
           "id": 688,
           "archetype": "npc.soldier",
-          "x": 452.7166818586917,
-          "z": -11.331988947154974,
+          "x": 456.33885300638764,
+          "z": -11.15098086356736,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1087,12 +1102,12 @@
           "pickup": null
         },
         {
-          "id": 884,
-          "archetype": "infected.dog",
-          "x": 482.8907676131819,
-          "z": 0.7241898947331527,
-          "hp": 45,
-          "maxHp": 45,
+          "id": 887,
+          "archetype": "infected.runner",
+          "x": 484.00601273729876,
+          "z": 2.5037313978412192,
+          "hp": 0,
+          "maxHp": 60,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1103,9 +1118,9 @@
         {
           "id": 837,
           "archetype": "infected.runner",
-          "x": 457.69312699477825,
-          "z": 2.05125063065035,
-          "hp": 60,
+          "x": 481.6579388646158,
+          "z": 0.973023442399333,
+          "hp": 59,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -1117,24 +1132,10 @@
         {
           "id": 896,
           "archetype": "infected.runner",
-          "x": 479.9172843454445,
-          "z": 0.4586588892862154,
-          "hp": 60,
+          "x": 484.0073652326386,
+          "z": 2.7080657669167274,
+          "hp": 0,
           "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 897,
-          "archetype": "infected.sprinter",
-          "x": 481.58456445300584,
-          "z": 2.494055889814345,
-          "hp": 5,
-          "maxHp": 45,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1145,9 +1146,9 @@
         {
           "id": 898,
           "archetype": "infected.dog",
-          "x": 481.8436140013088,
-          "z": 1.6728456962640623,
-          "hp": 45,
+          "x": 483.11721142317845,
+          "z": 3.1742642638185803,
+          "hp": 43.54857781765229,
           "maxHp": 45,
           "civilian": false,
           "role": null,
@@ -1159,9 +1160,9 @@
         {
           "id": 899,
           "archetype": "infected.screamer",
-          "x": 480.1233475079625,
-          "z": 1.9086006295851343,
-          "hp": 30,
+          "x": 478.29749690681956,
+          "z": 3.6822358242361517,
+          "hp": 90,
           "maxHp": 90,
           "civilian": false,
           "role": null,
@@ -1173,9 +1174,9 @@
         {
           "id": 900,
           "archetype": "infected.brute",
-          "x": 481.2476488995588,
-          "z": 3.8797073385492418,
-          "hp": 66,
+          "x": 484.0041832667722,
+          "z": 5.221299296023064,
+          "hp": 450,
           "maxHp": 450,
           "civilian": false,
           "role": null,
@@ -1187,22 +1188,8 @@
         {
           "id": 901,
           "archetype": "infected.runner",
-          "x": 481.352795527334,
-          "z": 0.9503763614263094,
-          "hp": 40,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 902,
-          "archetype": "infected.runner",
-          "x": 480.79941670363786,
-          "z": 0.2289316028572363,
+          "x": 483.8446775457684,
+          "z": 1.9960553439409539,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -1215,8 +1202,134 @@
         {
           "id": 903,
           "archetype": "infected.runner",
-          "x": 483.0836662702111,
-          "z": 1.5590250682706288,
+          "x": 480.1857707067151,
+          "z": 2.1024868982468106,
+          "hp": 59,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 805,
+          "archetype": "infected.dog",
+          "x": 484.00817640499156,
+          "z": 3.2793986642045,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 839,
+          "archetype": "infected.dog",
+          "x": 451.729,
+          "z": -9.027626268531744,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 856,
+          "archetype": "infected.dog",
+          "x": 453.9058989359096,
+          "z": 0.35928759760189516,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 857,
+          "archetype": "infected.screamer",
+          "x": 481.03473548523857,
+          "z": 1.6406391140631331,
+          "hp": 90,
+          "maxHp": 90,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 858,
+          "archetype": "infected.brute",
+          "x": 472.3953189972669,
+          "z": -16.4529660623471,
+          "hp": 450,
+          "maxHp": 450,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 882,
+          "archetype": "infected.runner",
+          "x": 450.1442460025076,
+          "z": -9.888084545697717,
+          "hp": 0,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 886,
+          "archetype": "infected.brute",
+          "x": 473.82170348241897,
+          "z": -12.288679257349676,
+          "hp": 450,
+          "maxHp": 450,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 843,
+          "archetype": "infected.dog",
+          "x": 482.28681406033553,
+          "z": 3.2695840360889368,
+          "hp": 5,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 854,
+          "archetype": "infected.runner",
+          "x": 480.2329727914535,
+          "z": 4.541626791101314,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -1227,10 +1340,80 @@
           "pickup": null
         },
         {
-          "id": 905,
+          "id": 855,
           "archetype": "infected.sprinter",
-          "x": 452.52832035097236,
-          "z": -0.016866970607295775,
+          "x": 482.1927980553972,
+          "z": 1.6971123574344713,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 859,
+          "archetype": "infected.runner",
+          "x": 480.2349382385244,
+          "z": 1.1907530408164861,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 860,
+          "archetype": "infected.sprinter",
+          "x": 471.81923341824483,
+          "z": -28.41430776421776,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 861,
+          "archetype": "infected.dog",
+          "x": 481.6194792815472,
+          "z": 2.181798348719941,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 904,
+          "archetype": "infected.sprinter",
+          "x": 484.0112736764467,
+          "z": 4.115124174274274,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 905,
+          "archetype": "infected.dog",
+          "x": 482.98886583572465,
+          "z": 1.8635016332956447,
           "hp": 45,
           "maxHp": 45,
           "civilian": false,
@@ -1242,11 +1425,11 @@
         },
         {
           "id": 906,
-          "archetype": "infected.dog",
-          "x": 483.0900070669901,
-          "z": 2.587400515714351,
-          "hp": 45,
-          "maxHp": 45,
+          "archetype": "infected.runner",
+          "x": 484.0150939138825,
+          "z": 3.6870799483284347,
+          "hp": 58.54857781765229,
+          "maxHp": 60,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1256,177 +1439,9 @@
         },
         {
           "id": 907,
-          "archetype": "infected.screamer",
-          "x": 479.84654044200164,
-          "z": 2.8159478928124013,
-          "hp": 90,
-          "maxHp": 90,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 908,
-          "archetype": "infected.brute",
-          "x": 479.65181719496985,
-          "z": 4.220239527281915,
-          "hp": 450,
-          "maxHp": 450,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 909,
-          "archetype": "infected.runner",
-          "x": 481.0139301511839,
-          "z": 1.7867115595045053,
-          "hp": 60,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 910,
-          "archetype": "infected.runner",
-          "x": 482.34616367513934,
-          "z": 2.995959803292102,
-          "hp": 60,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 911,
-          "archetype": "infected.sprinter",
-          "x": 482.66751972946184,
-          "z": 3.8476093554406408,
-          "hp": 45,
-          "maxHp": 45,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 912,
-          "archetype": "infected.dog",
-          "x": 482.1894738061874,
-          "z": 0.9831776997414092,
-          "hp": 45,
-          "maxHp": 45,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 913,
-          "archetype": "infected.screamer",
-          "x": 469.63312328174857,
-          "z": 13.12789185457144,
-          "hp": 90,
-          "maxHp": 90,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 914,
-          "archetype": "infected.brute",
-          "x": 467.6063088004033,
-          "z": 34.83993460251687,
-          "hp": 450,
-          "maxHp": 450,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 915,
-          "archetype": "infected.runner",
-          "x": 479.2873825417237,
-          "z": 2.136492246768273,
-          "hp": 60,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 916,
-          "archetype": "infected.sprinter",
-          "x": 478.9530336435245,
-          "z": 2.9979911982551517,
-          "hp": 45,
-          "maxHp": 45,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 917,
-          "archetype": "infected.dog",
-          "x": 482.4515003925778,
-          "z": 2.14217791324934,
-          "hp": 45,
-          "maxHp": 45,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 918,
-          "archetype": "infected.runner",
-          "x": 480.6796321992928,
-          "z": 2.606442457499602,
-          "hp": 60,
-          "maxHp": 60,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 919,
           "archetype": "infected.armored",
-          "x": 470.66385053332874,
-          "z": 3.5932663956229636,
+          "x": 479.395159919198,
+          "z": 3.687960494861908,
           "hp": 240,
           "maxHp": 240,
           "civilian": false,
@@ -1437,10 +1452,10 @@
           "pickup": null
         },
         {
-          "id": 920,
+          "id": 908,
           "archetype": "infected.sprinter",
-          "x": 444.9913973064765,
-          "z": -6.597188308616264,
+          "x": 484.0031004037164,
+          "z": 2.2684080449262223,
           "hp": 0,
           "maxHp": 45,
           "civilian": false,
@@ -1451,10 +1466,66 @@
           "pickup": null
         },
         {
-          "id": 921,
+          "id": 909,
           "archetype": "infected.dog",
-          "x": 480.4911391508208,
-          "z": 1.114557490195082,
+          "x": 452.75152507847633,
+          "z": -11.50225343217789,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 910,
+          "archetype": "infected.runner",
+          "x": 483.47236785801175,
+          "z": 1.152429726548169,
+          "hp": 52,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 911,
+          "archetype": "infected.armored",
+          "x": 481.51070359581735,
+          "z": 5.852376341926069,
+          "hp": 180,
+          "maxHp": 240,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 912,
+          "archetype": "infected.runner",
+          "x": 484.0086583366156,
+          "z": 4.124876522198671,
+          "hp": 0,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 913,
+          "archetype": "infected.sprinter",
+          "x": 482.5966611019911,
+          "z": 5.344940351948353,
           "hp": 45,
           "maxHp": 45,
           "civilian": false,
@@ -1465,10 +1536,52 @@
           "pickup": null
         },
         {
-          "id": 922,
+          "id": 914,
+          "archetype": "infected.dog",
+          "x": 482.40841681466196,
+          "z": 2.511512082306742,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 915,
+          "archetype": "infected.screamer",
+          "x": 475.4510403799241,
+          "z": 30.048162391382323,
+          "hp": 90,
+          "maxHp": 90,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 916,
+          "archetype": "infected.brute",
+          "x": 474.03846339152943,
+          "z": 45.722832567774624,
+          "hp": 450,
+          "maxHp": 450,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 917,
           "archetype": "infected.runner",
-          "x": 479.4819096461609,
-          "z": 1.2548342265461319,
+          "x": 480.3864828676588,
+          "z": 5.432672439932646,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -1479,10 +1592,52 @@
           "pickup": null
         },
         {
-          "id": 923,
+          "id": 918,
+          "archetype": "infected.sprinter",
+          "x": 480.96416383801716,
+          "z": 2.482551474113404,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 919,
+          "archetype": "infected.dog",
+          "x": 481.7810603441878,
+          "z": 2.819751888518355,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 920,
+          "archetype": "infected.runner",
+          "x": 482.58845538086194,
+          "z": 0.878922425731442,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 921,
           "archetype": "infected.armored",
-          "x": 470.4296040979075,
-          "z": -4.52756807214994,
+          "x": 482.9084951187352,
+          "z": 4.1692534200662905,
           "hp": 240,
           "maxHp": 240,
           "civilian": false,
@@ -1493,11 +1648,39 @@
           "pickup": null
         },
         {
+          "id": 922,
+          "archetype": "infected.sprinter",
+          "x": 479.40033835863255,
+          "z": 4.91048879906198,
+          "hp": 25,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 923,
+          "archetype": "infected.dog",
+          "x": 453.5762900160841,
+          "z": -2.7923932484239526,
+          "hp": 37,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
           "id": 924,
           "archetype": "infected.runner",
-          "x": 470.8527868167855,
-          "z": 19.793333695570066,
-          "hp": 60,
+          "x": 454.4165204292398,
+          "z": -9.365515668523912,
+          "hp": 20,
           "maxHp": 60,
           "civilian": false,
           "role": null,
@@ -1508,11 +1691,11 @@
         },
         {
           "id": 925,
-          "archetype": "infected.sprinter",
-          "x": 470.9216119785616,
-          "z": 9.333661715905073,
-          "hp": 45,
-          "maxHp": 45,
+          "archetype": "infected.armored",
+          "x": 479.0698863936222,
+          "z": 2.384033919664899,
+          "hp": 200,
+          "maxHp": 240,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1522,9 +1705,9 @@
         },
         {
           "id": 926,
-          "archetype": "infected.dog",
-          "x": 478.5445297841805,
-          "z": 2.2584470499679155,
+          "archetype": "infected.sprinter",
+          "x": 481.894915722452,
+          "z": 4.751221458301618,
           "hp": 45,
           "maxHp": 45,
           "civilian": false,
@@ -1536,11 +1719,11 @@
         },
         {
           "id": 927,
-          "archetype": "infected.screamer",
-          "x": 479.4471871584791,
-          "z": 53.99413270333156,
-          "hp": 90,
-          "maxHp": 90,
+          "archetype": "infected.dog",
+          "x": 483.130075084918,
+          "z": 2.5892225128295596,
+          "hp": 45,
+          "maxHp": 45,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1550,23 +1733,9 @@
         },
         {
           "id": 928,
-          "archetype": "infected.brute",
-          "x": 479.441428405313,
-          "z": 63.991834961757576,
-          "hp": 450,
-          "maxHp": 450,
-          "civilian": false,
-          "role": null,
-          "animal": null,
-          "companion": false,
-          "infected": true,
-          "pickup": null
-        },
-        {
-          "id": 929,
           "archetype": "infected.runner",
-          "x": 469.08134477218334,
-          "z": 33.40950915990771,
+          "x": 481.1454123722396,
+          "z": 3.1809110839094736,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -1577,12 +1746,12 @@
           "pickup": null
         },
         {
-          "id": 885,
-          "archetype": "infected.screamer",
-          "x": 450.7320662855579,
-          "z": -91.06929427183529,
-          "hp": 90,
-          "maxHp": 90,
+          "id": 929,
+          "archetype": "infected.armored",
+          "x": 477.05811811964116,
+          "z": 3.9327897237471188,
+          "hp": 240,
+          "maxHp": 240,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1591,12 +1760,12 @@
           "pickup": null
         },
         {
-          "id": 904,
-          "archetype": "infected.runner",
-          "x": 451.025797604322,
-          "z": 0.08378129319177502,
-          "hp": 0,
-          "maxHp": 60,
+          "id": 930,
+          "archetype": "infected.sprinter",
+          "x": 480.56465474928734,
+          "z": 3.7385131777209715,
+          "hp": 45,
+          "maxHp": 45,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1607,10 +1776,234 @@
         {
           "id": 931,
           "archetype": "infected.dog",
-          "x": 464.01633227359514,
-          "z": 6.8789958250061956,
+          "x": 483.86313794383517,
+          "z": 2.8432832711094678,
           "hp": 45,
           "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 932,
+          "archetype": "infected.runner",
+          "x": 446.7178975045806,
+          "z": -8.87953304658756,
+          "hp": 0,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 933,
+          "archetype": "infected.armored",
+          "x": 474.522105103689,
+          "z": -1.3868188398752819,
+          "hp": 240,
+          "maxHp": 240,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 934,
+          "archetype": "infected.sprinter",
+          "x": 481.70528931262044,
+          "z": 3.8603651007542426,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 935,
+          "archetype": "infected.dog",
+          "x": 480.276003984813,
+          "z": 2.9570324470717213,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 939,
+          "archetype": "infected.dog",
+          "x": 444.51607847269054,
+          "z": -8.22231461821465,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 942,
+          "archetype": "infected.runner",
+          "x": 477.0260455136659,
+          "z": 15.432077118507827,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 943,
+          "archetype": "infected.sprinter",
+          "x": 477.1043550465075,
+          "z": 11.527122834624201,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 944,
+          "archetype": "infected.dog",
+          "x": 481.09918630455377,
+          "z": 4.463627749749022,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 945,
+          "archetype": "infected.screamer",
+          "x": 488.1305629014964,
+          "z": 82.38038411924802,
+          "hp": 0,
+          "maxHp": 90,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 946,
+          "archetype": "infected.brute",
+          "x": 490.14003985500085,
+          "z": 86.43760091784537,
+          "hp": 0,
+          "maxHp": 450,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 947,
+          "archetype": "infected.runner",
+          "x": 478.59241534359126,
+          "z": 29.408526462201156,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 838,
+          "archetype": "infected.sprinter",
+          "x": 473.5803151081576,
+          "z": -59.753488908325366,
+          "hp": 45,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 883,
+          "archetype": "infected.sprinter",
+          "x": 451.38453852779526,
+          "z": -1.339625048077368,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 897,
+          "archetype": "infected.sprinter",
+          "x": 452.1028320374559,
+          "z": 0.42086739880660756,
+          "hp": 0,
+          "maxHp": 45,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 936,
+          "archetype": "infected.runner",
+          "x": 460.5963210914421,
+          "z": 9.856344826922168,
+          "hp": 60,
+          "maxHp": 60,
+          "civilian": false,
+          "role": null,
+          "animal": null,
+          "companion": false,
+          "infected": true,
+          "pickup": null
+        },
+        {
+          "id": 941,
+          "archetype": "infected.armored",
+          "x": 440.0753893023603,
+          "z": -8.2182981010453,
+          "hp": 240,
+          "maxHp": 240,
           "civilian": false,
           "role": null,
           "animal": null,
@@ -1625,13 +2018,13 @@
       "l9": {
         "phase": "done",
         "carId": 667,
-        "startedAt": 11780,
-        "preCrashDurability": 150,
+        "startedAt": 10962,
+        "preCrashDurability": 610,
         "from": {
-          "x": 482.14984130859375,
-          "y": 0.9954229593276978,
-          "z": 1.7615073919296265,
-          "yaw": 0.38825679831162896
+          "x": 482.1734313964844,
+          "y": 0.9954222440719604,
+          "z": 3.1710031032562256,
+          "yaw": 0.5963983365606029
         },
         "safeAnchor": "crawl-start",
         "finished": true,
@@ -1765,14 +2158,14 @@
               837
             ],
             "dry-shortcut-6": [
-              838,
-              839,
-              840,
-              841,
-              842,
-              843,
-              844,
-              845
+              846,
+              847,
+              848,
+              849,
+              850,
+              851,
+              852,
+              853
             ],
             "crossing-patrol-7": [
               854,
@@ -1805,33 +2198,25 @@
               903
             ],
             "crossing-patrol-10": [
-              904,
-              905,
-              906,
-              907,
-              908,
-              909
-            ],
-            "crossing-patrol-11": [
-              910,
-              911,
               912,
               913,
               914,
-              915
+              915,
+              916,
+              917
             ],
-            "crossing-patrol-12": [
-              924,
-              925,
-              926,
-              927,
-              928,
-              929
+            "crossing-patrol-11": [
+              942,
+              943,
+              944,
+              945,
+              946,
+              947
             ]
           },
           "patrol": {
-            "nextAt": 11230,
-            "serial": 13
+            "nextAt": 10390,
+            "serial": 12
           }
         },
         "driving": {
@@ -1863,21 +2248,21 @@
             "evac-point",
             "bridge"
           ],
-          "stallAt": 6029,
+          "stallAt": 5961,
           "restarted": true,
           "repairTicks": 0,
           "repairActive": false,
-          "gateAt": 4990,
+          "gateAt": 4983,
           "gateClosed": true,
           "gateId": 695,
           "bridgeGateId": 696,
           "fenceBroken": true,
-          "evacuationAt": 8286,
+          "evacuationAt": 8196,
           "evacuated": [
             669,
+            672,
             671,
-            670,
-            672
+            670
           ],
           "evacuating": [
             669,
@@ -1886,32 +2271,15 @@
             672
           ],
           "evacuationDone": true,
-          "hugAt": null,
+          "hugAt": 8426,
           "hugDone": true,
           "truckEntering": {
-            "669": 10701,
-            "670": 10724,
-            "671": 10722,
-            "672": 10727
+            "669": 8899,
+            "670": 9182,
+            "671": 9088,
+            "672": 9021
           },
-          "fallbackBoarding": {
-            "669": {
-              "x": 447.5,
-              "z": 18.5
-            },
-            "670": {
-              "x": 447.5,
-              "z": 18.5
-            },
-            "671": {
-              "x": 447.5,
-              "z": 18.5
-            },
-            "672": {
-              "x": 447.5,
-              "z": 18.5
-            }
-          },
+          "fallbackBoarding": {},
           "busId": 675,
           "busPassengers": [
             676,
@@ -1922,13 +2290,13 @@
             681
           ],
           "busReleased": 6,
-          "busHitAt": -1000,
-          "busRams": 0,
+          "busHitAt": 7786,
+          "busRams": 1,
           "busStoppedAt": null,
-          "busLineAt": 4304,
+          "busLineAt": 4298,
           "tankerId": 693,
           "tankerWreckId": 694,
-          "tankerFuseAt": 3778,
+          "tankerFuseAt": 3772,
           "tankerExploded": true,
           "stampede": [],
           "fireAt": null,
@@ -1952,14 +2320,14 @@
             710
           ],
           "waves": [
-            846,
-            847,
-            848,
-            849,
-            850,
-            851,
-            852,
-            853,
+            838,
+            839,
+            840,
+            841,
+            842,
+            843,
+            844,
+            845,
             860,
             861,
             862,
@@ -1984,14 +2352,26 @@
             893,
             894,
             895,
-            916,
-            917,
+            904,
+            905,
+            906,
+            907,
+            908,
+            909,
+            910,
+            911,
             918,
             919,
             920,
             921,
             922,
             923,
+            924,
+            925,
+            926,
+            927,
+            928,
+            929,
             930,
             931,
             932,
@@ -1999,9 +2379,21 @@
             934,
             935,
             936,
-            937
+            937,
+            938,
+            939,
+            940,
+            941,
+            948,
+            949,
+            950,
+            951,
+            952,
+            953,
+            954,
+            955
           ],
-          "nextWave": 10806,
+          "nextWave": 10170,
           "lines": [],
           "megaSightings": [
             0,
@@ -2057,34 +2449,42 @@
           },
           "hatchOpen": false,
           "hatchInteractHeld": false,
+          "busRamAt": 0,
+          "busRamZ": 7.613531112670898,
+          "busStunUntil": 7966,
           "living": 4,
-          "boostUntil": 11192,
-          "busRamAt": 10987,
-          "busRamZ": 6.467848777770996
+          "hugSpot": {
+            "x": 450.9617310959227,
+            "z": -5.342572715022357,
+            "dogX": 451.6617310959227,
+            "dogZ": -5.342572715022357
+          },
+          "boostUntil": 10416
         },
-        "impactSpeed": 12.076026037154037,
+        "impactSpeed": 15.4291060755096,
         "heading": {
-          "x": 0.9239055396935738,
-          "z": -0.3826206394374538
+          "x": 0.8252347532034204,
+          "z": -0.5647898742942279
         },
-        "approachTicks": 115,
+        "approachTicks": 90,
+        "megaLandedAt": 10242,
         "fallFrom": {
-          "x": 504.8928873330118,
-          "y": 0.9954229593276978,
-          "z": -7.657159818902771,
-          "yaw": 0.38825679831162896
+          "x": 501.6334234175697,
+          "y": 0.9954222440719604,
+          "z": -10.147396788036561,
+          "yaw": 0.5963983365606029
         },
         "weaponFireIds": [
-          938,
-          939
+          956,
+          957
         ],
         "samFlightFrom": {
-          "x": 504.65798138220924,
-          "y": 1.7954229593276978,
-          "z": -7.55987729245148,
-          "yaw": 0.38825679831162896
+          "x": 501.39754465064453,
+          "y": 1.7954222440719605,
+          "z": -9.98596158598866,
+          "yaw": 0.5963983365606029
         },
-        "dazedAt": 11300
+        "dazedAt": 10482
       },
       "mega": null,
       "checkpoints": [
@@ -2107,73 +2507,71 @@
         {
           "id": "mid-crossing",
           "position": [
-            377.0162353515625,
-            0.9954250454902649,
-            -220.73236083984375
+            377.073486328125,
+            0.995434045791626,
+            -222.88653564453125
           ]
         },
         {
           "id": "evac-point",
           "position": [
-            452.9423522949219,
-            0.9993366003036499,
-            0.03513680398464203
+            453.7230224609375,
+            0.9998211860656738,
+            -0.21951647102832794
           ]
         },
         {
           "id": "bridge",
           "position": [
-            452.94451904296875,
-            0.9954347014427185,
-            0.040283676236867905
+            452,
+            0.9954346418380737,
+            0
           ]
         },
         {
           "id": "outskirts-approach",
           "position": [
-            482.14984130859375,
-            0.9954229593276978,
-            1.7615073919296265
+            482.1734313964844,
+            0.9954222440719604,
+            3.1710031032562256
           ]
         }
       ]
     },
     "eventCounts": {
-      "world.blocker.changed": 1672,
+      "world.blocker.changed": 1677,
       "objective.started": 2,
       "checkpoint.set": 5,
       "dialogue.line": 14,
       "level.started": 1,
-      "sim.tick": 11900,
-      "vehicle.sound": 3485,
-      "weather.gust": 38,
-      "mission.signal": 69,
-      "vehicle.durability-hit": 100,
-      "vehicle.infected-hit": 21,
-      "combat.hit": 186,
-      "combat.kill": 35,
-      "telegraph": 192,
-      "vehicle.grabbed": 11,
-      "vehicle.shaken": 10,
+      "sim.tick": 11082,
+      "vehicle.sound": 3223,
+      "weather.gust": 35,
+      "mission.signal": 66,
+      "vehicle.durability-hit": 62,
+      "vehicle.infected-hit": 23,
+      "combat.hit": 209,
+      "combat.kill": 52,
+      "telegraph": 187,
+      "vehicle.grabbed": 13,
+      "vehicle.shaken": 13,
       "vfx.effect": 1,
       "explosion": 1,
       "explosion.beat": 3,
-      "vehicle.attack-windup": 89,
-      "loadout.switched": 8,
-      "combat.attack": 184,
-      "noise": 184,
-      "ai.alerted": 371,
-      "infected.attack": 2,
-      "infected.groan": 18,
-      "infected.recovered": 8,
+      "loadout.switched": 15,
+      "combat.attack": 170,
+      "noise": 170,
+      "ai.alerted": 518,
+      "infected.attack": 20,
+      "infected.groan": 30,
+      "infected.recovered": 16,
       "infected.special": 8,
-      "ally.attack": 67,
-      "ally.callout": 3,
-      "vehicle.damage-stage": 3,
-      "civilian.grabbed": 4,
-      "civilian.state": 10,
-      "vehicle.exited": 5,
-      "civilian.saved": 4,
+      "ally.callout": 2,
+      "vehicle.exited": 6,
+      "ally.attack": 97,
+      "vehicle.entered": 1,
+      "vehicle.attack-windup": 33,
+      "vehicle.damage-stage": 1,
       "objective.completed": 2,
       "explosion.slowmo": 1,
       "mega.cue": 1,
@@ -2332,7 +2730,7 @@
         "contactId": null,
         "attackId": null,
         "before": 990,
-        "after": 970
+        "after": 980
       },
       {
         "type": "mission.signal",
@@ -2366,8 +2764,8 @@
         "source": "attack",
         "contactId": null,
         "attackId": null,
-        "before": 970,
-        "after": 950
+        "before": 980,
+        "after": 970
       },
       {
         "type": "mission.signal",
@@ -2383,129 +2781,151 @@
       },
       {
         "type": "mission.signal",
-        "tick": 2940,
+        "tick": 2939,
         "name": "l9.setpiece.thrower-1"
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3183,
+        "tick": 3181,
         "sourceId": 667,
         "targetId": 761,
         "source": "contact",
         "contactId": 8,
         "attackId": null,
-        "before": 950,
-        "after": 950
+        "before": 970,
+        "after": 970
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3229,
+        "tick": 3228,
         "sourceId": 667,
         "targetId": 760,
         "source": "contact",
         "contactId": 9,
         "attackId": null,
-        "before": 950,
-        "after": 950
+        "before": 970,
+        "after": 970
       },
       {
         "type": "dialogue.line",
         "id": "L9.clingers",
         "text": "They're on the roof!",
-        "tick": 3230
+        "tick": 3229
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3231,
+        "tick": 3230,
         "sourceId": 667,
         "targetId": 759,
         "source": "contact",
         "contactId": 10,
         "attackId": null,
-        "before": 950,
-        "after": 950
+        "before": 970,
+        "after": 970
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3245,
+        "tick": 3243,
         "sourceId": 667,
         "targetId": 764,
         "source": "contact",
         "contactId": 11,
         "attackId": null,
-        "before": 950,
-        "after": 950
+        "before": 970,
+        "after": 970
       },
       {
         "type": "mission.signal",
-        "tick": 3249,
+        "tick": 3246,
         "name": "l9.mega-sighting-2",
         "actorId": 674
       },
       {
         "type": "mission.signal",
-        "tick": 3404,
+        "tick": 3399,
         "name": "l9.setpiece.smash-2"
       },
       {
         "type": "mission.signal",
-        "tick": 3478,
+        "tick": 3472,
         "name": "l9.tanker-armed",
         "actorId": 693
       },
       {
         "type": "mission.signal",
-        "tick": 3638,
+        "tick": 3631,
         "name": "l9.tanker-exploded",
         "actorId": 693
       },
       {
         "type": "mission.signal",
-        "tick": 3925,
+        "tick": 3916,
         "name": "l9.setpiece.roadblock-1"
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3983,
+        "tick": 3952,
+        "sourceId": 667,
+        "targetId": 770,
+        "source": "obstacle",
+        "contactId": 12,
+        "attackId": null,
+        "before": 970,
+        "after": 960
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 3963,
+        "sourceId": 667,
+        "targetId": 771,
+        "source": "obstacle",
+        "contactId": 13,
+        "attackId": null,
+        "before": 960,
+        "after": 950
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 3973,
         "sourceId": 667,
         "targetId": 772,
         "source": "obstacle",
-        "contactId": 12,
+        "contactId": 14,
         "attackId": null,
         "before": 950,
         "after": 940
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 3998,
+        "tick": 3983,
         "sourceId": 667,
         "targetId": 770,
         "source": "obstacle",
-        "contactId": 13,
+        "contactId": 15,
         "attackId": null,
         "before": 940,
         "after": 930
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 4043,
+        "tick": 4046,
         "sourceId": 667,
         "targetId": 782,
         "source": "contact",
-        "contactId": 14,
+        "contactId": 16,
         "attackId": null,
         "before": 930,
         "after": 930
       },
       {
         "type": "mission.signal",
-        "tick": 4251,
+        "tick": 4245,
         "name": "l9.mega-sighting-3",
         "actorId": 674
       },
       {
         "type": "mission.signal",
-        "tick": 4304,
+        "tick": 4298,
         "name": "l9.bus-chase",
         "actorId": 675
       },
@@ -2513,7 +2933,7 @@
         "type": "dialogue.line",
         "id": "L9.bus.warning",
         "text": "Sam: School bus behind us — it's full of them, and someone's foot is on the gas!",
-        "tick": 4305
+        "tick": 4299
       },
       {
         "type": "mission.signal",
@@ -2523,28 +2943,12 @@
       },
       {
         "type": "mission.signal",
-        "tick": 4355,
+        "tick": 4349,
         "name": "l9.setpiece.pack-2"
       },
       {
-        "type": "vehicle.attack-windup",
-        "tick": 4392,
-        "sourceId": 667,
-        "targetId": 796,
-        "attackId": 15,
-        "hitAt": 4428
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 4392,
-        "sourceId": 667,
-        "targetId": 799,
-        "attackId": 16,
-        "hitAt": 4428
-      },
-      {
         "type": "vehicle.durability-hit",
-        "tick": 4504,
+        "tick": 4498,
         "sourceId": 667,
         "targetId": 788,
         "source": "obstacle",
@@ -2555,7 +2959,7 @@
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 4504,
+        "tick": 4498,
         "sourceId": 667,
         "targetId": 789,
         "source": "obstacle",
@@ -2566,7 +2970,7 @@
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 4520,
+        "tick": 4513,
         "sourceId": 667,
         "targetId": 789,
         "source": "obstacle",
@@ -2577,18 +2981,18 @@
       },
       {
         "type": "mission.signal",
-        "tick": 4567,
+        "tick": 4561,
         "name": "l9.setpiece.leapers-2"
       },
       {
         "type": "dialogue.line",
         "id": "L9.bus.dale",
         "text": "That's my kid's school bus.",
-        "tick": 4605
+        "tick": 4599
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 4661,
+        "tick": 4659,
         "sourceId": 667,
         "targetId": 805,
         "source": "contact",
@@ -2598,8 +3002,19 @@
         "after": 900
       },
       {
+        "type": "vehicle.durability-hit",
+        "tick": 4702,
+        "sourceId": 667,
+        "targetId": 803,
+        "source": "contact",
+        "contactId": 21,
+        "attackId": null,
+        "before": 900,
+        "after": 900
+      },
+      {
         "type": "mission.signal",
-        "tick": 4830,
+        "tick": 4773,
         "name": "l9.setpiece.thrower-2"
       },
       {
@@ -2608,7 +3023,7 @@
         "sourceId": 667,
         "targetId": 816,
         "source": "contact",
-        "contactId": 21,
+        "contactId": 22,
         "attackId": null,
         "before": 900,
         "after": 900
@@ -2617,7 +3032,7 @@
         "type": "dialogue.line",
         "id": "L9.bus.dale-beat",
         "text": "It's not anymore.",
-        "tick": 4905
+        "tick": 4899
       },
       {
         "type": "vehicle.durability-hit",
@@ -2625,7 +3040,7 @@
         "sourceId": 667,
         "targetId": 815,
         "source": "contact",
-        "contactId": 22,
+        "contactId": 23,
         "attackId": null,
         "before": 900,
         "after": 900
@@ -2636,17 +3051,6 @@
         "sourceId": 667,
         "targetId": 819,
         "source": "contact",
-        "contactId": 23,
-        "attackId": null,
-        "before": 900,
-        "after": 900
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 4925,
-        "sourceId": 667,
-        "targetId": 814,
-        "source": "contact",
         "contactId": 24,
         "attackId": null,
         "before": 900,
@@ -2654,9 +3058,9 @@
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 4957,
+        "tick": 4930,
         "sourceId": 667,
-        "targetId": 817,
+        "targetId": 814,
         "source": "contact",
         "contactId": 25,
         "attackId": null,
@@ -2665,89 +3069,89 @@
       },
       {
         "type": "mission.signal",
-        "tick": 4990,
+        "tick": 4983,
         "name": "l9.gate-countdown"
       },
       {
         "type": "mission.signal",
-        "tick": 5055,
+        "tick": 5068,
         "name": "l9.leaper-crouch",
         "actorId": 820
       },
       {
         "type": "mission.signal",
-        "tick": 5085,
+        "tick": 5098,
         "name": "l9.leaper-pounce",
         "actorId": 820
       },
       {
+        "type": "mission.signal",
+        "tick": 5113,
+        "name": "l9.setpiece.stall-ambush"
+      },
+      {
+        "type": "mission.signal",
+        "tick": 5121,
+        "name": "l9.leaper-crouch",
+        "actorId": 821
+      },
+      {
         "type": "vehicle.durability-hit",
-        "tick": 5119,
+        "tick": 5132,
         "sourceId": 667,
         "targetId": 820,
         "source": "attack",
         "contactId": null,
         "attackId": null,
         "before": 900,
-        "after": 880
+        "after": 890
       },
       {
         "type": "mission.signal",
-        "tick": 5119,
+        "tick": 5132,
         "name": "l9.leaper-landed",
         "actorId": 820
       },
       {
         "type": "mission.signal",
-        "tick": 5120,
+        "tick": 5133,
         "name": "l9.leaper-shaken",
         "actorId": 820
       },
       {
         "type": "mission.signal",
-        "tick": 5122,
-        "name": "l9.setpiece.stall-ambush"
+        "tick": 5151,
+        "name": "l9.leaper-pounce",
+        "actorId": 821
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 5185,
+        "sourceId": 667,
+        "targetId": 821,
+        "source": "attack",
+        "contactId": null,
+        "attackId": null,
+        "before": 890,
+        "after": 880
       },
       {
         "type": "mission.signal",
-        "tick": 5145,
-        "name": "l9.leaper-crouch",
+        "tick": 5185,
+        "name": "l9.leaper-landed",
         "actorId": 821
       },
       {
         "type": "mission.signal",
-        "tick": 5175,
-        "name": "l9.leaper-pounce",
+        "tick": 5186,
+        "name": "l9.leaper-shaken",
         "actorId": 821
       },
       {
         "type": "dialogue.line",
         "id": "L9.gate",
         "text": "Gate closes in sixty. Anyone not through stays.",
-        "tick": 5205
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 5209,
-        "sourceId": 667,
-        "targetId": 821,
-        "source": "attack",
-        "contactId": null,
-        "attackId": null,
-        "before": 880,
-        "after": 860
-      },
-      {
-        "type": "mission.signal",
-        "tick": 5209,
-        "name": "l9.leaper-landed",
-        "actorId": 821
-      },
-      {
-        "type": "mission.signal",
-        "tick": 5210,
-        "name": "l9.leaper-shaken",
-        "actorId": 821
+        "tick": 5199
       },
       {
         "type": "mission.signal",
@@ -2757,65 +3161,36 @@
       },
       {
         "type": "mission.signal",
-        "tick": 5856,
-        "name": "l9.leaper-crouch",
-        "actorId": 828
-      },
-      {
-        "type": "mission.signal",
-        "tick": 5886,
-        "name": "l9.leaper-pounce",
-        "actorId": 828
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 5920,
-        "sourceId": 667,
-        "targetId": 828,
-        "source": "attack",
-        "contactId": null,
-        "attackId": null,
-        "before": 860,
-        "after": 840
-      },
-      {
-        "type": "mission.signal",
-        "tick": 5920,
-        "name": "l9.leaper-landed",
-        "actorId": 828
-      },
-      {
-        "type": "mission.signal",
-        "tick": 5921,
-        "name": "l9.leaper-shaken",
-        "actorId": 828
-      },
-      {
-        "type": "mission.signal",
-        "tick": 6029,
+        "tick": 5961,
         "name": "l9.rail-stall"
       },
       {
         "type": "checkpoint.set",
         "id": "mid-crossing",
-        "tick": 6029
+        "tick": 5961
       },
       {
         "type": "dialogue.line",
         "id": "L9.stall.sam",
         "text": "Twenty seconds! Hold the hatch — keep them off us!",
-        "tick": 6030
+        "tick": 5962
       },
       {
         "type": "mission.signal",
-        "tick": 6176,
+        "tick": 5967,
         "name": "l9.leaper-crouch",
         "actorId": 828
       },
       {
         "type": "mission.signal",
-        "tick": 6206,
+        "tick": 5997,
         "name": "l9.leaper-pounce",
+        "actorId": 828
+      },
+      {
+        "type": "mission.signal",
+        "tick": 6031,
+        "name": "l9.leaper-missed",
         "actorId": 828
       },
       {
@@ -2823,23 +3198,6 @@
         "tick": 6210,
         "name": "l9.bus-spill",
         "actorId": 678
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 6240,
-        "sourceId": 667,
-        "targetId": 828,
-        "source": "attack",
-        "contactId": null,
-        "attackId": null,
-        "before": 840,
-        "after": 820
-      },
-      {
-        "type": "mission.signal",
-        "tick": 6240,
-        "name": "l9.leaper-landed",
-        "actorId": 828
       },
       {
         "type": "mission.signal",
@@ -2861,1525 +3219,166 @@
       },
       {
         "type": "mission.signal",
-        "tick": 6869,
+        "tick": 6801,
         "name": "l9.setpiece.stall-rush"
       },
       {
         "type": "mission.signal",
-        "tick": 7229,
+        "tick": 7161,
         "name": "l9.engine-restarted"
       },
       {
         "type": "dialogue.line",
         "id": "L9.stall.restart",
         "text": "Engine's back! Drive, now!",
-        "tick": 7230
+        "tick": 7162
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 7541,
+        "tick": 7494,
         "sourceId": 667,
-        "targetId": 883,
+        "targetId": 884,
         "source": "contact",
         "contactId": 26,
         "attackId": null,
-        "before": 820,
-        "after": 820
+        "before": 880,
+        "after": 880
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 7543,
+        "tick": 7552,
         "sourceId": 667,
-        "targetId": 882,
+        "targetId": 885,
         "source": "contact",
         "contactId": 27,
         "attackId": null,
-        "before": 820,
-        "after": 820
+        "before": 880,
+        "after": 880
       },
       {
-        "type": "vehicle.durability-hit",
-        "tick": 7563,
-        "sourceId": 667,
-        "targetId": 887,
-        "source": "contact",
-        "contactId": 28,
-        "attackId": null,
-        "before": 820,
-        "after": 820
+        "type": "mission.signal",
+        "tick": 7696,
+        "name": "l9.bus-ram-windup",
+        "actorId": 675
+      },
+      {
+        "type": "mission.signal",
+        "tick": 7786,
+        "name": "l9.bus-ram-missed",
+        "actorId": 675
       },
       {
         "type": "checkpoint.set",
         "id": "evac-point",
-        "tick": 8286
+        "tick": 8196
       },
       {
         "type": "mission.signal",
-        "tick": 8286,
+        "tick": 8196,
         "name": "l9.evacuation-started"
       },
       {
-        "type": "vehicle.attack-windup",
-        "tick": 8322,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 29,
-        "hitAt": 8358
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8474,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 30,
-        "hitAt": 8510
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8510,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 30,
-        "before": 820,
-        "after": 810
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8570,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 31,
-        "hitAt": 8606
+        "type": "mission.signal",
+        "tick": 8546,
+        "name": "l9.corgi-goodbye",
+        "actorId": 670
       },
       {
         "type": "mission.signal",
-        "tick": 8590,
+        "tick": 8583,
         "name": "l9.gate-closed"
       },
       {
-        "type": "vehicle.durability-hit",
-        "tick": 8606,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 31,
-        "before": 810,
-        "after": 800
-      },
-      {
         "type": "vehicle.attack-windup",
-        "tick": 8666,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 32,
-        "hitAt": 8702
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8702,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 32,
-        "before": 800,
-        "after": 790
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8762,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 33,
-        "hitAt": 8798
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8781,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 34,
-        "hitAt": 8817
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8798,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 33,
-        "before": 790,
-        "after": 780
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8817,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 34,
-        "before": 780,
-        "after": 770
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8858,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 35,
-        "hitAt": 8894
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8877,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 36,
-        "hitAt": 8913
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8894,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 35,
-        "before": 770,
-        "after": 760
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8913,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 36,
-        "before": 760,
-        "after": 750
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8933,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 37,
-        "hitAt": 8969
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8954,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 38,
-        "hitAt": 8990
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8967,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 39,
-        "hitAt": 9003
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 8973,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 40,
-        "hitAt": 9009
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 8990,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 38,
-        "before": 750,
-        "after": 740
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9003,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 39,
-        "before": 740,
-        "after": 730
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9009,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 40,
-        "before": 730,
-        "after": 720
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9050,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 41,
-        "hitAt": 9086
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9063,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 42,
-        "hitAt": 9099
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9086,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 41,
-        "before": 720,
-        "after": 710
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9095,
+        "tick": 8640,
         "sourceId": 667,
         "targetId": 837,
-        "attackId": 43,
-        "hitAt": 9131
+        "attackId": 28,
+        "hitAt": 8676
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 9099,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 42,
-        "before": 710,
-        "after": 700
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9131,
+        "tick": 8676,
         "sourceId": 667,
         "targetId": 837,
         "source": "attack",
         "contactId": null,
-        "attackId": 43,
-        "before": 700,
-        "after": 690
+        "attackId": 28,
+        "before": 880,
+        "after": 870
       },
       {
         "type": "vehicle.attack-windup",
-        "tick": 9146,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 44,
-        "hitAt": 9182
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9159,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 45,
-        "hitAt": 9195
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9182,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 44,
-        "before": 690,
-        "after": 680
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9191,
+        "tick": 8738,
         "sourceId": 667,
         "targetId": 837,
-        "attackId": 46,
-        "hitAt": 9227
+        "attackId": 29,
+        "hitAt": 8774
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 9195,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 45,
-        "before": 680,
-        "after": 670
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9227,
+        "tick": 8774,
         "sourceId": 667,
         "targetId": 837,
         "source": "attack",
         "contactId": null,
-        "attackId": 46,
-        "before": 670,
-        "after": 660
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9242,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 47,
-        "hitAt": 9278
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9255,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 48,
-        "hitAt": 9291
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9278,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 47,
-        "before": 660,
-        "after": 650
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9287,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 49,
-        "hitAt": 9323
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9291,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 48,
-        "before": 650,
-        "after": 640
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9323,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 49,
-        "before": 640,
-        "after": 630
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9338,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 50,
-        "hitAt": 9374
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9351,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 51,
-        "hitAt": 9387
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9374,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 50,
-        "before": 630,
-        "after": 620
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9383,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 52,
-        "hitAt": 9419
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9387,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 51,
-        "before": 620,
-        "after": 610
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9419,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 52,
-        "before": 610,
-        "after": 600
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9434,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 53,
-        "hitAt": 9470
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9447,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 54,
-        "hitAt": 9483
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9470,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 53,
-        "before": 600,
-        "after": 590
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9479,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 55,
-        "hitAt": 9515
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9483,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 54,
-        "before": 590,
-        "after": 580
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9498,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 56,
-        "hitAt": 9534
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9534,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 56,
-        "before": 580,
-        "after": 570
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9536,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 57,
-        "hitAt": 9572
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9542,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 58,
-        "hitAt": 9578
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9543,
-        "sourceId": 667,
-        "targetId": 884,
-        "attackId": 59,
-        "hitAt": 9579
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9578,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 58,
-        "before": 570,
-        "after": 560
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9579,
-        "sourceId": 667,
-        "targetId": 884,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 59,
-        "before": 560,
-        "after": 550
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9579,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 60,
-        "hitAt": 9615
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9594,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 61,
-        "hitAt": 9630
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9615,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 60,
-        "before": 550,
-        "after": 540
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9630,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 61,
-        "before": 540,
-        "after": 530
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9638,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 62,
-        "hitAt": 9674
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9674,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 62,
-        "before": 530,
-        "after": 520
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9675,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 63,
-        "hitAt": 9711
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9690,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 64,
-        "hitAt": 9726
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9711,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 63,
-        "before": 520,
-        "after": 510
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9726,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 64,
-        "before": 510,
-        "after": 500
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9734,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 65,
-        "hitAt": 9770
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9770,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 65,
-        "before": 500,
-        "after": 490
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9771,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 66,
-        "hitAt": 9807
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9786,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 67,
-        "hitAt": 9822
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9807,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 66,
-        "before": 490,
-        "after": 480
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9822,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 67,
-        "before": 480,
-        "after": 470
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9830,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 68,
-        "hitAt": 9866
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9859,
-        "sourceId": 667,
-        "targetId": 899,
-        "attackId": 69,
-        "hitAt": 9895
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9866,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 68,
-        "before": 470,
-        "after": 460
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9867,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 70,
-        "hitAt": 9903
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9895,
-        "sourceId": 667,
-        "targetId": 899,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 69,
-        "before": 460,
-        "after": 450
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9903,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 70,
-        "before": 450,
-        "after": 440
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9908,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 71,
-        "hitAt": 9944
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9918,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 72,
-        "hitAt": 9954
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9922,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 73,
-        "hitAt": 9958
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9946,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 74,
-        "hitAt": 9982
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9955,
-        "sourceId": 667,
-        "targetId": 899,
-        "attackId": 75,
-        "hitAt": 9991
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9958,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 73,
-        "before": 440,
-        "after": 430
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 9963,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 76,
-        "hitAt": 9999
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9991,
-        "sourceId": 667,
-        "targetId": 899,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 75,
-        "before": 430,
-        "after": 420
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 9999,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 76,
-        "before": 420,
-        "after": 410
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10018,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 77,
-        "hitAt": 10054
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10051,
-        "sourceId": 667,
-        "targetId": 899,
-        "attackId": 78,
-        "hitAt": 10087
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10054,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 77,
-        "before": 410,
-        "after": 400
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10059,
-        "sourceId": 667,
-        "targetId": 903,
-        "attackId": 79,
-        "hitAt": 10095
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10087,
-        "sourceId": 667,
-        "targetId": 899,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 78,
-        "before": 400,
-        "after": 390
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10095,
-        "sourceId": 667,
-        "targetId": 903,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 79,
-        "before": 390,
-        "after": 380
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10114,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 80,
-        "hitAt": 10150
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10127,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 81,
-        "hitAt": 10163
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10147,
-        "sourceId": 667,
-        "targetId": 899,
-        "attackId": 82,
-        "hitAt": 10183
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10150,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 80,
-        "before": 380,
-        "after": 370
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10163,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 81,
-        "before": 370,
-        "after": 360
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10183,
-        "sourceId": 667,
-        "targetId": 899,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 82,
-        "before": 360,
-        "after": 350
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10196,
-        "sourceId": 667,
-        "targetId": 897,
-        "attackId": 83,
-        "hitAt": 10232
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10210,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 84,
-        "hitAt": 10246
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10223,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 85,
-        "hitAt": 10259
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10232,
-        "sourceId": 667,
-        "targetId": 897,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 83,
-        "before": 350,
-        "after": 340
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10238,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 86,
-        "hitAt": 10274
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10259,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 85,
-        "before": 340,
-        "after": 330
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10263,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 87,
-        "hitAt": 10299
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10274,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 88,
-        "hitAt": 10310
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10274,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 86,
-        "before": 330,
-        "after": 320
+        "attackId": 29,
+        "before": 870,
+        "after": 860
       },
       {
         "type": "mission.signal",
-        "name": "civilian.saved",
-        "tick": 10277
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10293,
-        "sourceId": 667,
-        "targetId": 897,
-        "attackId": 89,
-        "hitAt": 10329
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10294,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 90,
-        "hitAt": 10330
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10309,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 91,
-        "hitAt": 10345
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10321,
-        "sourceId": 667,
-        "targetId": 896,
-        "attackId": 92,
-        "hitAt": 10357
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10321,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 93,
-        "hitAt": 10357
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10323,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 94,
-        "hitAt": 10359
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10334,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 95,
-        "hitAt": 10370
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10357,
-        "sourceId": 667,
-        "targetId": 896,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 92,
-        "before": 320,
-        "after": 310
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10357,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 93,
-        "before": 310,
-        "after": 300
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10359,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 94,
-        "before": 300,
-        "after": 290
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10370,
-        "sourceId": 667,
-        "targetId": 901,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 95,
-        "before": 290,
-        "after": 280
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10404,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 96,
-        "hitAt": 10440
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10417,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 97,
-        "hitAt": 10453
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10419,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 98,
-        "hitAt": 10455
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10428,
-        "sourceId": 667,
-        "targetId": 897,
-        "attackId": 99,
-        "hitAt": 10464
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10440,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 96,
-        "before": 280,
-        "after": 270
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10453,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 97,
-        "before": 270,
-        "after": 260
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10455,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 98,
-        "before": 260,
-        "after": 250
-      },
-      {
-        "type": "mission.signal",
-        "name": "civilian.saved",
-        "tick": 10463
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10464,
-        "sourceId": 667,
-        "targetId": 897,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 99,
-        "before": 250,
-        "after": 240
-      },
-      {
-        "type": "mission.signal",
-        "name": "civilian.saved",
-        "tick": 10473
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10491,
-        "sourceId": 667,
-        "targetId": 904,
-        "attackId": 100,
-        "hitAt": 10527
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10500,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 101,
-        "hitAt": 10536
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10513,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 102,
-        "hitAt": 10549
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10515,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 103,
-        "hitAt": 10551
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10527,
-        "sourceId": 667,
-        "targetId": 904,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 100,
-        "before": 240,
-        "after": 230
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10528,
-        "sourceId": 667,
-        "targetId": 905,
-        "attackId": 104,
-        "hitAt": 10564
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10536,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 101,
-        "before": 230,
-        "after": 220
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10543,
-        "sourceId": 667,
-        "targetId": 909,
-        "attackId": 105,
-        "hitAt": 10579
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10579,
-        "sourceId": 667,
-        "targetId": 909,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 105,
-        "before": 220,
-        "after": 210
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10587,
-        "sourceId": 667,
-        "targetId": 904,
-        "attackId": 106,
-        "hitAt": 10623
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10596,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 107,
-        "hitAt": 10632
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10619,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 108,
-        "hitAt": 10655
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10632,
-        "sourceId": 667,
-        "targetId": 837,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 107,
-        "before": 210,
-        "after": 200
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10634,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 109,
-        "hitAt": 10670
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10655,
-        "sourceId": 667,
-        "targetId": 898,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 108,
-        "before": 200,
-        "after": 190
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10670,
-        "sourceId": 667,
-        "targetId": 906,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 109,
-        "before": 190,
-        "after": 180
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10685,
-        "sourceId": 667,
-        "targetId": 899,
-        "attackId": 110,
-        "hitAt": 10721
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10692,
-        "sourceId": 667,
-        "targetId": 837,
-        "attackId": 111,
-        "hitAt": 10728
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10700,
-        "sourceId": 667,
-        "targetId": 901,
-        "attackId": 112,
-        "hitAt": 10736
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10710,
-        "sourceId": 667,
-        "targetId": 904,
-        "attackId": 113,
-        "hitAt": 10746
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10715,
-        "sourceId": 667,
-        "targetId": 898,
-        "attackId": 114,
-        "hitAt": 10751
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10721,
-        "sourceId": 667,
-        "targetId": 899,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 110,
-        "before": 180,
-        "after": 170
-      },
-      {
-        "type": "vehicle.attack-windup",
-        "tick": 10730,
-        "sourceId": 667,
-        "targetId": 906,
-        "attackId": 115,
-        "hitAt": 10766
-      },
-      {
-        "type": "vehicle.durability-hit",
-        "tick": 10746,
-        "sourceId": 667,
-        "targetId": 904,
-        "source": "attack",
-        "contactId": null,
-        "attackId": 113,
-        "before": 170,
-        "after": 160
-      },
-      {
-        "type": "mission.signal",
-        "tick": 10746,
+        "tick": 8944,
         "name": "l9.survivor-evacuated",
         "actorId": 669
       },
       {
-        "type": "vehicle.durability-hit",
-        "tick": 10766,
+        "type": "vehicle.attack-windup",
+        "tick": 8996,
         "sourceId": 667,
-        "targetId": 906,
+        "targetId": 899,
+        "attackId": 30,
+        "hitAt": 9032
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9032,
+        "sourceId": 667,
+        "targetId": 899,
         "source": "attack",
         "contactId": null,
-        "attackId": 115,
-        "before": 160,
-        "after": 150
+        "attackId": 30,
+        "before": 860,
+        "after": 850
       },
       {
         "type": "mission.signal",
-        "tick": 10767,
+        "tick": 9066,
+        "name": "l9.survivor-evacuated",
+        "actorId": 672
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9092,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 31,
+        "hitAt": 9128
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9128,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 31,
+        "before": 850,
+        "after": 840
+      },
+      {
+        "type": "mission.signal",
+        "tick": 9133,
         "name": "l9.survivor-evacuated",
         "actorId": 671
       },
@@ -4387,148 +3386,666 @@
         "type": "dialogue.line",
         "id": "L9.okafor",
         "text": "You came back for us. Every time.",
-        "tick": 10768
+        "tick": 9134
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9188,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 32,
+        "hitAt": 9224
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9224,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 32,
+        "before": 840,
+        "after": 830
       },
       {
         "type": "mission.signal",
-        "tick": 10769,
+        "tick": 9227,
         "name": "l9.survivor-evacuated",
         "actorId": 670
       },
       {
-        "type": "mission.signal",
-        "tick": 10772,
-        "name": "l9.survivor-evacuated",
-        "actorId": 672
+        "type": "vehicle.attack-windup",
+        "tick": 9284,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 33,
+        "hitAt": 9320
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9320,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 33,
+        "before": 830,
+        "after": 820
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9380,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 34,
+        "hitAt": 9416
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9416,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 34,
+        "before": 820,
+        "after": 810
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9428,
+        "sourceId": 667,
+        "targetId": 900,
+        "attackId": 35,
+        "hitAt": 9464
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9452,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 36,
+        "hitAt": 9488
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9464,
+        "sourceId": 667,
+        "targetId": 900,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 35,
+        "before": 810,
+        "after": 800
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9476,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 37,
+        "hitAt": 9512
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9488,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 36,
+        "before": 800,
+        "after": 790
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9512,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 37,
+        "before": 790,
+        "after": 780
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9548,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 38,
+        "hitAt": 9584
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9572,
+        "sourceId": 667,
+        "targetId": 899,
+        "attackId": 39,
+        "hitAt": 9608
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9580,
+        "sourceId": 667,
+        "targetId": 883,
+        "attackId": 40,
+        "hitAt": 9616
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9584,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 38,
+        "before": 780,
+        "after": 770
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9608,
+        "sourceId": 667,
+        "targetId": 899,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 39,
+        "before": 770,
+        "after": 760
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9616,
+        "sourceId": 667,
+        "targetId": 883,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 40,
+        "before": 760,
+        "after": 750
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9616,
+        "sourceId": 667,
+        "targetId": 887,
+        "attackId": 41,
+        "hitAt": 9652
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9644,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 42,
+        "hitAt": 9680
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9652,
+        "sourceId": 667,
+        "targetId": 887,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 41,
+        "before": 750,
+        "after": 740
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9676,
+        "sourceId": 667,
+        "targetId": 883,
+        "attackId": 43,
+        "hitAt": 9712
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9680,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 42,
+        "before": 740,
+        "after": 730
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9712,
+        "sourceId": 667,
+        "targetId": 883,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 43,
+        "before": 730,
+        "after": 720
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9712,
+        "sourceId": 667,
+        "targetId": 887,
+        "attackId": 44,
+        "hitAt": 9748
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9748,
+        "sourceId": 667,
+        "targetId": 887,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 44,
+        "before": 720,
+        "after": 710
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9750,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 45,
+        "hitAt": 9786
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9772,
+        "sourceId": 667,
+        "targetId": 883,
+        "attackId": 46,
+        "hitAt": 9808
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9773,
+        "sourceId": 667,
+        "targetId": 905,
+        "attackId": 47,
+        "hitAt": 9809
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9786,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 45,
+        "before": 710,
+        "after": 700
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9787,
+        "sourceId": 667,
+        "targetId": 837,
+        "attackId": 48,
+        "hitAt": 9823
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9808,
+        "sourceId": 667,
+        "targetId": 883,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 46,
+        "before": 700,
+        "after": 690
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9809,
+        "sourceId": 667,
+        "targetId": 905,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 47,
+        "before": 690,
+        "after": 680
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9821,
+        "sourceId": 667,
+        "targetId": 887,
+        "attackId": 49,
+        "hitAt": 9857
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9823,
+        "sourceId": 667,
+        "targetId": 837,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 48,
+        "before": 680,
+        "after": 670
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9845,
+        "sourceId": 667,
+        "targetId": 805,
+        "attackId": 50,
+        "hitAt": 9881
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9846,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 51,
+        "hitAt": 9882
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9868,
+        "sourceId": 667,
+        "targetId": 883,
+        "attackId": 52,
+        "hitAt": 9904
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9881,
+        "sourceId": 667,
+        "targetId": 805,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 50,
+        "before": 670,
+        "after": 660
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9882,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 51,
+        "before": 660,
+        "after": 650
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9883,
+        "sourceId": 667,
+        "targetId": 837,
+        "attackId": 53,
+        "hitAt": 9919
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9904,
+        "sourceId": 667,
+        "targetId": 883,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 52,
+        "before": 650,
+        "after": 640
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9919,
+        "sourceId": 667,
+        "targetId": 837,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 53,
+        "before": 640,
+        "after": 630
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9941,
+        "sourceId": 667,
+        "targetId": 805,
+        "attackId": 54,
+        "hitAt": 9977
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9942,
+        "sourceId": 667,
+        "targetId": 903,
+        "attackId": 55,
+        "hitAt": 9978
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9964,
+        "sourceId": 667,
+        "targetId": 883,
+        "attackId": 56,
+        "hitAt": 10000
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9977,
+        "sourceId": 667,
+        "targetId": 805,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 54,
+        "before": 630,
+        "after": 620
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 9978,
+        "sourceId": 667,
+        "targetId": 903,
+        "source": "attack",
+        "contactId": null,
+        "attackId": 55,
+        "before": 620,
+        "after": 610
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9979,
+        "sourceId": 667,
+        "targetId": 837,
+        "attackId": 57,
+        "hitAt": 10015
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9982,
+        "sourceId": 667,
+        "targetId": 887,
+        "attackId": 58,
+        "hitAt": 10018
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9989,
+        "sourceId": 667,
+        "targetId": 897,
+        "attackId": 59,
+        "hitAt": 10025
       },
       {
         "type": "mission.signal",
-        "tick": 10772,
+        "tick": 9996,
         "name": "l9.evacuation-complete"
       },
       {
         "type": "checkpoint.set",
         "id": "bridge",
-        "tick": 10772
+        "tick": 9996
+      },
+      {
+        "type": "dialogue.line",
+        "id": "L9.sam-stays",
+        "text": "Someone has to watch your back. And somebody has to see what's on that campus.",
+        "tick": 9997
+      },
+      {
+        "type": "vehicle.attack-windup",
+        "tick": 9998,
+        "sourceId": 667,
+        "targetId": 887,
+        "attackId": 60,
+        "hitAt": 10034
       },
       {
         "type": "vehicle.durability-hit",
-        "tick": 10795,
+        "tick": 10008,
         "sourceId": 667,
-        "targetId": 904,
+        "targetId": 903,
         "source": "contact",
-        "contactId": 116,
+        "contactId": 61,
         "attackId": null,
-        "before": 150,
-        "after": 150
+        "before": 610,
+        "after": 610
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 10009,
+        "sourceId": 667,
+        "targetId": 837,
+        "source": "contact",
+        "contactId": 62,
+        "attackId": null,
+        "before": 610,
+        "after": 610
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 10013,
+        "sourceId": 667,
+        "targetId": 883,
+        "source": "contact",
+        "contactId": 63,
+        "attackId": null,
+        "before": 610,
+        "after": 610
+      },
+      {
+        "type": "vehicle.durability-hit",
+        "tick": 10017,
+        "sourceId": 667,
+        "targetId": 897,
+        "source": "contact",
+        "contactId": 64,
+        "attackId": null,
+        "before": 610,
+        "after": 610
       },
       {
         "type": "mission.signal",
-        "tick": 10897,
+        "tick": 10142,
         "name": "l9.bus-ram-windup",
         "actorId": 675
       },
       {
         "type": "checkpoint.set",
         "id": "outskirts-approach",
-        "tick": 10975
+        "tick": 10182
       },
       {
         "type": "mission.signal",
-        "tick": 10975,
+        "tick": 10182,
         "name": "l9.crash-approach",
         "actorId": 667
       },
       {
         "type": "objective.completed",
         "id": "approach",
-        "tick": 10975
-      },
-      {
-        "type": "dialogue.line",
-        "id": "L9.sam-stays",
-        "text": "Someone has to watch your back. And somebody has to see what's on that campus.",
-        "tick": 11068
+        "tick": 10182
       },
       {
         "type": "mission.signal",
-        "tick": 11090,
+        "tick": 10242,
+        "name": "l9.mega-boarded",
+        "actorId": 674
+      },
+      {
+        "type": "mission.signal",
+        "tick": 10272,
         "name": "l9.bridge-collapse"
       },
       {
         "type": "mission.signal",
-        "tick": 11090,
+        "tick": 10272,
         "name": "l9.weapons-lost",
         "actorId": 667
       },
       {
         "type": "mission.signal",
-        "tick": 11180,
+        "tick": 10362,
         "name": "l9.crash-impact",
         "actorId": 667
       },
       {
         "type": "objective.started",
         "id": "reach-outskirts",
-        "tick": 11180
+        "tick": 10362
       },
       {
         "type": "mission.signal",
-        "tick": 11300,
+        "tick": 10482,
         "name": "l9.dazed"
       },
       {
         "type": "mission.signal",
-        "tick": 11420,
+        "tick": 10602,
         "name": "l9.rise"
       },
       {
         "type": "mission.signal",
-        "tick": 11480,
+        "tick": 10662,
         "name": "l9.mega-exits-wreck",
         "actorId": 674
       },
       {
         "type": "dialogue.line",
-        "tick": 11630,
+        "tick": 10812,
         "id": "L9.mega-survived",
         "text": "Sam: It survived. It’s heading for the city!"
       },
       {
         "type": "dialogue.line",
-        "tick": 11780,
+        "tick": 10962,
         "id": "L9.end-caption",
         "text": "Everything went into the river. Almost everything."
       },
       {
         "type": "mission.signal",
-        "tick": 11900,
+        "tick": 11082,
         "name": "l9.ending-finished"
       },
       {
         "type": "objective.completed",
         "id": "reach-outskirts",
-        "tick": 11900
+        "tick": 11082
       },
       {
         "type": "level.completed",
         "id": "L9",
         "result": {
-          "time": 198.33333333333334,
+          "time": 184.7,
           "kills": 0,
-          "knockdowns": 15,
+          "knockdowns": 14,
           "damage": 0,
           "deaths": 0,
-          "rescued": 3,
+          "rescued": 0,
           "optionalObjectives": []
         },
-        "tick": 11900
+        "tick": 11082
       }
     ],
     "pickups": [],
     "duplicatePickups": [],
-    "peakAlive": 79,
-    "peakCharacters": 89,
+    "peakAlive": 80,
+    "peakCharacters": 90,
     "firstMinute": {
       "ticks": 0,
       "regularPeak": 0,
@@ -4540,7 +4057,7 @@
         "id": "crash-approach",
         "x": 457,
         "z": 0,
-        "samples": 10974,
+        "samples": 10181,
         "maxDisplacement": 38
       },
       {
@@ -4560,19 +4077,19 @@
         "z": 0
       },
       {
-        "tick": 10975,
+        "tick": 10182,
         "step": "",
         "marker": null
       },
       {
-        "tick": 11180,
+        "tick": 10362,
         "step": "reach-outskirts",
         "marker": "crawl-start",
         "x": 527.5,
         "z": 2.6
       },
       {
-        "tick": 11900,
+        "tick": 11082,
         "step": "",
         "marker": null
       }
@@ -4593,7 +4110,7 @@
       "targeted": 0,
       "hit": 0,
       "minimumHealthFraction": 1,
-      "samples": 11900
+      "samples": 11082
     },
     "phaseStarts": [
       {
@@ -4604,38 +4121,129 @@
       },
       {
         "phase": "result",
-        "tick": 11900,
-        "live": 37,
+        "tick": 11082,
+        "live": 52,
         "civilians": 9
       }
     ],
     "phasePeaks": {
       "playing": {
-        "alive": 79,
-        "characters": 89
+        "alive": 80,
+        "characters": 90
       },
       "result": {
-        "alive": 37,
-        "characters": 47
+        "alive": 52,
+        "characters": 62
       }
     },
     "births": {
       "infected.alpha": 10,
-      "infected.runner": 68,
-      "infected.sprinter": 37,
-      "infected.dog": 34,
-      "infected.screamer": 17,
-      "infected.brute": 16,
+      "infected.runner": 72,
+      "infected.sprinter": 42,
+      "infected.dog": 39,
+      "infected.screamer": 16,
+      "infected.brute": 15,
       "infected.zebra": 4,
       "infected.elephant": 2,
-      "infected.armored": 15,
+      "infected.armored": 21,
       "infected.crawler": 1
     },
+    "birthLedger": [
+      {
+        "tick": 0,
+        "id": 674,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "x": -430,
+        "z": 0
+      },
+      {
+        "tick": 2176,
+        "id": 757,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": -188.63454876152971,
+        "z": -322.1948696950286
+      },
+      {
+        "tick": 2176,
+        "id": 758,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": -173.6880402178243,
+        "z": -308.1377760283797
+      },
+      {
+        "tick": 2939,
+        "id": 765,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "thrower",
+        "x": -41.00327225536256,
+        "z": -297.1192700187224
+      },
+      {
+        "tick": 4561,
+        "id": 820,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": 271.8530074174205,
+        "z": -310.03401307160226
+      },
+      {
+        "tick": 4561,
+        "id": 821,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": 286.34495856861815,
+        "z": -295.5087470901719
+      },
+      {
+        "tick": 4773,
+        "id": 822,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "thrower",
+        "x": 311.648535616766,
+        "z": -315.776168800222
+      },
+      {
+        "tick": 5113,
+        "id": 828,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": 369.4488125086008,
+        "z": -203.14824777982818
+      },
+      {
+        "tick": 5113,
+        "id": 829,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "thrower",
+        "x": 402.70684644267317,
+        "z": -214.05252120083554
+      },
+      {
+        "tick": 6000,
+        "id": 846,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "leaper",
+        "x": 240,
+        "z": -33
+      }
+    ],
     "speed": {
       "regularMax": 5.510995742504086,
-      "fasterThanPlayer": 3813,
-      "regularSamples": 3914,
-      "sprinters": 3914
+      "fasterThanPlayer": 4086,
+      "regularSamples": 4309,
+      "sprinters": 4309
     },
     "runOut": null,
     "regions": {},
@@ -4699,14 +4307,14 @@
     }
   },
   "threat": {
-    "ticks": 11900,
-    "totalSpawned": 205,
-    "peakConcurrentInfected": 90,
+    "ticks": 11082,
+    "totalSpawned": 223,
+    "peakConcurrentInfected": 92,
     "followerWait": {
       "windows": [
         {
           "key": "step/approach|phase/driving",
-          "escortTicks": 0,
+          "escortTicks": 227,
           "stationaryFarTicks": 0,
           "arenaWaitTicks": 0
         },
@@ -4759,24 +4367,29 @@
           "arenaWaitTicks": 0
         }
       ],
-      "escortTicks": 1,
+      "escortTicks": 228,
       "stationaryFarTicks": 0,
       "arenaWaitTicks": 0,
       "upperBoundPercent": 0,
       "followers": [
         {
+          "id": 670,
+          "escortTicks": 206,
+          "stationaryFarTicks": 0
+        },
+        {
           "id": 668,
-          "escortTicks": 1,
+          "escortTicks": 168,
           "stationaryFarTicks": 0
         }
       ],
       "paceWindows": [
         {
           "key": "step/approach|phase/driving",
-          "samples": 0,
-          "p50GapM": null,
-          "p90GapM": null,
-          "maxGapM": null,
+          "samples": 13,
+          "p50GapM": 5.772935122328259,
+          "p90GapM": 5.820008591058937,
+          "maxGapM": 5.820008591058937,
           "waitingTicks": 0,
           "backtrackTicks": 0,
           "stuckFollowers": []
@@ -4874,40 +4487,29 @@
         "label": "approach: Drive toward the city",
         "threat": false,
         "startSeconds": 0,
-        "seconds": 182.91666666666666,
-        "spawned": 198,
+        "seconds": 169.7,
+        "spawned": 216,
         "initial": 7,
-        "observed": 205,
-        "reachableEver": 204,
-        "within2_5m": 11,
-        "attacks": 2,
-        "attacksPerMinute": 0.6560364464692483,
-        "firstAttackSeconds": 121.41666666666667,
-        "groupAttacks": 17,
-        "groupAttacksPerMinute": 5.57630979498861,
-        "firstGroupAttackSeconds": 168.96666666666667,
+        "observed": 223,
+        "reachableEver": 222,
+        "within2_5m": 16,
+        "attacks": 3,
+        "attacksPerMinute": 1.060695344725987,
+        "firstAttackSeconds": 121.01666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
         "followerSpeeds": [],
         "followerMin": null,
         "followerMedian": null,
         "boundedPaths": {
-          "samples": 80,
-          "minimumPercent": 0,
-          "worstTick": 6241,
-          "nearby": 1,
-          "reachable": 0,
-          "blockedIds": [
-            828
-          ],
-          "blockedPositions": [
-            {
-              "identity": "828@95",
-              "id": 828,
-              "x": 379.3413442044022,
-              "z": -218.78829385188365,
-              "playerX": 378.1162726558774,
-              "playerZ": -217.41198322161335
-            }
-          ]
+          "samples": 70,
+          "minimumPercent": 100,
+          "worstTick": 10081,
+          "nearby": 26,
+          "reachable": 26,
+          "blockedIds": [],
+          "blockedPositions": []
         },
         "maxBlockedSeconds": 10,
         "blockedEvidence": {
@@ -4976,19 +4578,19 @@
           ]
         },
         "last": {
-          "tick": 10921,
-          "alive": 48,
-          "reachable": 47,
-          "playerX": 471.937255859375,
-          "playerZ": 5.514407157897949,
+          "tick": 10081,
+          "alive": 69,
+          "reachable": 68,
+          "playerX": 464.8039245605469,
+          "playerZ": 9.629603385925293,
           "positions": [
             {
               "identity": "674@1",
               "id": 674,
-              "x": 114.53138732910156,
-              "z": -269.5652160644531,
-              "playerX": 471.937255859375,
-              "playerZ": 5.514407157897949
+              "x": 114.52145385742188,
+              "z": -269.9719543457031,
+              "playerX": 464.8039245605469,
+              "playerZ": 9.629603385925293
             }
           ]
         },
@@ -4999,40 +4601,29 @@
         "label": "controller: driving",
         "threat": false,
         "startSeconds": 0,
-        "seconds": 182.91666666666666,
-        "spawned": 198,
+        "seconds": 169.7,
+        "spawned": 216,
         "initial": 7,
-        "observed": 205,
-        "reachableEver": 204,
-        "within2_5m": 11,
-        "attacks": 2,
-        "attacksPerMinute": 0.6560364464692483,
-        "firstAttackSeconds": 121.41666666666667,
-        "groupAttacks": 17,
-        "groupAttacksPerMinute": 5.57630979498861,
-        "firstGroupAttackSeconds": 168.96666666666667,
+        "observed": 223,
+        "reachableEver": 222,
+        "within2_5m": 16,
+        "attacks": 3,
+        "attacksPerMinute": 1.060695344725987,
+        "firstAttackSeconds": 121.01666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
         "followerSpeeds": [],
         "followerMin": null,
         "followerMedian": null,
         "boundedPaths": {
-          "samples": 80,
-          "minimumPercent": 0,
-          "worstTick": 6241,
-          "nearby": 1,
-          "reachable": 0,
-          "blockedIds": [
-            828
-          ],
-          "blockedPositions": [
-            {
-              "identity": "828@95",
-              "id": 828,
-              "x": 379.3413442044022,
-              "z": -218.78829385188365,
-              "playerX": 378.1162726558774,
-              "playerZ": -217.41198322161335
-            }
-          ]
+          "samples": 70,
+          "minimumPercent": 100,
+          "worstTick": 10081,
+          "nearby": 26,
+          "reachable": 26,
+          "blockedIds": [],
+          "blockedPositions": []
         },
         "maxBlockedSeconds": 10,
         "blockedEvidence": {
@@ -5101,19 +4692,19 @@
           ]
         },
         "last": {
-          "tick": 10921,
-          "alive": 48,
-          "reachable": 47,
-          "playerX": 471.937255859375,
-          "playerZ": 5.514407157897949,
+          "tick": 10081,
+          "alive": 69,
+          "reachable": 68,
+          "playerX": 464.8039245605469,
+          "playerZ": 9.629603385925293,
           "positions": [
             {
               "identity": "674@1",
               "id": 674,
-              "x": 114.53138732910156,
-              "z": -269.5652160644531,
-              "playerX": 471.937255859375,
-              "playerZ": 5.514407157897949
+              "x": 114.52145385742188,
+              "z": -269.9719543457031,
+              "playerX": 464.8039245605469,
+              "playerZ": 9.629603385925293
             }
           ]
         },
@@ -5123,13 +4714,13 @@
         "key": "phase/approach",
         "label": "controller: approach",
         "threat": false,
-        "startSeconds": 182.91666666666666,
-        "seconds": 1.9166666666666667,
+        "startSeconds": 169.7,
+        "seconds": 1.5,
         "spawned": 0,
-        "initial": 47,
-        "observed": 67,
-        "reachableEver": 46,
-        "within2_5m": 0,
+        "initial": 60,
+        "observed": 75,
+        "reachableEver": 59,
+        "within2_5m": 1,
         "attacks": 0,
         "attacksPerMinute": 0,
         "firstAttackSeconds": null,
@@ -5142,28 +4733,28 @@
         "boundedPaths": {
           "samples": 1,
           "minimumPercent": 100,
-          "worstTick": 10975,
-          "nearby": 15,
-          "reachable": 15,
+          "worstTick": 10182,
+          "nearby": 22,
+          "reachable": 22,
           "blockedIds": [],
           "blockedPositions": []
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 10975,
-          "alive": 47,
-          "reachable": 46,
-          "playerX": 482.14984130859375,
-          "playerZ": 1.7615073919296265,
+          "tick": 10182,
+          "alive": 60,
+          "reachable": 59,
+          "playerX": 482.1734313964844,
+          "playerZ": 3.1710031032562256,
           "positions": [
             {
               "identity": "674@1",
               "id": 674,
-              "x": 114.53138732910156,
-              "z": -269.5652160644531,
-              "playerX": 482.14984130859375,
-              "playerZ": 1.7615073919296265
+              "x": 114.52145385742188,
+              "z": -269.9719543457031,
+              "playerX": 482.1734313964844,
+              "playerZ": 3.1710031032562256
             }
           ]
         },
@@ -5173,13 +4764,13 @@
         "key": "phase/fall",
         "label": "controller: fall",
         "threat": false,
-        "startSeconds": 184.83333333333334,
+        "startSeconds": 171.2,
         "seconds": 1.5,
         "spawned": 0,
-        "initial": 48,
-        "observed": 48,
-        "reachableEver": 47,
-        "within2_5m": 0,
+        "initial": 60,
+        "observed": 61,
+        "reachableEver": 62,
+        "within2_5m": 1,
         "attacks": 0,
         "attacksPerMinute": 0,
         "firstAttackSeconds": null,
@@ -5192,30 +4783,21 @@
         "boundedPaths": {
           "samples": 1,
           "minimumPercent": 100,
-          "worstTick": 11090,
-          "nearby": 2,
-          "reachable": 2,
+          "worstTick": 10272,
+          "nearby": 1,
+          "reachable": 1,
           "blockedIds": [],
           "blockedPositions": []
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11090,
-          "alive": 48,
-          "reachable": 47,
-          "playerX": 504.8928873330118,
-          "playerZ": -7.657159818902771,
-          "positions": [
-            {
-              "identity": "674@1",
-              "id": 674,
-              "x": 114.53138732910156,
-              "z": -269.5652160644531,
-              "playerX": 504.8928873330118,
-              "playerZ": -7.657159818902771
-            }
-          ]
+          "tick": 10272,
+          "alive": 62,
+          "reachable": 62,
+          "playerX": 501.6334234175697,
+          "playerZ": -10.147396788036561,
+          "positions": []
         },
         "flags": []
       },
@@ -5223,12 +4805,12 @@
         "key": "step/reach-outskirts",
         "label": "reach-outskirts: Get clear of the wreck",
         "threat": false,
-        "startSeconds": 186.33333333333334,
+        "startSeconds": 172.7,
         "seconds": 12,
         "spawned": 0,
-        "initial": 36,
-        "observed": 38,
-        "reachableEver": 37,
+        "initial": 55,
+        "observed": 60,
+        "reachableEver": 58,
         "within2_5m": 0,
         "attacks": 8,
         "attacksPerMinute": 40,
@@ -5240,9 +4822,9 @@
         "followerMin": null,
         "followerMedian": null,
         "boundedPaths": {
-          "samples": 7,
+          "samples": 8,
           "minimumPercent": 100,
-          "worstTick": 11780,
+          "worstTick": 10962,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5251,9 +4833,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11780,
-          "alive": 36,
-          "reachable": 36,
+          "tick": 10962,
+          "alive": 55,
+          "reachable": 55,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5264,53 +4846,12 @@
         "key": "phase/impact",
         "label": "controller: impact",
         "threat": false,
-        "startSeconds": 186.33333333333334,
+        "startSeconds": 172.7,
         "seconds": 2,
         "spawned": 0,
-        "initial": 36,
-        "observed": 36,
-        "reachableEver": 35,
-        "within2_5m": 0,
-        "attacks": 0,
-        "attacksPerMinute": 0,
-        "firstAttackSeconds": null,
-        "groupAttacks": 0,
-        "groupAttacksPerMinute": 0,
-        "firstGroupAttackSeconds": null,
-        "followerSpeeds": [],
-        "followerMin": null,
-        "followerMedian": null,
-        "maxBlockedSeconds": 0,
-        "blockedEvidence": null,
-        "last": {
-          "tick": 11180,
-          "alive": 36,
-          "reachable": 35,
-          "playerX": 527.5,
-          "playerZ": 2.5999999046325684,
-          "positions": [
-            {
-              "identity": "674@1",
-              "id": 674,
-              "x": 114.53138732910156,
-              "z": -269.5652160644531,
-              "playerX": 527.5,
-              "playerZ": 2.5999999046325684
-            }
-          ]
-        },
-        "flags": []
-      },
-      {
-        "key": "phase/dazed",
-        "label": "controller: dazed",
-        "threat": false,
-        "startSeconds": 188.33333333333334,
-        "seconds": 2,
-        "spawned": 0,
-        "initial": 36,
-        "observed": 37,
-        "reachableEver": 36,
+        "initial": 55,
+        "observed": 57,
+        "reachableEver": 55,
         "within2_5m": 0,
         "attacks": 0,
         "attacksPerMinute": 0,
@@ -5324,7 +4865,7 @@
         "boundedPaths": {
           "samples": 1,
           "minimumPercent": 100,
-          "worstTick": 11300,
+          "worstTick": 10362,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5333,9 +4874,50 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11300,
-          "alive": 36,
-          "reachable": 36,
+          "tick": 10362,
+          "alive": 55,
+          "reachable": 55,
+          "playerX": 527.5,
+          "playerZ": 2.5999999046325684,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/dazed",
+        "label": "controller: dazed",
+        "threat": false,
+        "startSeconds": 174.7,
+        "seconds": 2,
+        "spawned": 0,
+        "initial": 56,
+        "observed": 56,
+        "reachableEver": 56,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 10482,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 10482,
+          "alive": 56,
+          "reachable": 56,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5346,12 +4928,12 @@
         "key": "phase/rise",
         "label": "controller: rise",
         "threat": false,
-        "startSeconds": 190.33333333333334,
+        "startSeconds": 176.7,
         "seconds": 1,
         "spawned": 0,
-        "initial": 37,
-        "observed": 37,
-        "reachableEver": 37,
+        "initial": 55,
+        "observed": 55,
+        "reachableEver": 55,
         "within2_5m": 0,
         "attacks": 0,
         "attacksPerMinute": 0,
@@ -5365,7 +4947,7 @@
         "boundedPaths": {
           "samples": 1,
           "minimumPercent": 100,
-          "worstTick": 11420,
+          "worstTick": 10602,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5374,9 +4956,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11420,
-          "alive": 37,
-          "reachable": 37,
+          "tick": 10602,
+          "alive": 55,
+          "reachable": 55,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5387,12 +4969,12 @@
         "key": "phase/mega-exit",
         "label": "controller: mega-exit",
         "threat": false,
-        "startSeconds": 191.33333333333334,
+        "startSeconds": 177.7,
         "seconds": 2.5,
         "spawned": 0,
-        "initial": 37,
-        "observed": 37,
-        "reachableEver": 37,
+        "initial": 55,
+        "observed": 55,
+        "reachableEver": 55,
         "within2_5m": 0,
         "attacks": 0,
         "attacksPerMinute": 0,
@@ -5406,7 +4988,7 @@
         "boundedPaths": {
           "samples": 2,
           "minimumPercent": 100,
-          "worstTick": 11600,
+          "worstTick": 10782,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5415,9 +4997,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11600,
-          "alive": 36,
-          "reachable": 36,
+          "tick": 10782,
+          "alive": 55,
+          "reachable": 55,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5428,12 +5010,12 @@
         "key": "phase/mega-roar",
         "label": "controller: mega-roar",
         "threat": false,
-        "startSeconds": 193.83333333333334,
+        "startSeconds": 180.2,
         "seconds": 2.5,
         "spawned": 0,
-        "initial": 36,
-        "observed": 36,
-        "reachableEver": 36,
+        "initial": 55,
+        "observed": 57,
+        "reachableEver": 56,
         "within2_5m": 0,
         "attacks": 1,
         "attacksPerMinute": 24,
@@ -5447,7 +5029,7 @@
         "boundedPaths": {
           "samples": 2,
           "minimumPercent": 100,
-          "worstTick": 11750,
+          "worstTick": 10932,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5456,9 +5038,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11750,
-          "alive": 36,
-          "reachable": 36,
+          "tick": 10932,
+          "alive": 54,
+          "reachable": 54,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5469,12 +5051,12 @@
         "key": "phase/mega-leap",
         "label": "controller: mega-leap",
         "threat": false,
-        "startSeconds": 196.33333333333334,
+        "startSeconds": 182.7,
         "seconds": 2,
         "spawned": 0,
-        "initial": 36,
-        "observed": 37,
-        "reachableEver": 36,
+        "initial": 55,
+        "observed": 57,
+        "reachableEver": 55,
         "within2_5m": 0,
         "attacks": 7,
         "attacksPerMinute": 210,
@@ -5488,7 +5070,7 @@
         "boundedPaths": {
           "samples": 1,
           "minimumPercent": 100,
-          "worstTick": 11780,
+          "worstTick": 10962,
           "nearby": 1,
           "reachable": 1,
           "blockedIds": [],
@@ -5497,9 +5079,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11780,
-          "alive": 36,
-          "reachable": 36,
+          "tick": 10962,
+          "alive": 55,
+          "reachable": 55,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5510,12 +5092,12 @@
         "key": "phase/done",
         "label": "controller: done",
         "threat": false,
-        "startSeconds": 198.33333333333334,
+        "startSeconds": 184.7,
         "seconds": 0,
         "spawned": 0,
         "initial": 0,
         "observed": 0,
-        "reachableEver": 37,
+        "reachableEver": 52,
         "within2_5m": 0,
         "attacks": 0,
         "attacksPerMinute": 0,
@@ -5529,9 +5111,9 @@
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
-          "tick": 11900,
-          "alive": 37,
-          "reachable": 37,
+          "tick": 11082,
+          "alive": 52,
+          "reachable": 52,
           "playerX": 527.5,
           "playerZ": 2.5999999046325684,
           "positions": []
@@ -5541,6 +5123,6 @@
     ],
     "waves": []
   },
-  "nativeStateHash": "aba5b7ac",
+  "nativeStateHash": "fbc550db",
   "error": null
 }

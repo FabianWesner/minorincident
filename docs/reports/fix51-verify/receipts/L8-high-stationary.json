@@ -4,10 +4,10 @@
   "tier": "high",
   "policy": "stationary",
   "seed": 1,
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
-  "observerHash": "d5cde71e96dc06637bd84b03207ce9d21a5e36c5eb4d6f6d3c9313fff03b1431",
-  "revision": "4cd042a286a621f8266d79803741ce707b3bb26c",
-  "generatedAt": "2026-11-27T17:44:18.111Z",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "4d3932b0bd4aaa5c21cf941662a3acfcf2da479b",
+  "generatedAt": "2026-11-28T00:44:43.843Z",
   "run": {
     "level": "L8",
     "policy": "complete",
@@ -145,11 +145,7 @@
         "checkpoint": "sanctuary",
         "tier": 0,
         "timeOfDay": null,
-        "subtitle": {
-          "id": "L8.gate-soldier",
-          "text": "Soldier: Heavy weapons stay at the armory. Rules of the sanctuary. You keep small arms, the axe, the shotgun, the MG.",
-          "until": 300
-        },
+        "subtitle": null,
         "cinematic": null,
         "failure": null,
         "stats": {
@@ -172,6 +168,7 @@
         "ability.corgi-lure",
         "weapon.handgun",
         "weapon.army-mg",
+        "weapon.rocket-launcher",
         "weapon.pipe-bomb",
         "weapon.fire-axe",
         "weapon.shotgun",
@@ -185,7 +182,8 @@
           "weapon.handgun",
           "weapon.army-mg",
           "weapon.shotgun",
-          "weapon.assault-rifle"
+          "weapon.assault-rifle",
+          "weapon.rocket-launcher"
         ]
       },
       "player": {
@@ -284,6 +282,15 @@
               {
                 "id": "weapon.assault-rifle",
                 "magazine": 36,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.rocket-launcher",
+                "magazine": 0,
                 "reserve": "infinite",
                 "charges": 0,
                 "nextCharge": 0,
@@ -1538,8 +1545,7 @@
             "x": 116,
             "z": 80
           }
-        ],
-        "gateToastAt": 240
+        ]
       },
       "l9": null,
       "mega": null,
@@ -3819,10 +3825,11 @@
             "z": 80
           }
         ],
-        "gateToastAt": 0,
         "lastJoinCue": 7014,
         "infectionSetupAt": 300,
         "infectionFeedLineAt": 540,
+        "heavyWeaponsSurrendered": true,
+        "gateToastAt": 0,
         "lionStoryKeeperId": 426,
         "gateBreachLineAt": 0,
         "driverAt": 0
@@ -3859,10 +3866,10 @@
     "eventCounts": {
       "world.blocker.changed": 50,
       "objective.started": 2,
-      "dialogue.line": 12,
       "checkpoint.set": 2,
       "level.started": 1,
       "sim.tick": 10800,
+      "dialogue.line": 12,
       "weather.gust": 34,
       "vfx.effect": 12,
       "barricade.sound": 4,
@@ -3894,12 +3901,6 @@
         "tick": 0
       },
       {
-        "type": "dialogue.line",
-        "id": "L8.gate-soldier",
-        "text": "Soldier: Heavy weapons stay at the armory. Rules of the sanctuary. You keep small arms, the axe, the shotgun, the MG.",
-        "tick": 0
-      },
-      {
         "type": "checkpoint.set",
         "id": "sanctuary",
         "tick": 0
@@ -3909,12 +3910,6 @@
         "id": "L8.survivor-joined",
         "text": "A survivor joined the group.",
         "tick": 6
-      },
-      {
-        "type": "dialogue.line",
-        "id": "L8.gate-toast",
-        "text": "Rocket launcher handed over to the armory.",
-        "tick": 240
       },
       {
         "type": "dialogue.line",
@@ -3933,6 +3928,12 @@
         "id": "L8.nadia-path",
         "text": "Nadia: Stay on the path. They're nervous tonight — so are we.",
         "tick": 540
+      },
+      {
+        "type": "dialogue.line",
+        "id": "L8.gate-soldier",
+        "text": "Soldier: Heavy weapons stay at the armory. Rules of the sanctuary. You keep small arms, the axe, the shotgun, the MG.",
+        "tick": 1200
       },
       {
         "type": "checkpoint.set",
@@ -3960,6 +3961,12 @@
         "id": "L8.hale-enclosures",
         "text": "Major Hale (radio): They’re in the enclosures!",
         "tick": 1260
+      },
+      {
+        "type": "dialogue.line",
+        "id": "L8.gate-toast",
+        "text": "Rocket launcher handed over to the armory.",
+        "tick": 1440
       },
       {
         "type": "dialogue.line",
@@ -4127,6 +4134,7 @@
       "infected.runner": 36,
       "infected.dog": 1
     },
+    "birthLedger": [],
     "speed": {
       "regularMax": 5.801164742442429,
       "fasterThanPlayer": 9843,

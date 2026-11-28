@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L8",
   "tier": "high",
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "sanctuary",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "3df310e445512f3ffcf3aed7a82a84d4e506e3bb0495b0dbb5e3d75470d340de",
+        "snapshotSha256": "ec84d9e147394ee721a2977fadc559d6d31fc12efa19c712516735e10d4f1dc0",
         "damage": 100,
         "expected": {
           "id": "sanctuary",
@@ -34,7 +34,8 @@
               "weapon.handgun",
               "weapon.army-mg",
               "weapon.shotgun",
-              "weapon.assault-rifle"
+              "weapon.assault-rifle",
+              "weapon.rocket-launcher"
             ]
           },
           "followers": [
@@ -70,7 +71,8 @@
               "weapon.handgun",
               "weapon.army-mg",
               "weapon.shotgun",
-              "weapon.assault-rifle"
+              "weapon.assault-rifle",
+              "weapon.rocket-launcher"
             ]
           },
           "followerMismatches": [],
@@ -96,7 +98,7 @@
       "value": {
         "checkpoint": "breach",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "867a55099741a98d649eb2d0542e4f215e5209b119c54c76d4ade971c92a481f",
+        "snapshotSha256": "98be5c55672ea7b2744d58375f4ed7703e405c9a7a51dd620dc5a5ebeb3361d8",
         "damage": 100,
         "expected": {
           "id": "breach",
@@ -179,7 +181,7 @@
       "value": {
         "checkpoint": "sealed",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "c3ef7ad2527a1ee78f664a1c28ac86352446b4cffee298900a8819a7247ee72f",
+        "snapshotSha256": "2562fdbaa3f4bddbb829b568599b3feaf3c0ce906204ee0bc9c28e5be955a64d",
         "damage": 100,
         "expected": {
           "id": "sealed",
@@ -271,13 +273,13 @@
       "value": {
         "checkpoint": "arena-flamingo",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "3af3c16ae28446cd1e01559c6ca245f407a6d01f8ee0a8763cff18c6be5bbc56",
+        "snapshotSha256": "9a520d2b8bd6a568fdeab8e2383bf437efb15dfe3cab84cdd8f7987e0d825bba",
         "damage": 100,
         "expected": {
           "id": "arena-flamingo",
           "anchor": {
             "x": 0,
-            "y": 0.800000011920929,
+            "y": 0.8199999928474426,
             "z": -18,
             "yaw": 1.628952264747545
           },
@@ -363,7 +365,7 @@
       "value": {
         "checkpoint": "cleared-flamingo",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4d14d9de975900d2f89f25caa4f6fd0a0a0c19fa1d02b4f2b21ff491f572782b",
+        "snapshotSha256": "3686dc0d6125dca1201244b6677890b0f4c0233f0e326e3aedd96645dd93fb7d",
         "damage": 100,
         "expected": {
           "id": "cleared-flamingo",
@@ -451,11 +453,11 @@
       "clause": "mortal checkpoint restore at L8/arena-lion",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "checkpoint": "arena-lion",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "1f441233ecaf1d80fbca8d320365b20f4de840cef8dd2a7c02f3fe06f9134e6f",
+        "snapshotSha256": "c27c8c5ea38d5ff4026aaf6ac6baa6eb332b98cd5e1c913e1267458ba48ec39a",
         "damage": 100,
         "expected": {
           "id": "arena-lion",
@@ -509,30 +511,31 @@
         "observed": {
           "id": "arena-lion",
           "position": {
-            "x": -45.95508898290873,
-            "z": -31.66134916908551
+            "x": -45.95576133363824,
+            "z": -31.661270115215707
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fists"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.kick"
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.assault-rifle"
             ]
           },
-          "followerMismatches": [
-            355
-          ],
+          "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0.34161584380008814,
+        "positionError": 0.3416064906401035,
         "gateMatch": true,
-        "rackMatch": false
+        "rackMatch": true
       },
       "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
       "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
@@ -546,7 +549,7 @@
       "value": {
         "checkpoint": "cleared-lion",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4ccb67c53459a53c1b62578d3ec6cb951e3108a8cfcc10282c448f7a0f352eee",
+        "snapshotSha256": "dc6a772f66ea7dc22be7ce62e4fdd6b708fd2c7899cf0aadcdad3ea9f07bc3ab",
         "damage": 100,
         "expected": {
           "id": "cleared-lion",
@@ -638,13 +641,13 @@
       "value": {
         "checkpoint": "arena-monkey",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "e3c4a1221a9f2c961122b4c4199945d389c51f8041644fa50f284dd44e71ae33",
+        "snapshotSha256": "dd45f8436cccb310e5915889bb16f44867ee266a065f7e38d44e6e7d23902808",
         "damage": 100,
         "expected": {
           "id": "arena-monkey",
           "anchor": {
             "x": -20,
-            "y": 0.7049999833106995,
+            "y": 0.7099999785423279,
             "z": 20,
             "yaw": -0.5316292768710175
           },
@@ -730,7 +733,7 @@
       "value": {
         "checkpoint": "cleared-monkey",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "12aa8c11e02236b36dcccee703f1625eb5e1978ee73b2564e2b99d8ba0cf9a65",
+        "snapshotSha256": "a42910455910c44da59bb7e3cc7564eaa5bab7e12ea26189c043d5301b77e9d3",
         "damage": 100,
         "expected": {
           "id": "cleared-monkey",
@@ -820,13 +823,13 @@
       "value": {
         "checkpoint": "arena-zebra",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "316a492c4b588ba62c07aa98d747a6478bc38c59aa2885a38ad894d8e90a510a",
+        "snapshotSha256": "32a143a2be54e4e0a02b6692c1efa8e7679573daf469cc832a2ff825f1ccdc1d",
         "damage": 100,
         "expected": {
           "id": "arena-zebra",
           "anchor": {
             "x": 46,
-            "y": 0.7049999833106995,
+            "y": 0.7099999785423279,
             "z": 32,
             "yaw": -0.13816238661639804
           },
@@ -910,7 +913,7 @@
       "value": {
         "checkpoint": "cleared-zebra",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "b201a0ea7435de524686a7a2535ee0a99f1ae90ac5e026b3e235a4ab69bffe0c",
+        "snapshotSha256": "e57b97ad59e5e0809666439c89bd37f772281cae0561f4688303290270e8accc",
         "damage": 100,
         "expected": {
           "id": "cleared-zebra",
@@ -996,11 +999,11 @@
       "clause": "mortal checkpoint restore at L8/arena-gorilla",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "checkpoint": "arena-gorilla",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "65083c541045c8e3e4f185312870fbac9b86bed8f201ea39e06a350b184c2486",
+        "snapshotSha256": "2e201ea4736558ed0f72cd5e4ba407d032975d69707eb628770e2f95e33f5680",
         "damage": 100,
         "expected": {
           "id": "arena-gorilla",
@@ -1063,15 +1066,16 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fists"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.kick"
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.assault-rifle"
             ]
           },
-          "followerMismatches": [
-            355
-          ],
+          "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
@@ -1080,7 +1084,7 @@
         },
         "positionError": 0,
         "gateMatch": true,
-        "rackMatch": false
+        "rackMatch": true
       },
       "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
       "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
@@ -1094,7 +1098,7 @@
       "value": {
         "checkpoint": "cleared-gorilla",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "b46fc1a695384a79d90060cd53eb63c273b4748b9e3e0cc3224e1d6b3b48b421",
+        "snapshotSha256": "1dcf61be9083b68ecc5760cca37fe5f4dafeea3e1811378d41151e9c5519d672",
         "damage": 100,
         "expected": {
           "id": "cleared-gorilla",
@@ -1185,11 +1189,11 @@
       "clause": "mortal checkpoint restore at L8/arena-elephant",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "checkpoint": "arena-elephant",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "a423e8aa47ba60bc260114b4a39db6ec2cecea5277ccd1e0b50bd6f9b57045cb",
+        "snapshotSha256": "1a9c674de8a0e66af0369ceb6845bd20a9047b1abb37e474f3377986e484b6e2",
         "damage": 100,
         "expected": {
           "id": "arena-elephant",
@@ -1252,15 +1256,16 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fists"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.kick"
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.assault-rifle"
             ]
           },
-          "followerMismatches": [
-            355
-          ],
+          "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
@@ -1269,7 +1274,7 @@
         },
         "positionError": 0,
         "gateMatch": true,
-        "rackMatch": false
+        "rackMatch": true
       },
       "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
       "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
@@ -1283,7 +1288,7 @@
       "value": {
         "checkpoint": "escape-route",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "f7ca7301270e4d4776341868c65bec2dbba915285fd99d89c4f84839c886dd50",
+        "snapshotSha256": "119555fedfd76a336b03fceadac84e4fa763774adf6bff55996aa028da9383a8",
         "damage": 100,
         "expected": {
           "id": "escape-route",

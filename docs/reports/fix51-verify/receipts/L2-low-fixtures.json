@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L2",
   "tier": "low",
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
@@ -238,12 +238,12 @@
       "clause": "idle snowball live infected census",
       "value": {
         "at60": {
-          "all": 30,
-          "rescue": 20
+          "all": 29,
+          "rescue": 21
         },
         "at120": {
           "all": 30,
-          "rescue": 14
+          "rescue": 18
         },
         "protected": true
       },
@@ -257,12 +257,23 @@
       "id": "L2-08",
       "clause": "idle firefighter combat and turns",
       "value": {
-        "hits": 29,
-        "turnedBy90": 0,
-        "turns": []
+        "hits": 19,
+        "turnedBy90": 2,
+        "turns": [
+          {
+            "id": 124,
+            "seconds": 2.9833333333333334,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 3.4833333333333334,
+            "sameAsset": true
+          }
+        ]
       },
       "target": "≥1 firefighter hit;≥2 turn by90s",
-      "status": "FAIL",
+      "status": "PASS",
       "tier": "low",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
@@ -273,32 +284,32 @@
       "value": [
         {
           "id": 121,
-          "samples": 678,
+          "samples": 621,
           "protectedTicks": 0
         },
         {
           "id": 122,
-          "samples": 425,
+          "samples": 426,
           "protectedTicks": 0
         },
         {
           "id": 123,
-          "samples": 797,
+          "samples": 689,
           "protectedTicks": 0
         },
         {
           "id": 124,
-          "samples": 994,
+          "samples": 438,
           "protectedTicks": 0
         },
         {
           "id": 125,
-          "samples": 809,
+          "samples": 542,
           "protectedTicks": 0
         },
         {
           "id": 126,
-          "samples": 694,
+          "samples": 580,
           "protectedTicks": 0
         }
       ],
@@ -314,7 +325,7 @@
       "value": {
         "axe": true,
         "diedBy120": true,
-        "firstDeathS": 88.35,
+        "firstDeathS": 86.33333333333333,
         "infectedAt": {
           "0": {
             "all": 0,
@@ -326,7 +337,7 @@
           }
         },
         "deathsAt": [
-          "88s@-49,-35/collapse"
+          "86s@-49,-34/collapse"
         ]
       },
       "target": "player reaches0HP within120s after doors",
@@ -356,12 +367,12 @@
       "clause": "uninterrupted protected camping live census at10/90s",
       "value": {
         "early": {
-          "all": 28,
-          "rescue": 22
+          "all": 26,
+          "rescue": 20
         },
         "late": {
           "all": 30,
-          "rescue": 14
+          "rescue": 18
         },
         "protected": true,
         "countOnly": true,
@@ -412,9 +423,9 @@
         "outcome": "complete",
         "deaths": 1,
         "cluster": null,
-        "size": 10,
-        "killed": 3,
-        "ratio": 0.3,
+        "size": 12,
+        "killed": 5,
+        "ratio": 0.4166666666666667,
         "visitedSide": false,
         "alarms": []
       },
@@ -1227,24 +1238,24 @@
             "rescue": 0
           },
           "10": {
-            "all": 28,
-            "rescue": 22
+            "all": 26,
+            "rescue": 20
           },
           "60": {
-            "all": 30,
-            "rescue": 20
+            "all": 29,
+            "rescue": 21
           },
           "90": {
             "all": 30,
-            "rescue": 14
+            "rescue": 18
           },
           "120": {
             "all": 30,
-            "rescue": 14
+            "rescue": 18
           }
         },
-        "firefighterHits": 29,
-        "firefightersTurnedBy90": 0,
+        "firefighterHits": 19,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
         "killsNearDoors": 0,
         "clusterKilled": 0,
@@ -1287,52 +1298,63 @@
           "allOutS": 10.45,
           "nonBiteNearRescue": 0
         },
-        "crewTurns": [],
+        "crewTurns": [
+          {
+            "id": 124,
+            "seconds": 2.9833333333333334,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 3.4833333333333334,
+            "sameAsset": true
+          }
+        ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 678,
+            "samples": 621,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 425,
+            "samples": 426,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 797,
+            "samples": 689,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 994,
+            "samples": 438,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 809,
+            "samples": 542,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 694,
+            "samples": 580,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 31,
+          "nonSightAlerts": 51,
           "emergeFar": 0,
           "emergeSeen": 0,
-          "emerged": 16
+          "emerged": 12
         },
         "radio": {
           "infected": 30,
-          "escapeArea": 16,
-          "groupsOf4": 4,
-          "chasingPlayer": 14,
-          "chasingFraction": 0.4666666666666667,
+          "escapeArea": 12,
+          "groupsOf4": 3,
+          "chasingPlayer": 16,
+          "chasingFraction": 0.5333333333333333,
           "scatteredSingles": 0
         },
         "cluster": null,
@@ -1349,10 +1371,10 @@
         "opening": "side",
         "seed": 1,
         "outcome": "timeout",
-        "simSeconds": 88.35,
+        "simSeconds": 86.33333333333333,
         "deaths": 1,
         "kills": 0,
-        "knockdowns": 25,
+        "knockdowns": 22,
         "damage": 103.74366666666643,
         "axe": true,
         "timeline": [
@@ -1411,15 +1433,15 @@
             "rescue": 15
           }
         },
-        "firefighterHits": 14,
-        "firefightersTurnedBy90": 0,
-        "firstDeathS": 88.35,
-        "killsNearDoors": 25,
+        "firefighterHits": 6,
+        "firefightersTurnedBy90": 2,
+        "firstDeathS": 86.33333333333333,
+        "killsNearDoors": 22,
         "clusterKilled": 0,
         "clusterSize": 0,
         "minHp": 3.743666666666428,
         "deathsAt": [
-          "88s@-49,-35/collapse"
+          "86s@-49,-34/collapse"
         ],
         "calm": {
           "infectedMax": 0,
@@ -1456,26 +1478,37 @@
           "allOutS": 10.45,
           "nonBiteNearRescue": 0
         },
-        "crewTurns": [],
+        "crewTurns": [
+          {
+            "id": 125,
+            "seconds": 3.2666666666666666,
+            "sameAsset": true
+          },
+          {
+            "id": 126,
+            "seconds": 3.216666666666667,
+            "sameAsset": true
+          }
+        ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 1142,
+            "samples": 1043,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1371,
+            "samples": 1284,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1405,
+            "samples": 1284,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 820,
+            "samples": 835,
             "protectedTicks": 0
           },
           {
@@ -1485,13 +1518,13 @@
           },
           {
             "id": 126,
-            "samples": 809,
+            "samples": 814,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 6,
+          "nonSightAlerts": 10,
           "emergeFar": 0,
           "emergeSeen": 0,
           "emerged": 0
@@ -1579,20 +1612,20 @@
             "rescue": 0
           },
           "10": {
-            "all": 28,
-            "rescue": 22
+            "all": 26,
+            "rescue": 20
           },
           "60": {
-            "all": 30,
-            "rescue": 20
+            "all": 29,
+            "rescue": 21
           },
           "90": {
             "all": 30,
-            "rescue": 14
+            "rescue": 18
           }
         },
-        "firefighterHits": 29,
-        "firefightersTurnedBy90": 0,
+        "firefighterHits": 19,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
         "killsNearDoors": 0,
         "clusterKilled": 0,
@@ -1635,52 +1668,63 @@
           "allOutS": 10.45,
           "nonBiteNearRescue": 0
         },
-        "crewTurns": [],
+        "crewTurns": [
+          {
+            "id": 124,
+            "seconds": 2.9833333333333334,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 3.4833333333333334,
+            "sameAsset": true
+          }
+        ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 678,
+            "samples": 621,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 425,
+            "samples": 426,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 797,
+            "samples": 689,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 994,
+            "samples": 438,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 809,
+            "samples": 542,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 694,
+            "samples": 580,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 24,
+          "nonSightAlerts": 36,
           "emergeFar": 0,
           "emergeSeen": 0,
-          "emerged": 16
+          "emerged": 12
         },
         "radio": {
           "infected": 30,
-          "escapeArea": 16,
-          "groupsOf4": 4,
-          "chasingPlayer": 14,
-          "chasingFraction": 0.4666666666666667,
+          "escapeArea": 12,
+          "groupsOf4": 3,
+          "chasingPlayer": 16,
+          "chasingFraction": 0.5333333333333333,
           "scatteredSingles": 0
         },
         "cluster": null,
@@ -2217,13 +2261,13 @@
       "trace": [
         {
           "tick": 10620,
-          "x": 78.17352294921875,
-          "z": 31.931371688842773
+          "x": 78.08930206298828,
+          "z": 29.928136825561523
         },
         {
           "tick": 10680,
-          "x": 78.53855895996094,
-          "z": 30.53502655029297
+          "x": 78.27985382080078,
+          "z": 32.78236770629883
         },
         {
           "tick": 10740,
@@ -2241,8 +2285,8 @@
         "simSeconds": 179.45,
         "deaths": 1,
         "kills": 0,
-        "knockdowns": 26,
-        "damage": 170.86899999999966,
+        "knockdowns": 25,
+        "damage": 160.86899999999966,
         "axe": true,
         "timeline": [
           {
@@ -2312,20 +2356,20 @@
             "rescue": 21
           },
           "60": {
-            "all": 27,
-            "rescue": 2
+            "all": 25,
+            "rescue": 0
           },
           "90": {
-            "all": 27,
-            "rescue": 1
+            "all": 28,
+            "rescue": 0
           }
         },
-        "firefighterHits": 18,
+        "firefighterHits": 23,
         "firefightersTurnedBy90": 4,
         "firstDeathS": 84.85,
         "killsNearDoors": 9,
-        "clusterKilled": 3,
-        "clusterSize": 10,
+        "clusterKilled": 5,
+        "clusterSize": 12,
         "minHp": 0,
         "deathsAt": [
           "85s@-47,-31/collapse"
@@ -2392,32 +2436,32 @@
         "crewExposure": [
           {
             "id": 121,
-            "samples": 1075,
+            "samples": 5959,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1424,
+            "samples": 6235,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1507,
+            "samples": 6246,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 1031,
+            "samples": 5937,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 1149,
+            "samples": 5884,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 893,
+            "samples": 5943,
             "protectedTicks": 0
           }
         ],
@@ -2426,12 +2470,12 @@
           "nonSightAlerts": 17,
           "emergeFar": 0,
           "emergeSeen": 0,
-          "emerged": 36
+          "emerged": 38
         },
         "radio": {
-          "infected": 27,
+          "infected": 28,
           "escapeArea": 26,
-          "groupsOf4": 4,
+          "groupsOf4": 5,
           "chasingPlayer": 0,
           "chasingFraction": 0,
           "scatteredSingles": 5
@@ -2446,37 +2490,37 @@
         "diedBy120": true,
         "scatteredSingleAdmissions": [
           {
-            "id": 268,
-            "tick": 7930,
+            "id": 262,
+            "tick": 7660,
             "x": -33.5,
             "z": -14
           },
           {
-            "id": 270,
-            "tick": 7930,
+            "id": 266,
+            "tick": 7820,
             "x": -34,
             "z": 2
           },
           {
-            "id": 272,
-            "tick": 7940,
+            "id": 268,
+            "tick": 7920,
             "x": -27.2,
             "z": 19
           },
           {
-            "id": 274,
-            "tick": 7940,
+            "id": 270,
+            "tick": 7920,
             "x": -13,
             "z": 26.5
           },
           {
-            "id": 276,
-            "tick": 7950,
+            "id": 286,
+            "tick": 8490,
             "x": 6,
             "z": 26.5
           },
           {
-            "id": 284,
+            "id": 288,
             "tick": 10620,
             "x": 25,
             "z": 26.5
