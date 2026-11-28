@@ -28,6 +28,8 @@ export class DistrictOcclusion {
   interiorState() { return { cpuMs: this.interiorCpuMs, buildings: this.interiorBuildings.length, hiddenBuildings: this.interiorBuildings.filter(b => !b.visible).length, placements: this.interiorBuildings.reduce((n, b) => n + b.props.length, 0) }; }
   /** Asset id whose placements the see-through cut leaves whole this frame (an objective building that must read as itself). */
   keepWhole: string | null = null;
+  /** Placement whose roof stays visible during a story exterior shot. */
+  keepRoof: string | null = null;
   /** L2's visible indoor rescue beat uses the existing roof cutaway. */
   marketRescueCutaway = false;
   /** Scene Lab A/B baseline: submit interiors of closed buildings too. */
@@ -390,6 +392,7 @@ export class DistrictOcclusion {
           inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
         }
         if (this.marketRescueCutaway && this.world.composition.id === 'L2' && entry.id === 'bld.supermarket') inside = true;
+        if (entry.id === this.keepRoof) inside = false;
         if (Boolean(ref.userData.roofHidden) === inside) continue;
         for (const group of [entry.hero, entry.near, entry.far]) group.roofVisible(!inside, ref);
       }
