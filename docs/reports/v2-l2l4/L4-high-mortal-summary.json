@@ -1,0 +1,115 @@
+{
+  "mode": "campaign",
+  "acceptanceMode": "STANDARD",
+  "immortal": false,
+  "routeOnly": false,
+  "quality": "high",
+  "heroine": "female",
+  "zoom": 1.5,
+  "levels": [
+    "L4"
+  ],
+  "runs": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 482,
+      "simSeconds": 477,
+      "maxNoProgressSeconds": 2.499,
+      "deaths": 27,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "",
+          "tick": 12,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1834,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2102,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 92 m",
+          "tick": 13501,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 3,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 2,
+    "P3": 1
+  }
+}

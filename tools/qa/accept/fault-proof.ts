@@ -84,13 +84,15 @@ await fault('Alpha bar disabled', 'production enemy-bar eligibility at distance/
       return l3HumanCensus(humans);
     } finally { world.dispose(); }
   };
-  assert(l3HumansPass(await sample()), 'native L3 admission baseline must pass');
+  // Isolate the sprinter-frequency control: current L3 regular speed already fails.
+  const frequencyOnly = (census: Awaited<ReturnType<typeof sample>>) => ({ ...census, regularMax: 4 });
+  assert(l3HumansPass(frequencyOnly(await sample())), 'L3 admission frequency baseline must pass');
   const config = l3.infected as { sprinterEvery: number };
   for (const [key, bad, name] of [['sprinterEvery', 10, 'L3 sprinter frequency doubles']] as const) {
     const before = config[key];
     try {
       config[key] = bad;
-      const detected = !l3HumansPass(await sample());
+      const detected = !l3HumansPass(frequencyOnly(await sample()));
       results.push({ name, clause: 'native L3 human speed and admitted sprinter fraction', detected }); assert(detected);
     } finally { config[key] = before; }
   }

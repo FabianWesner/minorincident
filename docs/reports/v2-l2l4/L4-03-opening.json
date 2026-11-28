@@ -1,0 +1,6322 @@
+{
+  "identity": {
+    "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+    "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+    "revision": "f2132cb71f491875fa5f1492817d58e008aca39e"
+  },
+  "method": "Pooled headless physical-input campaign, debug level entry, WebGL2; 60-second bounded opening, no objective skips or assists. Exit 1 means level unfinished at intentional cap.",
+  "cells": [
+    {
+      "quality": "high",
+      "zoom": 1.5,
+      "ledgerPath": "test-results/playtest/v2-l4-opening-high-z15/campaign-acceptance-ledger.json",
+      "ledgerSha256": "f21b4798a79b9397a4a30f2eaf484f5438a575ce03eab14818ebe613d87320a1",
+      "run": {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 60,
+        "simSeconds": 57,
+        "maxNoProgressSeconds": 0.9333333333333333,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 143
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 11,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster · 10 m",
+            "tick": 1832,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army · 3:10 remaining",
+            "tick": 2098,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      "issues": [],
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 2091,
+          "sourceId": 1,
+          "pickupId": 0,
+          "side": "RIGHT",
+          "actionId": "weapon.army-mg",
+          "replaced": null
+        },
+        {
+          "type": "l4.gun",
+          "tick": 2091
+        },
+        {
+          "type": "l4.firstTurn",
+          "tick": 2091,
+          "ids": [
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244
+          ],
+          "humansNear": 10
+        },
+        {
+          "type": "actual-klaxon-start",
+          "tick": 2091,
+          "observedWorldTick": 2091,
+          "handled": true,
+          "active": true,
+          "scheduled": [
+            {
+              "cue": "l4.klaxon",
+              "time": 41.63733333333333,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 41.63733333333333,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 41.63733333333333,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 41.63733333333333,
+              "positional": false
+            }
+          ],
+          "voices": [
+            {
+              "id": 203,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 204,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 205,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 206,
+              "cue": "l4.klaxon",
+              "gain": 0.06599999964237213,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2091,
+          "ids": [
+            {
+              "id": 209,
+              "x": -39.523593749999996,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -38.608554687499996,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -37.68982421875,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -24,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -15.75,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": -14.35,
+              "z": 25.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": 1.1,
+              "z": -9,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": 2.25,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": 3.15,
+              "z": -9,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": -32.9,
+              "z": 25.5,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 223,
+              "x": -32,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 224,
+              "x": -31.1,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 225,
+              "x": -1,
+              "z": -17.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 226,
+              "x": 0.15,
+              "z": -17.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 227,
+              "x": 1.05,
+              "z": -17.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 228,
+              "x": 0,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 229,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 230,
+              "x": 1.8,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 231,
+              "x": -45.9,
+              "z": 21,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 232,
+              "x": -44.75,
+              "z": 21,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 233,
+              "x": -45.1,
+              "z": 22,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 234,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 235,
+              "x": -44.65,
+              "z": 27.1,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 236,
+              "x": -43.5,
+              "z": 27.1,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 237,
+              "x": 12.5,
+              "z": -3,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 238,
+              "x": 13.4,
+              "z": -3,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 239,
+              "x": 14.3,
+              "z": -3,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 240,
+              "x": 12.1,
+              "z": 14,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 241,
+              "x": 13.25,
+              "z": 14,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 242,
+              "x": 14.4,
+              "z": 14,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 243,
+              "x": -40.1,
+              "z": -35,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 244,
+              "x": -39.2,
+              "z": -35,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2100,
+          "ids": [
+            {
+              "id": 256,
+              "x": -46.15,
+              "z": 22.299038105676658,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 257,
+              "x": -46.39580843236509,
+              "z": 20.076120467488714,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 258,
+              "x": -45.47643343236509,
+              "z": 20.076120467488714,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 259,
+              "x": -45.80889284674721,
+              "z": 23.26820509431905,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 260,
+              "x": -44.70096189432334,
+              "z": 22.65,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 261,
+              "x": -39.78875740027756,
+              "z": -34.35049334269899,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 262,
+              "x": -38.45,
+              "z": -35,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 263,
+              "x": -37.300000000000004,
+              "z": -35,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 264,
+              "x": -40.1,
+              "z": -33.35,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 265,
+              "x": -38.91182589501673,
+              "z": -34.08787130986651,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 266,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 267,
+              "x": -18,
+              "z": -38.4,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 268,
+              "x": -17.1,
+              "z": -38.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 269,
+              "x": -18.9,
+              "z": -37.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 270,
+              "x": -18,
+              "z": -37.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 271,
+              "x": 12.875,
+              "z": -2.350480947161671,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 272,
+              "x": 13.775,
+              "z": -2.350480947161671,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 273,
+              "x": 15.05,
+              "z": -3,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 274,
+              "x": 12.5,
+              "z": -1.35,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 275,
+              "x": -7.107106781186548,
+              "z": 41.892893218813455,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 276,
+              "x": -6.207106781186548,
+              "z": 41.892893218813455,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 277,
+              "x": -23.913125,
+              "z": 42.6,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 278,
+              "x": -22.993750000000002,
+              "z": 42.6,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2230,
+          "ids": [
+            {
+              "id": 279,
+              "x": -14.9,
+              "z": 40,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 280,
+              "x": -14,
+              "z": 40,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 281,
+              "x": -12.711771432346218,
+              "z": 41.4488887394336,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 282,
+              "x": -14.903817256601243,
+              "z": 41.07362154622733,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 283,
+              "x": -13.998091371699378,
+              "z": 41.400689226886335,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2240,
+          "ids": [
+            {
+              "id": 284,
+              "x": -46.46670000000001,
+              "z": 21,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 285,
+              "x": -45.5,
+              "z": 21,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 286,
+              "x": -44.35,
+              "z": 21,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 287,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 288,
+              "x": -18,
+              "z": -38.4,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 289,
+              "x": -17.1,
+              "z": -38.4,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 290,
+              "x": 12.1,
+              "z": -20.013125000000002,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 291,
+              "x": 13,
+              "z": -20,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 292,
+              "x": 13.9,
+              "z": -20,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 293,
+              "x": 12.1,
+              "z": -19.093750000000004,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2270,
+          "ids": [
+            {
+              "id": 294,
+              "x": -36.9,
+              "z": 39.979,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 295,
+              "x": -36,
+              "z": 40,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "cellar-level-start",
+          "tick": 2300,
+          "roster": {
+            "anchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entry": {
+              "x": -79.29999999999998,
+              "z": -45.2801,
+              "radius": 1.4,
+              "yaw": -1.5707963267948966
+            },
+            "player": {
+              "x": -22.907312393188477,
+              "y": 0.7049999833106995,
+              "z": 0.3665357232093811,
+              "yaw": -0.7853981633973753
+            },
+            "actors": []
+          }
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2330,
+          "ids": [
+            {
+              "id": 296,
+              "x": -40.1,
+              "z": -35,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 297,
+              "x": -38.95,
+              "z": -35,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2470,
+          "ids": [
+            {
+              "id": 301,
+              "x": 0,
+              "z": 18.8,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2490,
+          "ids": [
+            {
+              "id": 302,
+              "x": -40.1,
+              "z": -35,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 303,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 304,
+              "x": -44.65,
+              "z": 27.1,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 305,
+              "x": -43.75,
+              "z": 27.1,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 306,
+              "x": -45.8,
+              "z": 28.25,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2760,
+          "ids": [
+            {
+              "id": 316,
+              "x": -76.9,
+              "z": 55,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 317,
+              "x": -76,
+              "z": 55,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 318,
+              "x": -75.1,
+              "z": 55,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 319,
+              "x": -40.113125,
+              "z": -35,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 320,
+              "x": -39.19375,
+              "z": -35,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 321,
+              "x": -38.050000000000004,
+              "z": -35,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 322,
+              "x": -14.804466716182546,
+              "z": -22.738060233744356,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 323,
+              "x": -13.885091716182547,
+              "z": -22.738060233744356,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 324,
+              "x": -13.726073281548135,
+              "z": -21.72678899077567,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 325,
+              "x": 12.1,
+              "z": 14,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 326,
+              "x": 13,
+              "z": 14,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 327,
+              "x": 13.9,
+              "z": 14,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 328,
+              "x": -1,
+              "z": 33.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 329,
+              "x": 0.15,
+              "z": 33.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 330,
+              "x": 1.3,
+              "z": 33.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 331,
+              "x": -40.9,
+              "z": 41.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 332,
+              "x": -40,
+              "z": 41.2,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2890,
+          "ids": [
+            {
+              "id": 333,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 334,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 335,
+              "x": -13.726073281548135,
+              "z": -21.72678899077567,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 336,
+              "x": -14.791341716182545,
+              "z": -21.838060233744358,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2910,
+          "ids": [
+            {
+              "id": 338,
+              "x": -46.46670000000001,
+              "z": 21,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 339,
+              "x": -45.663453125000004,
+              "z": 21,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 340,
+              "x": -44.76756406250001,
+              "z": 21,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 341,
+              "x": -46.46670000000001,
+              "z": 21.9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 342,
+              "x": -45.75,
+              "z": 21.9,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2930,
+          "ids": [
+            {
+              "id": 343,
+              "x": 1.1,
+              "z": -9,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 344,
+              "x": 2,
+              "z": -9,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 345,
+              "x": 2.9,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "physical-l4-breach",
+          "side": "west",
+          "tick": 3223,
+          "levelSeconds": 53.71666666666667,
+          "afterAlarmSeconds": 18.866666666666667,
+          "alive": 56
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3230,
+          "ids": [
+            {
+              "id": 347,
+              "x": -39.15,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      ],
+      "result": {
+        "status": "PASS",
+        "value": {
+          "pickupTicks": [
+            2091
+          ],
+          "gunTicks": [
+            2091
+          ],
+          "turnTicks": [
+            2091
+          ],
+          "alarms": [
+            {
+              "type": "actual-klaxon-start",
+              "tick": 2091,
+              "observedWorldTick": 2091,
+              "handled": true,
+              "active": true,
+              "scheduled": [
+                {
+                  "cue": "l4.klaxon",
+                  "time": 41.63733333333333,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 41.63733333333333,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 41.63733333333333,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 41.63733333333333,
+                  "positional": false
+                }
+              ],
+              "voices": [
+                {
+                  "id": 203,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 204,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 205,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 206,
+                  "cue": "l4.klaxon",
+                  "gain": 0.06599999964237213,
+                  "loop": true
+                }
+              ]
+            }
+          ],
+          "firstAdmission": {
+            "type": "actual-l4-admissions",
+            "tick": 2091,
+            "ids": [
+              {
+                "id": 209,
+                "x": -39.523593749999996,
+                "z": 16,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 210,
+                "x": -38.608554687499996,
+                "z": 16,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 211,
+                "x": -37.68982421875,
+                "z": 16,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 212,
+                "x": -13.891341716182545,
+                "z": -22.738060233744356,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 213,
+                "x": -24.9,
+                "z": 25.5,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 214,
+                "x": -24,
+                "z": 25.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 215,
+                "x": -23.1,
+                "z": 25.5,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 216,
+                "x": -16.9,
+                "z": 25.5,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 217,
+                "x": -15.75,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 218,
+                "x": -14.35,
+                "z": 25.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 219,
+                "x": 1.1,
+                "z": -9,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 220,
+                "x": 2.25,
+                "z": -9,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 221,
+                "x": 3.15,
+                "z": -9,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 222,
+                "x": -32.9,
+                "z": 25.5,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 223,
+                "x": -32,
+                "z": 25.5,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 224,
+                "x": -31.1,
+                "z": 25.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 225,
+                "x": -1,
+                "z": -17.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 226,
+                "x": 0.15,
+                "z": -17.5,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 227,
+                "x": 1.05,
+                "z": -17.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 228,
+                "x": 0,
+                "z": 18.8,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 229,
+                "x": 0.9,
+                "z": 18.8,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 230,
+                "x": 1.8,
+                "z": 18.8,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 231,
+                "x": -45.9,
+                "z": 21,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 232,
+                "x": -44.75,
+                "z": 21,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 233,
+                "x": -45.1,
+                "z": 22,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 234,
+                "x": -45.8,
+                "z": 27.1,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 235,
+                "x": -44.65,
+                "z": 27.1,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 236,
+                "x": -43.5,
+                "z": 27.1,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 237,
+                "x": 12.5,
+                "z": -3,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 238,
+                "x": 13.4,
+                "z": -3,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 239,
+                "x": 14.3,
+                "z": -3,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 240,
+                "x": 12.1,
+                "z": 14,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 241,
+                "x": 13.25,
+                "z": 14,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 242,
+                "x": 14.4,
+                "z": 14,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 243,
+                "x": -40.1,
+                "z": -35,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 244,
+                "x": -39.2,
+                "z": -35,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              }
+            ]
+          }
+        }
+      },
+      "controls": [
+        {
+          "name": "l4.gun delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "l4.firstTurn delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-klaxon-start delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-l4-admissions delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "quality": "high",
+      "zoom": 1,
+      "ledgerPath": "test-results/playtest/v2-l4-opening-high-z1/campaign-acceptance-ledger.json",
+      "ledgerSha256": "d44e6619e8a229c199398a4ff8a1c09809478d0a77576095e26b91274d952987",
+      "run": {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 60,
+        "simSeconds": 57,
+        "maxNoProgressSeconds": 2.4833333333333334,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 108
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster · 10 m",
+            "tick": 1836,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army · 3:10 remaining",
+            "tick": 2239,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      "issues": [],
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 2239,
+          "sourceId": 1,
+          "pickupId": 0,
+          "side": "RIGHT",
+          "actionId": "weapon.army-mg",
+          "replaced": null
+        },
+        {
+          "type": "l4.gun",
+          "tick": 2239
+        },
+        {
+          "type": "l4.firstTurn",
+          "tick": 2239,
+          "ids": [
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244
+          ],
+          "humansNear": 12
+        },
+        {
+          "type": "actual-klaxon-start",
+          "tick": 2239,
+          "observedWorldTick": 2239,
+          "handled": true,
+          "active": true,
+          "scheduled": [
+            {
+              "cue": "l4.klaxon",
+              "time": 44.37866666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 44.37866666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 44.37866666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 44.37866666666667,
+              "positional": false
+            }
+          ],
+          "voices": [
+            {
+              "id": 214,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 215,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 216,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 217,
+              "cue": "l4.klaxon",
+              "gain": 0.06599999964237213,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2239,
+          "ids": [
+            {
+              "id": 209,
+              "x": -42.72359374999999,
+              "z": 10.2,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -41.80855468749999,
+              "z": 10.2,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -40.88982421874999,
+              "z": 10.2,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -39.5,
+              "z": 16,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -38.6,
+              "z": 16,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -37.7,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -15.9,
+              "z": -20.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -15.013124999999999,
+              "z": -20.4,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -14.09375,
+              "z": -20.4,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": -23.75,
+              "z": 25.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": -22.6,
+              "z": 25.5,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 223,
+              "x": -13.91522124869383,
+              "z": -21.605376801379265,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 224,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 225,
+              "x": -15.75,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 226,
+              "x": -14.85,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 227,
+              "x": -32.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 228,
+              "x": -31.75,
+              "z": 25.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 229,
+              "x": -30.6,
+              "z": 25.5,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 230,
+              "x": 1.1,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 231,
+              "x": 2,
+              "z": -9,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 232,
+              "x": 2.9,
+              "z": -9,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 233,
+              "x": -1,
+              "z": -17.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 234,
+              "x": -0.1,
+              "z": -17.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 235,
+              "x": 1.05,
+              "z": -17.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 236,
+              "x": 0,
+              "z": 18.8,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 237,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 238,
+              "x": 1.8,
+              "z": 18.8,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 239,
+              "x": -45.901883766934766,
+              "z": 20.99555075449005,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 240,
+              "x": -45.624058116532616,
+              "z": 21.651743675593302,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 241,
+              "x": -45.1,
+              "z": 21,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 242,
+              "x": -40.4,
+              "z": -26,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 243,
+              "x": -39.5,
+              "z": -26,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 244,
+              "x": -38.725,
+              "z": -25.35048094716167,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2240,
+          "ids": [
+            {
+              "id": 256,
+              "x": -46.19289321881345,
+              "z": 20.292893218813454,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 257,
+              "x": -46.375,
+              "z": 21.64951905283833,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 258,
+              "x": -44.1,
+              "z": 21,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 259,
+              "x": -45.97612046748871,
+              "z": 22.28268343236509,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 260,
+              "x": -45.076120467488714,
+              "z": 22.28268343236509,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 261,
+              "x": -40.1,
+              "z": -35,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 262,
+              "x": -39.2,
+              "z": -35,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 263,
+              "x": -38.300000000000004,
+              "z": -35,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 264,
+              "x": -40.1,
+              "z": -33.85,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 265,
+              "x": -38.95,
+              "z": -34.1,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 266,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 267,
+              "x": -18,
+              "z": -38.4,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 268,
+              "x": -17.1,
+              "z": -38.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 269,
+              "x": -18.9,
+              "z": -37.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 270,
+              "x": -17.646446609406727,
+              "z": -37.14644660940672,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 271,
+              "x": 12.5,
+              "z": -3,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 272,
+              "x": 13.65,
+              "z": -3,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 273,
+              "x": 14.8,
+              "z": -3,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 274,
+              "x": 12.5,
+              "z": -1.85,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 275,
+              "x": -7.107106781186548,
+              "z": 41.892893218813455,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 276,
+              "x": -6.207106781186548,
+              "z": 41.892893218813455,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 277,
+              "x": -23.9,
+              "z": 42.6,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 278,
+              "x": -23,
+              "z": 42.6,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2370,
+          "ids": [
+            {
+              "id": 279,
+              "x": -14.9,
+              "z": 39.879000000000005,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 280,
+              "x": -13.763124999999999,
+              "z": 40,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 281,
+              "x": -12.84375,
+              "z": 40,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 282,
+              "x": -14.9,
+              "z": 41.075,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 283,
+              "x": -14,
+              "z": 41.075,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2380,
+          "ids": [
+            {
+              "id": 284,
+              "x": -43.159800000000004,
+              "z": 10.2,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 285,
+              "x": -42.3,
+              "z": 10.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 286,
+              "x": -41.4,
+              "z": 10.2,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 287,
+              "x": -30.92359375,
+              "z": -38,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 288,
+              "x": -30.0085546875,
+              "z": -38,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 289,
+              "x": -29.08982421875,
+              "z": -38,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 290,
+              "x": 12.086875,
+              "z": -20,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 291,
+              "x": 13.006249999999998,
+              "z": -20,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 292,
+              "x": 13.9,
+              "z": -20,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 293,
+              "x": 12.1,
+              "z": -18.85,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2410,
+          "ids": [
+            {
+              "id": 294,
+              "x": -36.9,
+              "z": 39.879000000000005,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 295,
+              "x": -35.75,
+              "z": 40,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "cellar-level-start",
+          "tick": 2454,
+          "roster": {
+            "anchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entry": {
+              "x": -79.29999999999998,
+              "z": -45.2801,
+              "radius": 1.4,
+              "yaw": -1.5707963267948966
+            },
+            "player": {
+              "x": -22.64754867553711,
+              "y": 0.7049999833106995,
+              "z": 0.9384128451347351,
+              "yaw": -0.7853981633973571
+            },
+            "actors": []
+          }
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2470,
+          "ids": [
+            {
+              "id": 296,
+              "x": -40.51499999999999,
+              "z": -26,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 297,
+              "x": -39.5,
+              "z": -26,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2610,
+          "ids": [
+            {
+              "id": 299,
+              "x": 0,
+              "z": 18.8,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2630,
+          "ids": [
+            {
+              "id": 301,
+              "x": -47.8,
+              "z": -23,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 302,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 303,
+              "x": -44.663124999999994,
+              "z": 27.1,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 304,
+              "x": -43.74375,
+              "z": 27.1,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 305,
+              "x": -45.8,
+              "z": 28.25,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2900,
+          "ids": [
+            {
+              "id": 312,
+              "x": -76.9,
+              "z": 55,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 313,
+              "x": -76,
+              "z": 55,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 314,
+              "x": -75.1,
+              "z": 55,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 315,
+              "x": -47.8,
+              "z": -23,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 316,
+              "x": -46.9,
+              "z": -23,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 317,
+              "x": -46,
+              "z": -23,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 318,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 319,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 320,
+              "x": -13.698448497369093,
+              "z": -22.03095345255781,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 321,
+              "x": 12.1,
+              "z": 14,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 322,
+              "x": 13,
+              "z": 14,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 323,
+              "x": 13.9,
+              "z": 14,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 324,
+              "x": -1,
+              "z": 33.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 325,
+              "x": 0.15,
+              "z": 33.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 326,
+              "x": 1.3,
+              "z": 33.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 327,
+              "x": -40.9,
+              "z": 41.2,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 328,
+              "x": -39.64644660940672,
+              "z": 41.55355339059328,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3030,
+          "ids": [
+            {
+              "id": 330,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 331,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 332,
+              "x": -13.698448497369093,
+              "z": -22.03095345255781,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 333,
+              "x": -14.791341716182545,
+              "z": -21.838060233744358,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3050,
+          "ids": [
+            {
+              "id": 334,
+              "x": -46.46670000000001,
+              "z": 20.986702773743914,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 335,
+              "x": -45.57223275974263,
+              "z": 21.002758960511432,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 336,
+              "x": -44.85,
+              "z": 21,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 337,
+              "x": -46.46670000000001,
+              "z": 21.906072789818367,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 338,
+              "x": -45.75,
+              "z": 21.9,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3070,
+          "ids": [
+            {
+              "id": 339,
+              "x": 1.1,
+              "z": -9,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 340,
+              "x": 2.25,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 341,
+              "x": 3.15,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3110,
+          "ids": [
+            {
+              "id": 342,
+              "x": 35.1,
+              "z": 43,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 343,
+              "x": 36,
+              "z": 43,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "physical-l4-breach",
+          "side": "west",
+          "tick": 3275,
+          "levelSeconds": 54.583333333333336,
+          "afterAlarmSeconds": 17.266666666666666,
+          "alive": 67
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3280,
+          "ids": [
+            {
+              "id": 346,
+              "x": -39.15,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      ],
+      "result": {
+        "status": "PASS",
+        "value": {
+          "pickupTicks": [
+            2239
+          ],
+          "gunTicks": [
+            2239
+          ],
+          "turnTicks": [
+            2239
+          ],
+          "alarms": [
+            {
+              "type": "actual-klaxon-start",
+              "tick": 2239,
+              "observedWorldTick": 2239,
+              "handled": true,
+              "active": true,
+              "scheduled": [
+                {
+                  "cue": "l4.klaxon",
+                  "time": 44.37866666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 44.37866666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 44.37866666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 44.37866666666667,
+                  "positional": false
+                }
+              ],
+              "voices": [
+                {
+                  "id": 214,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 215,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 216,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 217,
+                  "cue": "l4.klaxon",
+                  "gain": 0.06599999964237213,
+                  "loop": true
+                }
+              ]
+            }
+          ],
+          "firstAdmission": {
+            "type": "actual-l4-admissions",
+            "tick": 2239,
+            "ids": [
+              {
+                "id": 209,
+                "x": -42.72359374999999,
+                "z": 10.2,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 210,
+                "x": -41.80855468749999,
+                "z": 10.2,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 211,
+                "x": -40.88982421874999,
+                "z": 10.2,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 212,
+                "x": -39.5,
+                "z": 16,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 213,
+                "x": -38.6,
+                "z": 16,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 214,
+                "x": -37.7,
+                "z": 16,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 215,
+                "x": -15.9,
+                "z": -20.4,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 216,
+                "x": -15.013124999999999,
+                "z": -20.4,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 217,
+                "x": -14.09375,
+                "z": -20.4,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 218,
+                "x": -24.9,
+                "z": 25.5,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 219,
+                "x": -23.75,
+                "z": 25.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 220,
+                "x": -22.6,
+                "z": 25.5,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 221,
+                "x": -14.791341716182545,
+                "z": -22.738060233744356,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 222,
+                "x": -13.891341716182545,
+                "z": -22.738060233744356,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 223,
+                "x": -13.91522124869383,
+                "z": -21.605376801379265,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 224,
+                "x": -16.9,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 225,
+                "x": -15.75,
+                "z": 25.5,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 226,
+                "x": -14.85,
+                "z": 25.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 227,
+                "x": -32.9,
+                "z": 25.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 228,
+                "x": -31.75,
+                "z": 25.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 229,
+                "x": -30.6,
+                "z": 25.5,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 230,
+                "x": 1.1,
+                "z": -9,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 231,
+                "x": 2,
+                "z": -9,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 232,
+                "x": 2.9,
+                "z": -9,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 233,
+                "x": -1,
+                "z": -17.5,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 234,
+                "x": -0.1,
+                "z": -17.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 235,
+                "x": 1.05,
+                "z": -17.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 236,
+                "x": 0,
+                "z": 18.8,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 237,
+                "x": 0.9,
+                "z": 18.8,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 238,
+                "x": 1.8,
+                "z": 18.8,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 239,
+                "x": -45.901883766934766,
+                "z": 20.99555075449005,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 240,
+                "x": -45.624058116532616,
+                "z": 21.651743675593302,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 241,
+                "x": -45.1,
+                "z": 21,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 242,
+                "x": -40.4,
+                "z": -26,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 243,
+                "x": -39.5,
+                "z": -26,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 244,
+                "x": -38.725,
+                "z": -25.35048094716167,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              }
+            ]
+          }
+        }
+      },
+      "controls": [
+        {
+          "name": "l4.gun delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "l4.firstTurn delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-klaxon-start delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-l4-admissions delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "quality": "low",
+      "zoom": 1.5,
+      "ledgerPath": "test-results/playtest/v2-l4-opening-low-z15/campaign-acceptance-ledger.json",
+      "ledgerSha256": "011c32d8304eb8198bae83e5f1a22e1c1450df5602a952dab1303fc4b31ad71a",
+      "run": {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 60,
+        "simSeconds": 58,
+        "maxNoProgressSeconds": 0.8833333333333333,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 158
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 11,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster · 10 m",
+            "tick": 1832,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army · 3:10 remaining",
+            "tick": 2185,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      "issues": [],
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 2173,
+          "sourceId": 1,
+          "pickupId": 0,
+          "side": "RIGHT",
+          "actionId": "weapon.army-mg",
+          "replaced": null
+        },
+        {
+          "type": "l4.gun",
+          "tick": 2173
+        },
+        {
+          "type": "l4.firstTurn",
+          "tick": 2173,
+          "ids": [
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201
+          ],
+          "humansNear": 7
+        },
+        {
+          "type": "actual-klaxon-start",
+          "tick": 2173,
+          "observedWorldTick": 2173,
+          "handled": true,
+          "active": true,
+          "scheduled": [
+            {
+              "cue": "l4.klaxon",
+              "time": 42.57066666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 42.57066666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 42.57066666666667,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 42.57066666666667,
+              "positional": false
+            }
+          ],
+          "voices": [
+            {
+              "id": 303,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 304,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 305,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 306,
+              "cue": "l4.klaxon",
+              "gain": 0.06599999964237213,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2173,
+          "ids": [
+            {
+              "id": 166,
+              "x": -39.5,
+              "z": 16,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -38.6,
+              "z": 16,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -37.7,
+              "z": 16,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -24,
+              "z": 25.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 171,
+              "x": -23.1,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 172,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 173,
+              "x": -15.75,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 174,
+              "x": -14.6,
+              "z": 25.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 175,
+              "x": 1.1,
+              "z": -9,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 176,
+              "x": 2.25,
+              "z": -9,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 177,
+              "x": 3.4,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 178,
+              "x": -32.9,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 179,
+              "x": -32,
+              "z": 25.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 180,
+              "x": -30.85,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 181,
+              "x": -1,
+              "z": -17.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 182,
+              "x": 0.15,
+              "z": -17.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 183,
+              "x": 1.3,
+              "z": -17.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 184,
+              "x": 0,
+              "z": 18.8,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 185,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 186,
+              "x": 1.8,
+              "z": 18.8,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 187,
+              "x": -45.901883766934766,
+              "z": 20.99555075449005,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 188,
+              "x": -45.624058116532616,
+              "z": 21.651743675593302,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 189,
+              "x": -44.85,
+              "z": 21,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 190,
+              "x": -47.8,
+              "z": -23,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 191,
+              "x": -46.9,
+              "z": -23,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 192,
+              "x": -46,
+              "z": -23,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 193,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 194,
+              "x": -44.4,
+              "z": 27.1,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 195,
+              "x": -43.25,
+              "z": 27.1,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 196,
+              "x": 12.5,
+              "z": -3,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 197,
+              "x": 13.65,
+              "z": -3,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 198,
+              "x": 14.55,
+              "z": -3,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 199,
+              "x": 12.1,
+              "z": 14,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 200,
+              "x": 13.25,
+              "z": 14,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 201,
+              "x": 14.4,
+              "z": 14,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2180,
+          "ids": [
+            {
+              "id": 208,
+              "x": -46.19289321881345,
+              "z": 20.292893218813454,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 209,
+              "x": -46.375,
+              "z": 21.64951905283833,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -45.475,
+              "z": 20.35048094716167,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -45.97612046748871,
+              "z": 22.28268343236509,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -40.1,
+              "z": -35,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -38.95,
+              "z": -35,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -37.800000000000004,
+              "z": -35,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -40.1,
+              "z": -34.1,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -17.75,
+              "z": -38.4,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": -16.6,
+              "z": -38.4,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": -18.9,
+              "z": -37.5,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": 12.88268343236509,
+              "z": -2.076120467488713,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": 13.78268343236509,
+              "z": -2.076120467488713,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": 15.009085798208755,
+              "z": -2.2899563669580596,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 223,
+              "x": 12.146446609406727,
+              "z": -1.7464466094067264,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 224,
+              "x": -7.107106781186548,
+              "z": 41.892893218813455,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 225,
+              "x": -6.207106781186548,
+              "z": 41.892893218813455,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 226,
+              "x": -23.9,
+              "z": 42.6,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 227,
+              "x": -23,
+              "z": 42.6,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2310,
+          "ids": [
+            {
+              "id": 228,
+              "x": -14.9,
+              "z": 40,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 229,
+              "x": -14,
+              "z": 39.979,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2350,
+          "ids": [
+            {
+              "id": 230,
+              "x": -36.9,
+              "z": 40,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 231,
+              "x": -36.73473156536559,
+              "z": 38.98872875703132,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "cellar-level-start",
+          "tick": 2354,
+          "roster": {
+            "anchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entry": {
+              "x": -79.29999999999998,
+              "z": -45.2801,
+              "radius": 1.4,
+              "yaw": -1.5707963267948966
+            },
+            "player": {
+              "x": -22.155506134033203,
+              "y": 0.7049999833106995,
+              "z": 1.097143292427063,
+              "yaw": -0.7853981633973753
+            },
+            "actors": []
+          }
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2840,
+          "ids": [
+            {
+              "id": 236,
+              "x": -46.46670000000001,
+              "z": 21,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 237,
+              "x": -45.75,
+              "z": 21,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 238,
+              "x": -44.85,
+              "z": 21,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 239,
+              "x": -46.46670000000001,
+              "z": 21.9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 240,
+              "x": -45.75,
+              "z": 21.9,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 241,
+              "x": -40.1,
+              "z": -35,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 242,
+              "x": -38.95,
+              "z": -35,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 244,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 245,
+              "x": -18,
+              "z": -38.4,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 246,
+              "x": 12.1,
+              "z": -20,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 247,
+              "x": 13,
+              "z": -20,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 248,
+              "x": 0,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 249,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 250,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 251,
+              "x": -44.9,
+              "z": 27.1,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 252,
+              "x": -43.75,
+              "z": 27.1,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2980,
+          "ids": [
+            {
+              "id": 255,
+              "x": -1,
+              "z": 33.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 256,
+              "x": 0.15,
+              "z": 33.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 257,
+              "x": 1.3,
+              "z": 33.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2990,
+          "ids": [
+            {
+              "id": 258,
+              "x": 12.1,
+              "z": 14,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 259,
+              "x": 13.25,
+              "z": 14,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 260,
+              "x": 14.4,
+              "z": 14,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3050,
+          "ids": [
+            {
+              "id": 262,
+              "x": -76.9,
+              "z": 55,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 263,
+              "x": -76.9,
+              "z": -45,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 264,
+              "x": -76,
+              "z": -45,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 265,
+              "x": -75.1,
+              "z": -45,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 266,
+              "x": -76.9,
+              "z": -44.1,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3100,
+          "ids": [
+            {
+              "id": 267,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 268,
+              "x": -18,
+              "z": -38.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3190,
+          "ids": [
+            {
+              "id": 269,
+              "x": 1.1,
+              "z": -9,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "physical-l4-breach",
+          "side": "west",
+          "tick": 3209,
+          "levelSeconds": 53.483333333333334,
+          "afterAlarmSeconds": 17.266666666666666,
+          "alive": 63
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3210,
+          "ids": [
+            {
+              "id": 270,
+              "x": -39.232075626151506,
+              "z": 15.923313598487454,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 271,
+              "x": -38.31659557282651,
+              "z": 16.00237259752551,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 272,
+              "x": -37.300000000000004,
+              "z": 16,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 273,
+              "x": -39.14703617506205,
+              "z": 16.837773982779456,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 274,
+              "x": -38.246446609406725,
+              "z": 16.903553390593274,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 275,
+              "x": 35.1,
+              "z": 43,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3220,
+          "ids": [
+            {
+              "id": 276,
+              "x": -39.53268343236509,
+              "z": 16.923879532511286,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3240,
+          "ids": [
+            {
+              "id": 277,
+              "x": -39.15,
+              "z": 8,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3270,
+          "ids": [
+            {
+              "id": 278,
+              "x": -38.79644660940672,
+              "z": 16.353553390593273,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 279,
+              "x": -37.85,
+              "z": 16,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3280,
+          "ids": [
+            {
+              "id": 280,
+              "x": -39.15,
+              "z": 8,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3290,
+          "ids": [
+            {
+              "id": 281,
+              "x": -39.857106781186545,
+              "z": 16.707106781186546,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 282,
+              "x": -38.15,
+              "z": 8,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3330,
+          "ids": [
+            {
+              "id": 284,
+              "x": -38.65,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3340,
+          "ids": [
+            {
+              "id": 285,
+              "x": -39.15,
+              "z": 8,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3360,
+          "ids": [
+            {
+              "id": 286,
+              "x": 25.1,
+              "z": -45,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 287,
+              "x": 26,
+              "z": -45,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      ],
+      "result": {
+        "status": "PASS",
+        "value": {
+          "pickupTicks": [
+            2173
+          ],
+          "gunTicks": [
+            2173
+          ],
+          "turnTicks": [
+            2173
+          ],
+          "alarms": [
+            {
+              "type": "actual-klaxon-start",
+              "tick": 2173,
+              "observedWorldTick": 2173,
+              "handled": true,
+              "active": true,
+              "scheduled": [
+                {
+                  "cue": "l4.klaxon",
+                  "time": 42.57066666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 42.57066666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 42.57066666666667,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 42.57066666666667,
+                  "positional": false
+                }
+              ],
+              "voices": [
+                {
+                  "id": 303,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 304,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 305,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 306,
+                  "cue": "l4.klaxon",
+                  "gain": 0.06599999964237213,
+                  "loop": true
+                }
+              ]
+            }
+          ],
+          "firstAdmission": {
+            "type": "actual-l4-admissions",
+            "tick": 2173,
+            "ids": [
+              {
+                "id": 166,
+                "x": -39.5,
+                "z": 16,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 167,
+                "x": -38.6,
+                "z": 16,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 168,
+                "x": -37.7,
+                "z": 16,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 169,
+                "x": -24.9,
+                "z": 25.5,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 170,
+                "x": -24,
+                "z": 25.5,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 171,
+                "x": -23.1,
+                "z": 25.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 172,
+                "x": -16.9,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 173,
+                "x": -15.75,
+                "z": 25.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 174,
+                "x": -14.6,
+                "z": 25.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 175,
+                "x": 1.1,
+                "z": -9,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 176,
+                "x": 2.25,
+                "z": -9,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 177,
+                "x": 3.4,
+                "z": -9,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 178,
+                "x": -32.9,
+                "z": 25.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 179,
+                "x": -32,
+                "z": 25.5,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 180,
+                "x": -30.85,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 181,
+                "x": -1,
+                "z": -17.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 182,
+                "x": 0.15,
+                "z": -17.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 183,
+                "x": 1.3,
+                "z": -17.5,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 184,
+                "x": 0,
+                "z": 18.8,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 185,
+                "x": 0.9,
+                "z": 18.8,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 186,
+                "x": 1.8,
+                "z": 18.8,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 187,
+                "x": -45.901883766934766,
+                "z": 20.99555075449005,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 188,
+                "x": -45.624058116532616,
+                "z": 21.651743675593302,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 189,
+                "x": -44.85,
+                "z": 21,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 190,
+                "x": -47.8,
+                "z": -23,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 191,
+                "x": -46.9,
+                "z": -23,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 192,
+                "x": -46,
+                "z": -23,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 193,
+                "x": -45.8,
+                "z": 27.1,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 194,
+                "x": -44.4,
+                "z": 27.1,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 195,
+                "x": -43.25,
+                "z": 27.1,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 196,
+                "x": 12.5,
+                "z": -3,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 197,
+                "x": 13.65,
+                "z": -3,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 198,
+                "x": 14.55,
+                "z": -3,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 199,
+                "x": 12.1,
+                "z": 14,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 200,
+                "x": 13.25,
+                "z": 14,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 201,
+                "x": 14.4,
+                "z": 14,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              }
+            ]
+          }
+        }
+      },
+      "controls": [
+        {
+          "name": "l4.gun delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "l4.firstTurn delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-klaxon-start delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-l4-admissions delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ]
+    },
+    {
+      "quality": "low",
+      "zoom": 1,
+      "ledgerPath": "test-results/playtest/v2-l4-opening-low-z1/campaign-acceptance-ledger.json",
+      "ledgerSha256": "3f57d0a21d8c2c06edc116e78f71750e49162fe9e768f1e94ca5a892fb251d8d",
+      "run": {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 60,
+        "simSeconds": 58,
+        "maxNoProgressSeconds": 2.429,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 148
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster · 10 m",
+            "tick": 1836,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army · 3:10 remaining",
+            "tick": 2235,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      "issues": [],
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 2235,
+          "sourceId": 1,
+          "pickupId": 0,
+          "side": "RIGHT",
+          "actionId": "weapon.army-mg",
+          "replaced": null
+        },
+        {
+          "type": "l4.gun",
+          "tick": 2235
+        },
+        {
+          "type": "l4.firstTurn",
+          "tick": 2235,
+          "ids": [
+            166,
+            167,
+            168,
+            169,
+            170,
+            171,
+            172,
+            173,
+            174,
+            175,
+            176,
+            177,
+            178,
+            179,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201
+          ],
+          "humansNear": 8
+        },
+        {
+          "type": "actual-klaxon-start",
+          "tick": 2235,
+          "observedWorldTick": 2235,
+          "handled": true,
+          "active": true,
+          "scheduled": [
+            {
+              "cue": "l4.klaxon",
+              "time": 43.541333333333334,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 43.541333333333334,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 43.541333333333334,
+              "positional": true
+            },
+            {
+              "cue": "l4.klaxon",
+              "time": 43.541333333333334,
+              "positional": false
+            }
+          ],
+          "voices": [
+            {
+              "id": 314,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 315,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 316,
+              "cue": "l4.klaxon",
+              "gain": 0.33000001311302185,
+              "loop": true
+            },
+            {
+              "id": 317,
+              "cue": "l4.klaxon",
+              "gain": 0.06599999964237213,
+              "loop": true
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2235,
+          "ids": [
+            {
+              "id": 166,
+              "x": -42.699999999999996,
+              "z": 10.2,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 167,
+              "x": -41.8,
+              "z": 10.2,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 168,
+              "x": -40.9,
+              "z": 10.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 169,
+              "x": -39.5,
+              "z": 16,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 170,
+              "x": -38.6,
+              "z": 16,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 171,
+              "x": -37.7,
+              "z": 16,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 172,
+              "x": -15.9,
+              "z": -20.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 173,
+              "x": -15.013124999999999,
+              "z": -20.4,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 174,
+              "x": -14.09375,
+              "z": -20.4,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 175,
+              "x": -24.9,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 176,
+              "x": -23.75,
+              "z": 25.5,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 177,
+              "x": -22.6,
+              "z": 25.5,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 178,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 179,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 180,
+              "x": -13.91522124869383,
+              "z": -21.605376801379265,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 181,
+              "x": -16.9,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 182,
+              "x": -15.75,
+              "z": 25.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 183,
+              "x": -14.85,
+              "z": 25.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 184,
+              "x": 1.1,
+              "z": -9,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 185,
+              "x": 2.25,
+              "z": -9,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 186,
+              "x": 2.513728757031316,
+              "z": -7.811179354631058,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 187,
+              "x": -32.9,
+              "z": 25.5,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 188,
+              "x": -32,
+              "z": 25.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 189,
+              "x": -30.85,
+              "z": 25.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 190,
+              "x": -1,
+              "z": -17.5,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 191,
+              "x": -0.1,
+              "z": -17.5,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 192,
+              "x": 0.8,
+              "z": -17.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 193,
+              "x": 0,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 194,
+              "x": 0.9,
+              "z": 18.8,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 195,
+              "x": 1.8,
+              "z": 18.8,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 196,
+              "x": -45.9,
+              "z": 21,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 197,
+              "x": -45,
+              "z": 21,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 198,
+              "x": -44.1,
+              "z": 21,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 199,
+              "x": -40.4,
+              "z": -26,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 200,
+              "x": -39.5,
+              "z": -26,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 201,
+              "x": -38.725,
+              "z": -25.35048094716167,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2240,
+          "ids": [
+            {
+              "id": 208,
+              "x": -46.165268434634406,
+              "z": 22.011271242968686,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 209,
+              "x": -46.375,
+              "z": 20.35048094716167,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 210,
+              "x": -44.392893218813455,
+              "z": 21.707106781186546,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 211,
+              "x": -46.15,
+              "z": 23.199038105676657,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 212,
+              "x": -40.1,
+              "z": -35,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 213,
+              "x": -39.2,
+              "z": -35,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 214,
+              "x": -38.300000000000004,
+              "z": -35,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 215,
+              "x": -40.1,
+              "z": -34.1,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 216,
+              "x": -18.9,
+              "z": -38.4,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 217,
+              "x": -17.75,
+              "z": -38.4,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 218,
+              "x": -16.85,
+              "z": -38.4,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 219,
+              "x": -18.9,
+              "z": -37.25,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 220,
+              "x": 12.5,
+              "z": -3,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 221,
+              "x": 13.4,
+              "z": -3,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 222,
+              "x": 14.55,
+              "z": -3,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 223,
+              "x": 12.5,
+              "z": -1.85,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 224,
+              "x": -7.107106781186548,
+              "z": 41.892893218813455,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 225,
+              "x": -6.207106781186548,
+              "z": 41.392893218813455,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 226,
+              "x": -23.9,
+              "z": 42.6,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 227,
+              "x": -23,
+              "z": 42.6,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2370,
+          "ids": [
+            {
+              "id": 228,
+              "x": -14.9,
+              "z": 39.979,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 229,
+              "x": -14,
+              "z": 40,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2410,
+          "ids": [
+            {
+              "id": 230,
+              "x": -36.913124999999994,
+              "z": 40,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 231,
+              "x": -35.99375,
+              "z": 40,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "cellar-level-start",
+          "tick": 2486,
+          "roster": {
+            "anchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entry": {
+              "x": -79.29999999999998,
+              "z": -45.2801,
+              "radius": 1.4,
+              "yaw": -1.5707963267948966
+            },
+            "player": {
+              "x": -22.323835372924805,
+              "y": 0.7049999833106995,
+              "z": 0.8102226257324219,
+              "yaw": -0.7853981633973571
+            },
+            "actors": []
+          }
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 2900,
+          "ids": [
+            {
+              "id": 235,
+              "x": -43.159800000000004,
+              "z": 10.2,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 236,
+              "x": -42.247325000000004,
+              "z": 10.2,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 238,
+              "x": -40.26499999999999,
+              "z": -26,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 239,
+              "x": -39.25,
+              "z": -26,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 240,
+              "x": -38.35,
+              "z": -26,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 241,
+              "x": -40.25048094716167,
+              "z": -24.725,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 242,
+              "x": -30.9,
+              "z": -38,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 243,
+              "x": -30,
+              "z": -38,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 244,
+              "x": 12.1,
+              "z": -20,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 245,
+              "x": 13,
+              "z": -20,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 246,
+              "x": -0.013124999999999887,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 247,
+              "x": 0.90625,
+              "z": 18.8,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 248,
+              "x": -45.8,
+              "z": 27.1,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 249,
+              "x": -44.9,
+              "z": 27.1,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 250,
+              "x": -43.75,
+              "z": 27.1,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3040,
+          "ids": [
+            {
+              "id": 253,
+              "x": -1,
+              "z": 33.5,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 254,
+              "x": -0.1,
+              "z": 33.5,
+              "hp": 60,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 255,
+              "x": 1.05,
+              "z": 33.5,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3050,
+          "ids": [
+            {
+              "id": 256,
+              "x": 12.1,
+              "z": 14,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 257,
+              "x": 13,
+              "z": 14,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 258,
+              "x": 13.9,
+              "z": 14,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3110,
+          "ids": [
+            {
+              "id": 259,
+              "x": -76.9,
+              "z": 55,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 260,
+              "x": -75.75,
+              "z": 55,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 261,
+              "x": -74.85,
+              "z": 55,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 262,
+              "x": -47.8,
+              "z": -23,
+              "hp": 240,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 263,
+              "x": -46.9,
+              "z": -23,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 264,
+              "x": -40.9,
+              "z": 41.2,
+              "hp": 225,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 265,
+              "x": -39.64644660940672,
+              "z": 41.55355339059328,
+              "hp": 1350,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3140,
+          "ids": [
+            {
+              "id": 268,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 269,
+              "x": -13.891341716182545,
+              "z": -22.738060233744356,
+              "hp": 45,
+              "hidden": false,
+              "pendingAdmission": false
+            },
+            {
+              "id": 270,
+              "x": -13.698448497369093,
+              "z": -22.03095345255781,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3220,
+          "ids": [
+            {
+              "id": 273,
+              "x": 1.1,
+              "z": -9,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3250,
+          "ids": [
+            {
+              "id": 274,
+              "x": 35.1,
+              "z": 43,
+              "hp": 450,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3260,
+          "ids": [
+            {
+              "id": 275,
+              "x": -46.46670000000001,
+              "z": 21,
+              "hp": 180,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3270,
+          "ids": [
+            {
+              "id": 276,
+              "x": -14.791341716182545,
+              "z": -22.738060233744356,
+              "hp": 210,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        },
+        {
+          "type": "actual-l4-admissions",
+          "tick": 3350,
+          "ids": [
+            {
+              "id": 278,
+              "x": -23.9,
+              "z": 42.6,
+              "hp": 37.5,
+              "hidden": false,
+              "pendingAdmission": false
+            }
+          ]
+        }
+      ],
+      "result": {
+        "status": "PASS",
+        "value": {
+          "pickupTicks": [
+            2235
+          ],
+          "gunTicks": [
+            2235
+          ],
+          "turnTicks": [
+            2235
+          ],
+          "alarms": [
+            {
+              "type": "actual-klaxon-start",
+              "tick": 2235,
+              "observedWorldTick": 2235,
+              "handled": true,
+              "active": true,
+              "scheduled": [
+                {
+                  "cue": "l4.klaxon",
+                  "time": 43.541333333333334,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 43.541333333333334,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 43.541333333333334,
+                  "positional": true
+                },
+                {
+                  "cue": "l4.klaxon",
+                  "time": 43.541333333333334,
+                  "positional": false
+                }
+              ],
+              "voices": [
+                {
+                  "id": 314,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 315,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 316,
+                  "cue": "l4.klaxon",
+                  "gain": 0.33000001311302185,
+                  "loop": true
+                },
+                {
+                  "id": 317,
+                  "cue": "l4.klaxon",
+                  "gain": 0.06599999964237213,
+                  "loop": true
+                }
+              ]
+            }
+          ],
+          "firstAdmission": {
+            "type": "actual-l4-admissions",
+            "tick": 2235,
+            "ids": [
+              {
+                "id": 166,
+                "x": -42.699999999999996,
+                "z": 10.2,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 167,
+                "x": -41.8,
+                "z": 10.2,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 168,
+                "x": -40.9,
+                "z": 10.2,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 169,
+                "x": -39.5,
+                "z": 16,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 170,
+                "x": -38.6,
+                "z": 16,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 171,
+                "x": -37.7,
+                "z": 16,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 172,
+                "x": -15.9,
+                "z": -20.4,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 173,
+                "x": -15.013124999999999,
+                "z": -20.4,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 174,
+                "x": -14.09375,
+                "z": -20.4,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 175,
+                "x": -24.9,
+                "z": 25.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 176,
+                "x": -23.75,
+                "z": 25.5,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 177,
+                "x": -22.6,
+                "z": 25.5,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 178,
+                "x": -14.791341716182545,
+                "z": -22.738060233744356,
+                "hp": 37.5,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 179,
+                "x": -13.891341716182545,
+                "z": -22.738060233744356,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 180,
+                "x": -13.91522124869383,
+                "z": -21.605376801379265,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 181,
+                "x": -16.9,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 182,
+                "x": -15.75,
+                "z": 25.5,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 183,
+                "x": -14.85,
+                "z": 25.5,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 184,
+                "x": 1.1,
+                "z": -9,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 185,
+                "x": 2.25,
+                "z": -9,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 186,
+                "x": 2.513728757031316,
+                "z": -7.811179354631058,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 187,
+                "x": -32.9,
+                "z": 25.5,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 188,
+                "x": -32,
+                "z": 25.5,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 189,
+                "x": -30.85,
+                "z": 25.5,
+                "hp": 1350,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 190,
+                "x": -1,
+                "z": -17.5,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 191,
+                "x": -0.1,
+                "z": -17.5,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 192,
+                "x": 0.8,
+                "z": -17.5,
+                "hp": 60,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 193,
+                "x": 0,
+                "z": 18.8,
+                "hp": 45,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 194,
+                "x": 0.9,
+                "z": 18.8,
+                "hp": 225,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 195,
+                "x": 1.8,
+                "z": 18.8,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 196,
+                "x": -45.9,
+                "z": 21,
+                "hp": 180,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 197,
+                "x": -45,
+                "z": 21,
+                "hp": 240,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 198,
+                "x": -44.1,
+                "z": 21,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 199,
+                "x": -40.4,
+                "z": -26,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 200,
+                "x": -39.5,
+                "z": -26,
+                "hp": 210,
+                "hidden": false,
+                "pendingAdmission": false
+              },
+              {
+                "id": 201,
+                "x": -38.725,
+                "z": -25.35048094716167,
+                "hp": 450,
+                "hidden": false,
+                "pendingAdmission": false
+              }
+            ]
+          }
+        }
+      },
+      "controls": [
+        {
+          "name": "l4.gun delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "l4.firstTurn delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-klaxon-start delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "actual-l4-admissions delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "observed tick delayed",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing voices",
+          "status": "FAIL"
+        },
+        {
+          "name": "missing admissions",
+          "status": "NOT CHECKED"
+        }
+      ]
+    }
+  ]
+}

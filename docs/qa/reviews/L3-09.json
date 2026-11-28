@@ -1,33 +1,43 @@
 {
   "row": "L3-09",
-  "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "status": "FAIL",
+  "reviewer": "Codex/v2-l2l4",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
-      "clause": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
+      "clause": "Regular infected speed ≤ 4.0 m/s",
+      "verdict": "FAIL",
+      "note": "Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike."
+    },
+    {
+      "clause": "Sprinters ≤5%",
       "verdict": "PASS",
-      "note": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+      "note": "Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L3-09-native.json",
-      "sha256": "6b5c6c8cb7d37eae0482b1ca9e1c74fbcec153a912fae4c6b13032005fe1ce8b",
-      "what": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+      "file": "docs/reports/v2-l2l4/L3-09-movement.json",
+      "sha256": "fc845bb6c4a159893076c3361577d862c0fc880a33bb8f56a2ec2f0567c1b029",
+      "what": "Both-tier per-tick runner positions, actual displacements and run metadata."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "tools/qa/accept/v2-l3-speed.ts",
+      "sha256": "953a4c3f960f0eb710d003c6dfbf5bd587c03cf0aab73b7894720197b076afc0",
+      "what": "Read-only observer and exact reproduction command."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
+      "what": "Current both-tier spawn census and sprinter fraction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
+      "what": "Current both-tier spawn census and sprinter fraction."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+  "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+  "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }

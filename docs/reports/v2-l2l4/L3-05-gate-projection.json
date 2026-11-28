@@ -1,0 +1,212 @@
+{
+  "identity": {
+    "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+    "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+    "revision": "bf03c71ba786175431982c336dbd1ab49b979fa7"
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "gate": {
+    "x": -126,
+    "y": 0.9,
+    "z": 0,
+    "halfX": 0.25,
+    "halfY": 0.9,
+    "halfZ": 5.2
+  },
+  "method": "Project the eight corners of the actual yard-east collision box through the recorded camera position, target and vertical FOV using three.js PerspectiveCamera. Image-positive y is down. Control: the recorded player projects inside the viewport. High completion ledger establishes attackAt <= captureTick < fallbackAt; low completion followed a retry so its final interval does not establish the first capture.",
+  "rows": [
+    {
+      "tier": "high",
+      "tick": 827,
+      "playerWorld": {
+        "x": -139.2533721923828,
+        "y": 0.7049999833106995,
+        "z": -7.84158182144165
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.375324576999063,
+        "regionScale": 1,
+        "focus": [
+          -139.2533721923829,
+          1.8304218949034315e-28,
+          -7.841581821441648
+        ],
+        "target": [
+          -139.2533721923829,
+          1.8304218949034315e-28,
+          -7.841581821441648
+        ],
+        "position": [
+          -123.0209442094577,
+          16.67859731537221,
+          8.390846161483552
+        ],
+        "spot": null
+      },
+      "playerScreen": {
+        "x": 640.0000000000041,
+        "y": 326.87603558702256,
+        "ndcZ": 0.9930464682712904
+      },
+      "gateCorners": [
+        {
+          "x": 1252.4857286168592,
+          "y": 903.5683333995589,
+          "ndcZ": 0.9899032186634683
+        },
+        {
+          "x": 636.7443050241735,
+          "y": 1664.4071419980232,
+          "ndcZ": 0.985357349393528
+        },
+        {
+          "x": 1287.7665437356695,
+          "y": 806.1347706758723,
+          "ndcZ": 0.9893100953834202
+        },
+        {
+          "x": 636.4669198101229,
+          "y": 1585.1168173750445,
+          "ndcZ": 0.9840927538480663
+        },
+        {
+          "x": 1291.6357761892796,
+          "y": 929.3233561168711,
+          "ndcZ": 0.9897493372302475
+        },
+        {
+          "x": 680.2006402823581,
+          "y": 1718.278292071408,
+          "ndcZ": 0.9850354793694346
+        },
+        {
+          "x": 1329.7655220341853,
+          "y": 831.8555134407524,
+          "ndcZ": 0.9891378271005812
+        },
+        {
+          "x": 683.7064869895228,
+          "y": 1641.8166046354895,
+          "ndcZ": 0.9837129990688986
+        }
+      ],
+      "gateTopPx": 806.1347706758723,
+      "capture": "test-results/playtest/v2-l3-camera-high/captures/campaign-L3-defend-high-z1.jpg",
+      "captureSha256": "76fa87889e188f0a0c98123c4188e3fdbe694c6629d436efb069f3c26b61da27",
+      "cameraReceipt": "test-results/playtest/v2-l3-camera-high/captures/campaign-L3-defend-high-z1.json",
+      "cameraReceiptSha256": "c6d2bfbf6993e8452b1f0e2691a01cec4a9c1a802c27111ca9a82be1d45275e3",
+      "attackAt": 763,
+      "fallbackAt": 1405,
+      "attackIntervalQualifies": true,
+      "completion": "test-results/playtest/v2-l3-camera-high/campaign-completion.json",
+      "completionSha256": "ba1a2b5027be45e6c08b844bb69996b86805f86eb635f157d3e901e2bf96c453"
+    },
+    {
+      "tier": "low",
+      "tick": 875,
+      "playerWorld": {
+        "x": -139.3291778564453,
+        "y": 0.7049999833106995,
+        "z": -7.7645111083984375
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.4164275647145,
+        "regionScale": 1,
+        "focus": [
+          -139.3291778564454,
+          1.8420719794276897e-30,
+          -7.764511108398435
+        ],
+        "target": [
+          -139.3291778564454,
+          1.8420719794276897e-30,
+          -7.764511108398435
+        ],
+        "position": [
+          -123.07323644070772,
+          16.7027570453765,
+          8.491430307339257
+        ],
+        "spot": null
+      },
+      "playerScreen": {
+        "x": 640.0000000000033,
+        "y": 326.9246568286312,
+        "ndcZ": 0.9930569686619657
+      },
+      "gateCorners": [
+        {
+          "x": 1260.1868758876203,
+          "y": 902.3565840893922,
+          "ndcZ": 0.9899253419911809
+        },
+        {
+          "x": 649.740079770495,
+          "y": 1660.307905536092,
+          "ndcZ": 0.9854032753412525
+        },
+        {
+          "x": 1295.8301301832591,
+          "y": 805.0747533858749,
+          "ndcZ": 0.9893348377812662
+        },
+        {
+          "x": 650.5671488145309,
+          "y": 1580.9356699049963,
+          "ndcZ": 0.9841468247012403
+        },
+        {
+          "x": 1299.3663922596984,
+          "y": 928.0373757367579,
+          "ndcZ": 0.989772126015212
+        },
+        {
+          "x": 693.3399749018446,
+          "y": 1713.920152322843,
+          "ndcZ": 0.9850834155476718
+        },
+        {
+          "x": 1337.8594427905637,
+          "y": 830.7194053884106,
+          "ndcZ": 0.98916335757497
+        },
+        {
+          "x": 697.9757039376863,
+          "y": 1637.3424096587037,
+          "ndcZ": 0.9837696451096238
+        }
+      ],
+      "gateTopPx": 805.0747533858749,
+      "capture": "test-results/playtest/v2-l3-camera-low/captures/campaign-L3-defend-low-z1.jpg",
+      "captureSha256": "b25cbaffe112464ca71275b03c4967d2af5f0c11e7f01c2bb93b9a4a1d55192c",
+      "cameraReceipt": "test-results/playtest/v2-l3-camera-low/captures/campaign-L3-defend-low-z1.json",
+      "cameraReceiptSha256": "9d836b4676c4da9540644505630a10fc92ed9fe5a28a2c9a965beb1d9c3b3f05",
+      "attackAt": 1611,
+      "fallbackAt": 2257,
+      "attackIntervalQualifies": false,
+      "completion": "test-results/playtest/v2-l3-camera-low/campaign-completion.json",
+      "completionSha256": "21a601f45948557ee3ce451353587f6b6034890fac9af4fd4f230ab9dff1f0c7"
+    }
+  ]
+}

@@ -2,166 +2,114 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5",
-  "fixtureHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
-  "browserHash": "0f496cdddf2f7c71138c55b1028fea465105781857559ca4e918ee213068d434",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "fixtureHash": "f46f97d7dfd6775eb8f136fe60d75fa4deccb7e2e314775cdd0446f1f0056916",
+  "browserHash": "07d3fda6eb76bec7c08e3e66e3aab257c2de4719b5d6903d04d35eb69c1ca7d8",
+  "errors": [],
   "checks": [
     {
-      "id": "G-25",
-      "clause": "physical WASD/mouse full-level browser console",
+      "id": "L4-03",
+      "clause": "actual MG pickup klaxon and attack start share simulation tick",
       "tier": "low",
       "policy": "real-input-webgl2",
       "status": "PASS",
       "value": {
-        "backend": "webgl2",
-        "zoom": 1.5,
-        "completed": true,
-        "skipped": [],
-        "consoleErrors": [],
-        "immortal": true,
-        "frameTiming": false
+        "cells": [
+          {
+            "zoom": 1.5,
+            "tick": 2173,
+            "gunTicks": [
+              2173
+            ],
+            "turnTicks": [
+              2173
+            ],
+            "voices": 4,
+            "admissions": 36,
+            "controls": [
+              {
+                "name": "l4.gun delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "l4.firstTurn delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "actual-klaxon-start delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "actual-l4-admissions delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "observed tick delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "missing voices",
+                "status": "FAIL"
+              },
+              {
+                "name": "missing admissions",
+                "status": "NOT CHECKED"
+              }
+            ]
+          },
+          {
+            "zoom": 1,
+            "tick": 2235,
+            "gunTicks": [
+              2235
+            ],
+            "turnTicks": [
+              2235
+            ],
+            "voices": 4,
+            "admissions": 36,
+            "controls": [
+              {
+                "name": "l4.gun delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "l4.firstTurn delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "actual-klaxon-start delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "actual-l4-admissions delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "observed tick delayed",
+                "status": "FAIL"
+              },
+              {
+                "name": "missing voices",
+                "status": "FAIL"
+              },
+              {
+                "name": "missing admissions",
+                "status": "NOT CHECKED"
+              }
+            ]
+          }
+        ],
+        "proofPath": "docs/reports/v2-l2l4/L4-03-opening.json",
+        "proofSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
       },
-      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
       "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
     }
   ],
-  "errors": [],
-  "run": [
-    {
-      "level": "L4",
-      "entry": "debug",
-      "heroine": "female",
-      "finished": true,
-      "skipped": [],
-      "wallSeconds": 269,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 11.783333333333333,
-      "deaths": 0,
-      "assists": 2,
-      "attacks": {
-        "weapon.army-mg": 1786
-      },
-      "weaponsStart": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "weaponsEnd": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "steps": [
-        {
-          "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 58 m",
-          "tick": 1,
-          "marker": {
-            "anchor": "l4-plaza",
-            "ring": {
-              "x": -17,
-              "y": 0,
-              "z": 3
-            },
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "quartermaster",
-          "text": "Report to the quartermaster · 10 m",
-          "tick": 1829,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": {
-              "x": -23.2,
-              "y": 0,
-              "z": 0.6
-            },
-            "drawn": [
-              -23.2,
-              0.05,
-              0.6
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "hold",
-          "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2175,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 69 m",
-          "tick": 13575,
-          "marker": {
-            "anchor": "l4-cellar-door",
-            "ring": {
-              "x": -79.29999999999998,
-              "y": 0,
-              "z": -45.2801
-            },
-            "drawn": [
-              -79.3,
-              0.13,
-              -45.28
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "bar",
-          "text": "Bar the cellar door · 5 m",
-          "tick": 14747,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": {
-              "x": 74.6,
-              "y": 0,
-              "z": -1.7999999999999998
-            },
-            "drawn": [
-              74.6,
-              0.05,
-              -1.8
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "wait",
-          "text": "Stay down · 0:07 remaining",
-          "tick": 14904,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
-          }
-        }
-      ]
-    }
-  ],
-  "issues": [],
-  "frameTiming": false,
-  "backend": "webgl2",
-  "zoom": 1.5
+  "observations": {
+    "scope": "bounded 60-second opening; game unfinished, process exit 1 expected; no full-level or performance claim",
+    "evidence": "docs/reports/v2-l2l4/L4-03-opening.json",
+    "evidenceSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
+  }
 }

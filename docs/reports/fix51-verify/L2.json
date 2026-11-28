@@ -3,9 +3,9 @@
   "level": "L2",
   "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:14:06.466Z",
+  "generatedAt": "2026-11-28T02:01:25.618Z",
   "policies": [
     {
       "tier": "low",
@@ -4128,9 +4128,9 @@
   "rows": [
     {
       "id": "L2-01",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); low/complete bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); low/complete pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); low/stationary first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); low/stationary bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); low/stationary pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); high/complete first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); high/complete bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); high/complete pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); high/stationary first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); high/stationary bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); high/stationary pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); low/controlled-fixture calm combat and alarm/crew clocks: {\"infectedMax\":0,\"combatEvents\":0,\"alarmS\":23.15,\"crewAtTruckS\":4.866666666666666,\"axeActive\":true} (target 0 infected/combat; alarm20–30s; crew seated≤8s later; PASS); low/controlled-fixture initial bench civilian identity census (seat geometry unreviewed): 4 (target 4 bench civilians; PASS); high/controlled-fixture calm combat and alarm/crew clocks: {\"infectedMax\":0,\"combatEvents\":0,\"alarmS\":23.15,\"crewAtTruckS\":4.866666666666666,\"axeActive\":true} (target 0 infected/combat; alarm20–30s; crew seated≤8s later; PASS); high/controlled-fixture initial bench civilian identity census (seat geometry unreviewed): 4 (target 4 bench civilians; PASS)",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); low/complete bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); low/complete pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); low/stationary first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); low/stationary bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); low/stationary pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); high/complete first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); high/complete bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); high/complete pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); high/stationary first alarm level clock (before any checkpoint rebasing): 23.15 (target 20 ≤ value ≤ 30; PASS); high/stationary bench civilian identity count: 4 (target 4 ≤ value ≤ 4; PASS); high/stationary pre-alarm combat/infected census: {\"ticks\":1388,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":0} (target zero infected; zero combat events; PASS); low/controlled-fixture calm combat and alarm/crew clocks: {\"infectedMax\":0,\"combatEvents\":0,\"alarmS\":23.15,\"crewAtTruckS\":4.866666666666666,\"axeActive\":true} (target 0 infected/combat; alarm20–30s; crew seated≤8s later; PASS); low/controlled-fixture initial bench civilian identity census (seat geometry unreviewed): 4 (target 4 bench civilians; PASS); high/controlled-fixture calm combat and alarm/crew clocks: {\"infectedMax\":0,\"combatEvents\":0,\"alarmS\":23.15,\"crewAtTruckS\":4.866666666666666,\"axeActive\":true} (target 0 infected/combat; alarm20–30s; crew seated≤8s later; PASS); high/controlled-fixture initial bench civilian identity census (seat geometry unreviewed): 4 (target 4 bench civilians; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers: zero infected/combat, alarm 23.15 s, crew at truck 4.8667 s later; four original physical-input frames at logged zoom 1/1.5 show two seated pairs on two benches.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -4138,7 +4138,8 @@
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
         "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+        "docs/reports/v2-l2l4/L2-01-current-frames.json"
       ],
       "expected": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
       "checks": [
@@ -4360,9 +4361,6 @@
         "method": "NEXT: Extend the existing L2 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: 0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "checkKinds": [
-        "browser-visual"
-      ],
       "review": {
         "tag": "O",
         "instruction": "Inspect four civilians seated on two benches in the current low/high opening frames; clocks and calm combat remain native checks.",
@@ -4371,36 +4369,36 @@
       "reviewDecision": {
         "row": "L2-01",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "71b9c5d607d61b71784abbe7554b5f83bf605189",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
             "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
             "verdict": "PASS",
-            "note": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+            "note": "Both tiers: zero infected/combat, alarm 23.15 s, crew at truck 4.8667 s later; four original physical-input frames at logged zoom 1/1.5 show two seated pairs on two benches."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-01-browser-ledger.json.gz",
-            "sha256": "2e4bdca48fcd8b23f6ed15823686e8678ce1f020cbf4d492e32b7ee3d56f0af4",
-            "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+            "file": "docs/reports/v2-l2l4/L2-01-current-frames.json",
+            "sha256": "876d259ca8f794201d2e39228a00693102bca02e1beedec0b30d928697aa762b",
+            "what": "Four individually inspected actual-zoom capture hashes and concrete seat observation."
           },
           {
-            "file": "docs/reports/final-a/L2-01-image-review.json",
-            "sha256": "5e51033b51f74493f029291c4aab271851442a2b30baa3888d06323114241a3c",
-            "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
+            "what": "Current native fixture: calm census, alarm and crew clocks."
           },
           {
-            "file": "docs/reports/final-a/L2-01-current-proof.json",
-            "sha256": "35c176be9460913b71ce59b77149410514b7071d4b6ec1fcfd3befa6cd14cc50",
-            "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
+            "what": "Current native fixture: calm census, alarm and crew clocks."
           }
         ],
-        "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -4504,9 +4502,9 @@
     },
     {
       "id": "L2-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); low/complete crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); low/stationary actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); low/stationary crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); high/complete actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); high/complete crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); high/stationary actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); high/stationary crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); low/controlled-fixture native ride seating and timing: {\"passenger\":true,\"seconds\":24.316666666666666,\"seatedEveryTick\":true,\"crewExitS\":0.8,\"controlS\":0.5} (target 15–25s; all seated; exits≤4s; control≤0.5s; PASS); low/controlled-fixture native seven-person seated roster and complete exit/control clocks: {\"ids\":[1,121,122,123,124,125,126],\"rideTicks\":1459,\"unseatedTicks\":0,\"allOutAt\":3394,\"controlAt\":3166,\"arrivedAt\":3165,\"allOutS\":3.816666666666667,\"controlS\":0.016666666666666666} (target 7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s; PASS); high/controlled-fixture native ride seating and timing: {\"passenger\":true,\"seconds\":24.316666666666666,\"seatedEveryTick\":true,\"crewExitS\":0.8,\"controlS\":0.5} (target 15–25s; all seated; exits≤4s; control≤0.5s; PASS); high/controlled-fixture native seven-person seated roster and complete exit/control clocks: {\"ids\":[1,121,122,123,124,125,126],\"rideTicks\":1459,\"unseatedTicks\":0,\"allOutAt\":3394,\"controlAt\":3166,\"arrivedAt\":3165,\"allOutS\":3.816666666666667,\"controlS\":0.016666666666666666} (target 7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s; PASS)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); low/complete crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); low/stationary actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); low/stationary crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); high/complete actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); high/complete crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); high/stationary actual departure-to-arrival route time: 24.316666666666666 (target 15 ≤ value ≤ 25; PASS); high/stationary crew-exit start after arrival (not all-seven exit completion): 0.8 (target 0 ≤ value ≤ 4; PASS); low/controlled-fixture native ride seating and timing: {\"passenger\":true,\"seconds\":24.316666666666666,\"seatedEveryTick\":true,\"crewExitS\":0.8,\"controlS\":0.5} (target 15–25s; all seated; exits≤4s; control≤0.5s; PASS); low/controlled-fixture native seven-person seated roster and complete exit/control clocks: {\"ids\":[1,121,122,123,124,125,126],\"rideTicks\":1459,\"unseatedTicks\":0,\"allOutAt\":3394,\"controlAt\":3166,\"arrivedAt\":3165,\"allOutS\":3.816666666666667,\"controlS\":0.016666666666666666} (target 7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s; PASS); high/controlled-fixture native ride seating and timing: {\"passenger\":true,\"seconds\":24.316666666666666,\"seatedEveryTick\":true,\"crewExitS\":0.8,\"controlS\":0.5} (target 15–25s; all seated; exits≤4s; control≤0.5s; PASS); high/controlled-fixture native seven-person seated roster and complete exit/control clocks: {\"ids\":[1,121,122,123,124,125,126],\"rideTicks\":1459,\"unseatedTicks\":0,\"allOutAt\":3394,\"controlAt\":3166,\"arrivedAt\":3165,\"allOutS\":3.816666666666667,\"controlS\":0.016666666666666666} (target 7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s; PASS) Manual review FAIL (Codex/v2-l2l4): At actual zoom 1 just after arrival and before crew exit starts, personally inspected frames show 0 identifiable firefighters and 0 courier in the centered opaque fire engine on both tiers. High capture tick 3137: arrival 3132, exit starts 3180; low tick 3169: arrival 3168, exit starts 3216. Target crew visible and courier never hidden.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -4514,7 +4512,8 @@
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
         "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+        "docs/reports/v2-l2l4/L2-03-arrival-visibility.json"
       ],
       "expected": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
       "checks": [
@@ -4708,9 +4707,6 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L2 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "checkKinds": [
-        "browser-visual"
-      ],
       "review": {
         "tag": "O",
         "instruction": "Inspect crew and courier visibility during boarding, ride and market arrival in both qualities; opaque engine occlusion is an objective failure.",
@@ -4718,37 +4714,27 @@
       },
       "reviewDecision": {
         "row": "L2-03",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "75b9c67d7e94308c40779186919a233bb93e7c82",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "85d5d2108710eabb6f6fd23197e5542ca4784b60",
         "clauses": [
           {
             "clause": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
-            "verdict": "PASS",
-            "note": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
+            "verdict": "FAIL",
+            "note": "At actual zoom 1 just after arrival and before crew exit starts, personally inspected frames show 0 identifiable firefighters and 0 courier in the centered opaque fire engine on both tiers. High capture tick 3137: arrival 3132, exit starts 3180; low tick 3169: arrival 3168, exit starts 3216. Target crew visible and courier never hidden."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-03-browser-ledger.json.gz",
-            "sha256": "7603203452346b75c279151478665deafc7a8f75ede2bc2129078ac46e092570",
-            "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
-          },
-          {
-            "file": "docs/reports/final-a/L2-03-image-review.json",
-            "sha256": "669b82dd311b91d69efd8fa8cc4e91e916a43840c677af0a0ed52614eb68de7b",
-            "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
-          },
-          {
-            "file": "docs/reports/final-a/L2-03-current-proof.json",
-            "sha256": "136bcf58324b0185ea503132a06bcfcab1404d6d309cb737dc42397191c84c76",
-            "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
+            "file": "docs/reports/v2-l2l4/L2-03-arrival-visibility.json",
+            "sha256": "4b166bab4d480b5f2f9d429310dc5e1e3426cd3ba29b704f70aac077b2814a1f",
+            "what": "Two personally opened physical-input arrival frames with exact hashes, same-frame zoom and same-run arrival/crew-exit timestamps."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Repro: run the v2-l2-light-L2-high/low opening capture command in docs/reports/v2-l2l4/README.md and inspect the doors-t...-z1 original frame before the crew-exit timestamp. Actual zoom 1.5 during this scene and continuous ride visibility remain open; frame is a counterexample to the visibility clause.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -4756,7 +4742,7 @@
       "id": "L2-04",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); low/complete door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); low/complete nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); low/stationary arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); low/stationary door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); low/stationary nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); high/complete arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); high/complete door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); high/complete nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); high/stationary arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); high/stationary door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); high/stationary nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[52.75,53.55,61.5,65.5],\"nearBefore\":0} (target ordered arrival→exit→atDoors→open;4s force;0 infected within40m; PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[52.75,53.55,61.5,65.5],\"nearBefore\":0} (target ordered arrival→exit→atDoors→open;4s force;0 infected within40m; PASS)",
+      "value": "low/complete arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); low/complete door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); low/complete nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); low/stationary arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); low/stationary door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); low/stationary nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); high/complete arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); high/complete door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); high/complete nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); high/stationary arrival/exit/doors event order: [3131,3179,3656,3896] (target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed; PASS); high/stationary door forcing duration: 4 (target 4 ≤ value ≤ 4; PASS); high/stationary nearest living infected before doors open: {\"samples\":3895,\"nearest\":null} (target none within40 m; PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[52.75,53.55,61.5,65.5],\"nearBefore\":0} (target ordered arrival→exit→atDoors→open;4s force;0 infected within40m; PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[52.75,53.55,61.5,65.5],\"nearBefore\":0} (target ordered arrival→exit→atDoors→open;4s force;0 infected within40m; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers and both policies: ticks 3131, 3179, 3656, 3896 in order; independent fixtures show 52.75, 53.55, 61.5, 65.5 s.; Both tiers and policies: 3895 pre-open samples have no living infected; fixtures record zero near before opening.; Both tiers and policies: 240 ticks = 4 s; independent fixture likewise 61.5 → 65.5 s.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -4983,56 +4969,61 @@
       "reviewDecision": {
         "row": "L2-04",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Order truckArrived → crewExit → atDoors → doorsOpen; no infected within 40 m before doors open; doors forced in 4 s.",
+            "clause": "Truck arrival → crew exit → at doors → doors open",
             "verdict": "PASS",
-            "note": "14 current native checks PASS across low/high. low/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS)"
+            "note": "Both tiers and both policies: ticks 3131, 3179, 3656, 3896 in order; independent fixtures show 52.75, 53.55, 61.5, 65.5 s."
+          },
+          {
+            "clause": "No infected within 40 m before doors open",
+            "verdict": "PASS",
+            "note": "Both tiers and policies: 3895 pre-open samples have no living infected; fixtures record zero near before opening."
+          },
+          {
+            "clause": "Doors forced in four seconds",
+            "verdict": "PASS",
+            "note": "Both tiers and policies: 240 ticks = 4 s; independent fixture likewise 61.5 → 65.5 s."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-04-native.json",
-            "sha256": "4485ec31bfaa7edac64f2ef6eec29adb8ae45b1bae9ab095a0214f5fc10485cd",
-            "what": "14 current native checks PASS across low/high. low/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+            "sha256": "895045b320e0aecd89cd4126bd41f75ce39169cc31548340ff97471ea0f1d9d4",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
-            "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+            "sha256": "c30c0cae27b9d02b74ccc440280724bbc1f77590ecf61ed1334a1e8de76bcc50",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-stationary.json.gz",
-            "sha256": "a0cff1248de36d5a38ff2ed18174ee80ddf0b665e4c4c8f77b0991216898dd74",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
-            "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+            "sha256": "2bddf595c5f71adbb4d20bcdb633c3a99864f11c9a2d5b33fec339b0728c2c3e",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-high-stationary.json.gz",
-            "sha256": "88dbf4ff7941f2a3eabd5e4a284fb8d4b07cb36f3c592b381203c42cc6404842",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
-            "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
-            "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
-            "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
+            "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Current-head both-tier native acceptance refresh; real-input visual ride evidence is not required by this row. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5514,13 +5505,15 @@
       "id": "L2-07",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":45.06666666666667,\"playerWindups\":14,\"groupWindups\":0,\"attacksPerMinute\":18.63905325443787} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.63905325443787 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1178,\"groupWindups\":0,\"attacksPerMinute\":785.3333333333334} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.9166666666666665,\"windowSeconds\":90} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 785.3333333333334 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":678,\"groupAttacks\":0,\"firstAttackSeconds\":3.3333333333333335} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 338.9529232051104 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 32.47422680412371 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1654,\"groupWindups\":0,\"attacksPerMinute\":1102.6666666666667} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.683333333333333,\"windowSeconds\":90} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 1102.6666666666667 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 96.36363636363636 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":775,\"groupAttacks\":0,\"firstAttackSeconds\":3.1333333333333333} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 387.44618802944035 (target 4 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":45.06666666666667,\"playerWindups\":14,\"groupWindups\":0,\"attacksPerMinute\":18.63905325443787} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.63905325443787 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1178,\"groupWindups\":0,\"attacksPerMinute\":785.3333333333334} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.9166666666666665,\"windowSeconds\":90} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 785.3333333333334 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":678,\"groupAttacks\":0,\"firstAttackSeconds\":3.3333333333333335} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 338.9529232051104 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 32.47422680412371 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1654,\"groupWindups\":0,\"attacksPerMinute\":1102.6666666666667} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.683333333333333,\"windowSeconds\":90} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 1102.6666666666667 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 96.36363636363636 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":775,\"groupAttacks\":0,\"firstAttackSeconds\":3.1333333333333333} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 387.44618802944035 (target 4 ≤ value ≤ Infinity; PASS) Manual review PASS (Codex/v2-l2l4): Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
         "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
       ],
       "expected": "combat: reachable ≥ 90 %; passive first attack ≤ 15 s (measured 3.3 s); passive attacks ≥ 4/min (tune).",
       "checks": [
@@ -5773,46 +5766,51 @@
       "reviewDecision": {
         "row": "L2-07",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
-            "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 15 s (measured 3.3 s); passive attacks ≥ 4/min (tune).",
+            "clause": "Combat reachability and passive attacks",
             "verdict": "PASS",
-            "note": "18 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 32.47422680412371; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":416,\"groupWindups\":0,\"attacksPerMinute\":554.6666666666666}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45}; target ≤15 s (PASS); low/stationary real player/group windups per minute: 554.6666666666666; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 90.47619047619048; target 90 ≤ value ≤ 100 (PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":907,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333}; target first attack ≤15 s (PASS); low/stationary stationary player windups/min after doors open: 453.43702263574505; target 4 ≤ value ≤ Infinity (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":14.266842800528401}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 14.266842800528401; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":513,\"groupWindups\":0,\"attacksPerMinute\":684}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45}; target ≤15 s (PASS); high/stationary real player/group windups per minute: 684; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.18181818181817; target 90 ≤ value ≤ 100 (PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":912,\"groupAttacks\":0,\"firstAttackSeconds\":3.15}; target first attack ≤15 s (PASS); high/stationary stationary player windups/min after doors open: 455.9366754617414; target 4 ≤ value ≤ Infinity (PASS)"
+            "note": "Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-07-native.json",
-            "sha256": "a70f1f6906e163c28ea2f96116b55c9b1fb35266b1795a60a612c261874da44f",
-            "what": "18 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 32.47422680412371; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":416,\"groupWindups\":0,\"attacksPerMinute\":554.6666666666666}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45}; target ≤15 s (PASS); low/stationary real player/group windups per minute: 554.6666666666666; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 90.47619047619048; target 90 ≤ value ≤ 100 (PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":907,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333}; target first attack ≤15 s (PASS); low/stationary stationary player windups/min after doors open: 453.43702263574505; target 4 ≤ value ≤ Infinity (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":14.266842800528401}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 14.266842800528401; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":513,\"groupWindups\":0,\"attacksPerMinute\":684}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45}; target ≤15 s (PASS); high/stationary real player/group windups per minute: 684; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.18181818181817; target 90 ≤ value ≤ 100 (PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":912,\"groupAttacks\":0,\"firstAttackSeconds\":3.15}; target first attack ≤15 s (PASS); high/stationary stationary player windups/min after doors open: 455.9366754617414; target 4 ≤ value ≤ Infinity (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+            "sha256": "895045b320e0aecd89cd4126bd41f75ce39169cc31548340ff97471ea0f1d9d4",
+            "what": "Current low-complete native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
-            "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
-            "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+            "sha256": "c30c0cae27b9d02b74ccc440280724bbc1f77590ecf61ed1334a1e8de76bcc50",
+            "what": "Current low-stationary native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-stationary.json.gz",
-            "sha256": "a0cff1248de36d5a38ff2ed18174ee80ddf0b665e4c4c8f77b0991216898dd74",
-            "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
+            "what": "Current high-complete native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
-            "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
-            "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+            "sha256": "2bddf595c5f71adbb4d20bcdb633c3a99864f11c9a2d5b33fec339b0728c2c3e",
+            "what": "Current high-stationary native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-high-stationary.json.gz",
-            "sha256": "88dbf4ff7941f2a3eabd5e4a284fb8d4b07cb36f3c592b381203c42cc6404842",
-            "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
+            "what": "Current low-fixtures native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
+            "what": "Current high-fixtures native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5820,7 +5818,7 @@
       "id": "L2-08",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":29,\"rescue\":21},\"at120\":{\"all\":30,\"rescue\":18},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":19,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":2.9833333333333334,\"sameAsset\":true},{\"id\":122,\"seconds\":3.4833333333333334,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":621,\"protectedTicks\":0},{\"id\":122,\"samples\":426,\"protectedTicks\":0},{\"id\":123,\"samples\":689,\"protectedTicks\":0},{\"id\":124,\"samples\":438,\"protectedTicks\":0},{\"id\":125,\"samples\":542,\"protectedTicks\":0},{\"id\":126,\"samples\":580,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":25},\"at120\":{\"all\":59,\"rescue\":25},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":46,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":3.2333333333333334,\"sameAsset\":true},{\"id\":126,\"seconds\":3.183333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":812,\"protectedTicks\":0},{\"id\":122,\"samples\":652,\"protectedTicks\":0},{\"id\":123,\"samples\":833,\"protectedTicks\":0},{\"id\":124,\"samples\":549,\"protectedTicks\":0},{\"id\":125,\"samples\":693,\"protectedTicks\":0},{\"id\":126,\"samples\":552,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS)",
+      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":29,\"rescue\":21},\"at120\":{\"all\":30,\"rescue\":18},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":19,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":2.9833333333333334,\"sameAsset\":true},{\"id\":122,\"seconds\":3.4833333333333334,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":621,\"protectedTicks\":0},{\"id\":122,\"samples\":426,\"protectedTicks\":0},{\"id\":123,\"samples\":689,\"protectedTicks\":0},{\"id\":124,\"samples\":438,\"protectedTicks\":0},{\"id\":125,\"samples\":542,\"protectedTicks\":0},{\"id\":126,\"samples\":580,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":25},\"at120\":{\"all\":59,\"rescue\":25},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":46,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":3.2333333333333334,\"sameAsset\":true},{\"id\":126,\"seconds\":3.183333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":812,\"protectedTicks\":0},{\"id\":122,\"samples\":652,\"protectedTicks\":0},{\"id\":123,\"samples\":833,\"protectedTicks\":0},{\"id\":124,\"samples\":549,\"protectedTicks\":0},{\"id\":125,\"samples\":693,\"protectedTicks\":0},{\"id\":126,\"samples\":552,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS) Manual review PASS (Codex/v2-l2l4): At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -6019,36 +6017,31 @@
       "reviewDecision": {
         "row": "L2-08",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Snowball: infected **≥ 20 at +60 s, ≥ 30 at +120 s** (idle bot); ≥ 2 firefighters turned by +90 s; firefighters fight (≥ 1 hit) and have no immunity.",
+            "clause": "Idle snowball and firefighter combat",
             "verdict": "PASS",
-            "note": "6 current native checks PASS across low/high. low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS)"
+            "note": "At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-08-native.json",
-            "sha256": "09074d2654389d015ae92d3d0082e0f37dd2f1e14c2d8eb31d4c6a15d2cfa4c1",
-            "what": "6 current native checks PASS across low/high. low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
+            "what": "Current low-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
-            "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
-            "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
-            "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
-            "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
+            "what": "Current high-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6265,7 +6258,7 @@
       "id": "L2-10",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS)",
+      "value": "low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -6472,36 +6465,31 @@
       "reviewDecision": {
         "row": "L2-10",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Axe: single swing with 1–2 infected in 2.5 m; roundhouse hits all (≥ 3) and pushes ≥ 2 m with ≥ 3 in range.",
+            "clause": "Axe target selection and roundhouse push",
             "verdict": "PASS",
-            "note": "4 current native checks PASS across low/high. low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres\" [full value in proof]; low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres [full value in proof]; high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS)"
+            "note": "Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-10-native.json",
-            "sha256": "09e1ea54747b82936861a64364ad4a979461c69ee42ee4eff6faac40f4ff5d32",
-            "what": "4 current native checks PASS across low/high. low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres\" [full value in proof]; low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres [full value in proof]; high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
+            "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
-            "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
-            "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
-            "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
-            "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
+            "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6681,7 +6669,7 @@
       "id": "L2-12",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL)",
+      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL) Manual review FAIL (Codex/v2-l2l4): Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -6846,37 +6834,27 @@
       "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target.",
       "reviewDecision": {
         "row": "L2-12",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
         "clauses": [
           {
-            "clause": "combat: competent run meets ≥ 1 infected per 30 m of route (tune); attacks on the player ≥ 2/min, ≤ 20/min (tune).",
-            "verdict": "PASS",
-            "note": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
+            "clause": "Competent bridge player attack rate",
+            "verdict": "FAIL",
+            "note": "Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-12-native.json",
-            "sha256": "1b35e1cd0d393a67c9bf356d57cdd35498845150eb5254564472d3f1e44db59c",
-            "what": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
-            "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
-            "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
-            "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
-            "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
+            "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -7534,9 +7512,11 @@
       "id": "L2-16",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "",
+      "value": "Manual review P (Codex/v2-l2l4): PO: compare the eight matched opening frames (tiers high/low, actual zooms 1/1.5) and the two L2 street frames (actual zoom 1). L1 appears warmer; the sampled L2 street looks intact and tidy. L2 street zoom 1.5 and other locations remain unverified.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/v2-l2l4/L2-16-light-review.json"
+      ],
       "expected": "Light reads clearly harder/higher than L1; streets \"wounded, but still standing\".",
       "checks": [],
       "historical": {
@@ -7561,42 +7541,27 @@
       },
       "reviewDecision": {
         "row": "L2-16",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "48a680a3310991193bb37c2f837edb04fb588f1d",
+        "status": "P",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "a72deff5cbfdb191b9c1eaec457df9fe2e2a5f3f",
         "clauses": [
           {
             "clause": "Light reads clearly harder/higher than L1; streets \"wounded, but still standing\".",
-            "verdict": "PASS",
-            "note": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted."
+            "verdict": "P",
+            "note": "PO: compare the eight matched opening frames (tiers high/low, actual zooms 1/1.5) and the two L2 street frames (actual zoom 1). L1 appears warmer; the sampled L2 street looks intact and tidy. L2 street zoom 1.5 and other locations remain unverified."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L1-17-image-review.json",
-            "sha256": "72019eff06c4a2e368625a42c1af062c3aef9ff43eec385acc2393c6c08d2388",
-            "what": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted."
-          },
-          {
-            "file": "docs/reports/final-a/L2-16-browser-ledger.json.gz",
-            "sha256": "2e4bdca48fcd8b23f6ed15823686e8678ce1f020cbf4d492e32b7ee3d56f0af4",
-            "what": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted."
-          },
-          {
-            "file": "docs/reports/final-a/L2-16-image-review.json",
-            "sha256": "dcc713f0ce6a907f6763dd290e2f98ed4ebe9208c768b3cd00f0248ff511b89b",
-            "what": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted."
-          },
-          {
-            "file": "docs/reports/final-a/L2-16-current-proof.json",
-            "sha256": "178b625bbed7f2dbcad7f29db7d1c090b195a8715749708d52a6db5bd1e356ff",
-            "what": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted."
+            "file": "docs/reports/v2-l2l4/L2-16-light-review.json",
+            "sha256": "6a92edd991f184ee07ab6e2c19ff8bcc8fa47a90355f081a36d14a4c2570a405",
+            "what": "Ten individually opened current-source frames with SHA-256, actual zoom/quality, location and concrete visual observations."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "PO taste judgment requested; bounded opening and one street view per tier, not full-level visual coverage.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }

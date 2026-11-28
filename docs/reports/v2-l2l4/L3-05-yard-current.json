@@ -1,0 +1,47 @@
+{
+  "main": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
+  "frames": [
+    {
+      "tier": "high",
+      "requestedZoom": 1,
+      "path": "test-results/playtest/v2-l3-yard-high/captures/campaign-L3-defend-high-z1.jpg",
+      "sha256": "6372470da482368207abe697772dd55ce7fefb4963308327016e8fdd124c8f40",
+      "observation": "Courier, corgi, station frontage and officers visible; only a partial figure at the bottom edge, no clearly identifiable east-gate fight. Actual zoom is not logged for this threat-triggered capture."
+    },
+    {
+      "tier": "high",
+      "requestedZoom": 1.5,
+      "path": "test-results/playtest/v2-l3-yard-high/captures/campaign-L3-defend-high-z1-5.jpg",
+      "sha256": "6372470da482368207abe697772dd55ce7fefb4963308327016e8fdd124c8f40",
+      "observation": "Courier, corgi, station frontage and officers visible; only a partial figure at the bottom edge, no clearly identifiable east-gate fight. Actual zoom is not logged for this threat-triggered capture."
+    },
+    {
+      "tier": "low",
+      "requestedZoom": 1,
+      "path": "test-results/playtest/v2-l3-yard-low/captures/campaign-L3-defend-low-z1.jpg",
+      "sha256": "9fed74beecddd9e0cd2c0c94ffbe15448260059c994de7d533fb40d6613b1484",
+      "observation": "Courier, corgi, station frontage and officers visible; only a partial figure at the bottom edge, no clearly identifiable east-gate fight. Actual zoom is not logged for this threat-triggered capture."
+    },
+    {
+      "tier": "low",
+      "requestedZoom": 1.5,
+      "path": "test-results/playtest/v2-l3-yard-low/captures/campaign-L3-defend-low-z1-5.jpg",
+      "sha256": "9fed74beecddd9e0cd2c0c94ffbe15448260059c994de7d533fb40d6613b1484",
+      "observation": "Courier, corgi, station frontage and officers visible; only a partial figure at the bottom edge, no clearly identifiable east-gate fight. Actual zoom is not logged for this threat-triggered capture."
+    },
+    {
+      "tier": "high",
+      "path": "test-results/playtest/v2-l3-yard-high/captures/campaign-L3-t2720.jpg",
+      "sha256": "1f23d20b2c36de993b5827336bd184a7e1afced82a45c4120a27be737df79025",
+      "observation": "Retreat street beyond station, courier and smoke visible; not an attack-yard frame, included only as context."
+    },
+    {
+      "tier": "low",
+      "path": "test-results/playtest/v2-l3-yard-low/captures/campaign-L3-t2717.jpg",
+      "sha256": "3713093463b90b885b5775a59441beff991acda215fd2804bedf24ec91d0db99",
+      "observation": "Retreat street beyond station, courier and smoke visible; not an attack-yard frame, included only as context."
+    }
+  ],
+  "scope": "Physical headless threat-triggered yard captures; 90-second high sample and a separate repeated high segment, then 60-second low sample. No objective skips; bounded and unfinished.",
+  "limitations": "Threat capture does not log actual zoom or encounter scale and does not establish whether an east-gate fight was underway. Attack-camera scale and gate visibility throughout remain unmeasured."
+}

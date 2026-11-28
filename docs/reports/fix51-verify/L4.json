@@ -3,9 +3,9 @@
   "level": "L4",
   "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:27:30.758Z",
+  "generatedAt": "2026-11-28T02:01:36.507Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json"
     }
   ],
   "globals": [
@@ -4818,7 +4832,7 @@
       "id": "L4-01",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); low/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS); high/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); high/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS)",
+      "value": "low/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/complete convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/complete convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); high/stationary convoy vehicle identities: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary convoy duration: 30.483333333333334 (target 20 ≤ value ≤ 35; PASS); low/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); low/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS); high/controlled-fixture courier control restored after actual convoy stop: {\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0} (target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS); high/controlled-fixture full passenger bus parks inside the military perimeter: {\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}} (target all four hull bounds inside the actual military area; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -5027,51 +5041,51 @@
       "reviewDecision": {
         "row": "L4-01",
         "status": "PASS",
-        "reviewer": "Codex/final-b",
-        "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "5-vehicle convoy reaches the plaza in **20–35 s**; control ≤ 0.5 s after the stop; bus parks inside the military area.",
+            "clause": "Convoy count, arrival, control and parking",
             "verdict": "PASS",
-            "note": "low/complete: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nlow/complete: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nlow/stationary: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nlow/stationary: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nhigh/complete: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nhigh/complete: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nhigh/stationary: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nhigh/stationary: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nlow/controlled-fixture: courier control restored after actual convoy stop={\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0}; target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS\nlow/controlled-fixture: full passenger bus parks inside the military perimeter={\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}}; target all four hull bounds inside the actual military area; PASS\nhigh/controlled-fixture: courier control restored after actual convoy stop={\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0}; target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS\nhigh/controlled-fixture: full passenger bus parks inside the military perimeter={\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}}; target all four hull bounds inside the actual military area; PASS"
+            "note": "Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-complete.json.gz",
-            "sha256": "6642d7eade70ff99a19f9595b8eae175b316feb99bc9ec8764233a43599528c7",
-            "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
+            "what": "Current low-complete receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
-            "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
-            "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
+            "what": "Current low-stationary receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-complete.json.gz",
-            "sha256": "677631ad29ee5d560f110ab3b9a5e3537ddbe88135a2ad96162eabfdcaca25a6",
-            "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
+            "what": "Current high-complete receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
-            "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
-            "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
+            "what": "Current high-stationary receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-fixtures.json.gz",
-            "sha256": "15731ced4648a70d569c52f8195b4384a11e9a5862f6a70b77353c7e46778503",
-            "what": "Frozen-head native measurement: L4-01. courier control restored after actual convoy stop; full passenger bus parks inside the military perimeter."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+            "sha256": "1f8905db3b6cad0934242dd26061edf1a85f70816ed340ed9a0015cc87de6830",
+            "what": "Current low-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-fixtures.json.gz",
-            "sha256": "6e2c24d1e918ce893d9f59eb41bc8c45c65ae81423a5241b840054797ca0a07a",
-            "what": "Frozen-head native measurement: L4-01. courier control restored after actual convoy stop; full passenger bus parks inside the military perimeter."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+            "sha256": "6221f98773129b16d9f6fc32757d1d1e26e5cdfc5d08b0b01902ff310a906764",
+            "what": "Current high-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           }
         ],
-        "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass.",
-        "freshness": "STALE",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5210,15 +5224,18 @@
     },
     {
       "id": "L4-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/real-input-webgl2 actual MG pickup klaxon and attack start share simulation tick: {\"cells\":[{\"zoom\":1.5,\"tick\":2173,\"gunTicks\":[2173],\"turnTicks\":[2173],\"voices\":4,\"admissions\":36,\"controls\":[{\"name\":\"l4.gun delayed\",\"status\":\"FAIL\"},{\"name\":\"l4.firstTurn delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-klaxon-start delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-l4-admissions delayed\",\"status\":\"FAIL\"},{\"name\":\"observed tick delayed\",\"status\":\"FAIL\"},{\"name\":\"missing voices\",\"status\":\"FAIL\"… (full values in JSON) (target actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick; PASS); high/real-input-webgl2 actual MG pickup klaxon and attack start share simulation tick: {\"cells\":[{\"zoom\":1.5,\"tick\":2091,\"gunTicks\":[2091],\"turnTicks\":[2091],\"voices\":4,\"admissions\":36,\"controls\":[{\"name\":\"l4.gun delayed\",\"status\":\"FAIL\"},{\"name\":\"l4.firstTurn delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-klaxon-start delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-l4-admissions delayed\",\"status\":\"FAIL\"},{\"name\":\"observed tick delayed\",\"status\":\"FAIL\"},{\"name\":\"missing voices\",\"status\":\"FAIL\"… (full values in JSON) (target actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick; PASS) Manual review PASS (Codex/v2-l2l4): Physical MG pickup, gun and first-turn events, active positive-gain klaxon graph, and 36 living infected admissions share tick: high zoom 1.5/1 = 2091/2239; low = 2173/2235. Four voices per cell; 28 delayed/missing controls reject PASS.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L4-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+        "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+        "docs/reports/v2-l2l4/L4-03-opening.json"
       ],
       "expected": "Alarm (klaxon) and attack start **on the MG pickup tick**. PO: \"start the alam and attack at the moment when I picked up the MP\".",
       "checks": [
@@ -5265,6 +5282,206 @@
           "value": 0,
           "target": "0 ≤ value ≤ 0",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+        },
+        {
+          "id": "L4-03",
+          "clause": "actual MG pickup klaxon and attack start share simulation tick",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "cells": [
+              {
+                "zoom": 1.5,
+                "tick": 2173,
+                "gunTicks": [
+                  2173
+                ],
+                "turnTicks": [
+                  2173
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              },
+              {
+                "zoom": 1,
+                "tick": 2235,
+                "gunTicks": [
+                  2235
+                ],
+                "turnTicks": [
+                  2235
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              }
+            ],
+            "proofPath": "docs/reports/v2-l2l4/L4-03-opening.json",
+            "proofSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
+          },
+          "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+          "level": "L4"
+        },
+        {
+          "id": "L4-03",
+          "clause": "actual MG pickup klaxon and attack start share simulation tick",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "cells": [
+              {
+                "zoom": 1.5,
+                "tick": 2091,
+                "gunTicks": [
+                  2091
+                ],
+                "turnTicks": [
+                  2091
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              },
+              {
+                "zoom": 1,
+                "tick": 2239,
+                "gunTicks": [
+                  2239
+                ],
+                "turnTicks": [
+                  2239
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              }
+            ],
+            "proofPath": "docs/reports/v2-l2l4/L4-03-opening.json",
+            "proofSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
+          },
+          "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+          "level": "L4"
         }
       ],
       "historical": {
@@ -5275,42 +5492,30 @@
         "evidence": [],
         "method": "NEXT: Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event."
       },
-      "remaining": "NEXT: Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event.",
-      "checkKinds": [
-        "browser-input"
-      ],
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L4-03",
         "status": "PASS",
-        "reviewer": "Codex/final-b",
-        "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "f2132cb71f491875fa5f1492817d58e008aca39e",
         "clauses": [
           {
             "clause": "Alarm (klaxon) and attack start **on the MG pickup tick**. PO: \"start the alam and attack at the moment when I picked up the MP\".",
             "verdict": "PASS",
-            "note": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
+            "note": "Physical MG pickup, gun and first-turn events, active positive-gain klaxon graph, and 36 living infected admissions share tick: high zoom 1.5/1 = 2091/2239; low = 2173/2235. Four voices per cell; 28 delayed/missing controls reject PASS."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-b/L4-03-proof.json",
-            "sha256": "93c3310f733f0882759817d1e592f79d7617e5493fe9665070f979fcf4c2d973",
-            "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
-          },
-          {
-            "file": "docs/reports/final-b/L4-low-physical.json.gz",
-            "sha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
-            "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
-          },
-          {
-            "file": "docs/reports/final-b/L4-high-opening-physical.json.gz",
-            "sha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843",
-            "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
+            "file": "docs/reports/v2-l2l4/L4-03-opening.json",
+            "sha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8",
+            "what": "Four bounded real-input opening ledgers, run metadata, measured results and 28 negative controls."
           }
         ],
-        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
-        "freshness": "STALE",
+        "notes": "Opening only; does not establish level completion, mortal fairness, or subjective presentation.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5318,7 +5523,7 @@
       "id": "L4-04",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/complete civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/complete war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war-phase concurrent character cap: 116 (target 0 ≤ value ≤ 120; PASS); low/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/complete actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/complete war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war living character identity census: 117 (target 0 ≤ value ≤ 120; PASS); low/stationary soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/stationary civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/stationary war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war-phase concurrent character cap: 118 (target 0 ≤ value ≤ 120; PASS); low/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/stationary actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/stationary war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war living character identity census: 119 (target 0 ≤ value ≤ 120; PASS); high/complete soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/complete civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/complete war-phase concurrent infected cap: 82 (target 0 ≤ value ≤ 160; PASS); high/complete war-phase concurrent character cap: 160 (target 0 ≤ value ≤ 230; PASS); high/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/complete actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/complete war living infected plus reserved slots and pending turns: 118 (target 0 ≤ value ≤ 160; PASS); high/complete war living character identity census: 160 (target 0 ≤ value ≤ 230; PASS); high/stationary soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/stationary civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/stationary war-phase concurrent infected cap: 84 (target 0 ≤ value ≤ 160; PASS); high/stationary war-phase concurrent character cap: 162 (target 0 ≤ value ≤ 230; PASS); high/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/stationary actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/stationary war living infected plus reserved slots and pending turns: 113 (target 0 ≤ value ≤ 160; PASS); high/stationary war living character identity census: 162 (target 0 ≤ value ≤ 230; PASS)",
+      "value": "low/complete soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/complete civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/complete war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war-phase concurrent character cap: 116 (target 0 ≤ value ≤ 120; PASS); low/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/complete actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/complete war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/complete war living character identity census: 117 (target 0 ≤ value ≤ 120; PASS); low/stationary soldiers at turn: 10 (target 9 ≤ value ≤ 11; PASS); low/stationary civilian census at turn excluding soldiers: 32 (target 30 ≤ value ≤ 35; PASS); low/stationary war-phase concurrent infected cap: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war-phase concurrent character cap: 118 (target 0 ≤ value ≤ 120; PASS); low/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); low/stationary actual armed civilian share at turn: 0.5 (target 0.4 ≤ value ≤ 1; PASS); low/stationary war living infected plus reserved slots and pending turns: 80 (target 0 ≤ value ≤ 80; PASS); low/stationary war living character identity census: 119 (target 0 ≤ value ≤ 120; PASS); high/complete soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/complete civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/complete war-phase concurrent infected cap: 82 (target 0 ≤ value ≤ 160; PASS); high/complete war-phase concurrent character cap: 160 (target 0 ≤ value ≤ 230; PASS); high/complete every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/complete actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/complete war living infected plus reserved slots and pending turns: 118 (target 0 ≤ value ≤ 160; PASS); high/complete war living character identity census: 160 (target 0 ≤ value ≤ 230; PASS); high/stationary soldiers at turn: 20 (target 18 ≤ value ≤ 22; PASS); high/stationary civilian census at turn excluding soldiers: 64 (target 60 ≤ value ≤ 70; PASS); high/stationary war-phase concurrent infected cap: 84 (target 0 ≤ value ≤ 160; PASS); high/stationary war-phase concurrent character cap: 162 (target 0 ≤ value ≤ 230; PASS); high/stationary every war tick observed from turn through line break: {\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369} (target one contiguous observation per simulation tick from turn through the tick before collapse; PASS); high/stationary actual armed civilian share at turn: 0.453125 (target 0.4 ≤ value ≤ 1; PASS); high/stationary war living infected plus reserved slots and pending turns: 113 (target 0 ≤ value ≤ 160; PASS); high/stationary war living character identity census: 162 (target 0 ≤ value ≤ 230; PASS) Manual review PASS (Codex/v2-l2l4): Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -5717,41 +5922,41 @@
       "reviewDecision": {
         "row": "L4-04",
         "status": "PASS",
-        "reviewer": "Codex/final-b",
-        "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Scale: 18–22 soldiers, 60–70 civilians (40 + 24) high, ≥ 40 % armed; low 50 %; living infected plus reservations ≤ 120 / 80, living characters ≤ 190 / 120 (low budget amended 2026-11-02 to retain ≥60 living at first breach; downed/recoverable bodies excluded from low living cap).",
+            "clause": "War population and caps",
             "verdict": "PASS",
-            "note": "low/complete: soldiers at turn=10; target 9 ≤ value ≤ 11; PASS\nlow/complete: civilian census at turn excluding soldiers=32; target 30 ≤ value ≤ 35; PASS\nlow/complete: war-phase concurrent infected cap=80; target 0 ≤ value ≤ 80; PASS\nlow/complete: war-phase concurrent character cap=110; target 0 ≤ value ≤ 120; PASS\nlow/complete: every war tick observed from turn through line break={\"ticks\":10680,\"firstTick\":1969,\"lastTick\":12648,\"turnAt\":1969,\"lineBreakAt\":12649}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nlow/complete: actual armed civilian share at turn=0.5; target 0.4 ≤ value ≤ 1; PASS\nlow/complete: war living infected plus reserved slots and pending turns=80; target 0 ≤ value ≤ 80; PASS\nlow/complete: war living character identity census=111; target 0 ≤ value ≤ 120; PASS\nlow/stationary: soldiers at turn=10; target 9 ≤ value ≤ 11; PASS\nlow/stationary: civilian census at turn excluding soldiers=32; target 30 ≤ value ≤ 35; PASS\nlow/stationary: war-phase concurrent infected cap=80; target 0 ≤ value ≤ 80; PASS\nlow/stationary: war-phase concurrent character cap=114; target 0 ≤ value ≤ 120; PASS\nlow/stationary: every war tick observed from turn through line break={\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nlow/stationary: actual armed civilian share at turn=0.5; target 0.4 ≤ value ≤ 1; PASS\nlow/stationary: war living infected plus reserved slots and pending turns=80; target 0 ≤ value ≤ 80; PASS\nlow/stationary: war living character identity census=115; target 0 ≤ value ≤ 120; PASS\nhigh/complete: soldiers at turn=20; target 18 ≤ value ≤ 22; PASS\nhigh/complete: civilian census at turn excluding soldiers=64; target 60 ≤ value ≤ 70; PASS\nhigh/complete: war-phase concurrent infected cap=92; target 0 ≤ value ≤ 120; PASS\nhigh/complete: war-phase concurrent character cap=156; target 0 ≤ value ≤ 190; PASS\nhigh/complete: every war tick observed from turn through line break={\"ticks\":10716,\"firstTick\":1969,\"lastTick\":12684,\"turnAt\":1969,\"lineBreakAt\":12685}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nhigh/complete: actual armed civilian share at turn=0.453125; target 0.4 ≤ value ≤ 1; PASS\nhigh/complete: war living infected plus reserved slots and pending turns=109; target 0 ≤ value ≤ 120; PASS\nhigh/complete: war living character identity census=156; target 0 ≤ value ≤ 190; PASS\nhigh/stationary: soldiers at turn=20; target 18 ≤ value ≤ 22; PASS\nhigh/stationary: civilian census at turn excluding soldiers=64; target 60 ≤ value ≤ 70; PASS\nhigh/stationary: war-phase concurrent infected cap=93; target 0 ≤ value ≤ 120; PASS\nhigh/stationary: war-phase concurrent character cap=162; target 0 ≤ value ≤ 190; PASS\nhigh/stationary: every war tick observed from turn through line break={\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nhigh/stationary: actual armed civilian share at turn=0.453125; target 0.4 ≤ value ≤ 1; PASS\nhigh/stationary: war living infected plus reserved slots and pending turns=112; target 0 ≤ value ≤ 120; PASS\nhigh/stationary: war living character identity census=162; target 0 ≤ value ≤ 190; PASS"
+            "note": "Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-complete.json.gz",
-            "sha256": "6642d7eade70ff99a19f9595b8eae175b316feb99bc9ec8764233a43599528c7",
-            "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
+            "what": "Current-head low-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
-            "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
-            "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
+            "what": "Current-head low-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-complete.json.gz",
-            "sha256": "677631ad29ee5d560f110ab3b9a5e3537ddbe88135a2ad96162eabfdcaca25a6",
-            "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
+            "what": "Current-head high-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
-            "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
-            "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
+            "what": "Current-head high-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           }
         ],
-        "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass.",
-        "freshness": "STALE",
+        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6170,7 +6375,7 @@
       "id": "L4-06",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/stationary first physical breach level clock: 51.083333333333336 (target 30 ≤ value ≤ 60; PASS); low/stationary living infected at first breach: 65 (target 60 ≤ value ≤ Infinity; PASS); low/stationary sustained plaza living minimum after +45 s: 51 (target 40 ≤ value ≤ Infinity; PASS); high/stationary first physical breach level clock: 51.083333333333336 (target 30 ≤ value ≤ 60; PASS); high/stationary living infected at first breach: 64 (target 60 ≤ value ≤ Infinity; PASS); high/stationary sustained plaza living minimum after +45 s: 45 (target 40 ≤ value ≤ Infinity; PASS)",
+      "value": "low/stationary first physical breach level clock: 51.083333333333336 (target 30 ≤ value ≤ 60; PASS); low/stationary living infected at first breach: 65 (target 60 ≤ value ≤ Infinity; PASS); low/stationary sustained plaza living minimum after +45 s: 51 (target 40 ≤ value ≤ Infinity; PASS); high/stationary first physical breach level clock: 51.083333333333336 (target 30 ≤ value ≤ 60; PASS); high/stationary living infected at first breach: 64 (target 60 ≤ value ≤ Infinity; PASS); high/stationary sustained plaza living minimum after +45 s: 45 (target 40 ≤ value ≤ Infinity; PASS) Manual review PASS (Codex/v2-l2l4): Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40).",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
@@ -6260,31 +6465,31 @@
       "reviewDecision": {
         "row": "L4-06",
         "status": "PASS",
-        "reviewer": "Codex/final-b",
-        "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "**Horde present:** first breach into the plaza at ~45 s (level clock, ±15 s) with ≥ 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza ≥ 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
+            "clause": "First breach and sustained horde",
             "verdict": "PASS",
-            "note": "low/stationary: first physical breach level clock=52.71666666666667; target 30 ≤ value ≤ 60; PASS\nlow/stationary: living infected at first breach=67; target 60 ≤ value ≤ Infinity; PASS\nlow/stationary: sustained plaza living minimum after +45 s=52; target 40 ≤ value ≤ Infinity; PASS\nhigh/stationary: first physical breach level clock=52.71666666666667; target 30 ≤ value ≤ 60; PASS\nhigh/stationary: living infected at first breach=65; target 60 ≤ value ≤ Infinity; PASS\nhigh/stationary: sustained plaza living minimum after +45 s=54; target 40 ≤ value ≤ Infinity; PASS"
+            "note": "Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
-            "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
-            "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
+            "what": "Current-head low-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
           },
           {
-            "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
-            "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
-            "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
+            "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
+            "what": "Current-head high-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
           }
         ],
-        "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass.",
-        "freshness": "STALE",
+        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6292,7 +6497,7 @@
       "id": "L4-07",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 66.15384615384615 (target 90 ≤ value ≤ 100; FAIL); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 69.76744186046511 (target 90 ≤ value ≤ 100; FAIL)",
+      "value": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 66.15384615384615 (target 90 ≤ value ≤ 100; FAIL); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 69.76744186046511 (target 90 ≤ value ≤ 100; FAIL) Manual review FAIL (Codex/v2-l2l4): Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -6598,26 +6803,31 @@
       "reviewDecision": {
         "row": "L4-07",
         "status": "FAIL",
-        "reviewer": "Codex rr-a",
-        "date": "2026-11-07",
-        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
-        "sourceDigest": "dbff13c6ac7d618651fa1f5d27efdc04e1f8d95336a8e5d545f9a8769615d45a",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
         "clauses": [
           {
-            "clause": "combat: reachable ≥ 90 % (no clumps locked at sheds/walls); passive first attack ≤ 10 s (measured 4.87 s); passive attacks ≥ 6/min (tune). PO: \"they are not attacking me\" / \"The Zombies are somehow locked there\". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap.",
+            "clause": "Minimum bounded-path reachable share within 30 m (path ≤ 2.5× direct)",
             "verdict": "FAIL",
-            "note": "Fresh low/complete native reachable share is 85.48387096774194% against the 90% minimum (high/complete 98.2143%; low/high stationary 100%). Repro: npm run qa:accept -- --level L4 --tier both --skip-browser; inspect low/complete “minimum bounded-path reachable share within30m”."
+            "note": "Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/rr-a/evidence/L4-07.json",
-            "sha256": "fe850ddd68cca3a06d71e84a8513db68d7ae917ac08089c64769756d639cbc9f",
-            "what": "Fresh native acceptance row snapshot generated by qa:accept on frozen main; contains current measured clauses for L4-07."
+            "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
+            "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
+            "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
           }
         ],
-        "notes": "A measured current-source counterexample is sufficient for row FAIL; other clauses are not asserted to pass.",
-        "freshness": "STALE",
+        "notes": "Fresh current-head measurement. Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },

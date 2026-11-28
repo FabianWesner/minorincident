@@ -1,0 +1,104 @@
+{
+  "main": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
+  "method": "Headless pooled live step-mode real input, high first then low. No axe, no objective skips or injected actors; original eight frames personally opened.",
+  "rows": [
+    {
+      "tier": "high",
+      "log": "test-results/playtest/v2-l2-market-close-high/log.jsonl",
+      "logSha256": "121fd4192b76fe23d7f5a15e4d839350b45fed21428a1e7bb35bcc1fa2c99af6",
+      "frames": [
+        {
+          "turn": 18,
+          "path": "test-results/playtest/v2-l2-market-close-high/.frames/turn-000018-action.jpg",
+          "sha256": "e01c477e9ebc7f9badebc2b71ceb576d4d7a575fe6f856033671a42a8e0655df",
+          "action": {
+            "move": "d",
+            "ms": 1800
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 19,
+          "path": "test-results/playtest/v2-l2-market-close-high/.frames/turn-000019-action.jpg",
+          "sha256": "b4926b0c869d7e351b5770c4f7e1c23644fae338c02485668d31da15db52e9ad",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 20,
+          "path": "test-results/playtest/v2-l2-market-close-high/.frames/turn-000020-action.jpg",
+          "sha256": "e818895d3070f8d0fcf3b9c996a9ac52a78a6dbad558e8b384dca3728b25f407",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 21,
+          "path": "test-results/playtest/v2-l2-market-close-high/.frames/turn-000021-action.jpg",
+          "sha256": "e717fab3c812fed36697f44e700908ea5fe6c27f92ba75879415a7a441de0a4e",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "log": "test-results/playtest/v2-l2-market-close-low/log.jsonl",
+      "logSha256": "b4f0785712ce3b88865440dd17e009d5dfe97b24759ab93e5a678408a37150bd",
+      "frames": [
+        {
+          "turn": 18,
+          "path": "test-results/playtest/v2-l2-market-close-low/.frames/turn-000018-action.jpg",
+          "sha256": "cf36d1276dc0c43a4df1247c689805e8a65716ed1ee627b0d1c014439db95570",
+          "action": {
+            "move": "d",
+            "ms": 1800
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 19,
+          "path": "test-results/playtest/v2-l2-market-close-low/.frames/turn-000019-action.jpg",
+          "sha256": "63ad5df9e81e6297a793c8b07924321390ffe35f251fc05adcaac176c1dd21df",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 20,
+          "path": "test-results/playtest/v2-l2-market-close-low/.frames/turn-000020-action.jpg",
+          "sha256": "004ba08dadd41f991be5d54cb5d5b4d77038b774468df4c2530548fa0ce04524",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        },
+        {
+          "turn": 21,
+          "path": "test-results/playtest/v2-l2-market-close-low/.frames/turn-000021-action.jpg",
+          "sha256": "a5dabdeed371923ad9100844b31d878baaddf61efc32a29ad87d67797877234d",
+          "action": {
+            "wait": 500
+          },
+          "objective": "Cover the firefighters while they force the doors",
+          "observation": "Market interior and crowd visible; bodies overlap and some are cut by building/overlay. Several figures have raised or varied arm poses; full identity count and individual loop classification are not resolved."
+        }
+      ]
+    }
+  ],
+  "limitations": "Short sparse sequence; actual same-frame zoom not logged, no actor identity or loop ledger. Cutaway and overlap prevent visual count of 30/20 and proof of every bang/press/plead loop.",
+  "protection": "Screen mode default enabled courier damage protection; not a mortal fairness run."
+}

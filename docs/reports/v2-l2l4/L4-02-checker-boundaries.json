@@ -1,0 +1,34 @@
+{
+  "criterion": "docs/qa/level-acceptance.md L4-02: minimum 40 high, 30 low",
+  "checker": "tools/qa/accept/fix53-l4-calm.ts",
+  "checkerSha256": "1c456c35542d47048e0ae4c628a88d76bfc6cdc717fb0bb902b010edd03ad010",
+  "before": "Both tiers required 40; low sample of 30 incorrectly FAIL.",
+  "after": "Low requires 30 and high requires 40.",
+  "controls": [
+    {
+      "tier": "low",
+      "count": 29,
+      "status": "FAIL"
+    },
+    {
+      "tier": "low",
+      "count": 30,
+      "status": "PASS"
+    },
+    {
+      "tier": "high",
+      "count": 39,
+      "status": "FAIL"
+    },
+    {
+      "tier": "high",
+      "count": 40,
+      "status": "PASS"
+    }
+  ],
+  "method": "Invoked the actual adapter with synthetic one-sample compressed matrix and temporary receipt files, then restored prior receipts; asserted the emitted status and target in each case.",
+  "validation": [
+    "npm run typecheck: PASS",
+    "npm run lint: PASS"
+  ]
+}

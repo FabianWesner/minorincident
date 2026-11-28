@@ -1,0 +1,47 @@
+{
+  "method": "Live pooled headless step-mode, real input: eight waits of 4 seconds, then W 3 seconds and D 3 seconds. No MG interaction.",
+  "frames": [
+    {
+      "tier": "high",
+      "turn": 9,
+      "path": "test-results/playtest/v2-l4-calm-walk-high/.frames/turn-000009-action.jpg",
+      "sha256": "342444a61cd23acdb2d01e5684ee538926bc923d276228b3542ef003255ea9b7",
+      "observation": "Registration area: civilians separated around the courier; nearby chairs/table elements are dithered or missing with black peg-like remnants."
+    },
+    {
+      "tier": "high",
+      "turn": 10,
+      "path": "test-results/playtest/v2-l4-calm-walk-high/.frames/turn-000010-action.jpg",
+      "sha256": "55a78909858d798034de8195e442b30e2043d71290b0134f3ff789e9dc3fe6ac",
+      "observation": "After moving right: nearby civilians are separated; a patch of black peg-like furniture remnants remains beside the courier."
+    },
+    {
+      "tier": "low",
+      "turn": 9,
+      "path": "test-results/playtest/v2-l4-calm-walk-low/.frames/turn-000009-action.jpg",
+      "sha256": "74c9e607b5945f665bbd42e6f98a73d2ee1a0e8bd9b0c4b1713d7f638c0dc77b",
+      "observation": "Registration area: civilians separated around the courier; nearby chairs/table elements are dithered or missing with black peg-like remnants."
+    },
+    {
+      "tier": "low",
+      "turn": 10,
+      "path": "test-results/playtest/v2-l4-calm-walk-low/.frames/turn-000010-action.jpg",
+      "sha256": "f554ce616ad63fa52de94c99f54cf02eab784e6e9e93cae9137670aea5696b14",
+      "observation": "After moving right: nearby civilians are separated; a patch of black peg-like furniture remnants remains beside the courier."
+    }
+  ],
+  "logs": [
+    {
+      "tier": "high",
+      "path": "test-results/playtest/v2-l4-calm-walk-high/log.jsonl",
+      "sha256": "bd0c0e36cb2f27ab8a24f509154aacb2fc93ce6604521da9dd8732450a19f889"
+    },
+    {
+      "tier": "low",
+      "path": "test-results/playtest/v2-l4-calm-walk-low/log.jsonl",
+      "sha256": "c044af6fe3dcd637761e3e0b1f113e86423c59555b1e56f643f105d0572ba9c3"
+    }
+  ],
+  "limitations": "One registration-area route per tier, route zoom not separately measured; does not establish spacing throughout the camp or time. Furniture appearance is a candidate visual defect; cause and intent unverified.",
+  "protection": "Screen mode default enabled courier damage protection; not a mortal fairness run."
+}

@@ -3,9 +3,9 @@
   "level": "L3",
   "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:21:55.329Z",
+  "generatedAt": "2026-11-28T02:01:31.278Z",
   "policies": [
     {
       "tier": "low",
@@ -5814,7 +5814,7 @@
       "id": "L3-03",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":19.566666666666666,\"playerWindups\":6,\"groupWindups\":0,\"attacksPerMinute\":18.398637137989777} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.398637137989777 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":16.983333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":38.86162904808636} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":16.983333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 38.86162904808636 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":20.683333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":31.909750201450443} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.909750201450443 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":15.316666666666666,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":47.0076169749728} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4,\"windowSeconds\":15.316666666666666} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 47.0076169749728 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS)",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":19.566666666666666,\"playerWindups\":6,\"groupWindups\":0,\"attacksPerMinute\":18.398637137989777} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.398637137989777 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":16.983333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":38.86162904808636} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":16.983333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 38.86162904808636 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":20.683333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":31.909750201450443} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.909750201450443 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":15.316666666666666,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":47.0076169749728} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4,\"windowSeconds\":15.316666666666666} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 47.0076169749728 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (Codex/v2-l2l4): Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -6019,46 +6019,41 @@
       "reviewDecision": {
         "row": "L3-03",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
-            "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune).",
+            "clause": "Yard combat reachability and attacks",
             "verdict": "PASS",
-            "note": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
+            "note": "Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-03-native.json",
-            "sha256": "6f39659d8eace26cafb305d022a656b49c2e5cd29a4ce5c9cae476a5082e677c",
-            "what": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+            "sha256": "3ef754c4095fc207e9c95a8e6661d28bdf7380bfd06ac77c81953d9beab69ba5",
+            "what": "Current low-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
-            "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
-            "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
+            "what": "Current low-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
-            "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
-            "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+            "sha256": "a1ab38b6b157c72da8572dd7c1a3fce1d66422464c3dd874bec7802978864f8d",
+            "what": "Current high-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
-            "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
-            "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
-            "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
-            "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
+            "what": "Current high-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6066,7 +6061,7 @@
       "id": "L3-04",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/stationary fallback within sixty seconds without player fire: 16.983333333333334 (target 0 ≤ value ≤ 60; PASS); low/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); high/stationary fallback within sixty seconds without player fire: 15.316666666666666 (target 0 ≤ value ≤ 60; PASS); high/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3083,\"firstEligibleTick\":3083,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":683}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.383333333333333} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS); high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3082,\"firstEligibleTick\":3082,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":682}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.366666666666667} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS)",
+      "value": "low/stationary fallback within sixty seconds without player fire: 16.983333333333334 (target 0 ≤ value ≤ 60; PASS); low/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); high/stationary fallback within sixty seconds without player fire: 15.316666666666666 (target 0 ≤ value ≤ 60; PASS); high/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3083,\"firstEligibleTick\":3083,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":683}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.383333333333333} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS); high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3082,\"firstEligibleTick\":3082,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":682}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.366666666666667} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS) Manual review PASS (Codex/v2-l2l4): Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
@@ -6429,56 +6424,54 @@
       "reviewDecision": {
         "row": "L3-04",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
-            "clause": "The police lose without the player: fallback fires by its first-of rule (60 s / 3 turned / 8 inside) also with the idle bot; ≥ 1 officer turns (same id, uniform). PO: \"Ideally the Zombies will win against police when the player isn't doing anything\".",
+            "clause": "Idle first-of fallback and same officer turns",
             "verdict": "PASS",
-            "note": "10 current native checks PASS across low/high. low/stationary fallback within sixty seconds without player fire: 28.483333333333334; target 0 ≤ value ≤ 60 (PASS); low/stationary same-id turned officer ledger: 5; target 1 ≤ value ≤ Infinity (PASS); high/stationary fallback within sixty seconds without player fire: 14.25; target 0 ≤ value ≤ 60 (PASS); high/stationary same-id turned officer ledger: 10; target 1 ≤ value ≤ Infinity (PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3960,\"firstEligibleTick\":3960,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":1,\"elapsed\":775}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":1,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":12.916666666666666}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elaps [full value in proof]; high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":2892,\"firstEligibleTick\":2892,\"expectedCause\":\"turned\",\"actualCause\":\"turned\",\"inside\":6,\"turned\":3,\"elapsed\":492}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":3,\"sameLook\":true,\"fallbackCause\":\"turned\",\"fallbackAfterS\":8.2}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elap [full value in proof]"
+            "note": "Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-04-native.json",
-            "sha256": "2cea3f7786720bcf47bda6b5a4dea850830cdeb9c9b2b3014d918a8367e6b6e4",
-            "what": "10 current native checks PASS across low/high. low/stationary fallback within sixty seconds without player fire: 28.483333333333334; target 0 ≤ value ≤ 60 (PASS); low/stationary same-id turned officer ledger: 5; target 1 ≤ value ≤ Infinity (PASS); high/stationary fallback within sixty seconds without player fire: 14.25; target 0 ≤ value ≤ 60 (PASS); high/stationary same-id turned officer ledger: 10; target 1 ≤ value ≤ Infinity (PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3960,\"firstEligibleTick\":3960,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":1,\"elapsed\":775}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":1,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":12.916666666666666}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elaps [full value in proof]; high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":2892,\"firstEligibleTick\":2892,\"expectedCause\":\"turned\",\"actualCause\":\"turned\",\"inside\":6,\"turned\":3,\"elapsed\":492}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":3,\"sameLook\":true,\"fallbackCause\":\"turned\",\"fallbackAfterS\":8.2}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elap [full value in proof]"
+            "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
+            "what": "Current low-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
-            "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
-            "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
+            "what": "Current high-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
-            "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
-            "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
+            "what": "Current low-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-            "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-            "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-            "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-            "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
+            "what": "Current high-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L3-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (Codex/v2-l2l4): High actual attack tick 827 (attack 763, fallback 1405), player in yard: the entire east gate projects below the 720px viewport; its nearest box corner is y=806.1px. Low frame also projects it below at y=805.1px, but its later retry prevents independent same-interval qualification. Radius reaches 1.493×/1.496× default in high/low samples.",
       "automatedComplete": true,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/v2-l2l4/L3-05-gate-projection.json",
+        "docs/reports/v2-l2l4/L3-05-camera-radius.json"
+      ],
       "expected": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
       "checks": [],
       "historical": {
@@ -6492,9 +6485,6 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame)."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "checkKinds": [
-        "browser-visual"
-      ],
       "review": {
         "tag": "O",
         "instruction": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
@@ -6502,37 +6492,32 @@
       },
       "reviewDecision": {
         "row": "L3-05",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "dbb81c413b1df19a3eb61b63b7384949da70d4f4",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "bf03c71ba786175431982c336dbd1ab49b979fa7",
         "clauses": [
           {
             "clause": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
-            "verdict": "PASS",
-            "note": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "verdict": "FAIL",
+            "note": "High actual attack tick 827 (attack 763, fallback 1405), player in yard: the entire east gate projects below the 720px viewport; its nearest box corner is y=806.1px. Low frame also projects it below at y=805.1px, but its later retry prevents independent same-interval qualification. Radius reaches 1.493×/1.496× default in high/low samples."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-05-browser-ledger.json.gz",
-            "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "file": "docs/reports/v2-l2l4/L3-05-gate-projection.json",
+            "sha256": "4dc8b65ab9808b7d0b0f3172e5f322cf1ab55914c6ba3b2c6e36350d1cbbf2cc",
+            "what": "Recorded physical-input camera poses and individually opened frames, actual gate box, eight projected corners, player-in-frame control and high attack interval."
           },
           {
-            "file": "docs/reports/final-a/L3-05-image-review.json",
-            "sha256": "ba48f3b1dfe7278853a83480db98b55abcec87ece5161edf690cf5222a273822",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
-          },
-          {
-            "file": "docs/reports/final-a/L3-05-current-proof.json",
-            "sha256": "c6c60716324ac5435c139319563d262d2001cf36ca53e095f92752fb529c823d",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "file": "docs/reports/v2-l2l4/L3-05-camera-radius.json",
+            "sha256": "bc4b49f41ce71cd337f801cbb1cfaab11a8b73a400468677f560ec40149c65e7",
+            "what": "Pre-attack and defense camera radii, per-tier frame and sidecar hashes."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: run the PLAYTEST_REVEAL_AUDIT/PLAYTEST_THREAT_AUDIT L3 high command in docs/reports/v2-l2l4/README.md, inspect campaign-L3-defend-high-z1 and its JSON; project L3_GATES[yard-east] through the recorded camera. Gate visibility fails at a sampled instant; continuous coverage and low-tier attack interval remain open.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6540,7 +6525,7 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL)",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (Codex/v2-l2l4): Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -6874,46 +6859,26 @@
       "reviewDecision": {
         "row": "L3-06",
         "status": "FAIL",
-        "reviewer": "Codex rr-a2",
-        "date": "2026-11-07",
-        "commit": "696d3264a773668ecc5c41836bfd3781fbd4d894",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
         "clauses": [
           {
-            "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
+            "clause": "Calm squad following distance by member",
             "verdict": "FAIL",
-            "note": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+            "note": "Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check."
           }
         ],
         "evidence": [
           {
-            "file": "test-results/rr-a2/L3-06-calm/result.json",
-            "sha256": "0acbb258b9d56dc321356d2a6778eb02b54d8a6e42873b82cd289f7aec63cacd",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "test-results/rr-a2/L3-06-calm/formed.png",
-            "sha256": "84661b7ee9183115f73af71439f4f9faa57aa75b78fb88fb72a64552026d5852",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "test-results/rr-a2/L3-06-calm/moving.png",
-            "sha256": "c0496b8ac076dfde0994da49436d4eb6ddbcda5ae9b3539a393ac5db7e9e0f05",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "test-results/rr-a2/L3-06-calm/end.png",
-            "sha256": "0a3bd138aba263a2f0da0d02dae9adb41a011beff9f96b30247cf849fbf886a4",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "docs/reports/rr-a/evidence/L3-06.json",
-            "sha256": "be2f8f05332e7bb7abee472cb32f7d830a72e9054a1b08dedfec04b67e7b3325",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
+            "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
           }
         ],
-        "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
-        "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
-        "freshness": "STALE",
+        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -7067,7 +7032,7 @@
       "id": "L3-08",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[7,22,31],\"maxConcurrent\":100,\"cap\":100},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[5,22,22],\"maxConcurrent\":100,\"cap\":100},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,23,31],\"maxConcurrent\":100,\"cap\":100}],\"vote\":\"2/3\"} (target medianS1<S2<S3;max≤100; 2 of 3 valid seeds pass; PASS); high/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[11,37,43],\"maxConcurrent\":140,\"cap\":140},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[8,32,37],\"maxConcurrent\":140,\"cap\":140},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,33,37],\"maxConcurrent\":140,\"cap\":140}],\"vote\":\"3/3\"} (target medianS1<S2<S3;max≤140; 2 of 3 valid seeds pass; PASS)",
+      "value": "low/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[7,22,31],\"maxConcurrent\":100,\"cap\":100},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[5,22,22],\"maxConcurrent\":100,\"cap\":100},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,23,31],\"maxConcurrent\":100,\"cap\":100}],\"vote\":\"2/3\"} (target medianS1<S2<S3;max≤100; 2 of 3 valid seeds pass; PASS); high/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[11,37,43],\"maxConcurrent\":140,\"cap\":140},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[8,32,37],\"maxConcurrent\":140,\"cap\":140},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,33,37],\"maxConcurrent\":140,\"cap\":140}],\"vote\":\"3/3\"} (target medianS1<S2<S3;max≤140; 2 of 3 valid seeds pass; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -7238,38 +7203,45 @@
       "reviewDecision": {
         "row": "L3-08",
         "status": "PASS",
-        "reviewer": "Codex rr-a",
-        "date": "2026-11-07",
-        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
-        "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
-            "clause": "Pre-populated infected per segment **250 / 625 / 1000 ±20 %**; median live within 30 m rises from S1 to S3; caps 200 / 100 never exceeded.",
+            "clause": "Segment population, density progression and caps",
             "verdict": "PASS",
-            "note": "Apply the written criterion literally: median within30m rises from S1 to S3. Fresh controlled fixtures: low near30 values by seed S1/S2/S3=19/23/24,19/25/34,22/29/67 (medians19→34); high=72/72/79,81/92/76,59/92/77 (medians72→77). Prepopulation 250/600/1030 remains within ±20% of250/625/1000; concurrent caps are not exceeded (max100 low,200 high). All written clauses pass. The automated report flags high because its target additionally requires strict S1<S2<S3; that intermediate-segment condition is absent from the acceptance criterion."
+            "note": "Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/rr-a/evidence/L3-08.json",
-            "sha256": "54141b52d4889f6386f8ac1928f4140e52cac773b3741f692dc946af1d595d5d",
-            "what": "Fresh native acceptance row snapshot generated by qa:accept on frozen main; contains current measured clauses for L3-08."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
+            "what": "Current low-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
+            "what": "Current high-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
           }
         ],
-        "notes": "Fresh native row review passes the published S1-to-S3 median, authored population and cap criteria. The native evaluator currently imposes a stricter monotonic-per-segment target than the published row; this review does not treat that extra target as a criterion.",
-        "freshness": "STALE",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L3-09",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS)",
-      "automatedComplete": true,
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL) Manual review FAIL (Codex/v2-l2l4): Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike.; Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+        "docs/reports/v2-l2l4/L3-09-movement.json",
+        "tools/qa/accept/v2-l3-speed.ts"
       ],
       "expected": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
       "checks": [
@@ -7284,8 +7256,8 @@
             "outcome": "complete",
             "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
           },
-          "target": "regulars use shared tier speed bounds; sprinters≤5% of actual admissions",
-          "status": "PASS",
+          "target": "regulars≤4 m/s; sprinters≤5% of actual admissions",
+          "status": "FAIL",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -7302,8 +7274,8 @@
             "outcome": "complete",
             "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
           },
-          "target": "regulars use shared tier speed bounds; sprinters≤5% of actual admissions",
-          "status": "PASS",
+          "target": "regulars≤4 m/s; sprinters≤5% of actual admissions",
+          "status": "FAIL",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
@@ -7318,40 +7290,50 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible)."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
       "reviewDecision": {
         "row": "L3-09",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
+            "clause": "Regular infected speed ≤ 4.0 m/s",
+            "verdict": "FAIL",
+            "note": "Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike."
+          },
+          {
+            "clause": "Sprinters ≤5%",
             "verdict": "PASS",
-            "note": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+            "note": "Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-09-native.json",
-            "sha256": "6b5c6c8cb7d37eae0482b1ca9e1c74fbcec153a912fae4c6b13032005fe1ce8b",
-            "what": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+            "file": "docs/reports/v2-l2l4/L3-09-movement.json",
+            "sha256": "fc845bb6c4a159893076c3361577d862c0fc880a33bb8f56a2ec2f0567c1b029",
+            "what": "Both-tier per-tick runner positions, actual displacements and run metadata."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-            "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-            "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "tools/qa/accept/v2-l3-speed.ts",
+            "sha256": "953a4c3f960f0eb710d003c6dfbf5bd587c03cf0aab73b7894720197b076afc0",
+            "what": "Read-only observer and exact reproduction command."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-            "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-            "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
+            "what": "Current both-tier spawn census and sprinter fraction."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
+            "what": "Current both-tier spawn census and sprinter fraction."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -10045,146 +10027,6 @@
         "tag": "O",
         "instruction": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
         "clause": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**."
-      },
-      "reviewDecision": {
-        "row": "L3-14",
-        "status": "FAIL",
-        "reviewer": "Codex rr-a2",
-        "date": "2026-11-07",
-        "commit": "63705212e7dcc9144c2176934ab94471a8fbe98b",
-        "clauses": [
-          {
-            "clause": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
-            "verdict": "FAIL",
-            "note": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "test-results/rr-a2/L3-14-rest-low/result.json",
-            "sha256": "91f123611fd890fc9d05019b8e156787a3b65fbc3bd9c44de0c896b946fcf2c4",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-low/before-rest.png",
-            "sha256": "f301276b9c7563d55b69ea7f535c040b833995123871004cb44c9855b16bab41",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-low/after-rest5s.png",
-            "sha256": "220b680e40661210e80ed99b499284e4b8754649e7331a4cda5ddaa6b0c4f7f0",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-low/entered-ring.png",
-            "sha256": "95d463dc032f814f20186ddc57d8ace50b6a4c88d91981e1cf4dc86ccf504f8c",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-low/wait5s.png",
-            "sha256": "c4250bacfbeeeb75cd59f2d5015abfef7bdb58df206b5f89f03cc02a3664e820",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/result.json",
-            "sha256": "397d20e9f6ef8b1fe595d8c2ed352f0b9a6ce1f00e823bc6fb7589a4e47ca1b4",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/overview.png",
-            "sha256": "e2564d85a2cd993768be86ff7091dbc3dbb8ac581b4a90672ae883091e1c426c",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/bus-north.png",
-            "sha256": "792d8830406ab826ba3fdedf509c3fa807985832fc32a5040ccaf75922d08b12",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/bus-south.png",
-            "sha256": "cce331cf62263af48d54b9f98b89ec6c4a4f127056ac6b0838ffa4a5075dc9c8",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/x217-z1.5.png",
-            "sha256": "b2b69bd503cea9528e78e3f5ef660c78af44fed3151faf7b69f92cff16a09904",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/arrival-z1.5.png",
-            "sha256": "94ba1b6340d4a93b395c95006de44591c5838e30409b65812e1057bb353a41a9",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-low/rest5s-z1.5.png",
-            "sha256": "d4356d3c04e5342d1407adcfd35e83430c5c244efd94a5330f038187d31a3f91",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-high/result.json",
-            "sha256": "e7c696ea03a0e2e9cc0d0fd2580eb27a6ec01f9412148be3490ab986ab306c5b",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-high/before-rest.png",
-            "sha256": "c374f46b9eeb907d629eb876670be700141214207b7b307f4bf99e41b94c66bc",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-high/after-rest5s.png",
-            "sha256": "f08f7a1f51d2d0c9fe382fddab05969e1511d7036c5558eead35c16c0eff5934",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-high/entered-ring.png",
-            "sha256": "bf284f27013894e8f633ad59999c0b7e9c51649c7029c849aa84a81f31531059",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-14-rest-high/wait5s.png",
-            "sha256": "5f91f62b043d151cd1aa7dcd87cb6e5eaed3fcad9e1ff249cd4107b332884236",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/result.json",
-            "sha256": "8160ff6de9a1cc07744d61f9357a02af5322b851dc850aa9c44956379d7bd89c",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/overview.png",
-            "sha256": "2eb8a6bfcf4983f0e4bccd087134fa8d5acd6694c2fb04fb57dcd1726b872024",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/bus-north.png",
-            "sha256": "336234babe9a9116404b3be759e4c742656316ef2310191dea8771f95a00f01f",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/bus-south.png",
-            "sha256": "bddd7acabd084869695fce37a49538dc02cec28259bd5e07882c6ac1e6860dec",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/x217-z1.5.png",
-            "sha256": "eebc193004f233b6c008bc2eb989ccf1b258f28e026986379913ce8509ec4968",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/arrival-z1.5.png",
-            "sha256": "a6c6ad6518536bce6d9139861b949986269476827239014ef717ffd0fb2aeb67",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          },
-          {
-            "file": "test-results/rr-a2/L3-replay-high/rest5s-z1.5.png",
-            "sha256": "b01f3d6fc09a5d661362a3d4585daa7c8d86c98359165a9817dc963aef57c552",
-            "what": "Fresh low/high actual mortal native complete snapshots, replayed through production loadResume without actor edits/protection/skips. All20 cited original1280×720 captures opened. Nine actual150HP soldiers, truck+APC and two EVAC buses visible; five waiting civilians stand outside northern bus. FAIL presentation: both bus close views have opaque blank gray windows and no visible seated civilian silhouettes; E21 §5.10 and AC17 explicitly require buses with seated civilians visible. Before-ring rest measured every tick for300ticks/5s at x217:0 active infected inside compound (x>213,abs(z)<27), HP100 throughout, both tiers. Physical KeyS+KeyD enters ring at tick400; production camera radius59.882m with green ring visible in entered-ring capture. Input released; exact doneAt1300−crossedAt400=900ticks/15s in both tiers. Wait5s close views show ring, standing civilians and HUD10s remaining. Overview shows towers, two buses, military vehicles and outside attackers; no claim that all bus occupants are invisible from every possible camera, but required visible seated population is absent in reviewed close and normal pullback views."
-          }
-        ],
-        "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
-        "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
-        "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -10258,11 +10100,15 @@
     },
     {
       "id": "L3-16",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (Codex/v2-l2l4): Current-main high real-input street at tick 8595, actual zoom 1: at most one partial smoke plume visible (target ≥2). Same-pose zoom 1.5 frame shows smoke. Prior high frame also showed none; low tier and PO taste remain open.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/v2-l2l4/L3-16-high-t5425.jpg",
+        "docs/reports/v2-l2l4/L3-high-mortal-summary.json",
+        "docs/reports/v2-l2l4/L3-16-current-high.json"
+      ],
       "expected": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "checks": [],
       "historical": {
@@ -10276,10 +10122,6 @@
         "method": "Manual full-resolution review of campaign-L3-checkpoint-t5257-low-z1-5.jpg, retained as a labelled sheet cell. A single street counterexample fails the universal visible-column clause; this is a visual count, not an authored emitter census."
       },
       "remaining": "Review current smoke counterexamples, then recapture all three streets at both zooms/qualities after a game fix. Light and distinct damage remain PO review; smoke count stays objective.",
-      "checkKinds": [
-        "browser-visual",
-        "PO"
-      ],
       "review": {
         "tag": "P",
         "instruction": "Review Boulevard, Commerce and Oak frames at both zooms/qualities: does the light read late afternoon, and does each street communicate its distinct damage? The required two smoke columns per frame remain an objective check."
@@ -10287,36 +10129,36 @@
       "reviewDecision": {
         "row": "L3-16",
         "status": "FAIL",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "8a4eb56af5da3a3d44d14cf9df1ad8a931709928",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
         "clauses": [
           {
-            "clause": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
+            "clause": "At least two smoke columns in every street frame",
             "verdict": "FAIL",
-            "note": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "note": "Current-main high real-input street at tick 8595, actual zoom 1: at most one partial smoke plume visible (target ≥2). Same-pose zoom 1.5 frame shows smoke. Prior high frame also showed none; low tier and PO taste remain open."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-16-browser-ledger.json.gz",
-            "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "file": "docs/reports/v2-l2l4/L3-16-high-t5425.jpg",
+            "sha256": "b2c81b8dd7d7f9cfb8e8359f2d512ead963bc527fbc53a4bf264813543aa9652",
+            "what": "Personally inspected original high-tier street frame: zero visible smoke columns; fire under damaged bus."
           },
           {
-            "file": "docs/reports/final-a/L3-16-image-review.json",
-            "sha256": "8041380cc0bf496f0b5da9cfb1fa95e8fb5a5e8e71dbfe76b1359cd3239aac0b",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "file": "docs/reports/v2-l2l4/L3-high-mortal-summary.json",
+            "sha256": "0993033b1141ae1272df6ec146ad42a8e44b5e18dc6e862e8eb9154502ef794c",
+            "what": "Mortal real-input high-tier route completed with no skips; this frame is from that run."
           },
           {
-            "file": "docs/reports/final-a/L3-16-current-proof.json",
-            "sha256": "edfda862293b755057b3d643210a6c466d7290e4f62bf3269a626434af242444",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "file": "docs/reports/v2-l2l4/L3-16-current-high.json",
+            "sha256": "86a0b526bdf538c4e0a902b6c1221c062e0c40e9f09fc49b0c5e88b6b3ec3678",
+            "what": "Current-head, personally opened paired street frames with exact SHA256 and logged zoom; zoom 1 shows at most one smoke plume."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: E2E_PORT=5411 SCENE_PORT=5412 PLAYTEST_ACCEPTANCE_CAPTURES=1 PLAYTEST_ACCEPTANCE_CAPTURE_TIERS=single PLAYTEST_NO_FRAME_TIMING=1 node --import tsx/esm tools/playtest/play.ts --levels L3 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-main-high-l3; inspect checkpoint-t8594-high-z1. Low-tier and PO taste remain open.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }

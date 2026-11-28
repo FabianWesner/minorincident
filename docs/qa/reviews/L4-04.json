@@ -1,38 +1,38 @@
 {
   "row": "L4-04",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+  "reviewer": "Codex/v2-l2l4",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
-      "clause": "Scale: 18\u201322 soldiers, 60\u201370 civilians (40 + 24) high, \u2265 40 % armed; low 50 %; living infected plus reservations \u2264 120 / 80, living characters \u2264 190 / 120 (low budget amended 2026-11-02 to retain \u226560 living at first breach; downed/recoverable bodies excluded from low living cap).",
+      "clause": "War population and caps",
       "verdict": "PASS",
-      "note": "low/complete: soldiers at turn=10; target 9 \u2264 value \u2264 11; PASS\nlow/complete: civilian census at turn excluding soldiers=32; target 30 \u2264 value \u2264 35; PASS\nlow/complete: war-phase concurrent infected cap=80; target 0 \u2264 value \u2264 80; PASS\nlow/complete: war-phase concurrent character cap=110; target 0 \u2264 value \u2264 120; PASS\nlow/complete: every war tick observed from turn through line break={\"ticks\":10680,\"firstTick\":1969,\"lastTick\":12648,\"turnAt\":1969,\"lineBreakAt\":12649}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nlow/complete: actual armed civilian share at turn=0.5; target 0.4 \u2264 value \u2264 1; PASS\nlow/complete: war living infected plus reserved slots and pending turns=80; target 0 \u2264 value \u2264 80; PASS\nlow/complete: war living character identity census=111; target 0 \u2264 value \u2264 120; PASS\nlow/stationary: soldiers at turn=10; target 9 \u2264 value \u2264 11; PASS\nlow/stationary: civilian census at turn excluding soldiers=32; target 30 \u2264 value \u2264 35; PASS\nlow/stationary: war-phase concurrent infected cap=80; target 0 \u2264 value \u2264 80; PASS\nlow/stationary: war-phase concurrent character cap=114; target 0 \u2264 value \u2264 120; PASS\nlow/stationary: every war tick observed from turn through line break={\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nlow/stationary: actual armed civilian share at turn=0.5; target 0.4 \u2264 value \u2264 1; PASS\nlow/stationary: war living infected plus reserved slots and pending turns=80; target 0 \u2264 value \u2264 80; PASS\nlow/stationary: war living character identity census=115; target 0 \u2264 value \u2264 120; PASS\nhigh/complete: soldiers at turn=20; target 18 \u2264 value \u2264 22; PASS\nhigh/complete: civilian census at turn excluding soldiers=64; target 60 \u2264 value \u2264 70; PASS\nhigh/complete: war-phase concurrent infected cap=92; target 0 \u2264 value \u2264 120; PASS\nhigh/complete: war-phase concurrent character cap=156; target 0 \u2264 value \u2264 190; PASS\nhigh/complete: every war tick observed from turn through line break={\"ticks\":10716,\"firstTick\":1969,\"lastTick\":12684,\"turnAt\":1969,\"lineBreakAt\":12685}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nhigh/complete: actual armed civilian share at turn=0.453125; target 0.4 \u2264 value \u2264 1; PASS\nhigh/complete: war living infected plus reserved slots and pending turns=109; target 0 \u2264 value \u2264 120; PASS\nhigh/complete: war living character identity census=156; target 0 \u2264 value \u2264 190; PASS\nhigh/stationary: soldiers at turn=20; target 18 \u2264 value \u2264 22; PASS\nhigh/stationary: civilian census at turn excluding soldiers=64; target 60 \u2264 value \u2264 70; PASS\nhigh/stationary: war-phase concurrent infected cap=93; target 0 \u2264 value \u2264 120; PASS\nhigh/stationary: war-phase concurrent character cap=162; target 0 \u2264 value \u2264 190; PASS\nhigh/stationary: every war tick observed from turn through line break={\"ticks\":11400,\"firstTick\":1969,\"lastTick\":13368,\"turnAt\":1969,\"lineBreakAt\":13369}; target one contiguous observation per simulation tick from turn through the tick before collapse; PASS\nhigh/stationary: actual armed civilian share at turn=0.453125; target 0.4 \u2264 value \u2264 1; PASS\nhigh/stationary: war living infected plus reserved slots and pending turns=112; target 0 \u2264 value \u2264 120; PASS\nhigh/stationary: war living character identity census=162; target 0 \u2264 value \u2264 190; PASS"
+      "note": "Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/frozen-native/L4-low-complete.json.gz",
-      "sha256": "6642d7eade70ff99a19f9595b8eae175b316feb99bc9ec8764233a43599528c7",
-      "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
+      "what": "Current-head low-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
     },
     {
-      "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
-      "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
-      "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
+      "what": "Current-head low-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
     },
     {
-      "file": "docs/reports/final-b/frozen-native/L4-high-complete.json.gz",
-      "sha256": "677631ad29ee5d560f110ab3b9a5e3537ddbe88135a2ad96162eabfdcaca25a6",
-      "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
+      "what": "Current-head high-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
     },
     {
-      "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
-      "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
-      "what": "Frozen-head native measurement: L4-04. soldiers at turn; civilian census at turn excluding soldiers; war-phase concurrent infected cap; war-phase concurrent character cap; every war tick observed from turn through line break; actual armed civilian share at turn; war living infected plus reserved slots and pending turns; war living character identity census."
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
+      "what": "Current-head high-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
     }
   ],
-  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
+  "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
+  "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f"
 }

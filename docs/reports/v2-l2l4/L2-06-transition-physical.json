@@ -1,0 +1,160 @@
+{
+  "main": "2fa240fbd2882f4d51c3c9eb0c6f3342978da1ac",
+  "method": "Pooled headless live step-mode physical input; high then low, no axe or actor injection. Simulation tick ledger records 100 ms input slices; each listed original frame personally opened.",
+  "rows": [
+    {
+      "tier": "high",
+      "priorHudTick": 4210,
+      "firstBridgeHudTick": 4217,
+      "firstBridgeInputStart": 4210,
+      "lastTick": 4249,
+      "log": "test-results/playtest/v2-l2-ambush-high/log.jsonl",
+      "logSha256": "54dcacf99a8c2367d97c6a68787c0996f7c1a882f55546871866e18cd66161e2",
+      "timing": "test-results/playtest/v2-l2-ambush-high/timing.jsonl",
+      "timingSha256": "b6c34ed778bdaec43693398242be611a41c5c8ec99cb9d72ac077c6985b4febf",
+      "frames": [
+        {
+          "turn": 39,
+          "beforeTick": 4204,
+          "afterTick": 4210,
+          "objective": "Cover the firefighters while they force the doors",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000039-action.jpg",
+          "sha256": "a8701564bf23f165051b896596c58b1a9a1b29da02571d0e03284c659c06afb6",
+          "observation": "Closed doors and forcing HUD; no reliably identified ambush actor."
+        },
+        {
+          "turn": 40,
+          "beforeTick": 4210,
+          "afterTick": 4217,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000040-action.jpg",
+          "sha256": "dcf21137a1383882fcbb439a923542c359a5889de1fd87cccd3ff5cb927b86e2",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 41,
+          "beforeTick": 4217,
+          "afterTick": 4223,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000041-action.jpg",
+          "sha256": "336c4cd1386f46c0faff454e67721b05a713c4d5583f53bfe3b802dd0c289ef9",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 42,
+          "beforeTick": 4223,
+          "afterTick": 4230,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000042-action.jpg",
+          "sha256": "4e50a66cb533ab302600d417e9567e5ca3ad2517a9f42ce5131bfba9e765838a",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 43,
+          "beforeTick": 4230,
+          "afterTick": 4236,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000043-action.jpg",
+          "sha256": "56f16ef19fceff658aa47b78ef2994b643284b90bdd961dd8847380daae9f89a",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 44,
+          "beforeTick": 4236,
+          "afterTick": 4243,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000044-action.jpg",
+          "sha256": "8f5df6fdc152289234b99c9b6da809c2ad88feabd14b19c29dff9e1b4df41df9",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 45,
+          "beforeTick": 4243,
+          "afterTick": 4249,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-high/.frames/turn-000045-action.jpg",
+          "sha256": "1826da71609564ecf015a3948926e14ca337dcfbfbb12ef54e336c9e351c1adc",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "priorHudTick": 4206,
+      "firstBridgeHudTick": 4212,
+      "firstBridgeInputStart": 4206,
+      "lastTick": 4243,
+      "log": "test-results/playtest/v2-l2-ambush-low/log.jsonl",
+      "logSha256": "5ace25607f780a3c875026368aa912b4b4aef7aabf8cbaf741995a2de2b62564",
+      "timing": "test-results/playtest/v2-l2-ambush-low/timing.jsonl",
+      "timingSha256": "03552f7c253672303117485b93253c3ebfb7eb355d20a8065f4da695d1542442",
+      "frames": [
+        {
+          "turn": 43,
+          "beforeTick": 4200,
+          "afterTick": 4206,
+          "objective": "Cover the firefighters while they force the doors",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000043-action.jpg",
+          "sha256": "19de0169982bf68a33b1889855484ce3cc3ab955e1de037dabe1f72c917821d0",
+          "observation": "Closed doors and forcing HUD; no reliably identified ambush actor."
+        },
+        {
+          "turn": 44,
+          "beforeTick": 4206,
+          "afterTick": 4212,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000044-action.jpg",
+          "sha256": "aab9a558dbc23a082b59594bff80d013bc2a5e094f2ae0d63b93079d058e6d86",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 45,
+          "beforeTick": 4212,
+          "afterTick": 4218,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000045-action.jpg",
+          "sha256": "46ebb7d152f35756d3c4007cb138f319abd723c3d8b7b1522f9ae2aecfbcbfeb",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 46,
+          "beforeTick": 4218,
+          "afterTick": 4224,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000046-action.jpg",
+          "sha256": "030b9f5183e500cca9cb3e17ba6190d58637a3a15d71c39ca09799b26beb343d",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 47,
+          "beforeTick": 4224,
+          "afterTick": 4230,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000047-action.jpg",
+          "sha256": "83a22c72b6e15cedbffe2d4e728985b3b5488348156cffedc10555215d83604f",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 48,
+          "beforeTick": 4230,
+          "afterTick": 4236,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000048-action.jpg",
+          "sha256": "3ce556f30ca01d7c6bbe96bce9d040232e069ee145873dcbe50f8413ee1571c7",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        },
+        {
+          "turn": 49,
+          "beforeTick": 4236,
+          "afterTick": 4243,
+          "objective": "Reach the police checkpoint at the bridge \u00b7 147\u00a0m",
+          "path": "test-results/playtest/v2-l2-ambush-low/.frames/turn-000049-action.jpg",
+          "sha256": "4f9744587a873093d1c4b21665281e32712bf5855a8f91399ce3427d7915bc53",
+          "observation": "Open doors/bridge HUD; red minimap dots appear in later frames, but small figures are not reliably identified as ambush actors."
+        }
+      ]
+    }
+  ],
+  "limitations": "HUD change bounds rather than directly timestamps doorsOpen; 6\u20137 tick gaps between frames may hide a brief appearance. Minimap red dots alone do not prove a visible infected body. Actual same-frame zoom and actor identity not logged.",
+  "protection": "Screen mode default enabled courier damage protection; not a mortal fairness run."
+}

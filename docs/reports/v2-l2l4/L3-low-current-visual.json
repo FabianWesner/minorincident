@@ -1,0 +1,56 @@
+{
+  "head": "233eab905766440b4092ce718aa2191370de2b3c",
+  "method": "Pooled headless physical input; each original opened at 1280×720.",
+  "run": {
+    "finished": true,
+    "skipped": [],
+    "deaths": 3,
+    "attacks": {
+      "weapon.handgun": 315
+    },
+    "wallSeconds": 245
+  },
+  "frames": [
+    {
+      "file": "test-results/playtest/v2-main-low-l3/captures/campaign-L3-checkpoint-t5068-low-z1.jpg",
+      "sha256": "a63cf4bf39aac997bce199fafa22a9bbca46de09b3a1a094cf092bcd7a84e062",
+      "actualZoom": 1,
+      "actualQuality": "low",
+      "tick": 5068,
+      "observation": "Large smoke cloud above house; squad and courier on sidewalk."
+    },
+    {
+      "file": "test-results/playtest/v2-main-low-l3/captures/campaign-L3-checkpoint-t5068-low-z1-5.jpg",
+      "sha256": "5d333c38c050efdba42c98d105c1ac9bb7031612855487aa648d21adaae0a4e0",
+      "actualZoom": 1.5,
+      "actualQuality": "low",
+      "tick": 5068,
+      "observation": "Large smoke cloud above house; squad, courier and red car on street."
+    },
+    {
+      "file": "test-results/playtest/v2-main-low-l3/captures/campaign-L3-checkpoint-t8669-low-z1.jpg",
+      "sha256": "f53ca4c53986243d90f7036d017eea71a176fd22a109765817e5d33ce610c4f6",
+      "actualZoom": 1,
+      "actualQuality": "low",
+      "tick": 8670,
+      "observation": "Dark smoke fills upper street; courier and squad visible amid infected."
+    },
+    {
+      "file": "test-results/playtest/v2-main-low-l3/captures/campaign-L3-checkpoint-t8669-low-z1-5.jpg",
+      "sha256": "e87f843d341676e340631ea8b34e513ed5625602c698b88ded58ec5daccfd8c2",
+      "actualZoom": 1.5,
+      "actualQuality": "low",
+      "tick": 8670,
+      "observation": "Dark smoke above street; courier and squad visible, foreground roof cut away."
+    },
+    {
+      "file": "test-results/playtest/v2-main-low-l3/captures/campaign-L3-checkpoint-t12274-low-z1-5.jpg",
+      "sha256": "f8a537460bde6021897e05732381d8a2c126406947c000a3efe544a37ac14735",
+      "actualZoom": 1.5,
+      "actualQuality": "low",
+      "tick": 12275,
+      "observation": "Curved raised deck with squad and infected on surface; no trajectory conclusion from still."
+    }
+  ],
+  "limitation": "Sparse stills cannot establish every-frame smoke count, complete ramp geometry or absence of persistent stuck entities."
+}
