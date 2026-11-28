@@ -187,7 +187,7 @@ export function l3Segment(x: number): number { const s = l3.map.segments; return
  * frontages leave two distinct columns in the close street framing too. */
 export const l3SmokePlumes = [
   ...Object.values(l3.map.streets).flatMap(street =>
-    Array.from({ length: 273 }, (_, i) => [-1, 1].flatMap(side => [1, 2, 3, 4, 6].map(distance => ({ x: -128 + i + side * 2, z: street - side * distance, baseY: .25, size: 1.15 + (i % 3) * .05 })))).flat()),
+    Array.from({ length: 273 }, (_, i) => [-1, 1].flatMap(side => [1, 2, 3, 4, 6].map(distance => ({ x: -128 + i + side * 2, z: street - side * distance, baseY: .25, size: 1 + (i % 3) * .04 })))).flat()),
   // Station/On-ramp roads, Elm/Pine Cross and the three narrow mid-block alleys.
   ...[-120, -55, 40, 128, -90, -15, 85].flatMap(street =>
     Array.from({ length: 57 }, (_, i) => [-1, 1].map(side => ({ x: street - side * ([-90, -15, 85].includes(street) ? .8 : 2), z: -28 + i + side * 2, baseY: .25, size: ([-90, -15, 85].includes(street) ? .6 : .88) + (i % 3) * .04 }))).flat()),

@@ -712,7 +712,7 @@ export class Blasts extends Group {
         if (!c) {
           // Seed an already-burning skyline, rather than waiting ten seconds
           // for smoke to reach the roof. Reuse the existing bounded puff pool.
-          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size * (low ? 1.2 : 1), heat: 2, acc: low ? 18 : 24, shade: .05, cloud: 0, street: true };
+          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size, heat: 2, acc: low ? 18 : 24, shade: .05, cloud: 0, street: true };
           this.cloudColumns.set(key, c);
         }
         c.rate = low ? 3 : 4;
