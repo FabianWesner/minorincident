@@ -1,123 +1,28 @@
 {
   "row": "L10-06",
-  "status": "PASS",
-  "reviewer": "Codex final-c",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
-      "verdict": "PASS",
-      "note": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+      "verdict": "FAIL",
+      "note": "Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: run L10 controlled acceptance fixtures and inspect native dog speed ratio. Attack fixture observes 0.65 s telegraph, 1.08 m reach, 10 HP damage and 2 s cooldown. Visual distinction remains unreviewed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
-      "sha256": "4de1ac590068f58716bc6b97487a96f724d0d00c0f19ba159363734e995a7240",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+      "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
+      "sha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
+      "what": "Current controlled dog attack and speed fixture."
     },
     {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-save.json.gz",
-      "sha256": "856e07979225c6b82272f6c606e0ab90d9b9518dac8002d5543720a237cb8732",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-log-dog-look.jsonl.gz",
-      "sha256": "d0e3dddb482c9bc6e8573cbe9a9e55da5eacb3baaed8d0bbb5c6e0ccc9ca20af",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
-      "sha256": "2e6cab001881c3cbf36a32131b977cf2563f56df1bd45f8de75786aaeb5f9dcd",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-log-dog-look.jsonl.gz",
-      "sha256": "aaa4bafcb25034e70497ce38ced0a55252f6f3d61da89d9ebe0f2b00019bfc1d",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input.json",
-      "sha256": "3f679bac08fd03d79fbbfd5903b9076af9dd0f7329f05c5fa6110f04c4a0055e",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
-      "sha256": "348bb0904f9ff6f05bb63189eddf8a9fe59d22dca2a8e212535e79b86a0255ca",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input.json",
-      "sha256": "ef5ae9dea35fe5a0ac0e37ccace42f985d7b6639f519655602ca70d55ef8eddd",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
-      "sha256": "adc12dc5abed8ffad46b98e2d1ee9a9d5c501b32ceefb42fdc23c8a7e2fe6338",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/producer.ts",
-      "sha256": "bf78fbace2c12fc7cb0cacb602fb1a5fcc319e1e7ee3ed4f162f9c97546f254c",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-log-dog-look.jsonl.gz",
-      "sha256": "a3c9b420ad0f8344761dad90066815b1fe8188fb7abc93983dc273427130f6cc",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input.json",
-      "sha256": "0610ea71db59d0fa0e2dd6291665b6429eb7514cffe69253a944966f82c9e117",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-dog-save-provenance.json",
-      "sha256": "c27f5142f1d29cc6a1238b40711361de8129152f569f9defac249c552dad9b0c",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/capture-review.json",
-      "sha256": "f11e74672b2088be9cda633de8d88aa64978c2e30850b978c8fb0c260747ba69",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-save.json.gz",
-      "sha256": "9e684bd76017f434e502aedbf3dd245afaffc5954be7db3e2f6ff5bcdf8a20d9",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/appearance.json",
-      "sha256": "a0d9554592f28be4be589ca4b90658544beab258855ed6d4b12d4cad67af7729",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-log-dog-look.jsonl.gz",
-      "sha256": "9168c1a98f05c040959d1beffbf19123e2ca3e514f397db714680f5a26526ffb",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/l10-dog-look-r10-producer.ts",
-      "sha256": "fe32fee59bc0ab19e76aea023141c9aefa5cc7278b7e5dad08ad3b0d187da469",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
-    },
-    {
-      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input.json",
-      "sha256": "12316811abffa93593a8667a29c8790a1e85eaca001bf382d14a6923062f2355",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
-      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
-    },
-    {
-      "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
-      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
-      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+      "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
+      "sha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
+      "what": "Current controlled dog attack and speed fixture."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "Current controlled fixture; visual clause remains open.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

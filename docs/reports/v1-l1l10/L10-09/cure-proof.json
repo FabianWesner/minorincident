@@ -1,0 +1,320 @@
+{
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "a6754963d9deb0027e76de1f5b460ef7dd3dc75a",
+  "toolSha256": "982940b078be1a1d0b7854dcb86af7a2152a96ec1f9005678a50377b02da1283",
+  "method": "Read-only actual native cure grant and route movement observations; canonical final state identical. Separately replay the naturally reached post-grant production Resume snapshot with and without only the canister flag/item. All actors, positions, objectives, time and RNG identical. Four cardinal keyboard inputs for120ticks each; compare every-tick XYZ trajectory hashes exactly, retaining displacements to rule out an entirely blocked setup. Checkpoint death and physical subtitle/backpack appearance are separate evidence.",
+  "rows": [
+    {
+      "tier": "high",
+      "grant": {
+        "tick": 41644,
+        "before": {
+          "LEFT": [
+            "weapon.fists"
+          ],
+          "RIGHT": [
+            "weapon.kick",
+            "weapon.machete",
+            "weapon.hunting-rifle",
+            "weapon.molotov",
+            "weapon.assault-rifle"
+          ]
+        },
+        "after": {
+          "LEFT": [
+            "weapon.machete"
+          ],
+          "RIGHT": [
+            "weapon.machete",
+            "weapon.hunting-rifle",
+            "weapon.molotov",
+            "weapon.assault-rifle",
+            "weapon.handgun",
+            "weapon.shotgun",
+            "weapon.nail-gun",
+            "weapon.flamethrower",
+            "weapon.rocket-launcher",
+            "weapon.pipe-bomb"
+          ]
+        },
+        "carried": true,
+        "installed": false,
+        "item": true
+      },
+      "movement": {
+        "before": {
+          "best60TickMetres": 4.50649880428351,
+          "median60TickMetres": 4.498756159256445,
+          "windows": 36635
+        },
+        "carried": {
+          "best60TickMetres": 9.381194649799253,
+          "median60TickMetres": 9.369208122487041,
+          "windows": 15160
+        }
+      },
+      "controlledMovement": [
+        {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "fd0a3a624ec139f4d40446adb6c19d02cda0b88cd294da1f0fcf2f5499939ae2",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "fd0a3a624ec139f4d40446adb6c19d02cda0b88cd294da1f0fcf2f5499939ae2",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": -1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 7.76655623807927,
+              "trajectorySha256": "aa3d8d2da6f07146aa400d92ac9f19e26d9a6fc83db3a2bcbaee2797846561f1",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 7.76655623807927,
+              "trajectorySha256": "aa3d8d2da6f07146aa400d92ac9f19e26d9a6fc83db3a2bcbaee2797846561f1",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": 1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.226098462785897,
+              "trajectorySha256": "5bba8f60ac86f080a22f0c181cb92511ca52894180d77ccfa58344df553989e6",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.226098462785897,
+              "trajectorySha256": "5bba8f60ac86f080a22f0c181cb92511ca52894180d77ccfa58344df553989e6",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": -1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.487009588207039,
+              "trajectorySha256": "41ae3e3773c42b8c4a84648f22572871a35447c59e98d815267bc8faee579c95",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.487009588207039,
+              "trajectorySha256": "41ae3e3773c42b8c4a84648f22572871a35447c59e98d815267bc8faee579c95",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "physicalSeed": {
+        "path": "test-results/v1-l1l10/L10-09-high-research-save.json.gz",
+        "sha256": "4534db544b030cdb35503558defaeac8b90f535c3e851913b35e0c068e917893"
+      },
+      "snapshotSha256": "2ed88c13e7ed88d85621702b26609a39985d5b138f909b5ee7671d9ac3da286c",
+      "nativeStateHash": "f888020e",
+      "controlIdentical": true
+    },
+    {
+      "tier": "low",
+      "grant": {
+        "tick": 36098,
+        "before": {
+          "LEFT": [
+            "weapon.fists"
+          ],
+          "RIGHT": [
+            "weapon.kick",
+            "weapon.machete",
+            "weapon.hunting-rifle",
+            "weapon.molotov",
+            "weapon.nail-gun",
+            "weapon.assault-rifle"
+          ]
+        },
+        "after": {
+          "LEFT": [
+            "weapon.machete"
+          ],
+          "RIGHT": [
+            "weapon.machete",
+            "weapon.hunting-rifle",
+            "weapon.molotov",
+            "weapon.nail-gun",
+            "weapon.assault-rifle",
+            "weapon.handgun",
+            "weapon.shotgun",
+            "weapon.flamethrower",
+            "weapon.rocket-launcher",
+            "weapon.pipe-bomb"
+          ]
+        },
+        "carried": true,
+        "installed": false,
+        "item": true
+      },
+      "movement": {
+        "before": {
+          "best60TickMetres": 4.505498676106561,
+          "median60TickMetres": 4.4986427771125905,
+          "windows": 31518
+        },
+        "carried": {
+          "best60TickMetres": 9.381380226865197,
+          "median60TickMetres": 4.503456810421357,
+          "windows": 17158
+        }
+      },
+      "controlledMovement": [
+        {
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "0b5b6fae24c83ea4b043d3a6967bcfae2d5d04ed468ed1d85a419890bd11a815",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.749755859375,
+              "trajectorySha256": "0b5b6fae24c83ea4b043d3a6967bcfae2d5d04ed468ed1d85a419890bd11a815",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": -1,
+            "z": 0
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 7.77838242653668,
+              "trajectorySha256": "a12893799d08d07011da3859ff57473443d9931bec233ef1604843d86be55b6e",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 7.77838242653668,
+              "trajectorySha256": "a12893799d08d07011da3859ff57473443d9931bec233ef1604843d86be55b6e",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": 1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.230599488514406,
+              "trajectorySha256": "87d637b0c7066ccb08c7188e0f3f51c909bc01d859ecd1e81cc84c78eeba11a7",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.230599488514406,
+              "trajectorySha256": "87d637b0c7066ccb08c7188e0f3f51c909bc01d859ecd1e81cc84c78eeba11a7",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        },
+        {
+          "move": {
+            "x": 0,
+            "z": -1
+          },
+          "ticks": 120,
+          "cases": [
+            {
+              "carried": false,
+              "displacement": 8.474017577975664,
+              "trajectorySha256": "36f41185907ddbeecdb0a3e9e6b459889b4b93dedbb9661ca5f4539316122cc8",
+              "finalCarried": false,
+              "finalItem": false
+            },
+            {
+              "carried": true,
+              "displacement": 8.474017577975664,
+              "trajectorySha256": "36f41185907ddbeecdb0a3e9e6b459889b4b93dedbb9661ca5f4539316122cc8",
+              "finalCarried": true,
+              "finalItem": true
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "physicalSeed": {
+        "path": "test-results/v1-l1l10/L10-09-low-research-save.json.gz",
+        "sha256": "0b8aacb561d9f04545b654bf000dec5d2b0ec2bb356dce99f60699237f58b215"
+      },
+      "snapshotSha256": "f6e73bdf45e3f776b3853800634ad8de7e56c07a4c35e5140164c80661ce6322",
+      "nativeStateHash": "057fea60",
+      "controlIdentical": true
+    }
+  ]
+}

@@ -1,28 +1,38 @@
 {
   "row": "L10-03",
-  "status": "PASS",
-  "reviewer": "Codex rr-b",
-  "date": "2026-11-07",
-  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
-      "verdict": "PASS",
-      "note": "Fresh current-main low/high complete-route census: all12 region/tier windows have joint same-tick count/species witnesses; all contiguous intervals are covered and upperViolations=0. R6 low witness: tick41670, 68 infected/4 dogs/3 Alphas. R6 high: tick41790, 97/5/2. R7 peaks: low94 and high189; same-tick lower-bound witnesses75low/140high. Handgun pickup at tick3497; first residential dogs at4950, zero premature dog ticks. Both native final-state controls match."
+      "clause": "Seven route regions connect in order: creek/corn → farmstead and broken farms → restricted military zone → safe research hangar → dispersal route/complex. Total target ≈15 min with no idle padding.",
+      "verdict": "FAIL",
+      "note": "High native complete-input seed1 reaches cure release at 1349.35s (22m29.35s), 449.35s above 900s and 149.35s above the evaluator 1200s upper bound; low reaches release at 1194.37s (19m54.37s). High has four deaths and checkpoint retries, low three; these times include retry travel and do not establish an independently skilled or death-free duration. Native objective ledger visits crash, farmstead, restricted zone, research hangar and delivery/dispersal in that order; full visual region connectivity and idle-padding attribution remain unmeasured. Repro: L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>."
     }
   ],
   "evidence": [
     {
-      "file": "test-results/rr-b/L10-03-simultaneous-census.json",
-      "sha256": "d20a856623798de41564c7bb3084056ef68e0342704ae60a45370b4dff5c49f4",
-      "what": "Fresh same-tick per-tick current-main L10 regional census for both tiers, including interval coverage, counts, species composition, pickup order, and canonical control hashes."
+      "file": "docs/reports/v1-l1l10/L10-04/pacing.json",
+      "sha256": "0483108bc9faf5a6fbecf720004dcbaaedbe506ee97c48fe5034ac78afbb9492",
+      "what": "Native high/low complete-input timing, objective and death ledger."
     },
     {
-      "file": "test-results/rr-b/L10-03-native.json",
-      "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
-      "what": "Fresh current-main L10 native acceptance report with complete-route group-size checks and source identity."
+      "file": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
+      "sha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6",
+      "what": "Canonical high native complete route."
+    },
+    {
+      "file": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
+      "sha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051",
+      "what": "Canonical low native complete route."
+    },
+    {
+      "file": "tools/qa/accept/evaluate.ts",
+      "sha256": "642c37a369946252bcea07cbdb506db06bb0b4e45d7edb5462ddd50b982c0b04",
+      "what": "Acceptance evaluator applies 600–1200 s as the numerical band for approximately 15 minutes."
     }
   ],
-  "notes": "Fresh native review; same-tick census and native complete-route group-size checks pass.",
-  "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af"
+  "notes": "High-tier native route duration counterexample against the evaluator’s 10–20 minute band; physical route remains incomplete and seven-region visual review is open.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

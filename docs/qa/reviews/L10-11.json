@@ -1,28 +1,33 @@
 {
   "row": "L10-11",
-  "status": "PASS",
-  "reviewer": "Codex rr-b",
-  "date": "2026-11-07",
-  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
-      "verdict": "PASS",
-      "note": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
+      "clause": "Final assault only: at most 22 high / 14 low, small waves from three directions with breathers living ordinary infected; stationary ground policy: reachable ≥ 90 %, infected attacks on player ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport.",
+      "verdict": "FAIL",
+      "note": "Both 240s protected stationary holds: all living infected peak 21 high/13 low; bounded-path minimum 100% both; hold player attacks 338.87/303.57 per minute. Persistent id 115 in both, already within 25m on charge activation, but same ID moved 313.957m high at tick 43140 / 291.781m low at tick 43547 in one tick during earlier overpass staging. Independent complete-route audit identifies staging without death or restore, and source directly assigns the Mega position beside the player. Thus it does not continuously walk the journey into the arena. Small-wave directions, breathers and reinforcement continuity remain unmeasured; this is a counterexample, not a complete positive review. No physical L10 run reached finale."
     }
   ],
   "evidence": [
     {
-      "file": "test-results/rr-b/L10-11-hold-proof.json",
-      "sha256": "8d62755602ef90a839a4f98630d5a5937dc8276252e4edea11e3e4efb2b5f209",
-      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
+      "file": "docs/reports/v1-l1l10/L10-11/hold.json",
+      "sha256": "d3f0325d5d04c1751c3fdd0d0793c3d422d941ee14b369deafe2cc3d76383e86",
+      "what": "240-second stationary assault windows, both tiers, including same-ID trajectory from introduction."
     },
     {
-      "file": "test-results/rr-b/L10-11-native.json",
-      "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
-      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
+      "file": "docs/reports/v1-l1l10/L10-07/jump-audit.json",
+      "sha256": "3f0eec1f3648f9d60f92a19a6afd11dcf586407bb174a57b4b9411548fbaade0",
+      "what": "Independent native complete route records same overpass teleport without restore."
+    },
+    {
+      "file": "src/sim/missions/LevelTenStory.ts",
+      "sha256": "b335092a0926283d486a952ae29f8a7753029d5efc5b088a7010a8f6a84ac71a",
+      "what": "Overpass spectacle assigns existing pursuing Mega a position near the player."
     }
   ],
-  "notes": "All native numeric clauses covered at both tiers; full-window attack rates are distinguished from the charge-step interval. No separate visual or quiet frame-timing claim.",
-  "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af"
+  "notes": "The continuity failure is shared with L10-07; route/hold use native input and the hold suppresses player damage. Independent current stationary state-hash control was unavailable.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

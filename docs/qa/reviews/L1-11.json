@@ -1,33 +1,68 @@
 {
   "row": "L1-11",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "d7f1938e7c70f826ccec279c2f12aa65844c67ad",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
   "clauses": [
     {
-      "clause": "Bicycle: 7.5 m/s, WASD relative to the bike; after dismount it stands on the player's side of any fence/wall.",
+      "clause": "Bicycle: 7.5 m/s, WASD relative to the bike.",
       "verdict": "PASS",
-      "note": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
+      "note": "Both tiers, physical W held 7.5 m/s actual displacement for 84 consecutive ticks; W+A heading −0.016→−0.505 rad, W+D −0.520→−0.145 rad. Physical S reached −1.8 m/s in separate observed segments; reverse speed is not specified by this row."
+    },
+    {
+      "clause": "After dismount it stands on the player's side of any fence/wall.",
+      "verdict": "PASS",
+      "note": "Physical E at depot wall and privacy fence 127 on both tiers leaves player and bike on the same side. Fence minimum X −25.635; player X −26.546 and bike X −26.649; both unmounted. This samples one wall and one fence, not every geometry configuration."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-11-browser-ledger.json.gz",
-      "sha256": "8f129ea9ef03cad721c03b96b3bcd8fdc23f2107e66d9367c6fc647e4304de5c",
-      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
+      "file": "docs/reports/v1-l1l10/L1-11/final-summary.json",
+      "sha256": "d090a7221f515464807649718ecd8e465e52b851d201e30bddced4bd5eb6dde1",
+      "what": "Both-tier physical input and coordinate/collider measurements with full receipt hashes."
     },
     {
-      "file": "docs/reports/final-a/L1-11-image-review.json",
-      "sha256": "fe0d8b0d2bc83e566ee7fb74c71affdfc03bade4228d7a19c357857d2b085ce2",
-      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
+      "file": "test-results/v1-l1l10/L1-11-high-replay/captures/04-forward.png",
+      "sha256": "dd49b88f1609478b63989c1f29dda4f67484121002ceada60d6f15f07b5a2cfc",
+      "what": "high forward: inspected bicycle, courier and adjacent street, wall or fence."
     },
     {
-      "file": "docs/reports/final-a/L1-11-current-proof.json",
-      "sha256": "c979b1982f9e650276b098ac06dc56def22584e39b258ad04146a378ffad146d",
-      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
+      "file": "test-results/v1-l1l10/L1-11-high-fence/captures/06-fence-dismount.png",
+      "sha256": "0d825acee202b1aaa0edbec1dd916a878f1bf1eee3afd56a8dee35ce6b73607b",
+      "what": "high fence-dismount: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-11-high-fence-zoom/captures/07-fence-dismount-z1.5.png",
+      "sha256": "ccecd9121e3b1a31fd8b2923f03ea8abf54e8f96af5ee744c12977bf3d6da75e",
+      "what": "high fence-dismount-z1.5: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/bike-high/captures/03-wall-dismount.png",
+      "sha256": "e9b36de4d483ac79fb4e0f235dd0da90c9f656a85d22166512a0023b1d095b00",
+      "what": "high wall-dismount: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-11-low-speed/captures/04-forward.png",
+      "sha256": "8c10a89097df9844592734f27641af2b5266ae564587281cadd6a454bd418e33",
+      "what": "low forward: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-11-low-fence/captures/06-fence-dismount.png",
+      "sha256": "7e893e415312d0caf2d9dd21f877ef102bee18740c14dd930011066be902d5b3",
+      "what": "low fence-dismount: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-11-low-fence-zoom/captures/07-fence-dismount-z1.5.png",
+      "sha256": "513cd7cbc5f14bea53f3a6fea321c4fc9e9759c6dad2884c71703cb33a293432",
+      "what": "low fence-dismount-z1.5: inspected bicycle, courier and adjacent street, wall or fence."
+    },
+    {
+      "file": "test-results/v1-l1l10/bike-low/captures/03-wall-dismount.png",
+      "sha256": "66e85f89c9d620117c671b6d54c34bbdc3594fa574e87fdbcfe55fd7b694602f",
+      "what": "low wall-dismount: inspected bicycle, courier and adjacent street, wall or fence."
     }
   ],
-  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Focused physical WASD/E after native parcel pickup, with declared coordinate guidance; not a continuous mortal route. Wall samples predate L8/L9-only source changes. Selected images inspected at zoom 1 and 1.5.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

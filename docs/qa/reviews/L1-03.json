@@ -1,33 +1,138 @@
 {
   "row": "L1-03",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
       "verdict": "PASS",
-      "note": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
+      "note": "Both quality sequences: 321 tick samples, same clerk ID 155 high / 148 low, 94 transfer ticks with zero hidden transfer ticks, parcel transfers, return walks inside to z -39.34 before clerk removal, and door latch closes. All 22 frames inspected: clerk carries parcel, offers it, waves, turns toward doorway; later the open door and then closed door remain with courier holding parcel. Entry/return inside is partly occluded by shop wall. Seven broken-data controls reject. Native bot reaches onset, then idle capture; separate current physical L1 runs completed both tiers."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-03-input-ledger.json.gz",
-      "sha256": "43ecd80d8a3722f2dce5b3f8a82e84efd65e1e9ff2ed88271c1e36bfa9937717",
-      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
+      "file": "docs/reports/v1-l1l10/L1-03/browser-ledger.json.gz",
+      "sha256": "6ef750e8cfebc32bcfd38e723f2e292e1cfe91648a689287dedf8921e8f9060b",
+      "what": "Current same-actor ledger or qualification proof."
     },
     {
-      "file": "docs/reports/final-a/L1-03-image-review.json",
-      "sha256": "255de74d638389fc8e09b9794b4e1e35db0d8e53b45a63d621bc1ad13ad300d7",
-      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
+      "file": "docs/reports/v1-l1l10/L1-03/L1-03-story-proof.json",
+      "sha256": "25d1fa4ea71bf0dff663dc22b3fcbcf4129116184f40be0437820d30eb1801bd",
+      "what": "Current same-actor ledger or qualification proof."
     },
     {
-      "file": "docs/reports/final-a/L1-03-story-proof.json",
-      "sha256": "75fdadc6a4af349de8bb42f92d616761039027504ac45df6ff6eccc1ac49fa53",
-      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0000-npc-carry.png",
+      "sha256": "c4f7db0b423030a8f400bd8eb7ddcab7a5d56e2cc190679ead7830f4d2bcf6cb",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0060-npc-carry.png",
+      "sha256": "938c850ec12d350ff5611582509313f2407a98ac5890893db32f9ba9932ccf33",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0082-npc-give.png",
+      "sha256": "24ddc65b3aa88155d2a460580db33bff8799223b07efc6f3ab7923b2c8ffc910",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0120-npc-give.png",
+      "sha256": "d17555a5365117c67b8822f032b815641d1650ffea5cd3580478aaf0ec336f51",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0136-npc-wave.png",
+      "sha256": "824b94068e3f34da965206b7ed93efdf3b31df3e4dfa42dfb1efda8332cecbb2",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0176-npc-walk.png",
+      "sha256": "17cd98fabf783c3b0dfc3a9f2671bd3db02c67b630fda212e0c6494fb274ae5d",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0180-npc-walk.png",
+      "sha256": "45b215a40cf89b2813da3484fdca7f9eef0347532bbaa8adea0b13e8d715c98b",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0240-npc-walk.png",
+      "sha256": "88337ed13ba5b7607d8f0e8638a6a93dd45a19e0b4cf476dbc2adb20c5506a06",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0260-none.png",
+      "sha256": "1b36368438debd671a99b17819c997f8474447cd1045fb310dddd70801900d79",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0300-none.png",
+      "sha256": "ec27a211fb91bf2a41e80021d1a077ed54036b4f5bcac0157a96afb6938284ef",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/high-0320-none.png",
+      "sha256": "1fd8de4b40145cfbc5afebe49789593d5278ecd87ff420ecce7dfeb3118c1135",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0000-npc-carry.png",
+      "sha256": "90b05f70cec186329029897501fe2d3dd0679f4cdaafa54b98225345eaaaa768",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0060-npc-carry.png",
+      "sha256": "0cf8ebd2c625fccd1c30d0e84c42f8a1172e9e058cc93c9887bce49d21f5770e",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0082-npc-give.png",
+      "sha256": "379a5158500f2825625cf2449912965dbdac982162c98dbf83e363d1e8a3fe15",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0120-npc-give.png",
+      "sha256": "ddd58138e682774138cf7673689bd4876f559f1dfc96440a9a1727fb0dbef231",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0136-npc-wave.png",
+      "sha256": "054b176f985952c1111198001eb6f4949f223ffa8a87ad773b5b2537eb1842dd",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0176-npc-walk.png",
+      "sha256": "e518604a2ef7f349a0fa2db5de1582ab05584341ccdf7b21b5f768e631f0346c",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0180-npc-walk.png",
+      "sha256": "cc52bc27b59ca3db75b56f9fb065940346dd23c3ddf54577a5a7ec70fac3d18a",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0240-npc-walk.png",
+      "sha256": "ae4b8d26f4fcafa8c5e5b98fffe3a17fd33d7687aed8ee88fa12a25ced3186ec",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0260-none.png",
+      "sha256": "89bde756d169b2c3ebe45989412751eb678aa5f03ec9e5f9027c988ca18eae3b",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0300-none.png",
+      "sha256": "2a69bc163d51c1e302767e837f4abdb9e31a3cfa84354564658f0be06e244fdb",
+      "what": "Personally inspected depot handover frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-depot/captures/low-0320-none.png",
+      "sha256": "368626899b1a38094de10f85efa10808286d87858fd04d8b19b1792ba58d81d4",
+      "what": "Personally inspected depot handover frame."
     }
   ],
-  "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "High-first original receipt reordered only for existing proof script, whose duplicate-tier mutation assumes low first. Drawn flags between rendered frames are diagnostic, not visibility proof.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

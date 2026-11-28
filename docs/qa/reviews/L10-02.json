@@ -1,28 +1,43 @@
 {
   "row": "L10-02",
-  "status": "PASS",
-  "reviewer": "Codex final-c",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "4d3932b0bd4aaa5c21cf941662a3acfcf2da479b",
   "clauses": [
     {
-      "clause": "Mega Alpha introduced by roar/impact by 2:00 (authored 1:30), ≥ 80 m behind on a reachable route.",
-      "verdict": "PASS",
-      "note": "Both native routes introduce one persistent Mega at tick5400 (90.0s); actual roar and impact events occur tick5401 (90.0167s), before120s. Boss appears west/behind the eastbound courier at distances119.3733m low/118.9586m high (both>=80m). Independent full-source collider queries find body-clear routes154.7138/155.0419m with0.55m clearance; a severing-wall negative control disconnects them. Both observer final state hashes equal canonical current controls. Native event timing/path evidence; no personal audio-listening claim."
+      "clause": "Mega has no HP bar before the finale.",
+      "verdict": "FAIL",
+      "note": "Literal row mismatch: 1 overhead red HP bar visible in each of four inspected high/low zoom 1/1.5 frames while cure-installed is false. Repro: progress to the dispersal approach, encounter the pursuing Mega and look above it. G-24 explicitly requires the pursuing Mega to keep its overhead bar; this is a criterion conflict, not an assertion that the G-24 behavior is accidental."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-02/introduction.json",
-      "sha256": "7cfce632f366cc997b57ea882137534def51dd1b6002f205b4dcb92b4d15bf73",
-      "what": "Both native routes introduce one persistent Mega at tick5400 (90.0s); actual roar and impact events occur tick5401 (90.0167s), before120s. Boss appears west/behind the eastbound courier at distances119.3733m low/118.9586m high (both>=80m). Independent full-source collider queries find body-clear routes154.7138/155.0419m with0.55m clearance; a severing-wall negative control disconnects them. Both observer final state hashes equal canonical current controls. Native event timing/path evidence; no personal audio-listening claim."
+      "file": "docs/reports/v1-l1l10/L10-02/bar-summary.json",
+      "sha256": "c5c47eb818563b883c6993c88c21167cb15757becf86a50d11715b9d5016a951",
+      "what": "Both-tier native snapshot provenance, setup, and exact image hashes."
     },
     {
-      "file": "docs/reports/final-c/L10-02/producer.ts",
-      "sha256": "b338924ce03ade80cc941c5f71898000da9ddd061b335bd096559dcfe94a475d",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+      "file": "test-results/v1-l1l10/L10-02-close/high-1795826823593/close-initial-z1.jpg",
+      "sha256": "cd8884d5cc6a1cf97453c264c8fd2be267c00041c9c3e507938e1061bcec265f",
+      "what": "high zoom 1: overhead red bar above pursuing Mega before cure installation; no full-width finale boss HUD."
+    },
+    {
+      "file": "test-results/v1-l1l10/L10-02-close/high-1795826823593/close-initial-z1.5.jpg",
+      "sha256": "da6947ccad72892dd9022b76bf023b487de3ad3e3dac53dbcbd3b1382bec7b1d",
+      "what": "high zoom 1.5: overhead red bar above pursuing Mega before cure installation; no full-width finale boss HUD."
+    },
+    {
+      "file": "test-results/v1-l1l10/L10-02-close/low-1795826839833/close-initial-z1.jpg",
+      "sha256": "9cbaebab43095f9b591bafaf456f4a2a5c7fe628c56a3c4a6326b68a98d8307a",
+      "what": "low zoom 1: overhead red bar above pursuing Mega before cure installation; no full-width finale boss HUD."
+    },
+    {
+      "file": "test-results/v1-l1l10/L10-02-close/low-1795826839833/close-initial-z1.5.jpg",
+      "sha256": "959307447e6358ebbeb142f6c97e255b89473900a3bc6f5bde93c08cac86448d",
+      "what": "low zoom 1.5: overhead red bar above pursuing Mega before cure installation; no full-width finale boss HUD."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "Naturally progressed native snapshots, protected physical browser resume; final native state matched prior control. No wide finale boss HUD is visible. Other row clauses remain open; product must resolve the incompatible health-bar directions.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

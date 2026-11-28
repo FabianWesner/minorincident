@@ -1,28 +1,38 @@
 {
   "row": "L1-02",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
       "verdict": "PASS",
-      "note": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
+      "note": "Untouched stationary native opening, every tick 0–3600: 58 high / 51 low civilians; 0 living infected and 0 combat events both. Maximum unfaced stationary interval 133 ticks (2.2167 s) both. Four broken/boundary controls pass. Hidden interiors excluded from visible idle; missing or behind authored facing target counts as unfaced, and >0.1 m travel resets idle. Inspected physical opening frames show courier, corgi and a seated civilian on warm street."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-02-current-review.json",
-      "sha256": "e02dee81c8705d57662abdfd8a9bbfcc558bd7f0655e5adc78dc570fefcb9149",
-      "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
+      "file": "docs/reports/v1-l1l10/L1-02/L1-02-current-review.json",
+      "sha256": "b67a2ea7c56710be0bd508f19467af911442fe033bef089d0cb99233d7e2a26f",
+      "what": "Current stationary morning census and per-tick actor ledger."
     },
     {
-      "file": "docs/reports/final-a/L1-02-current-ledger.json.gz",
-      "sha256": "d567286a726381d7265d73bc5eca119c6ca42ddf15939a91c858230af9ed5b2e",
-      "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
+      "file": "docs/reports/v1-l1l10/L1-02/L1-02-current-ledger.json.gz",
+      "sha256": "26a83f16600c9d7c97b2e8185f6f24632b6133408534e7d78286960514a88688",
+      "what": "Current stationary morning census and per-tick actor ledger."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
+      "sha256": "9308194e76af1b6f2736f175667cd672d048b77547130f87886c3b2c6d12e928",
+      "what": "Personally inspected current physical opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg",
+      "sha256": "4fd668d2df513788ab017b5d22c1139b26cf4a99a4672b38826a5f24da4cd5d1",
+      "what": "Personally inspected current physical opening frame."
     }
   ],
-  "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Facing observation is an authored-target proxy, with no player input or relocation. Physical frames are context; census is native.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

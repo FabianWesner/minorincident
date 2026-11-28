@@ -1,43 +1,88 @@
 {
   "row": "L10-01",
-  "status": "PASS",
-  "reviewer": "Codex final-c",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "status": "P",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
-      "clause": "First minute ≤ 8 regulars, no dogs/Alphas; R1 concurrent 4–8 (both tiers), singles/pairs.",
-      "verdict": "PASS",
-      "note": "Complete routes show R1 regular peaks 6 low/7 high; each authored group is a singleton or pair (sizes 2,2,2,1). First-minute regular peaks are 6 complete/7 stationary at each tier, with zero dogs and zero Alphas. Stationary R1 regional-group fields are not applicable because the passive route does not traverse the region; its full first-minute census is measured."
+      "clause": "First minute ≤ 8 regulars, no dogs/Alphas; the opening reads as a wreck beside dry corn, broken farm buildings and dead livestock.",
+      "verdict": "P",
+      "note": "Native first 3600 ticks: peak regulars 8 high / 7 low; dogs and Alphas 0 both. Four physical samples cover 83–84 simulation seconds each, but their driver logs do not provide a complete per-tick census. PO: inspect the eight cited start and ~45 s frames at both qualities and requested zooms. Initial views show courier/corgi on a broad grey surface, cropped truck and dark angular shapes; the wreck, corn, broken farms and livestock do not read together. Later views show sparse ground, corn at edge or barriers; judge whether the opening communicates the intended setting."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-01/numeric-review.json",
-      "sha256": "13729bdcc03c61f1da792415cbb5c0e378d69a7aa7282444fca8b7e3f3767528",
-      "what": "Complete routes show R1 regular peaks 6 low/7 high; each authored group is a singleton or pair (sizes 2,2,2,1). First-minute regular peaks are 6 complete/7 stationary at each tier, with zero dogs and zero Alphas. Stationary R1 regional-group fields are not applicable because the passive route does not traverse the region; its full first-minute census is measured."
+      "file": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
+      "sha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6",
+      "what": "Current native census or physical input sample summary."
     },
     {
-      "file": "docs/reports/final-c/native/L10-low-complete.json.gz",
-      "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+      "file": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
+      "sha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051",
+      "what": "Current native census or physical input sample summary."
     },
     {
-      "file": "docs/reports/final-c/native/L10-low-stationary.json.gz",
-      "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+      "file": "docs/reports/v1-l1l10/L10-01/high-z1-summary.json",
+      "sha256": "3b6a53353c6f7abf6a6dbc3c21f8c2fe3d70eda8c901170e8fe0e2631b3f5098",
+      "what": "Current native census or physical input sample summary."
     },
     {
-      "file": "docs/reports/final-c/native/L10-high-complete.json.gz",
-      "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+      "file": "docs/reports/v1-l1l10/L10-01/high-z15-summary.json",
+      "sha256": "af3a0895c8a605ab9b2f226b75047fe1208c8f8116a81794937926866274e15c",
+      "what": "Current native census or physical input sample summary."
     },
     {
-      "file": "docs/reports/final-c/native/L10-high-stationary.json.gz",
-      "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+      "file": "docs/reports/v1-l1l10/L10-01/low-z1-summary.json",
+      "sha256": "e0723ab238b5e91d626b3088f025aed98f952fdd8ba822029bd466164cf87905",
+      "what": "Current native census or physical input sample summary."
+    },
+    {
+      "file": "docs/reports/v1-l1l10/L10-01/low-z15-summary.json",
+      "sha256": "9d9fca54915fd05b192a8d2726ecace4fffb3d1368b54ff070b44569e5481eb8",
+      "what": "Current native census or physical input sample summary."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t9.jpg",
+      "sha256": "4a2006d0ac3c0d0b3209c51560a0506f9686963ce06ce6439961c1145a933aaa",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t2718.jpg",
+      "sha256": "d87fd58fcac4d972039a5f16bfe8a1b425486e495fd2007d7d89641d6892de99",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t9.jpg",
+      "sha256": "809c5ed2e8e3d5559da12fcf9414936231486f9438e44e9c66c069fa38f319a7",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t2768.jpg",
+      "sha256": "add6469b34725614cab70b624785c9591baba21c18a9c3b2f872460ae8fc2a1b",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t9.jpg",
+      "sha256": "d24899628354a77de80d5a4df41e937785a02ea8c44baa7fe2e2f71f5ccd8241",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t2713.jpg",
+      "sha256": "6042cdaa074267fa9b09af99228f6e7274af037b2c05d610d3446bb5f35ee6cc",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t10.jpg",
+      "sha256": "7de8c38f52e1908a3eba2c6b4ff05143a0dc60207c6c7cb2143041f45b5938c0",
+      "what": "Personally inspected opening frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t2711.jpg",
+      "sha256": "71ee6110ef2d0e3da9f217e542191410881c17f83b6e2ad4f8ee9485ba10036e",
+      "what": "Personally inspected opening frame."
     }
   ],
-  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "P reserved for opening visual composition; native census measured, physical samples are not per-tick population ledgers.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

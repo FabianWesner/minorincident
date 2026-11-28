@@ -1,33 +1,28 @@
 {
   "row": "L1-07",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
       "verdict": "PASS",
-      "note": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
+      "note": "Both tiers start with 5; low 30/30 and high 44/50 at +120/+240 seconds. All additional turns follow bites, no direct additions; observer has zero deaths, damage, knockdowns and kills."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-07-native.json",
-      "sha256": "c9d42c43f3d6c4f021bc018aae8a2fa5372713d56853e27620b205229fb3a5e3",
-      "what": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
+      "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
+      "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
+      "what": "Current native L1 controlled fixture."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
-      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
-      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
-      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
-      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
+      "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
+      "what": "Current native L1 controlled fixture."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Native fixture uses ordinary opening then relocates observer remotely.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

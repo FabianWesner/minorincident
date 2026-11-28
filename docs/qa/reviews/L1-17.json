@@ -1,48 +1,98 @@
 {
   "row": "L1-17",
-  "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "21a7804b89e0a668790578f41630a170533c78f1",
+  "status": "P",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Frames: morning suburb reads alive; spread reads \"too many — run\".",
-      "verdict": "PASS",
-      "note": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "verdict": "P",
+      "note": "PO: inspect the 12 cited morning/start, Annex and outbreak frames, both tiers and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog in warm suburb streets; outbreak views show several pursuing infected, red attack rings and minimap contacts, including a tight crowd at the fire station. Does the morning feel inhabited and the outbreak too numerous to fight? The samples show a few nearby figures rather than a broad morning crowd. Mortal routes completed; zoom1.5 high/low deaths 0/1, zoom1 high/low 2/1; one assist each."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-03-image-review.json",
-      "sha256": "255de74d638389fc8e09b9794b4e1e35db0d8e53b45a63d621bc1ad13ad300d7",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "docs/reports/v1-l1l10/L1-17/high-z15.json",
+      "sha256": "c2a5d025d7097220f1cafed31adc669b5883319a5b46e22883223b0d00f97a6d",
+      "what": "Current physical-run summary."
     },
     {
-      "file": "docs/reports/final-a/L1-04-image-review.json",
-      "sha256": "aabca903d1ad3f4b6ea4127a171be9001fe27ab26971284329308e4929f9bae2",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "docs/reports/v1-l1l10/L1-17/low-z15.json",
+      "sha256": "a336428124556e18539591772d42ddc777cdf074066ddda2bdd792a6b463b6c5",
+      "what": "Current physical-run summary."
     },
     {
-      "file": "docs/reports/final-a/L1-15-image-review.json",
-      "sha256": "b51c8a49c65e805c39ab3eb2ae1c42455fc0a80f024d08e976987961b7052bbf",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "docs/reports/v1-l1l10/L1-17/high-z1.json",
+      "sha256": "65faeb9da883293daa300e2cf9a885a224fa3b17073a1fb1cf7c36d5d710efaf",
+      "what": "Current physical-run summary."
     },
     {
-      "file": "docs/reports/final-a/L1-17-browser-ledger.json.gz",
-      "sha256": "fac69e14a1843e0a252a0f5e17b2cce31b8e5d08ba41704b50142746c07e8c8c",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "docs/reports/v1-l1l10/L1-17/low-z1.json",
+      "sha256": "43f7100978e1f0d0b2695fa83efb944b99271b66f5fd12905cd38e9975bc0594",
+      "what": "Current physical-run summary."
     },
     {
-      "file": "docs/reports/final-a/L1-17-image-review.json",
-      "sha256": "72019eff06c4a2e368625a42c1af062c3aef9ff43eec385acc2393c6c08d2388",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
+      "sha256": "9308194e76af1b6f2736f175667cd672d048b77547130f87886c3b2c6d12e928",
+      "what": "Personally inspected current physical-run frame."
     },
     {
-      "file": "docs/reports/final-a/L1-17-current-proof.json",
-      "sha256": "2a8e97693c33c9083b9c5f82ff1afd8778793fcf0268deca365041ac7c732906",
-      "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
+      "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t2717.jpg",
+      "sha256": "a6c5764f7533d45aec295c48d578a05a6ebde08b33b710daaee50fdc0a89d82a",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t8140.jpg",
+      "sha256": "4c064d200f697a14b98bff15b752c5cc9692757edd1340bbe2f793ded3e61422",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg",
+      "sha256": "4fd668d2df513788ab017b5d22c1139b26cf4a99a4672b38826a5f24da4cd5d1",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t2720.jpg",
+      "sha256": "d360abad7297016fcd8ef00a49fd78a578925946a0efed1df889d304432c4588",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t8136.jpg",
+      "sha256": "092d84099537ad4561ad2c7c59502d86c6e0b311df5f3390ebbe193196f2813b",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t12.jpg",
+      "sha256": "00b786ccbcf53135e8b61a2ba0c9eddb38d336130e603c9df84357deb1440ef2",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t2761.jpg",
+      "sha256": "4847fba4fd3fe45d42286bf9bb780a4a42e6c5356dc7a145eaa0f9412ee77650",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t8192.jpg",
+      "sha256": "7f03796441c46172130d1f9904faba46ed3bb46726fc4a0153f2035de28b2ec1",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t12.jpg",
+      "sha256": "abbbcc9f97551f3a8318ce8e028cc0b33db638ddfbea0015a97e18d0bfcd4829",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t2739.jpg",
+      "sha256": "d5053408e6d19f95069f8d0f9a15d66b8fb9ed8d49d5fff05cf1f4b473a559f0",
+      "what": "Personally inspected current physical-run frame."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t8165.jpg",
+      "sha256": "435ac84bc3ecc23cb5f2f0f52e3ffa471bb80c33991134ade9a175e895239043",
+      "what": "Personally inspected current physical-run frame."
     }
   ],
-  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "PO taste pending. Physical-input samples; no claim of comprehensive visual coverage or previous failed-driver frame.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

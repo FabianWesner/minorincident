@@ -1,0 +1,108 @@
+{
+  "head": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
+  "method": "Exclusive quiet pooled headless native Chrome Metal WebGL2. Native complete bot until Delivered, then bot stopped. Normal realtime, passive event/tick/RAF observers only; no screenshots or CDP during the blast. Frame is first requestAnimationFrame interval ending after blast performance.now timestamp. Warmup RAF interval before normal-time run is excluded.",
+  "tiers": {
+    "high": {
+      "quality": "high",
+      "backend": "webgl",
+      "errors": [],
+      "deliveredTick": 3326,
+      "quietSeconds": 4.733333333333333,
+      "quietSamples": 284,
+      "maxLivingInfected": 0,
+      "activeObjectiveSamples": 0,
+      "events": [
+        {
+          "type": "l1.flicker",
+          "tick": 3610,
+          "at": 20999.19999998808
+        },
+        {
+          "type": "l1.blast",
+          "tick": 3700,
+          "at": 22498.099999964237
+        },
+        {
+          "type": "l1.ringing",
+          "tick": 3712,
+          "at": 22701
+        },
+        {
+          "type": "l1.smoke",
+          "tick": 3784,
+          "at": 23896.30000001192
+        },
+        {
+          "type": "l1.screams",
+          "tick": 3820,
+          "at": 24502.599999964237
+        }
+      ],
+      "sequenceSeconds": 3.5,
+      "sequenceWallSeconds": 3.5033999999761583,
+      "blastFrameMs": 6.900000000001455,
+      "blastFrameAt": 22503,
+      "physicalCompleteReceipt": "test-results/v1-l1l10/l1-current-high/campaign-completion.json",
+      "physicalCompleteSha256": "78354a5a03b9654b2a8257a8c15468970975fc56323b94cb6f82f1cb92ebdf73",
+      "physicalDeliveredTick": 4462,
+      "physicalFlickerTick": 4746,
+      "physicalQuietSeconds": 4.733333333333333,
+      "physicalDeaths": 0
+    },
+    "low": {
+      "quality": "low",
+      "backend": "webgl",
+      "errors": [],
+      "deliveredTick": 3326,
+      "quietSeconds": 4.733333333333333,
+      "quietSamples": 284,
+      "maxLivingInfected": 0,
+      "activeObjectiveSamples": 0,
+      "events": [
+        {
+          "type": "l1.flicker",
+          "tick": 3610,
+          "at": 12277.5
+        },
+        {
+          "type": "l1.blast",
+          "tick": 3700,
+          "at": 13778.400000035763
+        },
+        {
+          "type": "l1.ringing",
+          "tick": 3712,
+          "at": 13978.5
+        },
+        {
+          "type": "l1.smoke",
+          "tick": 3784,
+          "at": 15176.600000023842
+        },
+        {
+          "type": "l1.screams",
+          "tick": 3820,
+          "at": 15776.800000011921
+        }
+      ],
+      "sequenceSeconds": 3.5,
+      "sequenceWallSeconds": 3.499300000011921,
+      "blastFrameMs": 6.400000000001455,
+      "blastFrameAt": 13782.7,
+      "physicalCompleteReceipt": "test-results/v1-l1l10/l1-current-low/campaign-completion.json",
+      "physicalCompleteSha256": "87eb2cd2865fdf97782886c42bf18b3ce0767b27d136a88ebc20c474c3158d54",
+      "physicalDeliveredTick": 4302,
+      "physicalFlickerTick": 4586,
+      "physicalQuietSeconds": 4.733333333333333,
+      "physicalDeaths": 1
+    }
+  },
+  "timing": {
+    "file": "test-results/v1-l1l10/L1-05/timing.json",
+    "sha256": "494613e1a360285a8e859767042ca2432213fc201c0c04a4f44d5913aba7d754"
+  },
+  "conditions": {
+    "file": "test-results/v1-l1l10/L1-05-quiet-conditions.jsonl",
+    "sha256": "4b023adbd1f9ee0dfa2a7d44188ef3d2861b4346ec2611fdbb96c298a23af7a6"
+  }
+}

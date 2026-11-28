@@ -1,0 +1,505 @@
+# v1-l1l10 — current-main acceptance sweep
+
+Head: `2f7ee5f06bf5562305e17b787d3573d2ef9f4efd` (`main`). No game source was changed. The lane began clean.
+
+## Scoped native refresh
+
+Executed the required commands after the initial all-level diagnostic refresh:
+
+- `npm run qa:accept -- --level L1 --skip-browser --reuse` — exit 1; 0 fresh failing rows, 12 incomplete rows.
+- `npm run qa:accept -- --level L10 --skip-browser --reuse` — exit 1; 7 fresh failing rows, 6 incomplete rows. Both low/high checkpoint replays completed; each reported five fixture errors for the `cure-disperse-ready` boss snapshot.
+
+The commands emitted refreshed L1/L10 aggregate outputs and used receipt inputs under [receipts](../fix51-verify/receipts/). The skip-browser command rewrites the aggregate without preserving browser-policy records, so I restored the committed aggregate JSON after recording the current run results here. The existing aggregate JSON therefore remains the committed baseline; it is not presented as the output of this run. No browser captures were produced. All 18 in-scope review files already present in `docs/qa/reviews/` are STALE according to `reviewFreshness` on this head. Prior verdicts below are therefore context only, not fresh decisions.
+
+| Row | Before (saved review) | After on current head | Numbers / evidence | P-note |
+|---|---|---|---|---|
+| L1-02 | PASS, stale | NOT CHECKED | Current acceptance: native clauses pass; 12 L1 rows remain incomplete. [L1 report](../fix51-verify/L1.json) | No new visual review. |
+| L1-03 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current handover frames inspected. |
+| L1-04 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current handover frames inspected. |
+| L1-05 | PASS, stale | NOT CHECKED | Current native acceptance has six passing checks; row remains incomplete pending full current browser/input clauses. [L1 report](../fix51-verify/L1.json) | No current blast frames inspected. |
+| L1-06 | PASS, stale | NOT CHECKED | Current native acceptance has ten passing checks; row remains incomplete pending full current browser clauses. [L1 report](../fix51-verify/L1.json) | No current emergence frames inspected. |
+| L1-10 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current encounter frames inspected. |
+| L1-11 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current physical-input review. |
+| L1-12 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current traversal frames inspected. |
+| L1-14 | PASS, stale | NOT CHECKED | Two native checks PASS and two remain NOT CHECKED; [L1 report](../fix51-verify/L1.json) | No current garage frames inspected. |
+| L1-15 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | No current extraction frames inspected. |
+| L1-16 | FAIL, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | Required fresh screenshot-only route review not run. |
+| L1-17 | PASS, stale | NOT CHECKED | Current acceptance: 12 L1 rows incomplete. [L1 report](../fix51-verify/L1.json) | Requires PO taste review of current morning/outbreak frames. |
+| L10-01 | PASS, stale | NOT CHECKED | Current native report contains 12 PASS checks; real-input census remains unqualified. [L10 report](../fix51-verify/L10.json) | No current capture sheets inspected. |
+| L10-08 | PASS, stale | NOT CHECKED | Current report has no complete row decision. [L10 report](../fix51-verify/L10.json) | No current road/crowd/telegraph frames inspected. |
+| L10-09 | PASS, stale | NOT CHECKED | Two native checks PASS and two remain NOT CHECKED. [L10 report](../fix51-verify/L10.json) | No current research/canister frames inspected. |
+| L10-11 | PASS, stale | NOT CHECKED | Current native report has 16 PASS and 2 NOT CHECKED clauses. [L10 report](../fix51-verify/L10.json) | Skilled-route and arrival criteria remain open. |
+| L10-12 | PASS, stale | NOT CHECKED | Current native report has four PASS checks; no current physical fight/death review. [L10 report](../fix51-verify/L10.json) | No current boss/corpse frames inspected. |
+| L10-14 | PASS, stale | NOT CHECKED | Current native report has six PASS and four NOT CHECKED clauses. [L10 report](../fix51-verify/L10.json) | No current cure mist/ending frames inspected. |
+
+## Initial machine flags (qualification updated)
+
+The initial evaluator reported the following flags. Subsequent review confirmed L10-06 and L10-15 as defects; the other flags below are diagnostic leads, not established acceptance failures. In particular, the immunity criterion prohibits killing rather than any HP loss; duration is approximate; the crowd bound says normally rather than peak; the current starting-weapon criterion permits kick; and the Mega position jump needs attribution. The fixture receipts cited here predate the latest head; see the current row entries below for fresh evidence.
+
+| Row | Before → after numbers | Cause / repro | Evidence |
+|---|---|---|---|
+| L10-02 | Remaining Mega HP `3000` → `1780.0997` before cure installation (loss `1219.9003`, both tiers; target zero loss). | Fresh controlled L10 fixture: apply direct-rocket immunity probe before installing cure; Mega loses HP. | [low fixture](../fix51-verify/receipts/L10-low-fixtures.json), [high fixture](../fix51-verify/receipts/L10-high-fixtures.json) |
+| L10-03 | Route `1259.3833 s` low / `1414.3667 s` high → target `600–1200 s`. | Execute the canonical complete route; both tiers exceed the upper bound by `59.38 s` / `214.37 s`. The simultaneous census proof also records `fresh:false` for both tiers. | [low complete](../fix51-verify/receipts/L10-low-complete.json), [high complete](../fix51-verify/receipts/L10-high-complete.json), [census](../fix72-c/L10-03/simultaneous-census.json) |
+| L10-04 | Concurrent ordinary-route peak `44/57` low, `68/68` high → target `≤15`. | Run complete and stationary acceptance policies at each tier; peaks are beyond the bound in all four cases. | [L10 receipts](../fix51-verify/receipts/) |
+| L10-05 | Initial racks include `weapon.kick`; expected fists-only. | Fresh unarmed start at `(547,0)`, machete at `(552,0.5)`. Walk east along crash-site exit for ≤1 s: pickup occurs at tick 52 / 1.4344 m, health stays 100, no respawn, but initial racks violate fists-only. | [low fixture](../fix51-verify/receipts/L10-low-fixtures.json), [high fixture](../fix51-verify/receipts/L10-high-fixtures.json) |
+| L10-06 | Dog run-speed ratio `1.65×` → target `1.1×`, both tiers. | Controlled native dog-speed fixture against player run speed. | [low fixture](../fix51-verify/receipts/L10-low-fixtures.json), [high fixture](../fix51-verify/receipts/L10-high-fixtures.json) |
+| L10-07 | Maximum Mega step `203.92–372.85 m/tick` across tier/policy runs → target `≤1 m/tick`. | Run the full native route and stationary hold while recording consecutive Mega positions; observed maximum step exceeds the limit in all four runs. | [L10 native receipts](../fix51-verify/receipts/) |
+| L10-15 | `cure-disperse-ready` expected boss alive at `1116 HP` low / `1072.8151 HP` high; death-control result is dead at `0 HP` in both. | Replay the checkpoint death-control fixture and compare restored boss snapshot after the ordinary courier death; location and racks match, boss state does not. Five named L10 checkpoint fixtures also throw `Cannot read properties of undefined (reading 'id')` per tier. | [low checkpoints](../fix51-verify/receipts/L10-low-checkpoints.json), [high checkpoints](../fix51-verify/receipts/L10-high-checkpoints.json) |
+
+## Initial open work and constraints (historical)
+
+The fresh headless real-input route, high then low, zoom 1.5 and default, and manual inspection of every cited capture have not been performed. Consequently no PASS/FAIL/P JSON was written for the 18 target rows; writing one would overstate evidence. Current source has extensive changes since the frozen source named in the saved reviews, so merely rebasing their digest would be invalid.
+
+The required per-row commits are currently unavailable: this worktree's Git index is at `/Users/wesner/Workspace/minorincident/.git/worktrees/v1-l1l10/index`, outside the writable root. `git restore` failed with `Unable to create ... index.lock: Operation not permitted`. An attempted restore of the initial all-level diagnostic output used read-only `git show` plus writes inside this worktree; the final diff must still be checked before any commit is attempted again.
+
+The only remaining worktree change from this turn is this lane report. L1/L10 aggregate JSON was restored after the scoped commands because `--skip-browser` removes the stored browser-policy entries. No game code, specs, browser captures, or review JSON were changed. No browser reservation was started.
+
+## L1 mortal real-input runs (continuation)
+
+On the same head, the pooled headless playtest ran HIGH first, then LOW on port 5401, each with `--levels L1 --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 8 --no-skip`. Both finished without skips: high 156 s with 1 death, low 148 s with 0 deaths. The driver reported zero issues and one assist in each run. Logs and captures are retained under `test-results/v1-l1l10/l1-high/` and `l1-low/`; captures have not yet been inspected, so they support no visual verdict. These runs do not establish the full clauses of any acceptance row. L10 mortal run remains open.
+
+## L10 high mortal run
+
+On the same source, `E2E_PORT=5402 npx tsx tools/playtest/play.ts --levels L10 --quality high --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 18 --session-seconds 480 --no-skip --out test-results/v1-l1l10/l10-high` completed three bounded segments and exited 1: no level completion, no skips, 29 deaths (7 + 6 + 16), zero assists. The 18-minute deadline is checked between segments, so the third completed at 24 minutes of sampled time. The driver reported two P2 navigation stalls at farm objective distances 111 m and 183 m. These are observations of the driver, not yet diagnosed game defects. Logs, summaries and captures remain in the named ignored output directory. The low run and visual inspection remain open.
+
+Four L1 frames were opened: high/low `campaign-L1-t12.jpg` show warm pavement, courier, corgi and a seated civilian; high `campaign-L1-t5458.jpg` and low `campaign-L1-t5503.jpg` show the Annex under a large smoke plume obscuring much of its entrance. These frames alone do not establish the crowd or complete visual-tone criterion. Other captures remain unreviewed.
+
+## L10 low mortal run
+
+The matching low-tier command (`E2E_PORT=5402 npx tsx tools/playtest/play.ts --levels L10 --quality low --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 18 --session-seconds 480 --no-skip --out test-results/v1-l1l10/l10-low`) exited 1 without completion after four segments, 1490 sampled seconds total. Segment deaths were 3 + 8 + 0 + 4 = 15; no skips or assists. The driver recorded four P2 navigation warnings and two P0 stops after 90.3 s without visible progress, near `(1809.3,-2.3)` and `(1764.1,-16.1)`. As with high, this is a failed driver run, not yet proof that a player cannot proceed. The logs and captures remain in the named ignored directory; captures have not been reviewed. Both-tier mortal runs are incomplete and fairness remains unqualified.
+
+## L10-06 review
+
+Fresh **FAIL** replaces the stale PASS: the high and low controlled dog fixtures each report speed ratio `1.65` versus the `1.1` requirement. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`, then inspect `native dog speed ratio` in each fixture receipt. The fixture divides spawned dog `infected.speed` by `survivor.speed`; the source of the changed ratio is not isolated. The other clauses and current dog/corgi appearance remain unreviewed. [Review JSON](../../qa/reviews/L10-06.json) records both receipt hashes and the observation.
+
+## L10-15 review
+
+Fresh **FAIL**: the checkpoint death fixture saves a living Mega at 1116 HP low / 1072.8151 HP high, kills it, then applies ordinary lethal player damage; respawn reports the boss dead at 0 HP in both tiers. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`; inspect the `cure-disperse-ready` boss snapshot comparisons in both checkpoint receipts. The source of the restore mismatch is unisolated. Five other named checkpoint fixtures error per tier, so complete regional coverage remains open. [Review JSON](../../qa/reviews/L10-15.json) records the hashes and observation.
+
+## L1-07 review
+
+Fresh **PASS**: remote idle spread starts at 5, reaches 30/30 low and 44/50 high at +120/+240 s; all additional turns follow bites and the observer takes no damage or action. The controlled probe uses an ordinary opening and one remote observer relocation. [Review JSON](../../qa/reviews/L1-07.json) records both fixture hashes. No game source changed; no regression cause or open clause was found for this row.
+
+## L10-10 review
+
+Fresh **PASS**: both complete native routes record 3600 eligible increments, zero invalid increments; high includes 120 dead ticks. Both tiers' controlled boundary probe pauses at 40.01 m with instruction, holds while dead and resumes inside. The minigun yields 20 rounds/s and 0.125 heat/s, locks at 1.0, remains locked at 0.4 and unlocks at 0.396667. [Review JSON](../../qa/reviews/L10-10.json) records four current receipt hashes. No game change or open numeric clause for this row.
+
+## Main advanced and L1-01 refresh
+
+Main advanced from `2f7ee5f0` to `540ab32a`; the lane was rebased. Earlier source-dependent reviews and playtests must be requalified on the new head. Fresh native L1 complete routes both finish, with null initial deadline and no offered starting weapons: **L1-01 PASS**. [Review](../../qa/reviews/L1-01.json), [high receipt](L1-01/high-complete.json), [low receipt](L1-01/low-complete.json). The scoped native run exited 1 for 12 incomplete L1 rows. No game source changed; no cause or open numeric clause for L1-01.
+
+## L1-07 current-main refresh
+
+On `540ab32a`, the new both-tier fixture retains the preceding result: 5 initially, low 30/30 and high 44/50 at +120/+240 s, bite provenance for all additional turns, and zero observer damage/deaths/knockdowns/kills. Fresh **PASS**: [review](../../qa/reviews/L1-07.json), [high fixture](L1-07/high-fixtures.json), [low fixture](L1-07/low-fixtures.json). The controlled probe relocates the observer after the ordinary opening. No game changes; no open numeric clause for this row. Scoped command exit 1 reflects 12 incomplete L1 rows.
+
+## L1-09 current-main review
+
+**PASS** on both qualities: 300 production runner spawns per fixture, 100 per speed tier, all within 4.4 m/s and their tier's 1.04× upper bound; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s versus ≥85%. This is a deterministic equal-tier sample. [Review](../../qa/reviews/L1-09.json) hashes the retained L1-07 fixture receipts. No game changes; no open measured clause for this row.
+
+## L10 current-main refresh
+
+On `540ab32a`, the scoped native run finished with seven machine FAIL rows and six incomplete rows; five checkpoint fixture errors per tier remain. **L10-06 FAIL** persists: dog speed ratio 1.65 vs 1.1 at both tiers. Repro: run `npm run qa:accept -- --level L10 --skip-browser --reuse`, inspect native dog speed ratio in the fixture receipts. Cause not isolated; appearance and other clauses remain open. [Review](../../qa/reviews/L10-06.json), [high fixture](L10-native/L10-high-fixtures.json), [low fixture](L10-native/L10-low-fixtures.json).
+
+## L10-15 on current main
+
+Fresh **FAIL**: on `a72c2770`, the checkpoint fixture again saved a living boss at 1116 HP low / 1072.8151 high and observed dead/0 HP on respawn after the fixture killed it and caused ordinary player death. Five other checkpoint fixtures error per tier. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`, inspect cure-disperse-ready boss snapshot. The cause is unisolated. Main advanced to `92c233e2` during the run; its intervening commits change reports only, with no `src`, `public`, `layouts` or acceptance-tool changes. [Review](../../qa/reviews/L10-15.json), [high](L10-native/L10-high-checkpoints.json), [low](L10-native/L10-low-checkpoints.json).
+
+## L10-06 refresh at 92c233e2
+
+Both current controlled fixtures reproduce **FAIL**: dog run-speed ratio 1.65 vs 1.1. Attack observations pass: 0.65 s telegraph, 1.08 m reach, 10 HP bite, 2 s cooldown. Repro: run L10 acceptance fixtures and inspect native dog speed ratio; appearance remains unreviewed and cause unisolated. [Review](../../qa/reviews/L10-06.json), [high fixture](L10-native/current-high-fixtures.json), [low fixture](L10-native/current-low-fixtures.json). The previously copied route receipts are from the preceding source and do not establish current L10-10 charge behavior.
+
+## L1-07 refresh at 92c233e2
+
+Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +120/+240 s, all additional turns from bites and observer undisturbed. Ordinary opening then remote observer relocation. [Review](../../qa/reviews/L1-07.json), [high](L1-07/current-high-fixtures.json), [low](L1-07/current-low-fixtures.json). No game change; no open numeric clause.
+
+## L1-09 refresh at 92c233e2
+
+**PASS** in both quality fixtures: 300 deterministic equal-tier spawns, all within tier bounds, range 4.40697–5.82185 m/s; 274/300 (91.33%) faster than 4.5 m/s. [Review](../../qa/reviews/L1-09.json) hashes the current L1-07 fixture receipts. No game change; no open sampled numeric clause.
+
+## L1-01 refresh at 92c233e2
+
+**PASS**: both current native complete policies finish. Initial deadline is null, racks absent and owned actions contain only fists/kick (unarmed). [Review](../../qa/reviews/L1-01.json), [high](L1-01/current-high-complete.json), [low](L1-01/current-low-complete.json). This is a native run, not current physical-input evidence. No game change or open numeric clause.
+
+## L1-08 at 92c233e2
+
+**PASS** in current native policies: both stationary tiers first player windup at 2.3167 s and 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples each. Complete low/high rates 27.93/19.20 per minute and minimum 100% across 23 samples each. The rate counts player-target windup events, not damage; reachability samples actors within 30 m with path ≤2.5× direct. [Review](../../qa/reviews/L1-08.json), [high stationary](L1-08/high-stationary.json), [low stationary](L1-08/low-stationary.json), complete receipts under L1-01. No game change; no open native clause.
+
+## L10-10 refresh at 92c233e2
+
+**PASS**: both current native routes record 3600 eligible increments and zero invalid increments, high with 120 dead ticks. Both controlled fixtures pause outside 40 m with instruction, hold while dead and resume inside; minigun 20 rounds/s, 0.125 heat/s, lock at 1.0 and unlock below 0.4 (0.396667). [Review](../../qa/reviews/L10-10.json), [high route](L10-native/current-high-complete.json), [low route](L10-native/current-low-complete.json), current fixture receipts in the L10-06 entry. No game change; no open numeric clause.
+
+The same current routes released with prerequisites at 1.989 m high / 1.916 m low and the fixture rejects each missing prerequisite; L10-13 remains open for its requested physical-input release.
+
+## L10-13 physical release at 92c233e2
+
+**PASS**: both controlled prerequisite matrices reject missing charge, cure installation, boss death, console proximity or fresh input, and accept the complete control. Physical WASD/E from native progressed saves released at 1.565 m high / 1.385 m low, with god disabled before E. The approach was protected; the native prefix is not a physical whole-campaign run. Four cited zoom 1.5 frames were opened: prompt visible before E, green glow after; low console area is obscured by a large corpse/effect. [Review](../../qa/reviews/L10-13.json), [high physical](L10-13/high-physical.json.gz), [low physical](L10-13/low-physical.json.gz). The first low attempt correctly refused release because the inherited prefix captured boss death before charging (0 ticks, release pending); [diagnostic receipt](L10-13/low-first-attempt.json.gz). The low prefix producer was corrected to capture the actual active release step; no game changes. No open prerequisite clause.
+
+## L10-14 partial evidence and observer limitation
+
+The current physical release ledgers in L10-13 reach title at front elapsed 3900 ticks (65 s), credits at 4200 ticks and thanks at 9600 ticks (90 s of credits) in both tiers; this is one-second render sampling, not a visual continuity or frame-rate proof. Both `epilogue-5-z1.5.jpg` captures were opened: high (`ae3c959e811d657c8e55a9a573b4b5ead7387359a0b10873c869fe4fdfc1909f`) shows a bright green plume above the console, small figures scattered around it and a fire at left; low (`10feafd2a78610604526fe4acb649c1da4f935d14709fd2ff3e568d25027c750`) shows a similar plume and scattered figures, with a dark large body near the centre. Paths are in the respective physical receipts. These two frames do not prove same-ID recovery or the full cinematic.
+
+The inherited physical producer calls a touch `dead` when either HP is zero **or the ID appears in `affectedIds`**. Current `CureFront.apply` places cured survivors in that list; therefore the `dead` field in these receipts is a misleading legacy label and does not establish that the subject died. The separate current controlled fixture records eight species as healthy after reaching the front, but full current browser identity, corpse retention, skip behavior, credits readability, and PO taste remain unqualified. L10-14 stays NOT CHECKED. No checker or game code changed.
+
+## Current-main L1 mortal routes
+
+On `92c233e2`, high then low real-input runs completed without skips: high 142 s, 0 deaths; low 168 s, 1 death. Each reports one assist. Low recorded a 4150 ms frame at tick 250; this was not a quiet performance run and is diagnostic, not a performance verdict. Outputs are under `test-results/v1-l1l10/l1-current-{high,low}/`. Opened high `captures/campaign-L1-t5436.jpg` (SHA-256 `67ed3b7d27e2b80afcdf9a306fff3228b81c8f2d680a97a3bb1104511a8fd388`): courier near bike racks, a figure outside the smoke-obscured Annex. Opened low `captures/campaign-L1-t5433.jpg` (SHA-256 `56bf8b4df0ed52235dd8ec5bc2c1a3db1ac7265ae8066ae0b8d22cdf68604304`): courier and corgi crossing the street, Annex mostly outside the frame and red minimap contacts. These periodic stills do not establish five exits or their order; L1-06 visual burst remains open. No game changes.
+
+## L1-06 at 92c233e2
+
+**PASS**: current native fixtures measure five actual door crossings, technician first (154 high / 147 low). Three measured departure headings are 26.82/109.25/171.43° high and 26.49/105.54/170.48° low; minimum pairwise separation 62.18° / 64.95°. All 14 captured frames opened: the first light-coated figure emerges from the Annex, then four others pass the door and disperse across the forecourt. [Review](../../qa/reviews/L1-06.json), [browser ledger](L1-06/browser-receipt.json.gz), current native fixture receipts in L1-07. The browser burst used native bot input and a fixed inspection camera with no protection or actor relocation; separate current mortal physical runs completed both qualities but did not capture the whole sequence. No game changes; no open measured clause.
+
+## L10-01 opening sample at 92c233e2
+
+High then low physical-input opening samples ran 60 wall seconds (54/53 simulation seconds), ending at the sample cap without skips: high 1 death, low 0; no driver issues. The separate current native complete routes census all 3600 first-minute ticks: regular peak 8 high / 7 low, dogs 0 and Alphas 0 in both. Physical output is under `test-results/v1-l1l10/l10-opening-{high,low}/`. Four frames opened: high `campaign-L10-t9.jpg` (`ba06a7188fd28aeb6696996069c2cdfe4d510f15c297dc5765338f847f2995e3`) and low `campaign-L10-t10.jpg` (`91fd0a3d4394d330cb4a5742a9f48136bb53f62d4ce25a785dfe80860b059797`) show courier/corgi on a dark grey diagonal surface, a partly cropped truck at top and dark angular shapes; neither establishes the full wreck/farm/livestock composition. High `campaign-L10-t2725.jpg` (`990664285f6d87b862332d937753624efbc5487b9ae033ebed28114d6e19fadb`) shows a red vehicle, pale and dark animal bodies, sparse dark ground and grey surfaces; low `campaign-L10-t2714.jpg` (`00e8aabd3df1c86ac3572b22ced3e4646ed1e54b4781476dca3e9f3049489f8b`) shows corn at upper right, fence and machinery at left, and a wide dark empty foreground. The physical samples fall short of 60 active seconds and these frames do not establish the complete visual clause, so L10-01 remains NOT CHECKED. Need full opening tour at default and 1.5 zoom, with the entire composition visible, and an active-time physical census. No game change.
+
+## L10-01 review at 92c233e2
+
+**P** for PO composition: native 3600-tick census regular peak 8 high / 7 low, zero dogs and Alphas both. Four physical samples at quality high/low and requested zoom 1/1.5 covered 83–84 simulation seconds in each first segment. Eight cited start/~45 s frames opened: initial views show courier/corgi on broad grey surface, cropped truck and dark angular shapes; later views show sparse dark ground, corn at edge or barriers. PO: do these exact frames communicate a wreck beside dry corn, broken farms and dead livestock? The driver logs do not supply a full per-tick physical census, and visual composition remains open. [Review](../../qa/reviews/L10-01.json) has exact frame paths/hashes and summaries. No game change.
+
+## L1-17 at 92c233e2
+
+**P**: PO to inspect 12 cited morning/start, Annex and outbreak frames at both qualities and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog on warm streets; outbreak views show several pursuers, red attack rings and minimap contacts, including a tight group at the fire station. Do these convey an inhabited suburb and too many infected to fight? Morning samples show few nearby figures; the older failed-driver crowd frame is not current evidence. Physical mortal routes completed: zoom1.5 high/low deaths 0/1; zoom1 high/low 2/1, one assist each. [Review](../../qa/reviews/L1-17.json) records exact inspected frames and hashes. No game change; PO taste remains open.
+
+## L1-03 depot handover at 92c233e2
+
+**PASS**: 321 sampled ticks each quality, same clerk ID 155 high / 148 low, 94 transfer ticks with zero hidden transfer ticks, parcel ownership transfers, clerk walks back inside to z −39.34 before removal, door latch closes. All 22 frames opened: clerk carries, offers and waves; later the open then closed shop door remains while courier holds the parcel. Return inside is partly occluded by wall. The native bot reached onset, then idle capture; separate current physical routes completed both tiers. Seven proof mutations reject after reordering the high-first receipt to low-first for the existing proof script's duplicate-tier control. [Review](../../qa/reviews/L1-03.json), [ledger](L1-03/browser-ledger.json.gz), [proof](L1-03/L1-03-story-proof.json). No game changes; no open measured clause.
+
+## L1-04 Annex handover at 92c233e2
+
+**P** for PO quality comparison: both tiers retain same technician ID (154 high / 147 low) across 707 ticks, 364 transfer ticks with zero hidden transfer ticks, parcel transfer and return inside to z −16.5; six broken-data controls reject. Twelve selected frames and the archived labelled PROD comparison were opened. Current coat, goggles, gloves and parcel are visible; parcel appears offset from the hand in the selected signing/carry view and the return is partly occluded. PO: do the exact cited frames meet PROD quality? [Review](../../qa/reviews/L1-04.json), [ledger](L1-04/browser-ledger.json.gz), [proof](L1-04/L1-04-story-proof.json). Native bot reaches onset, then idle sequence; separate physical L1 routes completed both tiers. No game changes.
+
+## L1-02 at 92c233e2
+
+**PASS**: untouched stationary 3600-tick native census: 58 high / 51 low civilians, zero living infected and combat events, maximum unfaced idle 133 ticks (2.2167 s) each. Four broken/boundary controls pass. The facing measure uses authored target ahead and resets after >0.1 m travel; hidden interiors excluded. Two cited current physical opening frames opened: courier, corgi and seated civilian on warm street. [Review](../../qa/reviews/L1-02.json), [summary](L1-02/L1-02-current-review.json), [ledger](L1-02/L1-02-current-ledger.json.gz). No game change; no open measured clause.
+
+## L1-10 at 92c233e2
+
+**PASS** in production-camera native complete-input trials: same-ID warning before first offscreen actor appearance 10/10 high and 9/10 low, against ≥80%; low seed10 had no qualifying warning, and low seed5 warning preceded appearance by only 2 ticks. Seven proof controls pass. The selection excludes visible-first actors and offscreen candidates that never appear; this is an event/camera sample, not audio audibility or physical input. [Review](../../qa/reviews/L1-10.json), [ledger](L1-10/native.json.gz), [proof](L1-10/measurement.json). No game change; no open measured event clause.
+
+## L1-11 high partial input trial
+
+Current high WebGL2 physical WASD/E after native parcel pickup: depot-wall dismount leaves player z −37.007 and bike z −37.007 on the same side of wall max z −38.5. Forward displacement peaked at 7.5 m/s for 28 consecutive ticks before encountering nearby geometry; steering headings changed 1.572→1.093 rad under W+A and 1.081→1.819 under W+D. Reverse displacement peaked at 1.8 m/s in this attempt; its relation to the current criterion remains open. The captured [ledger](L1-11/high-partial.json.gz) includes explicit coordinate assistance and no actor relocation/protection. Opened `03-wall-dismount.png` (SHA-256 `e9b36de4d483ac79fb4e0f235dd0da90c9f656a85d22166512a0023b1d095b00`): courier and bicycle outside depot wall. Opened `07-forward.png` (`a06cc1a3fcad718457ca5c2d5efc5df2375877b0e758d57b754d269035580079`): bicycle reaches a white fence/house frontage. This is partial: clear-road sustained speed, fence-side dismount and low tier remain open. No game source changed; L1-11 remains NOT CHECKED.
+
+## L1-11 continuation
+
+Low repeats the high depot-wall result: player and bicycle z −37.007 after physical E, wall max z −38.5; forward reaches 7.5 m/s for 28 consecutive ticks before frontage interference, and headings change 1.572→1.093 under W+A and 1.081→1.819 under W+D. [Low ledger](L1-11/low-partial.json.gz). The opened low wall frame `test-results/v1-l1l10/bike-low/captures/03-wall-dismount.png` (SHA-256 `66e85f89c9d620117c671b6d54c34bbdc3594fa574e87fdbcfe55fd7b694602f`) shows bicycle/courier outside depot.
+
+A second high route attempted a clearer lane but hit a hydrant and then frontage; its longest forward streak was below the intended 60-tick qualification. [High second ledger](L1-11/high-r2.json.gz). Opened `02-road-approach.png` (`affaa796393da9bebf7b98d33c7050ef022368597f054b0cfa2e52444a44f7dc`) shows bike against hydrant; `13-lane-reposition.png` (`95cf62e537669038eba6b49102b049cd2b7c0c1b491451bf9a499db4257918e7`) shows bike at residential frontage. These are driver-route limitations, not diagnosed game defects. Sustained clear-lane speed and actual fence dismount remain open; L1-11 remains NOT CHECKED. No game change.
+
+### Latest aggregate diagnostic
+
+On main `92c233e2`, `npm run qa:accept -- --level L1 --skip-browser --reuse` exited 2 with 0 fresh machine-failing rows and 8 incomplete rows. The L10 command was stopped after low/complete finished and low/stationary began, because the sweep's three-hour time box had already been exceeded; it has no aggregate verdict. Both commands regenerated shared aggregate files, which were restored to their previous tracked contents so an incomplete `--skip-browser` run does not overwrite existing browser-policy data. L1-05's former quiet timing producer was not found among the preserved QA scripts; the ordinary accident script explicitly excludes frame performance. Its old timing measurements cannot establish performance on this head.
+
+## L1-13 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-13 | stale PASS → fresh PASS | Bat absent at start, first acquired at tick 5132, 0.992 m from the garage anchor (2 m radius); fists 7 hits, bat 2 hits against a 60 HP regular, both tiers. | [Review](../../qa/reviews/L1-13.json), [high fixture](L1-07/current-high-fixtures.json), [low fixture](L1-07/current-low-fixtures.json); L1 mission and district source establish the weapon objective and bat placement at the garage anchor. | — |
+
+Native bot route and isolated combat fixture, with separate mortal real-input L1 runs documented above. The L8-only source changes between the receipt's `92c233e2` and current main `233eab90` do not alter L1. No game change; no remaining measured clause.
+
+## L1-14 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-14 | stale PASS → fresh PASS | 10 / 10 admitted; maximum first nonhidden distance from refuge door 0.9 / 0.9 m; at most 3 / 3 courier pursuers within 20 m; settled waiting minimum 17.467 / 17.454 m over 36,000 samples each. | [Review](../../qa/reviews/L1-14.json), [measurement](L1-14/measurement.json); raw ledger and 20 inspected captures are hashed in the review. | — |
+
+The existing native bot reached pickup at tick 5132, then empty input and damage suppression permitted a 150-second mechanical observation. Waiting distances are measured after the initial approach, from +90 seconds onward, and to both player and garage. Browser inspection used a fixed close camera: the opened captures show figures on the porch and pavement, though several sampled moments miss the doorway crossing. The 0.9 m is the logical first nonhidden position, not a pixel-onset measurement. Existing mortal physical L1 routes are documented above. The native script wrote its full ledger but its optional comparison step exited 1 because the older baseline file is absent; the new ledger was independently summarized. No game change.
+
+## L1-15 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-15 | stale PASS → fresh FAIL | Three invitations at ticks 6408/6648/6888; ≥50 / 25 living infected before entry; 187 / 187 physical input ticks; gate state closes at tick 7107 with corgi 1.05 / 1.05 m inside. In 3 / 3 sampled post-entry frames per tier, the shutter is not visible. | [Review](../../qa/reviews/L1-15.json), [measurement and controls](L1-15/L1-15-measurement.json); 16 opened captures and full browser receipt are hashed in the review. | — |
+
+**Defect and repro:** Play to the fire station at default follow zoom, wait near the bay, and enter with WASD. On entry and one second later, the gate state says closed, but the station facade is represented by large dark triangular cutaway surfaces and no closing shutter is visible. Reproduced on both qualities. The rendering/camera cause is not yet isolated; the appearance suggests a cutaway issue. Mechanics otherwise pass: repeated on-screen text, living moving infected, gate open before entry, and corgi inside at closure. Native bot input and damage protection were used to reach the approach; final entry used physical keyboard input with read-only trigger/camera guidance. The eight-second wait is protected, so this is not a mortality or voice-audibility claim. No game change.
+
+## L10-05 qualification on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-05 | stale PASS → still NOT CHECKED | Machete start distance 5.025 / 5.025 m; native route reports five / five retained authored finds and story-only objective text. The authored list has zero checkpoint flashbang entries, while the row asks for them. | [Qualification](L10-05/qualification.json), [high fixture](L10-native/current-high-fixtures.json), [low fixture](L10-native/current-low-fixtures.json), [later removal report](../s208-noflashbang/README.md). | Decision needed on the conflicting criterion before a complete verdict. |
+
+The 2026-11-20 change `f8cfdad7` deliberately removed the L10 flashbang and migrated held flashbangs to Molotovs; the acceptance row still requires the pickup and later replacement. The underlying PO instruction for removal was not located, so this is a documented criterion/implementation conflict rather than a confirmed game defect. The existing fixture labels the machete check FAIL solely because it expects fists without kick, whereas the current L9 handover fixture explicitly expects fists and kick; its “six” pickup check derives its expected list from the five current authored entries and cannot detect a missing sixth. Physical approaches to the regional pickups remain open. No source, criterion, or checker was changed.
+
+## L10-07 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-07 | stale PASS → fresh FAIL | Existing Mega ID 115 jumps 372.853 / 203.916 m in one tick while player alive, without a checkpoint restore. | [Review](../../qa/reviews/L10-07.json), [per-tick jump audit](L10-07/jump-audit.json), `src/sim/missions/LevelTenStory.ts` overpass staging. | — |
+
+**Defect and repro:** Run the native complete L10 route to the overpass spectacle: tick 49648 high or 44739 low moves the same stalker directly beside the courier instead of pursuing along terrain. The explicit `l10-overpass-mega-staged` branch assigns its position to the player-relative spectacle location; it is a separate event from checkpoint restoration. Four high / three low other jumps coincide exactly with restores and are not counted as this defect. The audit used ordinary native bot input and read-only update observation; the prior mortal physical run did not reach this location. Minimap, audio and other pursuit clauses remain unreviewed. No game change.
+
+## L10-11 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-11 | stale PASS → fresh FAIL | 240 s stationary window: all-living peak 21 / 13, bounded reachability 100% / 100%, hold windups 338.87 / 303.57 per minute. Same Mega ID 115 jumps 313.957 / 291.781 m in one tick before assault; already inside the 25 m arena at charge activation. | [Review](../../qa/reviews/L10-11.json), [hold receipt](L10-11/hold.json), [separate jump audit](L10-07/jump-audit.json). | — |
+
+**Defect and repro:** Follow the native L10 route through the overpass and into the finale. The overpass staging moves the persistent stalker directly beside the player before it reaches the arena, contradicting the no-teleport continuity requirement. High and low stationary policies recorded the jump at ticks 43140 and 43547; the independent complete-route audit shows the same staging with no death or checkpoint restore. Source cause is the position assignment in `LevelTenStory`'s overpass staging. The hold probe used protected stationary input for the 240-second window and a native approach; an independent current stationary state-hash control was unavailable. Its living count includes the Mega and other living infected, so it is a conservative cap bound rather than an ordinary-infected breakdown. Wave directions, breathers, reinforcement continuity and physical finale play remain open. No game change.
+
+## L10-12 controlled finale diagnostic on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-12 | stale PASS → still NOT CHECKED | Controlled healthy full-arsenal finale completed in 189.02 / 165.17 s with 0 / 0 deaths. Ground melee was rejected by the mounted platform in both tiers; a rear stair climber dealt 8.75 damage; one seeded climber reached the deck via the stair each tier. Bot mounts 0 / 1 and minigun kills 0 / 40. | [Native diagnostic](L10-12/story-probe.json); both-tier direct-weapon fixtures in [high](L10-native/current-high-fixtures.json) and [low](L10-native/current-low-fixtures.json). | — |
+
+The `L10_STORY_FINAL_ONLY=1 L10_STORY_TIERS=high,low L10_STORY_SEED=1` existing probe exited 1: high bot did not mount the gun (0 kills), and both injected finale-only runs omit earlier story beats expected by a broader check. Neither establishes a game failure. The shield/stair fixture explicitly places actors and the finale-only run injects a healthy arsenal and arena setup; it is a capability observation, not a real-input full-route or fairness result. A single stair approach does not prove that crowds can only climb stairs; high gun use, physical fight, visual health bar, cover and dismount behavior remain open. No game change or row verdict.
+
+## L10-02 qualification on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-02 | stale PASS → still NOT CHECKED | Native first widest-frame sighting 71.8 / 69.53 s; close sections `[1,6,7,8]` both. Twenty oversized direct-rocket hits leave 1780.10 / 1780.10 of 3000 HP before installation; production floor 1500 HP. | [Qualification](L10-02/qualification.json), current native receipts referenced there; `src/sim/combat/Damage.ts`, `src/render/HealthBars.ts`, `src/ui/Hud.ts`. | Clarify whether the no-bar clause excludes the overhead bar required by G-24. |
+
+The old fixture incorrectly calls any HP loss an immunity failure; the current row prohibits killing, not damage, and the damage floor plus the measured 20-hit result support survival. The criterion also says no HP bar before the finale, while G-24 explicitly requires the pursuing Mega's overhead bar; the HUD's separate screen-wide boss bar is restricted to the installed-cure finale. `HealthBars.barEligible` marks pursuit mandatory when visible, but no current physical image establishes the actual onscreen result. Confirm interpretation and inspect physical sightings/terrain escapes before closing. No source, criterion or checker changed.
+
+## L10-04 pacing diagnostic on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-04 | stale PASS → still NOT CHECKED | Native complete bot: 6 / 7 route-ambush emergence signals; consecutive gaps 74.50–154.67 / 67.83–136.67 s; first such signal 458.67 / 367.17 s. Completed with 4 / 3 deaths. | [Pacing receipt](L10-04/pacing.json); previous physical run diagnostics above. | — |
+
+`L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts` exited 0. Its named `l10-scare-emerged` signals are only one category of authored scare, and its longest gap between *all* beats includes radio, vignettes and objectives; neither establishes the 30–60 s quiet or approximate scare-cadence requirement. The native route is not a physical-input fairness run. Current peak counts alone also do not establish what is normal. A per-tick local crowd distribution, complete scare classification and visual moving-group review remain open. No game or checker change.
+
+## L10-03 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-03 | stale PASS → fresh FAIL | Cure release after 1349.35 / 1194.37 s (22:29.35 / 19:54.37); high is 149.35 s beyond the acceptance evaluator's 1200 s upper bound for ≈15 min. Native retries: 4 / 3 deaths. | [Review](../../qa/reviews/L10-03.json), [pacing route](L10-04/pacing.json), both current complete receipts in `L10-native/`. | — |
+
+**Defect and repro:** Run `L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>`; high reaches release in 22:29.35, before its 65-second epilogue, rather than within the evaluator's 10–20 minute band. Four deaths and checkpoint retries are included; their contribution to excess duration is not isolated, and this is a native bot result rather than proof of a skilled human's time. The objective ledger visits crash, farmstead, restricted zone, hangar and dispersal in order, but physical completion, all seven visual region boundaries and idle-padding attribution remain open. No game change.
+
+## L10-14 ending frames on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | Six newly inspected current-source frames: pullback at 60 s, title and middle credits at each tier. Existing one-second ledger measured title 65 s and credits 90 s in both tiers. | [Frame review](L10-14/ending-frame-review.json), with exact image paths and hashes; physical-release method documented above. | PO: do the cited 60 s and title frames communicate a full-L10 pullback? |
+
+Both 60 s views show a mostly peach field, dark triangular clusters, tiny scattered silhouettes and a green plume; recognizable journey landmarks are difficult to identify. The title is clear; the sampled credits contain readable text and visible pause/skip buttons, with a top line partly cropped during scrolling. This is a visual observation, not a continuous credits-readability or actual skip test. The physical captures were made on `92c233e2`; changes to current main are confined to L8. Same-ID recovery, corpse retention and skip behavior remain open; no row verdict or game change.
+
+## L10-09 handoff diagnostic on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-09 | stale PASS → still NOT CHECKED | Six named living cast members per tier in controlled fixture; ten distinct issued weapons. Four paired 120-tick movement trajectories match exactly with/without canister, both tiers. Physical approach: 339 / 313 input commands; 14 / 14 frames inspected. | [Native proof](L10-09/cure-proof.json), [physical summary and capture hashes](L10-09/physical-summary.json), [cast fixture](L10-12/story-probe.json). | — |
+
+The native complete-route observer generated naturally reached research snapshots and matched each prior canonical final-state hash. The high/low physical attempts waited through ordinary dialogue, then walked with WASD and used E at terminal and canister; courier was protected, with read-only navigation assistance. Opened frames show Voss's sample/container and two-kilometre explanations, a lit console and tent edge, and a white cylinder on the courier's backpack. The research checkpoint records the cure. The first high attempt stopped because the older producer assumed dialogue was already complete; a second attempt waited normally. The native movement comparison changes only the canister flag/item in matched snapshots; cardinal displacement ranges 7.77–8.75 m over 120 ticks, with identical paired trajectories. Actual post-collection death/restore, comprehensive indoor spawn exclusion, props/cast visual completeness and a mortal physical full-route remain open; no row verdict. No game change.
+
+### L10-09 mortal restore and hangar census
+
+The protected physical high/low handoffs were repeated from the same naturally reached snapshots, then protection was disabled outside and the courier waited for normal infected attacks. Death occurred at ticks 5901 / 5549 and restore 120 ticks later; both restored the `cure-research` checkpoint with `cure-carried` and `cure-canister` intact. During the sessions 23 / 16 actual infected spawns were logged, none inside the hangar; all 201 / 190 half-second hangar occupancy samples were empty of living infected. [Mortal summary](L10-09/mortal-summary.json) hashes both full receipts and the two opened post-restore frames: courier and corgi at an intersection with the cylinder visible, low also showing distant enemies. This is finite sampled occupancy rather than a proof for every possible route or seed. Native snapshots and the pre-handoff approach are controlled, with read-only route guidance; a full mortal physical route and full visual cast/prop review remain open. L10-09 stays NOT CHECKED. No game change.
+
+## L10-09 environmental dressing verdict on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-09 | stale PASS → fresh FAIL | 45 / 45 runtime placement origins inside hangar: 0 / 0 assets named container, 1 / 1 quarantine tent, 1 / 1 generator, 1 / 1 emergency light. | [Review](../../qa/reviews/L10-09.json), [runtime inventory](L10-09/hangar-inventory.json), eight inspected fixed-camera frames hashed in the review; physical handoff and mortal restore above. | — |
+
+**Defect and repro:** Reach the research hangar and inspect its interior: the required separate lab containers are absent in the photographed west/east/entry views, leaving a largely empty floor. Runtime D-CURE placement enumeration within the hangar bounds finds no asset named container in either tier; the cure canister pedestal is present, as are one tent, generator and emergency light. The cause is missing authored interior dressing in the runtime placement set; asset-name filtering and origin bounds are disclosed in the inventory, so an unrecognized container represented by another asset remains a limitation. Inspection cameras were fixed around a naturally reached native resume; no actors moved. Existing physical handoff and mortal restore evidence remain separately qualified. No game change.
+
+### L1-05 quiet admission attempt on main 233eab90
+
+An exclusive quiet-run reservation was granted, but quiet preflight remained false for approximately 120 seconds: load was 5.8–6.7 with four other active acceptance processes. The bounded attempt was cancelled and exited 75; no timing browser or measurement started. [Admission summary](L1-05/admission.json) hashes the full log. `MI_PERF_ADMISSION_TIMEOUT_SECONDS=120` did not bound the pool wrapper's admission loop in this configuration, so the attempt was explicitly cancelled; no checker change was made. The prepared adapter is retained under `test-results/v1-l1l10/L1-05-timing-adapter.ts` for a future quiet window. L1-05 remains NOT CHECKED; old timing is not current evidence.
+
+### L10-08 road framing partial on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-08 | stale PASS → still NOT CHECKED | Five progressed locations per tier, each inspected at zoom 1 and 1.5; 10 / 10 camera samples report road scale 1.3 and maximum zoom 1.5, product 1.95. | [Road summary](L10-08/road-summary.json) records hashes and paths of all 20 inspected frames and both receipts. | — |
+
+The road bridge shows verges and a cow; the farm view shows cornfields and a fire. The restricted-zone views are very dark beyond the flashlight; the low-tier fifth location shows a group of enemies and corpses. These snapshots do not establish whether all suit crowds are readable, nor whether the slam telegraph is a ground effect or the scale switches off in the finale. Native route snapshots were resumed for each view with protected player and physical KeyD; this is not a continuous physical run. The low charge snapshot was captured after a restored release and was excluded from finale evidence. Producers and native proof are retained in `test-results/v1-l1l10/L10-08-prefix/`. No game or checker change.
+
+### L10-08 finale and zoom-cap continuation on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-08 | stale PASS → still NOT CHECKED | Natural slam captured at three times and two zooms per tier; finale scale 1.0 / 1.0. Production camera capability: 28 / 28 cells pass, largest combined scale 2.0. | [Finale summary](L10-08/finale-summary.json), [road summary](L10-08/road-summary.json). | Night suit-crowd readability still needs representative identified frames. |
+
+Both natural finale snapshots were taken when the persistent Mega approached within 18 m; both native final-state hashes matched the prior control. The only main change since that control is L9 driving code. Each browser resume used physical spacing and at most three rockets, with player protection and otherwise normal AI. The twelve inspected slam frames show red circles on the floor around the crowd and Mega; the read-only telegraph ledger identifies the boss's own radius-3 ground-slam attack. The finale scale is 1.0 in those frames. The separate production camera rig tests pistol and rocket at five roads, corridor and finale, with maximum zoom requests: all 28 pass, maximum 2.0. It is a capability fixture, not a physical backtracking run. Representative identifiable suit crowds at night remain open, so this is not a complete row verdict. Producers and full receipts remain under `test-results/v1-l1l10/L10-08-close/`. No game or checker change.
+
+### L10-08 suit readability and verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-08 | stale PASS → fresh P | Road scale 1.3 / 1.3; finale 1.0 / 1.0; combined maximum 2.0 across 28 rig cells; natural boss slam in both tiers. Identified living suit IDs 143 / 379, inspected at 120 and 180 approach ticks at zoom 1 and 1.5. | [Review](../../qa/reviews/L10-08.json), [suit frame paths and hashes](L10-08/suit-summary.json), [road](L10-08/road-summary.json), [finale](L10-08/finale-summary.json). | PO: in the eight exact frames in the suit summary, are the suit and nearby infected sufficiently distinct at night? |
+
+`inf.common-worker` is the suit model. The high physical approach moves toward ID 143 from 17 m to 4.3 m near the lit house; the group partly overlaps. The low approach encounters ID 379 at the dark complex approach, close to the courier and another infected; the flashlight and red health bars assist visibility. Figures are visible but whether the crowd reads clearly enough is a taste decision. The player was protected and each tier resumed a natural progressed snapshot; this is a focused encounter, not a continuous mortal run. Earlier road and slam evidence methods and limits remain above. No game or checker change.
+
+### L1-05 second quiet admission on main 4d3932b0
+
+A second bounded exclusive admission attempt ended after 120 s without starting the timing adapter. The final preflight reported load 2.33 but active L7 acceptance and a separate mortal-distance QA process; an earlier sample also showed an L6 acceptance job. No blast-frame timing was measured, and L1-05 remains NOT CHECKED. The adapter and its native-prefix limitation remain as documented above. No game or checker change.
+
+### L1-11 third route attempt on main 4d3932b0
+
+A third high-tier physical bicycle route attempted the depot street fence using coordinate-assisted cautious steering for 900 ticks. It ended at (−36.02, −34.97), near the depot and hydrant rather than the target fence; E dismounted with the bicycle 1.20 m away. The opened [frame and receipt summary](L1-11/high-r3-summary.json) show courier, corgi and bicycle on the sidewalk outside the depot, with a hydrant in front. This is an inconclusive driver route, not a fence counterexample; low was not repeated on the same failed path. The prior measured 7.5 m/s and wall dismount remain documented above. L1-11 remains NOT CHECKED; no game change.
+
+### L10-14 credits skip partial on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | Physical click on actual Skip credits advanced high from credits phase tick 0 to thanks phase tick 1 in two simulation ticks; low release setup did not trigger and has no skip result. | [Skip summary](L10-14/skip-summary.json), exact two opened high frames and receipt hashes. | Earlier full-L10 pullback visual question remains open. |
+
+High credits show the title, readable initial attribution lines, Pause and Skip buttons over the pulled-back scene; the post-click frame shows “Thanks for playing” over the courier, corgi and survivors. The click resumes the game clock, so the measurement re-paused it before stepping; the initial observer attempt failed to do so and was discarded. Low twice failed to release the cure after reaching the console prompt, including a held-E retry; this is an inconclusive setup observation, not a diagnosed defect or skip result. The inherited touched/dead observer field is still misleading as described above. Corpse retention, repeat-view cinematic skip, low credits skip and full readability remain open. No game or checker change.
+
+### L10-05 acceptance mismatch verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-05 | stale PASS → fresh FAIL | Checkpoint flashbang entries 0 / 0; five / five authored story weapon finds versus the six named in the row. Crash machete start distance 5.025 / 5.025 m. | [Review](../../qa/reviews/L10-05.json), [qualification](L10-05/qualification.json), current list and spawner linked by hash in review. | Product resolution needed: later s208 deliberately removed flashbang. |
+
+**Acceptance mismatch and repro:** Reach the L10 military checkpoint and look for the required flashbang: the current story pickup list has no flashbang entry and the resident-chunk weapon spawner iterates that five-item list. The later [s208 report](../s208-noflashbang/README.md) explicitly records intentional removal on 2026-11-20, after the row's 2026-11-19 instruction. This FAIL reports the discrepancy against the still-current written criterion; it does not assert that the removal was accidental or decide which direction product intended. Both-tier native route found the five retained items; physical pickup approaches and machete/axe equivalence remain unmeasured. The previous “fists-only” failure is not used because the handover separately specifies kick. No game, spec or checker change.
+
+### L10-02 pre-finale health-bar verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-02 | stale PASS → fresh FAIL | One overhead HP bar in 2 / 2 inspected zoom frames while cure-installed is false. Native first sighting 71.8 / 69.53 s; earlier direct-hit fixture leaves 1780.10 / 1780.10 HP of 3000. | [Review](../../qa/reviews/L10-02.json), [bar frames and native snapshot](L10-02/bar-summary.json), [earlier qualification](L10-02/qualification.json). | Product: reconcile no-bar row with G-24's explicit pursuit-bar requirement. |
+
+**Acceptance mismatch and repro:** Reach the dispersal approach before installing the cure and look at the pursuing Mega: an overhead red health bar is visible above it on both tiers at zoom 1 and 1.5. This obeys G-24 but conflicts with the literal no-HP-bar wording in this row. There is no full-width finale boss bar in these frames. The natural native snapshots matched prior complete-route final hashes and were normally resumed with player protection; no actor was relocated by the observer. The broad route encounter count and terrain-gap evasion still require physical qualification. No game, spec or checker change.
+
+### L10-12 pre-finale health-bar verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-12 | stale PASS → fresh FAIL | One overhead HP bar in 2 / 2 inspected zoom frames before cure installation. Controlled finale diagnostics above remain separate and incomplete. | [Review](../../qa/reviews/L10-12.json), [same both-tier bar evidence](L10-02/bar-summary.json). | Product: reconcile finale-only row with G-24's explicit pursuit-bar requirement. |
+
+**Acceptance mismatch and repro:** Before installing the cure, encounter the pursuing Mega on the dispersal approach: its red overhead HP bar is already present. G-24 expressly requires this presentation, while L10-12 says the Mega health bar appears only for the finale. This is an explicitly qualified criterion conflict. The wide finale boss bar is a separate HUD element and is absent in these pre-finale frames. Mounted shield, stairs, gun and survivability are not established by this counterexample; their partial diagnostic is above. No game, spec or checker change.
+
+### L10-04 local moving census on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-04 | stale PASS → still NOT CHECKED | Half-second samples before cure installation: 2,183 / 2,114. Within 20 m, median 0 / 1, p95 10 / 10, max 21 / 15; 13 / 0 samples exceed 15. Moving-only median 0 / 0, p95 10 / 9, max 16 / 12. | [Local census](L10-04/local-census.json), full compressed samples and producer under `test-results/v1-l1l10/`. | — |
+
+The earlier 68/57 whole-region peaks are not evidence that the player normally faces that many at once. This census counts admitted living ordinary infected in explicit 12 m and 20 m circles every 30 ticks, excluding the pursuing Mega; moving means displacement ≥0.05 m since the previous sample. Both read-only native complete routes match the prior final-state hashes; the intervening main change affects L9 driving. These are radius-based bot observations rather than visually partitioned groups or a physical run, and the row's quiet/scare classification and finale-only crowd-fight clause remain open. No game or checker change.
+
+### L1-12 bench and changed alley route on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → still NOT CHECKED | Seven bench legs per tier: maximum endpoint error 0.110 / 0.110 m, maximum stopped 1 / 1 tick; 14 / 14 endpoint frames inspected at zoom 1 and 1.5. Old backyard leg 03 hit the later sealed fence after 1,200 high-tier ticks. | [Bench and route summary](L1-12/bench-summary.json), with frame and full receipt hashes. | — |
+
+Both bench routes used physical WASD on foot carrying the parcel, with read-only coordinate assistance. The 28 inspected frames show the courier and corgi passing the depot frontage, racks and both ends of the bench; the courier remains visible at those endpoints. This only measures the bench segment, not every fence, pallet or trash-bag passage. The old backyard route attempts to cross the depot-side street fence that `src/levels/L1/layout.ts` explicitly says was added to close that lane; its stop is not counted as an unintended prop snag. A current legal alternate route through the relevant alleys and its camera-side visibility remain open. No game or checker change.
+
+### L1-12 street-side route on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → still NOT CHECKED | Ten street-side legs per tier, maximum endpoint error 0.113 / 0.113 m and maximum stopped 0 / 0 ticks. Twenty endpoint frames per tier inspected at zoom 1 and 1.5. | [Street summary](L1-12/street-summary.json); [bench summary](L1-12/bench-summary.json). | — |
+
+The physical on-foot route uses a native parcel prefix and read-only coordinate assistance. Frames show the courier beside trash bags, pallets and fences and then near the Annex; the courier is visible in the sampled endpoint images. Combined with the separate seven-leg bench test, these measurements cover the named prop types on a reachable route. They do not establish continuous visibility between endpoint captures or every possible alley/fence angle, so the absolute camera-side “never hides” clause remains open. The previously sealed rear lane is excluded as documented above. No game or checker change.
+
+### L1-12 moving camera review and verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → fresh PASS, sampled | Seven bench plus ten reachable street/alley legs each tier; endpoint error ≤0.113 m, longest stop 1 tick. Inspected 86 / 86 paired-zoom moving stills, sampled every 30 ticks through four fence-lined legs, plus the earlier endpoint frames. | [Review](../../qa/reviews/L1-12.json), [motion frame hashes and receipt](L1-12/motion-summary.json), [street](L1-12/street-summary.json), [bench](L1-12/bench-summary.json). | — |
+
+On the tested physical on-foot route, the courier passes the named trash-bag, pallet and bench areas and remains visible in the sampled fence-line views. In a full-size high-tier roof-crossing frame, the foreground cutout exposes the courier. This PASS is qualified to the selected legal route and 2 Hz capture sampling; it does not prove every intervening frame or every possible camera angle. Native input is used only for the parcel prefix, and coordinate guidance is disclosed. The old rear lane was intentionally sealed and is excluded as described above. No game or checker change.
+
+### L10-04 quiet-candidate cross-check on main 4d3932b0
+
+The local census and same-seed pacing ledger were correlated by simulation tick. With zero ordinary infected within 20 m, high has sampled runs of 32 s and 61 s, low one of 56 s. The 61 s high and 56 s low runs overlap the research-hangar conversation; high's 32 s run includes pickup, vignette and checkpoint beats. [Candidate intervals and beat ledger](L10-04/quiet-candidates.json) give the exact times and hashes. These are enemy-free candidates, not measured silence or proof of survival-horror pacing: the census excludes Mega and the beat ledger is not a complete audio/visual classification. L10-04 remains NOT CHECKED. No game or checker change.
+
+### L10-14 same-ID transition observation on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | First 12 s after release: 6 / 30 observed living infected preserve IDs and transition to healthy civilian/animal entities with HP 100 and `npc-cower` recovery. Low includes 3 dogs. | [Identity summary](L10-14/identity-summary.json), both full receipts and four inspected frames hashed there. | — |
+
+A corrected read-only observer records the actual post-front entity rather than treating membership in `affectedIds` as death. Both browser quality settings resumed the same naturally reached **high-tier** release snapshot; a physical approach and E released the cure, protection was disabled before release, and the measurement ran 12 s. The two-second frames show a green ring and scattered figures around the console; the 12-second frames show a bridge, vehicles, figures and green haze. The ledger confirms identity and recovery state but these distant stills do not prove animation quality for each entity. Corpse persistence, full credits readability and low-tier skip from a low-native route remain open. No game or checker change.
+
+### L10-14 dead-body ambiguity on main 556d5cba
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | On the shared high-native resume, Mega ID 115 remained at 0 HP in both quality runs. An initially zero-HP firefighter ID 710 was alive at 210 HP immediately before cure conversion, at its scheduled recovery tick 869 / 869. | [Corpse transition trace](L10-14/corpse-trace.json), full read-only receipts under `test-results/v1-l1l10/L10-14-corpse-trace/`. | — |
+
+The initial census looked like a dead firefighter becoming healthy, but per-tick trace shows the actor was in recoverable infected `dead` state with `recoverAt=869`; the pre-cure observer measured 210 HP at tick 869 before same-ID conversion. No reuse through `infected.spawn` was observed for that ID. This is not evidence that a permanent corpse revived. The dead Mega remains at 0 HP, but an ordinary permanent corpse crossing the cure front was not observed, so the row's dead-body requirement remains open. Both browser qualities use the same high-native resume and the observer only reads/wraps events. Main's intervening commit changes generated receipts only. No game or checker change.
+
+### L1-05 quiet timing verdict on main 556d5cba
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-05 | stale PASS → fresh PASS | Calm 4.733 / 4.733 s, 284 / 284 sampled ticks without active objective or living admitted infected; ordered flicker-to-screams 3.5 / 3.5 s; blast-crossing frame 6.9 / 6.4 ms. | [Review](../../qa/reviews/L1-05.json), [timing summary](L1-05/timing-summary.json), full passive RAF/event receipt and quiet admission log hashed there. | — |
+
+Exclusive pooled quiet admission was granted with load 1.50 and no active foreign workload. Native uncapped Chrome Metal WebGL2 ran high then low at normal realtime; the timing adapter used native bot input only until Delivered, stopped it, then observed events and requestAnimationFrame without screenshots or CDP during the blast. The measured frame is the first RAF interval ending after the blast event; the long initial warmup interval caused by fixed-step setup is excluded. Separate prior physical full-level routes recorded the same 284-tick Delivered-to-flicker interval, with 0 / 1 deaths; they were on source differing only in L8/L9 and generated receipts. This is one blast sample per tier, not a performance distribution. No game or checker change.
+
+### L1-11 bicycle physical verdict on main 556d5cba
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-11 | stale PASS → fresh PASS, sampled | Actual forward 7.5 m/s for 84 / 84 consecutive ticks; left heading −0.016→−0.505 and right −0.520→−0.145 rad on both tiers. S reached −1.8 m/s. Both physical fence dismounts leave player X −26.546 and bike X −26.649, on the same side of fence min X −25.635. | [Review](../../qa/reviews/L1-11.json), [measurements and inspected frames](L1-11/final-summary.json). | — |
+
+The earlier clear-road route was reconstructed from prior reviewed positions. It reached sustained 7.5 m/s on both tiers; its return leg hit frontage, so a separate direct physical approach was used for fence 127. Both fence and previously measured depot-wall dismounts leave bike and courier on the same side. The inspected views show the mounted bike on the street and the unmounted bike beside the courier outside the fence at zoom 1 and 1.5. This is finite coverage of a wall and a fence, not every possible geometry; all measured motion uses physical keys after a native parcel prefix with read-only coordinate guidance. The earlier failed route attempts remain documented above. No game or checker change.
+
+### L10-14 settled bodies across cure front on main 556d5cba
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | Two / two settled bodies (dog ID 699, firefighter ID 711), 23.7 m and 23.5 m from console: both remain same-ID, corpse=true, HP 0 after front radius 602.17 m in each quality run. | [Permanent-body summary](L10-14/permanent-summary.json), full receipts and producer under `test-results/v1-l1l10/L10-14-permanent/`. | Full pullback taste remains open. |
+
+The same naturally reached high-tier release snapshot was resumed at both quality settings. Physical rocket input and normal environmental fire preceded a 150-tick settling wait with courier protection; protection was disabled before physical E released the cure. The event ledger attributes the two deaths to fire, and both bodies had `corpse=true` before release and after 12 s. The four inspected pre-release frames show a lit console and infected crowd; the tracked bodies are outside those views, so their persistence is a state observation, not a visual body comparison. These are two sampled bodies on one shared native prefix. Low-native credits skip, repeat-view cinematic skip and continuous credits readability remain open. No game or checker change.
+
+## Final handoff on current main 556d5cba
+
+Numbers are high / low unless stated otherwise. Existing focused sections above contain methods, image descriptions, exact hashes and qualifications. “NOT CHECKED” means no current verdict; old review files for those rows are stale and must not be mistaken for the present outcome. The source digest, not the commit label on an earlier review, decides freshness. No game, layout or specification files changed.
+
+| Row | Verdict | Numbers / observation | Evidence | P-note |
+| --- | --- | --- | --- | --- |
+| L1-01 | PASS | Both current native complete policies finish. At initial observation deadline is null, weapon racks are absent and owned actions contain only fists and kick. No physical-input run on this head is claimed. | [review](../../qa/reviews/L1-01.json) | — |
+| L1-02 | PASS | Untouched stationary native opening, every tick 0–3600: 58 high / 51 low civilians; 0 living infected and 0 combat events both. Maximum unfaced stationary interval 133 ticks (2.2167 s) both. Four broken/boundary controls pass. Hidden interiors excluded from visible idle; missing or… | [review](../../qa/reviews/L1-02.json) | — |
+| L1-03 | PASS | Both quality sequences: 321 tick samples, same clerk ID 155 high / 148 low, 94 transfer ticks with zero hidden transfer ticks, parcel transfers, return walks inside to z -39.34 before clerk removal, and door latch closes. All 22 frames inspected: clerk carries parcel, offers it, waves,… | [review](../../qa/reviews/L1-03.json) | — |
+| L1-04 | P | Both tiers: same technician ID 154 high / 147 low over 707 ticks, 364 transfer ticks with zero hidden transfer ticks; parcel transfers and technician returns to z -16.5 inside; six broken-data controls reject. Inspected 12 selected frames and archived labelled PROD comparison. Current… | [review](../../qa/reviews/L1-04.json) | PO: compare cited technician and PROD frames. |
+| L1-05 | PASS | High/low 4.7333 s; 284 sampled ticks each with zero active objectives and zero living admitted infected. Separate real-input runs reached Delivered and record the same 284-tick delivered-to-flicker interval. | [review](../../qa/reviews/L1-05.json) | — |
+| L1-06 | PASS | Both native fixtures observe five crossings with technician first (ID 154 high / 147 low). Actual four-metre departure headings include 26.82/109.25/171.43° high and 26.49/105.54/170.48° low, minimum pairwise separations 62.18°/64.95°. All 14 browser burst frames inspected:… | [review](../../qa/reviews/L1-06.json) | — |
+| L1-07 | PASS | Both tiers start with 5; low 30/30 and high 44/50 at +120/+240 seconds. All additional turns follow bites, no direct additions; observer has zero deaths, damage, knockdowns and kills. | [review](../../qa/reviews/L1-07.json) | — |
+| L1-08 | PASS | Both tiers: stationary first player windup 2.3167 s, 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples. Complete policies: low/high 27.93/19.20 windups/min and 100% minimum across 23 samples each. Reachability is sampled within 30 m with path ≤2.5× direct… | [review](../../qa/reviews/L1-08.json) | — |
+| L1-09 | PASS | Both quality fixtures spawn 100 runners in each of three tiers. All 300 meet 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic sample. | [review](../../qa/reviews/L1-09.json) | — |
+| L1-10 | PASS | Production-camera native complete-input trials, seeds 1–10 each quality: same-ID warning strictly before first appearance 10/10 high and 9/10 low, exceeding 80%. Low seed10 had no qualifying warning; low seed5 warning preceded appearance by only 2 ticks. Seven… | [review](../../qa/reviews/L1-10.json) | — |
+| L1-11 | PASS | Both tiers, physical W held 7.5 m/s actual displacement for 84 consecutive ticks; W+A heading −0.016→−0.505 rad, W+D −0.520→−0.145 rad. Physical S reached −1.8 m/s in separate observed segments; reverse speed is not specified by this row. | [review](../../qa/reviews/L1-11.json) | — |
+| L1-12 | PASS | Physical WASD with coordinate guidance, carrying parcel: ten reachable street/alley legs and seven bench legs per tier; maximum endpoint errors 0.113 m and 0.110 m, respectively; longest stop one simulation tick. Sampled frames show trash bags, pallets and bench. | [review](../../qa/reviews/L1-12.json) | — |
+| L1-13 | PASS | Both high and low: no initial bat; first acquired at tick 5132, 0.992 m from garage-bat (2 m anchor radius), after weapon objective; route completed with 0 deaths. Controlled isolated 60 HP regular: fists 7 hits, bat 2. L1 mission maps weapon interaction and district bat to garage-bat,… | [review](../../qa/reviews/L1-13.json) | — |
+| L1-14 | PASS | High/low: 10 residents admitted each; first logical visible position at most 0.9 m from refuge door; maximum 3 courier pursuers within 20 m; after +90 s, minimum waiting distance from both player and garage 17.467/17.454 m across 36000 samples each. 150 s stationary observation after… | [review](../../qa/reviews/L1-14.json) | — |
+| L1-15 | FAIL | High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow… | [review](../../qa/reviews/L1-15.json) | — |
+| L1-16 | NOT CHECKED | Previous low seed1 trial: >60 s at fenced house corner; old evidence stale for current head. High and current-head retest open. | [prior lane result](README.md) | — |
+| L1-17 | P | PO: inspect the 12 cited morning/start, Annex and outbreak frames, both tiers and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog in warm suburb streets; outbreak views show several pursuing infected, red attack rings and minimap contacts,… | [review](../../qa/reviews/L1-17.json) | PO: do cited morning and outbreak frames feel inhabited and overwhelming? |
+| L10-01 | P | Native first 3600 ticks: peak regulars 8 high / 7 low; dogs and Alphas 0 both. Four physical samples cover 83–84 simulation seconds each, but their driver logs do not provide a complete per-tick census. PO: inspect the eight cited start and ~45 s frames at both qualities and requested… | [review](../../qa/reviews/L10-01.json) | PO: do cited opening frames communicate wreck, corn, farms and livestock? |
+| L10-02 | FAIL | Literal row mismatch: 1 overhead red HP bar visible in each of four inspected high/low zoom 1/1.5 frames while cure-installed is false. Repro: progress to the dispersal approach, encounter the pursuing Mega and look above it. G-24 explicitly requires the pursuing Mega to keep its… | [review](../../qa/reviews/L10-02.json) | — |
+| L10-03 | FAIL | High native complete-input seed1 reaches cure release at 1349.35s (22m29.35s), 449.35s above 900s and 149.35s above the evaluator 1200s upper bound; low reaches release at 1194.37s (19m54.37s). High has four deaths and checkpoint retries, low three; these times include retry travel and… | [review](../../qa/reviews/L10-03.json) | — |
+| L10-04 | NOT CHECKED | Native scare signals 6 / 7; gaps 74.50–154.67 / 67.83–136.67 s; full pacing and quiet stretches open. | [pacing](L10-04/pacing.json) | — |
+| L10-05 | FAIL | Against the current acceptance row: 0 checkpoint flashbang entries, 5 authored story weapon finds instead of the 6 named finds, on both tiers. Repro: reach the military checkpoint and seek flashbang pickup; the L10 pickup list and spawner contain none. The 2026-11-20 s208 report… | [review](../../qa/reviews/L10-05.json) | — |
+| L10-06 | FAIL | Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: run L10 controlled acceptance fixtures and inspect native dog speed ratio. Attack fixture observes 0.65 s telegraph, 1.08 m reach, 10 HP damage and 2 s cooldown. Visual distinction remains unreviewed. | [review](../../qa/reviews/L10-06.json) | — |
+| L10-07 | FAIL | High seed1 tick 49647→49648: same Mega id 115 moved (2978.093,-4.771)→(3337.350,95.000), 372.853 m in one tick, player alive and no restore event. Low tick 44738→44739: same id moved (3136.142,61.850)→(3337.346,94.995), 203.916 m, player alive and no restore event. LevelTenStory stages… | [review](../../qa/reviews/L10-07.json) | — |
+| L10-08 | P | Five progressed road locations at both tiers report scale 1.3; bridge verges and farm fields visible. Actual finale scale 1.0. Production rig capability: 28/28 location/weapon/tier cases pass, maximum combined 2.0. | [review](../../qa/reviews/L10-08.json) | PO: judge cited road/finale framing. |
+| L10-09 | FAIL | At both tiers the runtime hangar placement census finds 0 assets named as containers, 1 quarantine tent, 1 generator and 1 emergency light (45 placement origins in bounds); inspection views show a largely empty floor, one tent-like shelter, console, people and a generator-like machine,… | [review](../../qa/reviews/L10-09.json) | — |
+| L10-10 | PASS | Both current complete routes record 3600 eligible increments and zero invalid increments; high includes 120 dead ticks. Both controlled fixtures pause at 40.01 m with instruction, hold while dead and resume inside; 20 rounds and 0.125 heat in one full-speed second, lock at 1.0, still… | [review](../../qa/reviews/L10-10.json) | — |
+| L10-11 | FAIL | Both 240s protected stationary holds: all living infected peak 21 high/13 low; bounded-path minimum 100% both; hold player attacks 338.87/303.57 per minute. Persistent id 115 in both, already within 25m on charge activation, but same ID moved 313.957m high at tick 43140 / 291.781m low… | [review](../../qa/reviews/L10-11.json) | — |
+| L10-12 | FAIL | Literal row mismatch: 1 overhead red HP bar visible in each of four inspected high/low zoom 1/1.5 frames while cure-installed is false. Repro: progress to the dispersal approach, encounter the pursuing Mega and look above it. G-24 explicitly requires the pursuing Mega to keep its… | [review](../../qa/reviews/L10-12.json) | — |
+| L10-13 | PASS | Both controlled fixtures reject each missing charge, installed cure, boss death, proximity or fresh input, and accept the complete control. Physical WASD approach and E from native progressed save release at 1.565 m high and 1.385 m low, god disabled before E. Release front appears… | [review](../../qa/reviews/L10-13.json) | — |
+| L10-14 | NOT CHECKED | 6 / 30 same-ID living recoveries; 2 / 2 sampled corpses stay dead per tier; title 65 s, credits 90 s, menu; objective gaps remain. | [ending observation](L10-14/final-observation.json) | PO: inspect 60 s and title frames in [frame review](L10-14/ending-frame-review.json); do they communicate a full-L10 pullback? |
+| L10-15 | FAIL | At cure-disperse-ready the saved boss is alive at 1116 HP low / 1072.8151 high; after fixture kills boss and causes ordinary player death, respawn reports boss dead at 0 HP in both tiers. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect boss snapshot at… | [review](../../qa/reviews/L10-15.json) | — |
+
+### Defects and acceptance conflicts (repro)
+
+- **L1-15:** Reach the fire station, wait at the bay, enter via WASD and watch the follow camera; shutter state closes, but no shutter is visible and the facade shows dark cutaway triangles in both tiers. Cause not isolated.
+- **L10-02 and L10-12:** Before cure installation, encounter the Mega on dispersal approach: one overhead HP bar is visible in each tier, contrary to both rows but explicitly required by G-24. Product must resolve the criterion conflict.
+- **L10-03:** Run `L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>`: release takes 1349.35 / 1194.37 s, with 4 / 3 deaths and retries; high exceeds the evaluator's 1200 s upper bound. This is native-bot timing, not a skilled-player benchmark.
+- **L10-05:** At the military checkpoint seek the required flashbang: none is authored (5 / 5 story finds vs 6 required); later s208 deliberately removed it. Product must resolve the acceptance conflict.
+- **L10-06:** Run the L10 fixtures and compare spawned dog and survivor speeds: ratio 1.65 / 1.65 versus required 1.1.
+- **L10-07 and L10-11:** Follow the native route to the overpass: the existing Mega teleports 372.853 / 203.916 m in one tick without restore; a separate audit observes 313.957 / 291.781 m. The overpass staging code directly assigns its position, breaking continuous pursuit.
+- **L10-09:** Inspect the research hangar from west/east/entry: no separate lab containers appear; census finds 0 / 0 container-named assets among 45 / 45 placement origins. Asset naming and origin bounds limit the census.
+- **L10-15:** Run the L10 acceptance fixtures and inspect cure-disperse-ready boss snapshot: boss saved alive at 1072.8151 / 1116 HP but remains dead at 0 / 0 after a fixture kill, player death and checkpoint restore. Other checkpoint fixtures have errors and remain open.
+
+### Ending follow-up and fairness
+
+L10-14: [final observation](L10-14/final-observation.json), [same-ID recoveries](L10-14/identity-summary.json), [permanent corpses](L10-14/permanent-summary.json), [PO frames](L10-14/ending-frame-review.json). Both render tiers used the same naturally reached high-tier prefix. The credits show scrolling attribution and license lines in the inspected 0–89 s samples; the menu appears afterward. Actual credits-button and repeat-view cinematic skips work in both tiers; the latter replay copies the flag earned on a first view into the release snapshot. Fixed-tick samples are not a real-time performance or continuous-readability test. Delivered cue at 50 s, journey/survivor shots and exact kneeling presentation remain open, so no review JSON is written for L10-14.
+
+L1 mortal physical runs completed with 0 / 1 deaths at zoom 1.5, and 2 / 1 at zoom 1, one assist each. L10 mortal physical attempts did not complete: 29 / 15 deaths, with driver stalls and no skips; these are not fairness verdicts. L1-16, L10-04 and L10-14 require the follow-up lane. Visual quality is for the PO: the sampled L1 morning/outbreak frames and L10 opening/pullback are linked in the P notes; the fire-station cutaway/shutter is the concrete visual glitch identified above. No claim that either level is stunning is made without PO judgment.
+
+### Final acceptance commands and freshness audit
+
+`npm run qa:accept -- --level L1 --skip-browser --reuse` exited 1: the generated tracker reported 1 failing and 6 incomplete L1 rows. `npm run qa:accept -- --level L10 --skip-browser --reuse` exited 1: it reported 10 failing and 3 incomplete L10 rows, and the checkpoint fixture batch reported 5 errors per tier. These are command-level tracker results, not counts of the fresh review decisions in the handoff table; incomplete automated clauses and review freshness are separate. Full logs are retained under `test-results/v1-l1l10/final-qa-l1.log` and `final-qa-l10.log`.
+
+The commands regenerated shared `fix51-verify` receipts and would invalidate hashes in existing reviews, so their tracked generated changes were restored to the pre-command state; the resulting acceptance-status file is not a newly generated tracker snapshot. A subsequent `loadReviews` plus `reviewFreshness` audit finds 16 / 17 L1 reviews and 13 / 15 L10 reviews FRESH; precisely L1-16, L10-04 and L10-14 retain stale prior reviews. The table above reflects that audit. A follow-up must regenerate a tracker without invalidating its evidence and complete those three reviews.
