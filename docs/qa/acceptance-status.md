@@ -1,4 +1,4 @@
-# Acceptance status — main de5976fa
+# Acceptance status — main 4eba9d4f
 
 **NO-GO.** NOT CHECKED is not a pass. Targets remain unchanged in [level-acceptance.md](level-acceptance.md). Every status below comes from fresh native receipts on this source; browser, timing and review clauses remain open. Each NOT CHECKED row names its check kind (browser-visual, browser-input, perf-quiet-window, PO) for lane routing.
 
