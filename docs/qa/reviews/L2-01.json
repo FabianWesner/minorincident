@@ -19,15 +19,15 @@
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-      "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+      "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
       "what": "Current native fixture: calm census, alarm and crew clocks."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-      "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+      "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
       "what": "Current native fixture: calm census, alarm and crew clocks."
     }
   ],
-  "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest.",
+  "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
   "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd"
 }

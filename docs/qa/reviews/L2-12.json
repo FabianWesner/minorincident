@@ -14,10 +14,10 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-      "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
+      "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
       "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
     }
   ],
-  "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
+  "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
   "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd"
 }

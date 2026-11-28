@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L2",
-  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T23:49:49.679Z",
+  "generatedAt": "2026-11-28T00:22:44.937Z",
   "policies": [
     {
       "tier": "low",
@@ -4387,16 +4387,16 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
             "what": "Current native fixture: calm census, alarm and crew clocks."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
             "what": "Current native fixture: calm census, alarm and crew clocks."
           }
         ],
-        "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest.",
+        "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -5004,36 +5004,36 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
-            "sha256": "bf5c007d9a94a488bbb8e1cf0d66ba0b312b5e560f35304b2694afcb7078f23a",
+            "sha256": "895045b320e0aecd89cd4126bd41f75ce39169cc31548340ff97471ea0f1d9d4",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
-            "sha256": "5d284dd070da31a6cd2d9c94f8de5e9bb3b93d2ddab44c96ce67ee551d5fec7a",
+            "sha256": "c30c0cae27b9d02b74ccc440280724bbc1f77590ecf61ed1334a1e8de76bcc50",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
-            "sha256": "2070be23e1db43a5797a70ee3bda7be3c791a4d8c879916789d731c159dad42d",
+            "sha256": "2bddf595c5f71adbb4d20bcdb633c3a99864f11c9a2d5b33fec339b0728c2c3e",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           }
         ],
-        "notes": "Current-head both-tier native acceptance refresh; real-input visual ride evidence is not required by this row. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
+        "notes": "Current-head both-tier native acceptance refresh; real-input visual ride evidence is not required by this row. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -5791,36 +5791,36 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
-            "sha256": "bf5c007d9a94a488bbb8e1cf0d66ba0b312b5e560f35304b2694afcb7078f23a",
+            "sha256": "895045b320e0aecd89cd4126bd41f75ce39169cc31548340ff97471ea0f1d9d4",
             "what": "Current low-complete native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
-            "sha256": "5d284dd070da31a6cd2d9c94f8de5e9bb3b93d2ddab44c96ce67ee551d5fec7a",
+            "sha256": "c30c0cae27b9d02b74ccc440280724bbc1f77590ecf61ed1334a1e8de76bcc50",
             "what": "Current low-stationary native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
             "what": "Current high-complete native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
-            "sha256": "2070be23e1db43a5797a70ee3bda7be3c791a4d8c879916789d731c159dad42d",
+            "sha256": "2bddf595c5f71adbb4d20bcdb633c3a99864f11c9a2d5b33fec339b0728c2c3e",
             "what": "Current high-stationary native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
             "what": "Current low-fixtures native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
             "what": "Current high-fixtures native receipt. Low/high minimum bounded reachability 100%/96.36%; first actual doors-open attack 3.333/3.133 s (≤15); passive player windups 338.95/387.45 per minute (≥4). Protected stationary player; complete route reachability 100% both."
           }
         ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6042,16 +6042,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
             "what": "Current low-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
             "what": "Current high-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
-        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6490,16 +6490,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+            "sha256": "82acfac52f2ad41a35e8ccab8ea648715c0841a06c2826b5611822c960340e6c",
             "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+            "sha256": "02c421402d8193a7a326de1019cf40d079c7055e7550d7e1d31840e89141c281",
             "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
-        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6860,11 +6860,11 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
+            "sha256": "ba8146c2529f98c547c4f6fc8aa18f8e96ec1b6dd7fc314d5909f103c4871781",
             "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
           }
         ],
-        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
+        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed. Main 4d3932b: native checks identical to prior head; receipt hashes refreshed. Any visual captures predate this L9-only change.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"

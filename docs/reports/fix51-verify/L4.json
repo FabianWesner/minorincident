@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L4",
-  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T23:22:11.211Z",
+  "generatedAt": "2026-11-28T00:28:47.022Z",
   "policies": [
     {
       "tier": "low",
@@ -5040,36 +5040,36 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
-            "sha256": "f6f39cb9c1f86c4c812c66ad105f1c87b96a76013f9ce587daad31a132cafb2a",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
             "what": "Current low-complete receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
-            "sha256": "9a439a08e3daa19392bb33a9e06263088061f93d6889c5aa21947c2937ba04fe",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
             "what": "Current low-stationary receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
-            "sha256": "ccf2d82eb29cde8bf93ad33272e3163ea2cfa51611a14f8637a68c307ad89c26",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
             "what": "Current high-complete receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-            "sha256": "619b9ddff9dc79cac9e35c77309841ff081a2c1c7d4bb23f3e86287cf7173fd3",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
             "what": "Current high-stationary receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
-            "sha256": "8183bfa01d98aae40fe2e23dd9a492204a555cad7a5f1e9ded86061ee8be5a7b",
+            "sha256": "1f8905db3b6cad0934242dd26061edf1a85f70816ed340ed9a0015cc87de6830",
             "what": "Current low-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
-            "sha256": "bf2cc5b2f4bf1cf84dc7002a0c333b55809e7223f94524f245302196105e7503",
+            "sha256": "6221f98773129b16d9f6fc32757d1d1e26e5cdfc5d08b0b01902ff310a906764",
             "what": "Current high-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           }
         ],
-        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed.",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -5730,26 +5730,26 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
-            "sha256": "f6f39cb9c1f86c4c812c66ad105f1c87b96a76013f9ce587daad31a132cafb2a",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
             "what": "Current-head low-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
-            "sha256": "9a439a08e3daa19392bb33a9e06263088061f93d6889c5aa21947c2937ba04fe",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
             "what": "Current-head low-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
-            "sha256": "ccf2d82eb29cde8bf93ad33272e3163ea2cfa51611a14f8637a68c307ad89c26",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
             "what": "Current-head high-complete: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-            "sha256": "619b9ddff9dc79cac9e35c77309841ff081a2c1c7d4bb23f3e86287cf7173fd3",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
             "what": "Current-head high-stationary: Low/high at turn: 10/20 soldiers, 32/64 civilians, armed share 50%/45.3125%. Across complete and stationary runs infected plus reservations peak low 80/high 118; living character peak low 119/high 162; limits 80/160 and 120/230 respectively. Each 11400-tick war interval observed."
           }
         ],
-        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed.",
+        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6273,16 +6273,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
-            "sha256": "9a439a08e3daa19392bb33a9e06263088061f93d6889c5aa21947c2937ba04fe",
+            "sha256": "1820f3b6385fbcef822c46c8d2ed0a0f8ee203a238994052c8c59aaad8dcf3e1",
             "what": "Current-head low-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-            "sha256": "619b9ddff9dc79cac9e35c77309841ff081a2c1c7d4bb23f3e86287cf7173fd3",
+            "sha256": "8553d33d6953465a487142b66d059cec9c3d6506f86f78112581a419b3cfcbe5",
             "what": "Current-head high-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
           }
         ],
-        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed.",
+        "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6611,16 +6611,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
-            "sha256": "f6f39cb9c1f86c4c812c66ad105f1c87b96a76013f9ce587daad31a132cafb2a",
+            "sha256": "80d0dd725afd21f88c0de339d2c180797d5cf41cca1940741dd5b7bf51ecd778",
             "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
-            "sha256": "ccf2d82eb29cde8bf93ad33272e3163ea2cfa51611a14f8637a68c307ad89c26",
+            "sha256": "434673ffa158c678ab95869474e91319d148356f8cfc46e6140483ac3e62f812",
             "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
           }
         ],
-        "notes": "Fresh current-head measurement. Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed.",
+        "notes": "Fresh current-head measurement. Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed. Main 4d3932b: native row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
