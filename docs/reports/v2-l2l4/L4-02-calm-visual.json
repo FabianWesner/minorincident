@@ -1,0 +1,117 @@
+{
+  "cells": [
+    {
+      "tier": "high",
+      "routeZoom": 1.5,
+      "source": "test-results/playtest/v2-l4-opening-high-z15/campaign-acceptance-ledger.json",
+      "sha256": "f21b4798a79b9397a4a30f2eaf484f5438a575ce03eab14818ebe613d87320a1",
+      "samples": 69,
+      "firstTick": 30,
+      "lastTick": 2070,
+      "maxDecals": 0,
+      "maxSurfaceSplats": 0,
+      "maxScorch": 0,
+      "maxEngagedSoldiers": 0,
+      "soldierActivities": [
+        "look",
+        "chat",
+        "walk"
+      ],
+      "postArrivalSamples": 9
+    },
+    {
+      "tier": "high",
+      "routeZoom": 1,
+      "source": "test-results/playtest/v2-l4-opening-high-z1/campaign-acceptance-ledger.json",
+      "sha256": "d44e6619e8a229c199398a4ff8a1c09809478d0a77576095e26b91274d952987",
+      "samples": 74,
+      "firstTick": 30,
+      "lastTick": 2220,
+      "maxDecals": 0,
+      "maxSurfaceSplats": 0,
+      "maxScorch": 0,
+      "maxEngagedSoldiers": 0,
+      "soldierActivities": [
+        "look",
+        "chat",
+        "walk"
+      ],
+      "postArrivalSamples": 14
+    },
+    {
+      "tier": "low",
+      "routeZoom": 1.5,
+      "source": "test-results/playtest/v2-l4-opening-low-z15/campaign-acceptance-ledger.json",
+      "sha256": "011c32d8304eb8198bae83e5f1a22e1c1450df5602a952dab1303fc4b31ad71a",
+      "samples": 72,
+      "firstTick": 30,
+      "lastTick": 2160,
+      "maxDecals": 0,
+      "maxSurfaceSplats": 0,
+      "maxScorch": 0,
+      "maxEngagedSoldiers": 0,
+      "soldierActivities": [
+        "look",
+        "walk"
+      ],
+      "postArrivalSamples": 12
+    },
+    {
+      "tier": "low",
+      "routeZoom": 1,
+      "source": "test-results/playtest/v2-l4-opening-low-z1/campaign-acceptance-ledger.json",
+      "sha256": "3f57d0a21d8c2c06edc116e78f71750e49162fe9e768f1e94ca5a892fb251d8d",
+      "samples": 74,
+      "firstTick": 30,
+      "lastTick": 2220,
+      "maxDecals": 0,
+      "maxSurfaceSplats": 0,
+      "maxScorch": 0,
+      "maxEngagedSoldiers": 0,
+      "soldierActivities": [
+        "look",
+        "walk"
+      ],
+      "postArrivalSamples": 14
+    }
+  ],
+  "captures": [
+    {
+      "path": "test-results/playtest/v2-l4-calm-high/captures/campaign-L4-quartermaster-t1834-high-z1.jpg",
+      "sha256": "fff77c10bbdc6afb2351c7151130709168879da012a7d945d92acfcdf91dfbd3",
+      "tier": "high",
+      "actualZoom": 1,
+      "captureTick": 1835,
+      "objective": "Report to the quartermaster · 10 m",
+      "observation": "Arriving bus and canvas truck dominate the frame; passengers line the bus, with a few soldiers visible in the wider view."
+    },
+    {
+      "path": "test-results/playtest/v2-l4-calm-high/captures/campaign-L4-quartermaster-t1834-high-z1-5.jpg",
+      "sha256": "d84806e8b46eb800c19d4b5e505e7de23bfb29060e01efd140b18832543255ca",
+      "tier": "high",
+      "actualZoom": 1.5,
+      "captureTick": 1835,
+      "objective": "Report to the quartermaster · 10 m",
+      "observation": "Arriving bus and canvas truck dominate the frame; passengers line the bus, with a few soldiers visible in the wider view."
+    },
+    {
+      "path": "test-results/playtest/v2-l4-calm-low/captures/campaign-L4-quartermaster-t1838-low-z1.jpg",
+      "sha256": "4568d7c2419d0757034748d4726dbb1e0d70da0bba51936a68311238f364c414",
+      "tier": "low",
+      "actualZoom": 1,
+      "captureTick": 1838,
+      "objective": "Report to the quartermaster · 10 m",
+      "observation": "Arriving bus and canvas truck dominate; a few passengers and one distant civilian are visible, most camp routines outside the view."
+    },
+    {
+      "path": "test-results/playtest/v2-l4-calm-low/captures/campaign-L4-quartermaster-t1838-low-z1-5.jpg",
+      "sha256": "1ba3aea81e07bda5cf9edf4942d23d98f7761592905c298b50754a965d50a93b",
+      "tier": "low",
+      "actualZoom": 1.5,
+      "captureTick": 1838,
+      "objective": "Report to the quartermaster · 10 m",
+      "observation": "Arriving bus and canvas truck dominate; a few passengers and one distant civilian are visible, most camp routines outside the view."
+    }
+  ],
+  "limits": "Samples at 30-tick intervals do not prove absence between samples; views center on the bus immediately after arrival, not the whole camp. No continuous spacing or routine presentation verdict."
+}
