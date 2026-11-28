@@ -1,0 +1,102 @@
+{
+  "identity": {
+    "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+    "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+    "revision": "a72deff5cbfdb191b9c1eaec457df9fe2e2a5f3f"
+  },
+  "method": "Pooled headless WebGL2 physical-input samples, high before low; same-frame quality and camera zoom recorded by capture logger. All ten original frames opened individually.",
+  "frames": [
+    {
+      "level": "L1",
+      "tier": "high",
+      "path": "test-results/playtest/v2-l2-light-L1-high/captures/campaign-L1-pickup-t330-high-z1.jpg",
+      "sha256": "ab9c97296e50f2bc2e2b8d8a170f583964bca6e863acbbe8fc8f11f59fe4d59e",
+      "tick": 331,
+      "zoom": 1,
+      "observation": "Warm orange-lit residential street with intact houses, fence, car and pedestrians."
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "path": "test-results/playtest/v2-l2-light-L1-high/captures/campaign-L1-pickup-t330-high-z1-5.jpg",
+      "sha256": "f9fec84c4869578d0b4a5cc7e79f5d9649dfe649c201ecc02ac00be466b74164",
+      "tick": 331,
+      "zoom": 1.5,
+      "observation": "Warm orange-lit residential street with intact houses, fence, car and pedestrians."
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "path": "test-results/playtest/v2-l2-light-L2-high/captures/campaign-L2-calm-t319-high-z1.jpg",
+      "sha256": "a2b83dc60e619cc65edf1f8677edd7532847f1dce8ec5edb008d5b3e74c09af4",
+      "tick": 319,
+      "zoom": 1,
+      "observation": "Bright fire-station forecourt with firefighters, truck and intact building; very little street damage visible in this view."
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "path": "test-results/playtest/v2-l2-light-L2-high/captures/campaign-L2-calm-t319-high-z1-5.jpg",
+      "sha256": "948fc37326d473142dcf9dc8b99479c91177f118468368e1fe326434f5b1836b",
+      "tick": 319,
+      "zoom": 1.5,
+      "observation": "Bright fire-station forecourt with firefighters, truck and intact building; very little street damage visible in this view."
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "path": "test-results/playtest/v2-l2-light-L1-low/captures/campaign-L1-pickup-t322-low-z1.jpg",
+      "sha256": "754826f8740c176d6e7b8cecfa313ea64da15740c693eab86dd98e7821957601",
+      "tick": 323,
+      "zoom": 1,
+      "observation": "Warm orange-lit residential street with intact houses, fence, car and pedestrians."
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "path": "test-results/playtest/v2-l2-light-L1-low/captures/campaign-L1-pickup-t322-low-z1-5.jpg",
+      "sha256": "d7261f297daad0c1ecb9c2b8317594a1b590f037309b3098ae25c3be626e71e0",
+      "tick": 323,
+      "zoom": 1.5,
+      "observation": "Warm orange-lit residential street with intact houses, fence, car and pedestrians."
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "path": "test-results/playtest/v2-l2-light-L2-low/captures/campaign-L2-calm-t317-low-z1.jpg",
+      "sha256": "137da82f32855f7e86e243c3ebd553db8314a554fae8d2f01dccb871dbe0e56f",
+      "tick": 317,
+      "zoom": 1,
+      "observation": "Bright fire-station forecourt with firefighters, truck and intact building; very little street damage visible in this view."
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "path": "test-results/playtest/v2-l2-light-L2-low/captures/campaign-L2-calm-t317-low-z1-5.jpg",
+      "sha256": "c7b92ae32d6d2aff593f569a93ffa731a71f24ce86603dbf1511add9c11a6872",
+      "tick": 317,
+      "zoom": 1.5,
+      "observation": "Bright fire-station forecourt with firefighters, truck and intact building; very little street damage visible in this view."
+    },
+    {
+      "level": "L2",
+      "tier": "high",
+      "path": "test-results/playtest/v2-l2-light-L2-high-long/captures/campaign-L2-bridge-t3913-high-z1.jpg",
+      "sha256": "de8d1db3a5bc1189a1cab25972f68750c6c0ec65f9448b0445f312e9a5aa7b2f",
+      "tick": 3913,
+      "zoom": 1,
+      "observation": "Courier beside fire engine on a street with intact house, shop, fences and pavement; no obvious major damage in the visible section."
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "path": "test-results/playtest/v2-l2-light-L2-low-long/captures/campaign-L2-bridge-t3916-low-z1.jpg",
+      "sha256": "a4540eb70634536cf8ade940fc85ae47a4e51411b20bde81e8ec8911e413e2ea",
+      "tick": 3916,
+      "zoom": 1,
+      "observation": "Courier beside fire engine on a street with intact house, shop, fences and pavement; no obvious major damage in the visible section."
+    }
+  ],
+  "question": "Does L2 light read higher/harder than L1, and do L2 streets feel wounded while buildings remain standing?",
+  "limitations": "L1 and L2 openings are different locations; L2 street frames are only at actual zoom 1. The attempted 1.5 street captures recorded actual zoom 1 under the ride/mission camera. Other L2 streets and full-level presentation are not established."
+}
