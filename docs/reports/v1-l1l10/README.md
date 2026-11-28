@@ -401,3 +401,11 @@ On the tested physical on-foot route, the courier passes the named trash-bag, pa
 ### L10-04 quiet-candidate cross-check on main 4d3932b0
 
 The local census and same-seed pacing ledger were correlated by simulation tick. With zero ordinary infected within 20 m, high has sampled runs of 32 s and 61 s, low one of 56 s. The 61 s high and 56 s low runs overlap the research-hangar conversation; high's 32 s run includes pickup, vignette and checkpoint beats. [Candidate intervals and beat ledger](L10-04/quiet-candidates.json) give the exact times and hashes. These are enemy-free candidates, not measured silence or proof of survival-horror pacing: the census excludes Mega and the beat ledger is not a complete audio/visual classification. L10-04 remains NOT CHECKED. No game or checker change.
+
+### L10-14 same-ID transition observation on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | First 12 s after release: 6 / 30 observed living infected preserve IDs and transition to healthy civilian/animal entities with HP 100 and `npc-cower` recovery. Low includes 3 dogs. | [Identity summary](L10-14/identity-summary.json), both full receipts and four inspected frames hashed there. | — |
+
+A corrected read-only observer records the actual post-front entity rather than treating membership in `affectedIds` as death. Both browser quality settings resumed the same naturally reached **high-tier** release snapshot; a physical approach and E released the cure, protection was disabled before release, and the measurement ran 12 s. The two-second frames show a green ring and scattered figures around the console; the 12-second frames show a bridge, vehicles, figures and green haze. The ledger confirms identity and recovery state but these distant stills do not prove animation quality for each entity. Corpse persistence, full credits readability and low-tier skip from a low-native route remain open. No game or checker change.
