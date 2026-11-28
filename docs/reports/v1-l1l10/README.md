@@ -381,3 +381,11 @@ The earlier 68/57 whole-region peaks are not evidence that the player normally f
 | L1-12 | stale PASS → still NOT CHECKED | Seven bench legs per tier: maximum endpoint error 0.110 / 0.110 m, maximum stopped 1 / 1 tick; 14 / 14 endpoint frames inspected at zoom 1 and 1.5. Old backyard leg 03 hit the later sealed fence after 1,200 high-tier ticks. | [Bench and route summary](L1-12/bench-summary.json), with frame and full receipt hashes. | — |
 
 Both bench routes used physical WASD on foot carrying the parcel, with read-only coordinate assistance. The 28 inspected frames show the courier and corgi passing the depot frontage, racks and both ends of the bench; the courier remains visible at those endpoints. This only measures the bench segment, not every fence, pallet or trash-bag passage. The old backyard route attempts to cross the depot-side street fence that `src/levels/L1/layout.ts` explicitly says was added to close that lane; its stop is not counted as an unintended prop snag. A current legal alternate route through the relevant alleys and its camera-side visibility remain open. No game or checker change.
+
+### L1-12 street-side route on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → still NOT CHECKED | Ten street-side legs per tier, maximum endpoint error 0.113 / 0.113 m and maximum stopped 0 / 0 ticks. Twenty endpoint frames per tier inspected at zoom 1 and 1.5. | [Street summary](L1-12/street-summary.json); [bench summary](L1-12/bench-summary.json). | — |
+
+The physical on-foot route uses a native parcel prefix and read-only coordinate assistance. Frames show the courier beside trash bags, pallets and fences and then near the Annex; the courier is visible in the sampled endpoint images. Combined with the separate seven-leg bench test, these measurements cover the named prop types on a reachable route. They do not establish continuous visibility between endpoint captures or every possible alley/fence angle, so the absolute camera-side “never hides” clause remains open. The previously sealed rear lane is excluded as documented above. No game or checker change.
