@@ -23,6 +23,8 @@ Follow-up: browser access was restored and later captures are documented below. 
 
 ## Validation so far
 
+- HIGH L2 arrival audit (`f11-l2-arrival-high-audit`): opened both tick-3123-labelled images; same-frame sidecars report tick 3124 and actual zoom 1 for both requested 1 and 1.5. Several helmeted firefighters are visible in the cutaway; the courier is not identifiable. The final completion state records a later attempt (arrival tick 4260), so it cannot independently establish the sampled image's exact arrival/exit interval. The bounded 120-second run ended unfinished with the axe-prompt stall. This is not a pass and actual zoom 1.5 remains open.
+
 - Latest-source L2/L3 threat audit: zero level flags; the only flag is the lane-excluded `PARTIAL_LEVEL_SELECTION`. Repeated the selected scene gate after the camera and smoke changes: 2/2 pass (`inf-chase-l3@high-z0.5` WebGPU, `l3-bar-cap-horde@low-z1.5` WebGL2). Opened both generated sheets: HIGH shows the courier followed and surrounded on a street; LOW shows a group with health bars partly obscured by smoke. Neither gate is a substitute for the requested row reviews.
 
 - Latest-source L2 native recheck, source hash `808b042c3322b9f92d2219da6c83c827e41d7c8191dd257d9ce653675dfad19f`: HIGH 1 failing/15 incomplete; LOW 1 failing/13 incomplete. Both tiers' 27 fixture clauses completed with zero errors and all four checkpoint controls passed. The reported failing check remains the pre-existing L2-12 bridge attack rate. This does not establish visual L2-03.
