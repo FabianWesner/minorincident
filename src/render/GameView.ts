@@ -878,6 +878,7 @@ export class GameView implements Lifecycle {
       // PO 2026-11-25: "The camera should not move when I enter an animal [cage]" -> no encounter zoom in L8.
       const l8Scale = 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
+      this.view.encounterFreeZoom = !rescue && l3AttackView(this.world);
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;

@@ -65,6 +65,8 @@ export class View {
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
   encounterScale = 1;
+  /** Yard defense retains player zoom while its encounter scale pulls back. */
+  encounterFreeZoom = false;
   /** Scripted minimum zoom ratio (L2 rescue doors): the radius uses max(player zoom, floor), so an eased floor widens a close
    * view continuously and returns to the player's own zoom without the 0.5x jump of the encounterScale zoom neutralization. 0 = off. */
   zoomFloor = 0;
@@ -127,7 +129,7 @@ export class View {
   }
   reset(player: { x: number; z: number; y?: number }, preserveZoom = false): void {
     this.maxZoom = zoomLimits[1]; this.zoomReturn = 0;
-    this.encounterScale = this.epilogueScale = 1; this.zoomFloor = 0;
+    this.encounterScale = this.epilogueScale = 1; this.zoomFloor = 0; this.encounterFreeZoom = false;
     this.zoomRatio = this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], preserveZoom ? this.targetZoom : 1));
     this.radius = this.defaultRadius * this.zoomRatio * this.regionScale;
     this.driving = false; this.driverWide = false; this.driveScale = 1; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
@@ -164,8 +166,8 @@ export class View {
   /** Guidance stays hidden through story framing and its blend back to play. */
   get storyShot(): boolean { return this.blendTarget > 0 || this.blend > 0 || this.scripted || this.epilogueScale > 1; }
   /** Scripted pull-backs temporarily neutralize player zoom and lock wheel/pinch. */
-  private get scripted(): boolean { return this.encounterScale > 1.02 || this.zoomFloor > this.zoomRatio + .02 || this.pullWeight > 0 && this.epilogueScale === 1; }
-  private scriptedAdjusted(zoom: number): number { return this.encounterScale > 1.02 || this.pullWeight > 0 && this.epilogueScale === 1 ? 1 : Math.max(zoom, this.zoomFloor); }
+  private get scripted(): boolean { return !this.encounterFreeZoom && (this.encounterScale > 1.02 || this.zoomFloor > this.zoomRatio + .02 || this.pullWeight > 0 && this.epilogueScale === 1); }
+  private scriptedAdjusted(zoom: number): number { return !this.encounterFreeZoom && (this.encounterScale > 1.02 || this.pullWeight > 0 && this.epilogueScale === 1) ? 1 : Math.max(zoom, this.zoomFloor); }
   private readonly safeProbe = new Vector3();
   private pullAt(weight: number, out: Vector3): Vector3 {
     return out.set(this.focus.x + (this.pullX - this.focus.x) * weight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * weight, this.focus.z + (this.pullZ - this.focus.z) * weight);
