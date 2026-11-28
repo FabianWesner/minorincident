@@ -1,0 +1,6 @@
+import {writeFileSync} from 'node:fs';
+import {loadL2,runL2} from '../sim-runner/l2Bots';
+import {provenance} from './accept/probe';
+const rows=[];
+for(const tier of ['high','low'] as const){const {world,mission}=await loadL2(1,tier);try{const doors=['l2-door-front','l2-door-loading'].map(k=>mission.def.anchors[k]);let samples=0,max=0,outside=0,firstOutside:object|null=null;const update=world.update.bind(world);world.update=()=>{update();const s=mission.state.l2!,p=world.entities.get(1)!;if(!s.doorsOpenAt||p.health.current<=0)return;const d=Math.min(...doors.map(q=>Math.hypot(p.transform.x-q.x,p.transform.z-q.z)));samples++;max=Math.max(max,d);if(d>15){outside++;firstOutside??={tick:world.tick,elapsed:(world.tick-s.doorsOpenAt)/60,x:p.transform.x,z:p.transform.z,d};}};const report=runL2(world,mission,'aggressive',{seed:1,stopAfterPlayerDeath:true,maxSeconds:240});rows.push({tier,samples,maxDoorDistanceM:max,outside15mTicks:outside,firstOutside,report});console.log(tier,JSON.stringify({samples,max,outside,firstOutside,death:report.firstDeathS}));}finally{world.dispose()}}
+writeFileSync('docs/reports/v2-l2l4/L2-09-mortal-distance.json',JSON.stringify({...provenance(),method:'Mortal seed-1 aggressive native InputFrames; read-only post-update distance from nearest rescue door until first death; high then low.',rows},null,2)+'\n');
