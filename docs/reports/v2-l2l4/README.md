@@ -180,3 +180,84 @@ L2-01 before: stale review / NOT CHECKED. After: PASS · FRESH, both-tier physic
 **L2-06 physical transition:** After the main update, two damage-protected no-axe live routes used physical input, high first then low. At the market, 100 ms paused steps produced 6–7 simulation ticks per frame. Fourteen original frames around the bridge-HUD transition were opened and hashed in [transition receipt](L2-06-transition-physical.json). High: last forcing HUD at tick 4210, first bridge HUD at 4217, final sampled frame 4249; low: 4206, 4212 and 4243. Doors open and red minimap markers appear, but small figures cannot be reliably identified as the authored ambush in these frames. Before → after: native admission/direction measurements only → real-input transition bounds and opened frame sequence at both tiers. A HUD change is not a direct doorsOpen event timestamp, gaps could miss a brief body appearance, and red dots are not visible-body proof. L2-06 remains NOT CHECKED. Repro: start the live command from the L2-05 entry with `LUNA_TIMING_LEDGER=1` and distinct `v2-l2-ambush-<tier>` output; perform its first 18 actions, then send `{"wait":100}` until the bridge objective appears and five further times. No game files changed; both sessions were stopped after the bounded observation.
 
 **Live-session protection correction:** The L4 registration walks and L2 market/ambush live sessions above used `--screen` without `LUNA_MORTAL=1`. `tools/playtest/live.ts` enables courier damage protection by default in that mode. Earlier wording called those sessions mortal; it has been corrected. Their physical-input frames and timing remain observations, but these sessions do not establish mortal deaths, survival or fairness. Earlier `play.ts` routes and the non-screen L2 no-axe attempt are separately described and are not reclassified by this correction.
+
+**L2-06 mortal eyes follow-up:** Repeated the no-axe physical transition on high then low using live step mode **without `--screen`**, so the screen-mode protection is off. Twelve original frames were opened individually; the read-only `eyes` observer reports zero on-screen enemies at all six sampled post-HUD points per tier. High sample ticks 4217–4248 follow a last forcing HUD at 4211; low samples 4220–4252. [Receipt](L2-06-eyes-mortal.json) retains exact frame/observation hashes and limits. Before → after: protected screen-only sequence with ambiguous figures → independent mortal physical sequence with six zero-enemy observations per tier. This still does not establish first-body timing: HUD is an indirect event bound, `eyes` may exclude emerging/occluded/not-yet-drawn bodies, and 5–7 tick gaps can hide a transient appearance. L2-06 remains NOT CHECKED for the follow-up lane. Repro: start the live command in the L2-05 entry **without `--screen`**, retain `LUNA_TIMING_LEDGER=1`, use the same first 18 physical actions, then send 100 ms waits until the bridge objective and five more; issue `/shot` after each and save the corresponding `/act` text. Both bounded sessions ended after the observation and are not full-level fairness runs.
+
+## Time-box handoff: every L2–L4 row
+
+Current main `2fa240fbd2882f4d51c3c9eb0c6f3342978da1ac`. FRESH means a current `writeReview` decision with matching source digest and present-evidence hashes. OPEN includes missing or stale reviews even where the tracker reports a numeric PASS. The numbers column gives a representative measured pair or the decisive counterexample, not a claim that every other clause is complete; full results and targets are in linked evidence. Earlier sections document before → after and historical attempts.
+
+| Row | Verdict | Numbers | Evidence | P-note / follow-up |
+| --- | --- | --- | --- | --- |
+| L2-01 | PASS · FRESH | alarm low/high 23.15 s | [review](../../qa/reviews/L2-01.json) | — |
+| L2-02 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L2 report](../fix51-verify/L2.json) | Physical no-axe completion and rack visibility remain open. |
+| L2-03 | FAIL · FRESH | low/high visible crew 0, courier 0 at arrival; exit starts 0.8 s | [review](../../qa/reviews/L2-03.json) | — |
+| L2-04 | PASS · FRESH | door forcing duration: low 4, high 4 | [review](../../qa/reviews/L2-04.json) | — |
+| L2-05 | OPEN | native trapped low 20/high 30; visual loops remain open | [L2 report](../fix51-verify/L2.json) | Confirm all trapped actors’ visible panic loops and counts. |
+| L2-06 | OPEN | low/high 24 admitted; 6 sampled post-transition views per tier, 0 eyes enemies; gaps remain | [L2 report](../fix51-verify/L2.json) | Direct doorsOpen/first-body timing, identity and continuous coverage open. |
+| L2-07 | PASS · FRESH | real player/group windups per minute: low 18.639, high 32.474 | [review](../../qa/reviews/L2-07.json) | — |
+| L2-08 | PASS · FRESH | low +60/+120 s 29/30, high 60/59; two turns each | [review](../../qa/reviews/L2-08.json) | — |
+| L2-09 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L2 report](../fix51-verify/L2.json) | Physical mortal route and uninterrupted +10/+90 census remain open. |
+| L2-10 | PASS · FRESH | both tiers: 1–2 single; 3 roundhouse; 2.5 m push | [review](../../qa/reviews/L2-10.json) | — |
+| L2-11 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L2 report](../fix51-verify/L2.json) | Physical groups, chase share and singles remain open. |
+| L2-12 | FAIL · FRESH | low 13.6788/min; high 31.3776/min (max 30) | [review](../../qa/reviews/L2-12.json) | — |
+| L2-13 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L2 report](../fix51-verify/L2.json) | Inspect person-to-person panic propagation in motion. |
+| L2-14 | OPEN | maximum admitted Elm cluster identities before retry: low 13, high 13 | [L2 report](../fix51-verify/L2.json) | Physical side route, kill share and alarm remain open. |
+| L2-15 | OPEN | prepared checkpoint officers: low 4, high 4 | [L2 report](../fix51-verify/L2.json) | Visible vehicles, firing officers and post-gate crossing remain open. |
+| L2-16 | P · FRESH | 8 matched opening frames; 2 street frames at actual zoom 1 | [review](../../qa/reviews/L2-16.json) | PO: L1/L2 light and wounded street; street 1.5× missing. |
+| L3-01 | OPEN | actual handgun pickup clock: low 4.45, high 4.45 | [L3 report](../fix51-verify/L3.json) | Real-input 600-shot HUD and exclusive armory acquisition remain open. |
+| L3-02 | OPEN | attack delay after handgun pickup: low 5, high 5 | [L3 report](../fix51-verify/L3.json) | Physical admissions, directions and first on-screen quarter remain open. |
+| L3-03 | PASS · FRESH | real player/group windups per minute: low 18.399, high 31.91 | [review](../../qa/reviews/L3-03.json) | — |
+| L3-04 | PASS · FRESH | fallback within sixty seconds without player fire: low 16.983, high 15.317 | [review](../../qa/reviews/L3-04.json) | — |
+| L3-05 | FAIL · FRESH | high gate nearest y 806.1 px (frame ends 720); low pose y 805.1 px | [review](../../qa/reviews/L3-05.json) | — |
+| L3-06 | FAIL · FRESH | low follow maxima 6.0007–6.5131 m (max 6); high unqualified | [review](../../qa/reviews/L3-06.json) | — |
+| L3-07 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L3 report](../fix51-verify/L3.json) | Physical squad combat and damage below 100 HP remain open. |
+| L3-08 | PASS · FRESH | both tiers authored 125/240/710; peak low/high 100/140 | [review](../../qa/reviews/L3-08.json) | — |
+| L3-09 | FAIL · FRESH | low/high runner 5.785–5.796 m/s (max 4) | [review](../../qa/reviews/L3-09.json) | — |
+| L3-10 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L3 report](../fix51-verify/L3.json) | Physical idle pressure and off-screen source band remain open. |
+| L3-11 | OPEN (tracker PASS; review stale) | all-street medkits low/high 33; review stale | [L3 report](../fix51-verify/L3.json) | Tracker PASS; refresh stale review against all current clauses. |
+| L3-12 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L3 report](../fix51-verify/L3.json) | Physical HUD distance and route readability remain open. |
+| L3-13 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L3 report](../fix51-verify/L3.json) | Inspect ramps, seams, clumps and bodies through route. |
+| L3-14 | OPEN | actual army soldier identities: low 9, high 9 | [L3 report](../fix51-verify/L3.json) | Vehicles, occupied buses, rest and ring visibility remain open. |
+| L3-15 | OPEN | 80-infected visibility not requalified | [L3 report](../fix51-verify/L3.json) | Capture courier inside an actual 80-infected crowd. |
+| L3-16 | FAIL · FRESH | high street frame ≤1 smoke column (min 2); low open | [review](../../qa/reviews/L3-16.json) | PO: late light and distinct street damage; high smoke FAIL. |
+| L4-01 | PASS · FRESH | convoy vehicle identities: low 5, high 5 | [review](../../qa/reviews/L4-01.json) | — |
+| L4-02 | OPEN | physical reception civilians low 32/high 64; visual coverage incomplete | [L4 report](../fix51-verify/L4.json) | Camp-wide spacing, routines and continuous damage effects remain open. |
+| L4-03 | PASS · FRESH | war starts on MG pickup tick: low 0, high 0 | [review](../../qa/reviews/L4-03.json) | — |
+| L4-04 | PASS · FRESH | soldiers at turn: low 10, high 20 | [review](../../qa/reviews/L4-04.json) | — |
+| L4-05 | OPEN | distinct arrival street edges: low 6, high 6 | [L4 report](../fix51-verify/L4.json) | Physical source groups and no indoor/tent admissions remain open. |
+| L4-06 | PASS · FRESH | first physical breach level clock: low 51.083, high 51.083 | [review](../../qa/reviews/L4-06.json) | — |
+| L4-07 | FAIL · FRESH | low 66.1538%, high 69.7674% reachable (min 90%) | [review](../../qa/reviews/L4-07.json) | — |
+| L4-08 | OPEN | actual Alpha identity count: low 6, high 8 | [L4 report](../fix51-verify/L4.json) | Physical Alpha directions, line arrivals and pop-in remain open. |
+| L4-09 | OPEN (tracker PASS; review stale) | line1 actual beat after first turn: low 62, high 62 | [L4 report](../fix51-verify/L4.json) | Tracker PASS; refresh stale review and qualify radio/HUD reveals. |
+| L4-10 | OPEN | HMG firing sources: low 2, high 2 | [L4 report](../fix51-verify/L4.json) | Tank shot paths and helicopter orbit need physical visual evidence. |
+| L4-11 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L4 report](../fix51-verify/L4.json) | PO: hit feel; bars, point-blank and mortal riot encounter remain open. |
+| L4-12 | OPEN | low/high nearest-20 native min 5 model IDs; rendered looks open | [L4 report](../fix51-verify/L4.json) | Rendered looks in 20-actor samples remain open. |
+| L4-13 | OPEN | physical escape census open | [L4 report](../fix51-verify/L4.json) | Complete real-input cellar escape and pursuit census. |
+| L4-14 | OPEN | live fire count at end of route: low 4, high 4 | [L4 report](../fix51-verify/L4.json) | Burning vehicles and actual scorch decals need renderer census. |
+| L4-15 | OPEN | camera/solid-texture visual coverage open | [L4 report](../fix51-verify/L4.json) | Inspect camera, structures and voids through escape. |
+| L4-16 | OPEN | bar fixture 60 ticks both tiers; physical handover/audio open | [L4 report](../fix51-verify/L4.json) | Physical entry roster, filtered audio and L5 handover remain open. |
+| L4-17 | OPEN | corpse pile/body draw coverage open | [L4 report](../fix51-verify/L4.json) | Measure body piles, limbs and draw order in motion. |
+| L4-18 | OPEN | No comparable numeric pair; see evidence / open clauses. | [L4 report](../fix51-verify/L4.json) | PO: war scale/readability; clearance and frames open. |
+
+## Defect list and one-line reproductions
+
+The following are current FRESH FAIL reviews; the linked review gives hashes, limits and detailed numbers. A failure is based on the measured counterexample, not on a claim that every remaining clause was checked.
+
+| Row | Defect and measured result | One-line reproduction |
+| --- | --- | --- |
+| L2-03 | At arrival before crew-exit start, 0 identifiable crew and 0 courier visible on both tiers; target visible crew and never-hidden courier. | Run the L2-16 physical opening command above on high/low and inspect each `doors-...-z1.jpg` against its same-run arrival/exit ticks; [receipt](L2-03-arrival-visibility.json). |
+| L2-12 | High complete-route bridge pressure 31.3776/min exceeds 30/min; low 13.6788/min. | `npm run qa:accept -- --level L2 --skip-browser --reuse`; inspect L2-12 high complete attack rate. |
+| L3-05 | High attack tick 827: entire east-gate box below frame, nearest corner y=806.1 vs 720 px; low pose y=805.1 without independent same-interval proof. | Run the `PLAYTEST_REVEAL_AUDIT=1 PLAYTEST_THREAT_AUDIT=1` L3 high command in the camera-radius entry; inspect the attack frame and project the east gate using [receipt](L3-05-gate-projection.json). |
+| L3-06 | Low squad follow maxima 6.0007–6.5131 m exceed 6 m; high follow evidence remains open. | `npm run qa:accept -- --level L3 --skip-browser --reuse`; inspect L3-06 low calm-squad member distances. |
+| L3-09 | Regular runner 5.785–5.796 m/s on both tiers exceeds 4 m/s. | `node --import tsx/esm tools/qa/accept/v2-l3-speed.ts`; inspect runner 131, ticks 1531–1547. |
+| L3-16 | High street frame at actual zoom 1 shows at most one smoke column; target ≥2 in every street frame. | Run the L3 high physical command in [review](../../qa/reviews/L3-16.json) and inspect the cited tick-8595 frame. |
+| L4-07 | Complete-route reachability low 66.1538%, high 69.7674%; target ≥90%. | `npm run qa:accept -- --level L4 --skip-browser --reuse`; inspect low/high complete reachability checks. |
+
+**Additional visual candidate:** L4 registration furniture fades into black peg-like remnants near the courier on both tiers. Its cause and intent are unverified, so it is not a row FAIL. Reproduce using the `live.ts` physical route in the L4-02 registration-walk entry and inspect turns 9–10.
+
+**Fairness handoff:** Earlier mortal real-input runs completed L2 high/low with 5/2 deaths and L3 high/low with 4/5 deaths; a later L3 recapture completed with 2/3. L4 high/low stopped unfinished with 27/28 deaths. These are driver-specific observations from earlier source-equivalent heads, not current-head competent-run qualification; L4 completion and current-main fairness remain open. The protected `--screen` visual walks are excluded from these mortality figures.
+
+**Visual judgment handoff:** L2 sampled fire-station and rescue street are clean/readable but the sampled street does not yet feel notably wounded; the PO must judge matched light and additional 1.5× street views. L3 sampled warm streets have visible smoke in some frames, but the high zoom-1 counterexample has too few columns and the east gate is off-frame in the sampled attack shot; a full-level stunning judgment remains open. L4 sampled plaza is populated and readable in parts, but registration furniture has the candidate fade artifact and full war/cellar presentation has not been reviewed; a full-level stunning judgment remains open.
+
+**Follow-up lane:** Continue every table row marked OPEN, including the tracker-PASS rows with stale review JSON. Preserve the FRESH P on L2-16 but capture the missing actual 1.5× street view and obtain PO taste judgment. Re-run L2/L3/L4 acceptance on the then-current main and refresh reviews only after checking source/evidence equivalence. The end-of-lane commands above completed with expected exit 1: L2 2 fresh FAIL/9 incomplete, L3 4/8, L4 1/12. No check remains running and no deployment, push, main movement, or game/layout change was performed.
