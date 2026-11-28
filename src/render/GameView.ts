@@ -229,6 +229,7 @@ export class GameView implements Lifecycle {
   private readonly flashOverlay = document.createElement('div');
   /** E19 ending: black fade after the shutter slam, and the rolled-down bay shutter. */
   private shutter: Group | null = null;
+  private shutterClosedAt: number | null = null;
   constructor(private readonly world: SimWorld, private readonly params: URLSearchParams, private quality: QualityTier = 'high') {
     this.renderer = new Renderer(params);
     this.courier = new CourierPresenter(world);
@@ -763,15 +764,30 @@ export class GameView implements Lifecycle {
       if (!this.shutter) {
         const ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
         const group = new Group(); group.position.set(door.x, ground, door.z);
-        // The courier waits 1.2 m behind the leaf: like a vehicle in front of her, it keeps a dithered silhouette inside her
-        // see-through disc (only fragments nearer the camera than she is), so she reads as inside the bay, behind the door (PO #26).
-        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')).seeThrough());
-        shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
+        // The closing leaf must remain a solid, readable surface in the follow camera's
+        // courier reveal. Applying the see-through material here erased it at entry.
+        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
+        const seamMaterial = this.materials.fromColor('story:shutter-seam', new Color('#682a28'));
+        for (let i = 1; i < 8; i++) {
+          const seam = new Mesh(new BoxGeometry(3.56, .035, .015), seamMaterial);
+          seam.position.set(0, -1.6 + i * .4, -.067); shutter.add(seam);
+        }
+        shutter.position.y = 3.5; shutter.scale.y = .001; shutter.name = 'bay-shutter'; shutter.castShadow = true;
         // Face the shutter across the door -> trigger (inward) axis: the bay may open east or north.
         const inside = mission.def.anchors['fire-bay-trigger']; if (inside) group.rotation.y = Math.atan2(inside.x - door.x, inside.z - door.z);
         group.add(shutter); this.shutter = group; this.scene.add(group);
       }
-      this.shutter.visible = !!closed;
+      if (closed) {
+        this.shutterClosedAt ??= this.world.tick;
+        const progress = Math.min(1, Math.max(0, (this.world.tick - this.shutterClosedAt) / 60));
+        const leaf = this.shutter.children[0];
+        leaf.scale.y = Math.max(.001, progress);
+        leaf.position.y = 3.5 - 1.6 * progress;
+        this.shutter.visible = true;
+      } else {
+        this.shutterClosedAt = null;
+        this.shutter.visible = false;
+      }
     }
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
@@ -1171,7 +1187,7 @@ export class GameView implements Lifecycle {
       const walking = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding === undefined && !carPose;
       const nearbyBodies = bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current);
       const bodyBoss = megaOccludesCourier(this.camera.position, current, this.world.entities.iterate());
-      this.courierMark.visible = courierPinWanted(walking, !this.world.entities.get(1)?.hidden, (!this.view.storyShot || __QA_HOOKS__ && this.view.spot === 'scene-lab'), nearbyBodies || bodyBoss);
+      this.courierMark.visible = !(this.world.scenario === 'L1' && this.world.missions?.state.gates['fire-shutter'] === false) && courierPinWanted(walking, !this.world.entities.get(1)?.hidden, (!this.view.storyShot || __QA_HOOKS__ && this.view.spot === 'scene-lab'), nearbyBodies || bodyBoss);
       const x = lerp(previous?.x ?? current.x, current.x, alpha), z = lerp(previous?.z ?? current.z, current.z, alpha);
       const y = lerp(previous?.y ?? current.y, current.y, alpha);
       this.courierMark.position.set(x, y + .62, z);
@@ -1261,6 +1277,13 @@ export class GameView implements Lifecycle {
           this.revealSubject.union(this.revealPet);
         }
       }
+      // Keep the fire station facade intact throughout the entry and shutter beat.
+      // Its cutaway triangles otherwise read as missing/dark facade panels in follow view.
+      if (this.world.scenario === 'L1' && this.districts) {
+        const nearBay = Math.hypot(current.x - (this.world.missions?.def.anchors['fire-bay-door']?.x ?? Infinity), current.z - (this.world.missions?.def.anchors['fire-bay-door']?.z ?? Infinity)) <= 24;
+        this.districts.occlusion.keepWhole = nearBay ? 'bld.fire-station' : null;
+        this.districts.occlusion.keepRoof = nearBay ? 'bld.fire-station' : null;
+      }
       // PO #45: the see-through disc must clear the corgi next to her too, else its tail dissolves into occluder dots.
       let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
       if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
@@ -1314,7 +1337,8 @@ export class GameView implements Lifecycle {
     const courier = this.world.entities.get(1);
     const behindHull = !!current && !!(this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
     courierXray.value = behindHull ? 1 : 0;
-    this.courierForeground = !!current && courierForegroundWanted(bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
+    const behindFireShutter = this.world.scenario === 'L1' && this.world.missions?.state.gates['fire-shutter'] === false;
+    this.courierForeground = !behindFireShutter && !!current && courierForegroundWanted(bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
     // The seated copy shares the courier's prewarmed depth slice: retain her
     // silhouette among the crew as the scripted truck turns under the camera.
     this.character?.setForeground(this.courierForeground || !!this.world.missions?.state.l2?.seated);
