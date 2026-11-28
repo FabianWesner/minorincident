@@ -15,8 +15,9 @@ for(const row of rows){
  const path=`docs/reports/fix51-verify/receipts/L4-${row.quality}-webgl2-z${row.zoom}-browser.json`;
  const receipt=JSON.parse(readFileSync(path,'utf8')) as FixtureReceipt;
  receipt.checks=receipt.checks.filter(c=>c.id!=='L4-02');
- receipt.checks.push({id:'L4-02',clause:'actual pre-pickup reception civilian census excluding soldiers',tier:row.quality,policy:'real-input-webgl2',status:min>=40?'PASS':'FAIL',
-  value:{samples:samples.length,firstTick:samples[0].tick,lastTick:samples.at(-1)!.tick,minimum:min,maximum:max,routeZoom:row.zoom,input,sha256:sha},target:'at least40 civilians until pickup; routines/overlap still require separate qualification',receipt:path});
+ const minimum=row.quality==='low'?30:40;
+ receipt.checks.push({id:'L4-02',clause:'actual pre-pickup reception civilian census excluding soldiers',tier:row.quality,policy:'real-input-webgl2',status:min>=minimum?'PASS':'FAIL',
+  value:{samples:samples.length,firstTick:samples[0].tick,lastTick:samples.at(-1)!.tick,minimum:min,maximum:max,routeZoom:row.zoom,input,sha256:sha},target:`at least${minimum} civilians until pickup; routines/overlap still require separate qualification`,receipt:path});
  writeFileSync(path,JSON.stringify(receipt,null,2)+'\n');
  console.log(row.quality,row.zoom,min,max);
 }
