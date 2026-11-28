@@ -21,6 +21,8 @@ The game changes are implemented, but the requested visual qualification is stil
 
 ## Validation so far
 
+- Added small sheets of individually opened samples: [L3-05](L3-05-sheet.jpg) (SHA-256 `93cdb786ca5e71053f376d2742f0f2187bbe650a2439c85c4f822d6f7d59f6ad`) shows the courier, a partial east gate, and a subtitle obscuring the lower fight on both tiers; all four images are actual zoom 1.5. [L3-16](L3-16-sheet.jpg) (SHA-256 `33f71379a048f2b5a71a12d3f93910c32849ce3e08dec126008dbc9c13e2761d`) shows large columns at actual zoom 1/1.5 on HIGH and LOW, with substantial smoke obscuration. These sheets are sampled observations and do not resolve the open clauses or establish passing reviews.
+
 - Final-source native refresh on commit `28368e38` (source hash `2ef7ed1a31d78d5b106e9cf760b2928806b03c0784ea25dc3ad1d1e70a722466`): L2 HIGH 1 failure/15 incomplete, LOW 1/13; L3 HIGH 1/15, LOW 2/13. All fixture executions and checkpoint controls passed. Failures are the previously recorded L2-12, L3-06 and L3-09. Fresh L2/L3 threat audit reports zero level flags; only `PARTIAL_LEVEL_SELECTION` remains, excluded by the lane rule. Native results do not resolve the visual reviews.
 
 - After pool access was restored, filtered `scene:gate` passed 2/2 selected L3 rows: `inf-chase-l3@high-z0.5` (WebGPU) and `l3-bar-cap-horde@low-z1.5` (WebGL2). Opened both generated sheets: the HIGH sheet shows a courier moving along a street and later surrounded by infected; the LOW sheet shows a group partially obscured by smoke with health bars. These automated scene gates do not establish the three requested visual reviews. No L2 scene was selected by the curated gate's L2/L3-name filter. Full row-specific capture and acceptance remain open.
