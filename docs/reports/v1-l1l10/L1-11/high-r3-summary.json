@@ -1,0 +1,72 @@
+{
+  "status": "inconclusive",
+  "tier": "high",
+  "reason": "Approach did not reach a fence; nearby colliders were depot and hydrant. No low repetition of failed path.",
+  "receipt": "test-results/v1-l1l10/bike-high-r3/receipt.json",
+  "receiptSha256": "e097dd0a26ff886c6fdb3c8de9a75bece3bcd797d5f839c2706eb3d16f3a6384",
+  "frame": {
+    "file": "test-results/v1-l1l10/bike-high-r3/captures/03-fence-dismount.png",
+    "sha256": "18cfcb5bf5c49d7f1e4f6f1d5f912162e231fa5bf35d4adbf52ce0a06769ae3d",
+    "label": "fence-dismount",
+    "state": {
+      "tick": 2012,
+      "player": {
+        "x": -36.02092742919922,
+        "y": 0.8500000238418579,
+        "z": -34.967838287353516,
+        "yaw": -0.12288672740910835
+      },
+      "carrying": true,
+      "storyLock": false,
+      "phase": "morning",
+      "bike": {
+        "at": {
+          "x": -35.8738342222984,
+          "y": 0.05,
+          "z": -36.158788995184715,
+          "yaw": -0.12288672740910835
+        },
+        "mounted": false,
+        "heading": 0.12288672740910835,
+        "speed": 0,
+        "pedal": 3.681999999999996,
+        "steer": 0,
+        "lean": 0,
+        "standTicks": 0,
+        "armed": false,
+        "lockUntil": 2030,
+        "approached": false
+      },
+      "distance": 1.2000000000000006,
+      "canInteract": false,
+      "interaction": false,
+      "azimuth": 0.7853981633974483,
+      "zoom": 1,
+      "walls": [
+        {
+          "id": "bld.courier-depot:782",
+          "min": [
+            -40.433,
+            -43.05
+          ],
+          "max": [
+            -35.166999999999994,
+            -38.5
+          ]
+        },
+        {
+          "id": "prop.fire-hydrant:1264",
+          "min": [
+            -33.75725028514862,
+            -34.75725028514862
+          ],
+          "max": [
+            -33.24274971485138,
+            -34.24274971485138
+          ]
+        }
+      ]
+    }
+  },
+  "head": "4d3932b0bd4aaa5c21cf941662a3acfcf2da479b"
+}

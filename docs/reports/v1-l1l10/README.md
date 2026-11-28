@@ -329,3 +329,7 @@ Both natural finale snapshots were taken when the persistent Mega approached wit
 ### L1-05 second quiet admission on main 4d3932b0
 
 A second bounded exclusive admission attempt ended after 120 s without starting the timing adapter. The final preflight reported load 2.33 but active L7 acceptance and a separate mortal-distance QA process; an earlier sample also showed an L6 acceptance job. No blast-frame timing was measured, and L1-05 remains NOT CHECKED. The adapter and its native-prefix limitation remain as documented above. No game or checker change.
+
+### L1-11 third route attempt on main 4d3932b0
+
+A third high-tier physical bicycle route attempted the depot street fence using coordinate-assisted cautious steering for 900 ticks. It ended at (−36.02, −34.97), near the depot and hydrant rather than the target fence; E dismounted with the bicycle 1.20 m away. The opened [frame and receipt summary](L1-11/high-r3-summary.json) show courier, corgi and bicycle on the sidewalk outside the depot, with a hydrant in front. This is an inconclusive driver route, not a fence counterexample; low was not repeated on the same failed path. The prior measured 7.5 m/s and wall dismount remain documented above. L1-11 remains NOT CHECKED; no game change.
