@@ -1,0 +1,65 @@
+{
+  "identity": {
+    "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+    "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+    "revision": "85d5d2108710eabb6f6fd23197e5542ca4784b60"
+  },
+  "method": "Headless pooled physical-input opening on current source, high then low, zero deaths up to bounded sample end. Individually opened both original 1280x720 frames; scene still after arrival but before crew-exit start.",
+  "rows": [
+    {
+      "tier": "high",
+      "frame": "test-results/playtest/v2-l2-light-L2-high/captures/campaign-L2-doors-t3137-high-z1.jpg",
+      "frameSha256": "9fef0d1d59bfff2e0271e1bf830453892b5a3e6b831dfc5ec3448a3c2147a071",
+      "frameTick": 3137,
+      "actualZoom": 1,
+      "departureTick": 1673,
+      "arrivalTick": 3132,
+      "crewExitStartTick": 3180,
+      "crewIds": [
+        121,
+        122,
+        123,
+        124,
+        125,
+        126
+      ],
+      "secondsSinceArrival": 0.08333333333333333,
+      "secondsUntilCrewExit": 0.7166666666666667,
+      "completionPath": "test-results/playtest/v2-l2-light-L2-high/campaign-completion.json",
+      "completionSha256": "7d893f049a829b9ab120f9bbc8b67317dbae94b792310dabd7a7a992083ea112",
+      "logPath": "test-results/playtest/v2-l2-light-L2-high/log-campaign.jsonl",
+      "logSha256": "762aab04e248129bcc0eeff0968fd5614e2a182ab9970b9f00848cfa3067a0eb",
+      "visibleCrew": 0,
+      "visibleCourier": 0,
+      "observation": "At full size the fire engine is centered in the image; the cab/body is opaque and no identifiable firefighter or courier is visible."
+    },
+    {
+      "tier": "low",
+      "frame": "test-results/playtest/v2-l2-light-L2-low/captures/campaign-L2-doors-t3168-low-z1.jpg",
+      "frameSha256": "f3786683306a07626496d797b0e26afccd5195c31eabbefda453bb719d904ed6",
+      "frameTick": 3169,
+      "actualZoom": 1,
+      "departureTick": 1709,
+      "arrivalTick": 3168,
+      "crewExitStartTick": 3216,
+      "crewIds": [
+        121,
+        122,
+        123,
+        124,
+        125,
+        126
+      ],
+      "secondsSinceArrival": 0.016666666666666666,
+      "secondsUntilCrewExit": 0.7833333333333333,
+      "completionPath": "test-results/playtest/v2-l2-light-L2-low/campaign-completion.json",
+      "completionSha256": "0a75e9c1e73b6e575f07df220f08c873cced26680a9f15ac6e2bbf9bd0a92408",
+      "logPath": "test-results/playtest/v2-l2-light-L2-low/log-campaign.jsonl",
+      "logSha256": "68078cfa6e8bed7f87c0adb81ff04df816c4b2adb39f9a018408a896fa49672a",
+      "visibleCrew": 0,
+      "visibleCourier": 0,
+      "observation": "At full size the fire engine is centered in the image; the cab/body is opaque and no identifiable firefighter or courier is visible."
+    }
+  ],
+  "limits": "Only actual zoom 1 qualified; requested zoom 1.5 at this point remained actual 1. Screens show one instant, not every ride frame. Timing/roster clauses are separately measured by native receipts."
+}

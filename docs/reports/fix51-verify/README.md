@@ -1,6 +1,6 @@
 # fix51-verify acceptance automation
 
-**NO-GO; incomplete acceptance coverage.** 53/180 rows have current measured clauses; 6 have fresh FAILs. Status totals: NOT CHECKED: 160, PASS: 14, FAIL: 6. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
+**NO-GO; incomplete acceptance coverage.** 53/180 rows have current measured clauses; 7 have fresh FAILs. Status totals: NOT CHECKED: 159, PASS: 14, FAIL: 7. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
 
 ## Run
 
@@ -81,7 +81,7 @@ Every remaining row and next check is listed here. P preserves the exact PO-revi
 | L1-16 | NOT CHECKED | 0 | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/live.ts in screenshot-only mode from a fresh L1 save with no hidden navigation assists; time every lost interval and review its route decisions. O: Route readability: Luna reaches the depot, Annex and garage without > 60 s lost (tune). |
 | L1-17 | NOT CHECKED | 0 | Manual low/high, close/wide review, including the high crowd frame from the retained failed driver attempt; this is visual tone, not a competent-time qualification. P: Review the morning depot/Annex frames for an inhabited suburb, then the outbreak frames for the feeling that there are too many infected to fight. |
 | L2-02 | NOT CHECKED | 2 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect the rack ring clear of the sign and bollards from the game camera in low/high; no-axe completion remains a native check. |
-| L2-03 | NOT CHECKED | 12 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect crew and courier visibility during boarding, ride and market arrival in both qualities; opaque engine occlusion is an objective failure. |
+| L2-03 | FAIL | 12 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect crew and courier visibility during boarding, ride and market arrival in both qualities; opaque engine occlusion is an objective failure. |
 | L2-05 | NOT CHECKED | 10 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: 30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen. |
 | L2-06 | NOT CHECKED | 10 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack. |
 | L2-09 | NOT CHECKED | 6 | Requalify the separately labelled uninterrupted +10/+90s census; count-only protection cannot establish mortality. Retain the15m route qualification and independent mortal death trial. |
