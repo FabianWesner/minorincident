@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T01:21:18.305Z",
+  "generatedAt": "2026-11-28T01:34:09.802Z",
   "policies": [
     {
       "tier": "low",
@@ -6464,11 +6464,14 @@
     },
     {
       "id": "L3-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (Codex/v2-l2l4): High actual attack tick 827 (attack 763, fallback 1405), player in yard: the entire east gate projects below the 720px viewport; its nearest box corner is y=806.1px. Low frame also projects it below at y=805.1px, but its later retry prevents independent same-interval qualification. Radius reaches 1.493×/1.496× default in high/low samples.",
       "automatedComplete": true,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/v2-l2l4/L3-05-gate-projection.json",
+        "docs/reports/v2-l2l4/L3-05-camera-radius.json"
+      ],
       "expected": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
       "checks": [],
       "historical": {
@@ -6482,9 +6485,6 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame)."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "checkKinds": [
-        "browser-visual"
-      ],
       "review": {
         "tag": "O",
         "instruction": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
@@ -6492,37 +6492,32 @@
       },
       "reviewDecision": {
         "row": "L3-05",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "dbb81c413b1df19a3eb61b63b7384949da70d4f4",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-28",
+        "commit": "bf03c71ba786175431982c336dbd1ab49b979fa7",
         "clauses": [
           {
             "clause": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
-            "verdict": "PASS",
-            "note": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "verdict": "FAIL",
+            "note": "High actual attack tick 827 (attack 763, fallback 1405), player in yard: the entire east gate projects below the 720px viewport; its nearest box corner is y=806.1px. Low frame also projects it below at y=805.1px, but its later retry prevents independent same-interval qualification. Radius reaches 1.493×/1.496× default in high/low samples."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-05-browser-ledger.json.gz",
-            "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "file": "docs/reports/v2-l2l4/L3-05-gate-projection.json",
+            "sha256": "4dc8b65ab9808b7d0b0f3172e5f322cf1ab55914c6ba3b2c6e36350d1cbbf2cc",
+            "what": "Recorded physical-input camera poses and individually opened frames, actual gate box, eight projected corners, player-in-frame control and high attack interval."
           },
           {
-            "file": "docs/reports/final-a/L3-05-image-review.json",
-            "sha256": "ba48f3b1dfe7278853a83480db98b55abcec87ece5161edf690cf5222a273822",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
-          },
-          {
-            "file": "docs/reports/final-a/L3-05-current-proof.json",
-            "sha256": "c6c60716324ac5435c139319563d262d2001cf36ca53e095f92752fb529c823d",
-            "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+            "file": "docs/reports/v2-l2l4/L3-05-camera-radius.json",
+            "sha256": "bc4b49f41ce71cd337f801cbb1cfaab11a8b73a400468677f560ec40149c65e7",
+            "what": "Pre-attack and defense camera radii, per-tier frame and sidecar hashes."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: run the PLAYTEST_REVEAL_AUDIT/PLAYTEST_THREAT_AUDIT L3 high command in docs/reports/v2-l2l4/README.md, inspect campaign-L3-defend-high-z1 and its JSON; project L3_GATES[yard-east] through the recorded camera. Gate visibility fails at a sampled instant; continuous coverage and low-tier attack interval remain open.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
