@@ -373,3 +373,11 @@ High credits show the title, readable initial attribution lines, Pause and Skip 
 | L10-04 | stale PASS → still NOT CHECKED | Half-second samples before cure installation: 2,183 / 2,114. Within 20 m, median 0 / 1, p95 10 / 10, max 21 / 15; 13 / 0 samples exceed 15. Moving-only median 0 / 0, p95 10 / 9, max 16 / 12. | [Local census](L10-04/local-census.json), full compressed samples and producer under `test-results/v1-l1l10/`. | — |
 
 The earlier 68/57 whole-region peaks are not evidence that the player normally faces that many at once. This census counts admitted living ordinary infected in explicit 12 m and 20 m circles every 30 ticks, excluding the pursuing Mega; moving means displacement ≥0.05 m since the previous sample. Both read-only native complete routes match the prior final-state hashes; the intervening main change affects L9 driving. These are radius-based bot observations rather than visually partitioned groups or a physical run, and the row's quiet/scare classification and finale-only crowd-fight clause remain open. No game or checker change.
+
+### L1-12 bench and changed alley route on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → still NOT CHECKED | Seven bench legs per tier: maximum endpoint error 0.110 / 0.110 m, maximum stopped 1 / 1 tick; 14 / 14 endpoint frames inspected at zoom 1 and 1.5. Old backyard leg 03 hit the later sealed fence after 1,200 high-tier ticks. | [Bench and route summary](L1-12/bench-summary.json), with frame and full receipt hashes. | — |
+
+Both bench routes used physical WASD on foot carrying the parcel, with read-only coordinate assistance. The 28 inspected frames show the courier and corgi passing the depot frontage, racks and both ends of the bench; the courier remains visible at those endpoints. This only measures the bench segment, not every fence, pallet or trash-bag passage. The old backyard route attempts to cross the depot-side street fence that `src/levels/L1/layout.ts` explicitly says was added to close that lane; its stop is not counted as an unintended prop snag. A current legal alternate route through the relevant alleys and its camera-side visibility remain open. No game or checker change.
