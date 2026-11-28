@@ -1,43 +1,133 @@
 {
   "row": "L1-14",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "b5a108ea26e39f87b07f5f3884cee56314c077c7",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
       "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "verdict": "PASS",
-      "note": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "note": "High/low: 10 residents admitted each; first logical visible position at most 0.9 m from refuge door; maximum 3 courier pursuers within 20 m; after +90 s, minimum waiting distance from both player and garage 17.467/17.454 m across 36000 samples each. 150 s stationary observation after ordinary native pickup input with damage suppression; browser captures use inspection camera and were opened individually on full-resolution sheets. They show residents on the porch and pavement, though several samples miss the transient doorway crossing. Logical admission is not a pixel-by-pixel visibility measurement."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-14-current-ledger.json.gz",
-      "sha256": "e3e90ad5f03f2f5240611b3fe49a589b396519ee612346f224689b7ba011b480",
-      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "file": "docs/reports/v1-l1l10/L1-14/measurement.json",
+      "sha256": "b44b2088b36a7b70cf58b9aee0321e1b0f30be26803d497d1bc2f4b1515cef16",
+      "what": "Every-tick native measurement summary for both qualities."
     },
     {
-      "file": "docs/reports/final-a/L1-14-native-summary.json",
-      "sha256": "9e35b17ee37f223f795bf108aa5c2532879a2a9db29a69693cb05198ff7033c8",
-      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "file": "test-results/v1-l1l10/L1-14/native-ledger.json.gz",
+      "sha256": "4ccc91eb010fa526191d0210fd8e842b5435b8344eef0e8517b8d3bdb349709b",
+      "what": "Raw 150-second resident and pursuer traces."
     },
     {
-      "file": "docs/reports/final-a/L1-14-browser-ledger.json.gz",
-      "sha256": "45c8c8849282f748ca479051c45a6888e70acd1f68df42843c962a54fdf1967a",
-      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "file": "test-results/v1-l1l10/L1-14/receipt.json",
+      "sha256": "0075c1f4f6504646b265041d923bcfdca511160b63dfa54275898b5eb6604b52",
+      "what": "Headless browser sample ledger and capture metadata."
     },
     {
-      "file": "docs/reports/final-a/L1-14-image-review.json",
-      "sha256": "f4e2c0970d7caea00a74fea853e2b12b51665eb4f51aa429d8cab8ffcbe0e399",
-      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t5405-n1-z1.png",
+      "sha256": "d3bd42cae7a473d7268e5c2dca00a4ef45d23a4655194e6617241410b14e67d2",
+      "what": "high fixed inspection camera at tick 5405, 1 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
     },
     {
-      "file": "docs/reports/final-a/L1-14-current-proof.json",
-      "sha256": "38e2d546e3f9b724183dfe69f6db4d30437a2ab30ea4852391069ffb8c1282b6",
-      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t5645-n2-z1.png",
+      "sha256": "3585e5343c4063eac639131f261533457820e971dec7b9742b2403fb31cd38aa",
+      "what": "high fixed inspection camera at tick 5645, 2 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t5735-n3-z1.png",
+      "sha256": "09ab11d4dd09b8a25d4f0d8463a8b6569811a65942efa22a06e5d729be7887f8",
+      "what": "high fixed inspection camera at tick 5735, 3 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t5885-n4-z1.png",
+      "sha256": "e790a15a572faa7554d2db3af65ebb07011086634510ec6a7ed1ecd3013f4c68",
+      "what": "high fixed inspection camera at tick 5885, 4 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6125-n5-z1.png",
+      "sha256": "6e39753b9e09163213e46bc202ac6a65aa5a08f147b4b4bdba966e59dbea212d",
+      "what": "high fixed inspection camera at tick 6125, 5 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6275-n6-z1.png",
+      "sha256": "ba766480cb35ffb7df099953949fdd4fc0aa7f4f083cee47eafdc68ebbe14b7f",
+      "what": "high fixed inspection camera at tick 6275, 6 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6425-n7-z1.png",
+      "sha256": "956b6026a0c8b76c03c60fb28cb91f662c8a63119f13f2424906654b05e71841",
+      "what": "high fixed inspection camera at tick 6425, 7 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6545-n8-z1.png",
+      "sha256": "c4113f8fecc9781226a4813d5495f34febb1fe4a4d5c2867f98c9c5ea1ca77e5",
+      "what": "high fixed inspection camera at tick 6545, 8 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6695-n9-z1.png",
+      "sha256": "a8d0bd9d2ac678a9e3eba0f58316d6b43bb0fad2474c374fddaedf69a5618445",
+      "what": "high fixed inspection camera at tick 6695, 9 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/high-t6845-n10-z1.png",
+      "sha256": "5b6bdde9b7ea5dc3c3692c01159209d8d64e73f06a25b908660d90aac825714e",
+      "what": "high fixed inspection camera at tick 6845, 10 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t5405-n1-z1.png",
+      "sha256": "42299d1ab2d069794cb55f9d7874d88f7feab35834e1842c2609ea72ab4ead57",
+      "what": "low fixed inspection camera at tick 5405, 1 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t5645-n2-z1.png",
+      "sha256": "bb1c31b90059e2c7fb8fe46e59beb89f8ca0d0d071f4fc83a0b22baecb1328f9",
+      "what": "low fixed inspection camera at tick 5645, 2 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t5735-n3-z1.png",
+      "sha256": "f8ea5cb4a72168ac1ba9383076a9336211e63bf0eef29fe974f44098c04c79dc",
+      "what": "low fixed inspection camera at tick 5735, 3 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t5885-n4-z1.png",
+      "sha256": "d5582eab728a5067624ce4a6a6b6eb8cb1d6cc50ff99123440f2c641573ac64c",
+      "what": "low fixed inspection camera at tick 5885, 4 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6125-n5-z1.png",
+      "sha256": "997e5c47ebf54facff7bb958b22d883c4c8aa1ce8665ed796b5c2dd727efff18",
+      "what": "low fixed inspection camera at tick 6125, 5 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6275-n6-z1.png",
+      "sha256": "8d6f8603e5d19e7aa20de3e7f9287505abc6e3134123f1cd29664e9b47c94f0f",
+      "what": "low fixed inspection camera at tick 6275, 6 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6425-n7-z1.png",
+      "sha256": "d3d999c876b152bb25ae81f5d34e785049c8e851d27b8475960c2f1af086df9d",
+      "what": "low fixed inspection camera at tick 6425, 7 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6545-n8-z1.png",
+      "sha256": "733b8fad804d59b5332f9611f02cb8f77f60377f69dc3518882e617fea17e5f4",
+      "what": "low fixed inspection camera at tick 6545, 8 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6695-n9-z1.png",
+      "sha256": "621254b99e1c941e797b9a8d578dd1da7f4fe38998112f29a1975a5db03eb91c",
+      "what": "low fixed inspection camera at tick 6695, 9 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-14/captures/low-t6845-n10-z1.png",
+      "sha256": "64b7749b2dc55a2580d0ee802071fb890be1226a3d2944708245a73e483b2fc4",
+      "what": "low fixed inspection camera at tick 6845, 10 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
     }
   ],
-  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Close camera observes emergence; physical mortal L1 runs are separate and documented in lane report.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

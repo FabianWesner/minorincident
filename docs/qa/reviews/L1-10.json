@@ -1,28 +1,28 @@
 {
   "row": "L1-10",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "7509b79434ff9d984296d2520236b91a70a77556",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters.",
       "verdict": "PASS",
-      "note": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
+      "note": "Production-camera native complete-input trials, seeds 1–10 each quality: same-ID warning strictly before first appearance 10/10 high and 9/10 low, exceeding 80%. Low seed10 had no qualifying warning; low seed5 warning preceded appearance by only 2 ticks. Seven stale/missing/identity/timing/boundary proof controls pass. Visible-first actors and candidates never appearing are excluded by the explicit offscreen-first definition; this is not an audio audibility test."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-10-native.json.gz",
-      "sha256": "243631c3f68b6f551b4814b1121f45576f9c74f54384025009d21d8a665a5fb8",
-      "what": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
+      "file": "docs/reports/v1-l1l10/L1-10/native.json.gz",
+      "sha256": "7efdab41f60c09422dafeb2c7cc12bb2c5970a5090d2f07ea7faae744a189e51",
+      "what": "Current ten-seed per-tier production-camera first-encounter event ledger or proof."
     },
     {
-      "file": "docs/reports/final-a/L1-10-current-proof.json",
-      "sha256": "b2333a7562339478db040c87fe2626c43fa2d42c1fb9450af9b20c078db6ea8f",
-      "what": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
+      "file": "docs/reports/v1-l1l10/L1-10/measurement.json",
+      "sha256": "ccbbb7145be4c50814139da9f533e2e62de1141e20c51904582ec4e923e092fb",
+      "what": "Current ten-seed per-tier production-camera first-encounter event ledger or proof."
     }
   ],
-  "notes": "Frozen runtime source4e570db; no game code edits. Explicit limits retained in the observation.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Native simulation event/camera sample; not a physical input or audio playback verdict.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

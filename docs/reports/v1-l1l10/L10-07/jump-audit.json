@@ -1,0 +1,321 @@
+{
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "5649b8c0de8e71dedbf49aa21e76178e39c4b685",
+  "method": "Native complete route; read-only wrapped update logs same-id consecutive-tick Mega displacement >1m and checkpoint/death events.",
+  "rows": [
+    {
+      "tier": "high",
+      "run": {
+        "completed": true,
+        "deaths": 4,
+        "outcome": "complete"
+      },
+      "events": [
+        {
+          "type": "player.died",
+          "tick": 16209
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 16329
+        },
+        {
+          "type": "player.died",
+          "tick": 24982
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 25102
+        },
+        {
+          "type": "player.died",
+          "tick": 51348
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 51468
+        },
+        {
+          "type": "player.died",
+          "tick": 69805
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 69925
+        }
+      ],
+      "jumps": [
+        {
+          "distance": 920.2777332322239,
+          "before": {
+            "tick": 16328,
+            "id": 115,
+            "x": 1567.2976358630392,
+            "z": -24.632158122376836,
+            "mode": "detailed",
+            "checkpoint": "cure-industrial",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 16329,
+            "id": 115,
+            "x": 647.0998923877014,
+            "z": -12.498766760645662,
+            "mode": "coarse",
+            "checkpoint": "cure-industrial",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 16329
+            }
+          ]
+        },
+        {
+          "distance": 162.7435514940561,
+          "before": {
+            "tick": 25101,
+            "id": 115,
+            "x": 1457.3413301826874,
+            "z": -3.4266609192727815,
+            "mode": "coarse",
+            "checkpoint": "cure-military",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 25102,
+            "id": 115,
+            "x": 1297.0998923877014,
+            "z": 25.001233239354338,
+            "mode": "coarse",
+            "checkpoint": "cure-military",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 25102
+            }
+          ]
+        },
+        {
+          "distance": 372.8530539203802,
+          "before": {
+            "tick": 49647,
+            "id": 115,
+            "x": 2978.0934174392537,
+            "z": -4.7714526819892225,
+            "mode": "coarse",
+            "checkpoint": "cure-corridor",
+            "playerHp": 78.06266666665029
+          },
+          "after": {
+            "tick": 49648,
+            "id": 115,
+            "x": 3337.349560546875,
+            "z": 95.00040435791016,
+            "mode": "coarse",
+            "checkpoint": "cure-corridor",
+            "playerHp": 78.06266666665029
+          },
+          "nearEvents": []
+        },
+        {
+          "distance": 987.4830996696575,
+          "before": {
+            "tick": 51467,
+            "id": 115,
+            "x": 3381.016223413493,
+            "z": 78.99273094700418,
+            "mode": "close",
+            "checkpoint": "cure-corridor",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 51468,
+            "id": 115,
+            "x": 2397.111591496171,
+            "z": -4.998622327207766,
+            "mode": "coarse",
+            "checkpoint": "cure-corridor",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 51468
+            }
+          ]
+        },
+        {
+          "distance": 680.588556439389,
+          "before": {
+            "tick": 69924,
+            "id": 115,
+            "x": 4000.8541862026977,
+            "z": -32.48031599071343,
+            "mode": "close",
+            "checkpoint": "cure-disperse-ready",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 69925,
+            "id": 115,
+            "x": 3332.311591496171,
+            "z": 95.00137767279223,
+            "mode": "coarse",
+            "checkpoint": "cure-disperse-ready",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 69925
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "run": {
+        "completed": true,
+        "deaths": 3,
+        "outcome": "complete"
+      },
+      "events": [
+        {
+          "type": "player.died",
+          "tick": 19561
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 19681
+        },
+        {
+          "type": "player.died",
+          "tick": 45857
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 45977
+        },
+        {
+          "type": "player.died",
+          "tick": 46906
+        },
+        {
+          "type": "checkpoint.restored",
+          "tick": 47026
+        }
+      ],
+      "jumps": [
+        {
+          "distance": 539.753773137452,
+          "before": {
+            "tick": 19680,
+            "id": 115,
+            "x": 1836.7230872652372,
+            "z": 12.966821138197195,
+            "mode": "detailed",
+            "checkpoint": "cure-military",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 19681,
+            "id": 115,
+            "x": 1297.1034921133844,
+            "z": 25.00127768041215,
+            "mode": "coarse",
+            "checkpoint": "cure-military",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 19681
+            }
+          ]
+        },
+        {
+          "distance": 203.91582992749554,
+          "before": {
+            "tick": 44738,
+            "id": 115,
+            "x": 3136.1421819652787,
+            "z": 61.849713774151176,
+            "mode": "coarse",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 48.7319999999833
+          },
+          "after": {
+            "tick": 44739,
+            "id": 115,
+            "x": 3337.346142578125,
+            "z": 94.99533081054688,
+            "mode": "coarse",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 48.7319999999833
+          },
+          "nearEvents": []
+        },
+        {
+          "distance": 580.0345380070214,
+          "before": {
+            "tick": 45976,
+            "id": 115,
+            "x": 3381.122476641973,
+            "z": 78.35261659763164,
+            "mode": "close",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 45977,
+            "id": 115,
+            "x": 2807.107991770488,
+            "z": -4.99866676826558,
+            "mode": "coarse",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 45977
+            }
+          ]
+        },
+        {
+          "distance": 111.52410395043212,
+          "before": {
+            "tick": 47025,
+            "id": 115,
+            "x": 2916.927167192933,
+            "z": 14.427461808498283,
+            "mode": "coarse",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 0
+          },
+          "after": {
+            "tick": 47026,
+            "id": 115,
+            "x": 2807.107991770488,
+            "z": -4.99866676826558,
+            "mode": "coarse",
+            "checkpoint": "l10-quarantine-gate",
+            "playerHp": 100
+          },
+          "nearEvents": [
+            {
+              "type": "checkpoint.restored",
+              "tick": 47026
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

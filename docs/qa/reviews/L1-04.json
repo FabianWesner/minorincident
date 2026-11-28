@@ -1,43 +1,93 @@
 {
   "row": "L1-04",
-  "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "00e40b5009d68c9627fe3ec5330961d9d7e379fb",
+  "status": "P",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
-      "verdict": "PASS",
-      "note": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "verdict": "P",
+      "note": "Both tiers: same technician ID 154 high / 147 low over 707 ticks, 364 transfer ticks with zero hidden transfer ticks; parcel transfers and technician returns to z -16.5 inside; six broken-data controls reject. Inspected 12 selected frames and archived labelled PROD comparison. Current coat, goggles, gloves and parcel are visible; parcel appears offset from hand in selected signing/carry view, and return is partly occluded. PO: do these exact frames meet PROD quality? Capture uses native bot to reach onset and idle sequence; separate current physical L1 runs completed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-04-browser-ledger.json.gz",
-      "sha256": "f2d078fdc8e4692053d222d609d0794bdb77a00df22079f4398d87807e7e298d",
-      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "file": "docs/reports/v1-l1l10/L1-04/browser-ledger.json.gz",
+      "sha256": "d02b4d598c061b7bc044d15fb8d2a13af4a3bea219ecad8f74f97cf62a24fdbf",
+      "what": "Current same-actor ledger or proof."
     },
     {
-      "file": "docs/reports/final-a/L1-04-image-review.json",
-      "sha256": "aabca903d1ad3f4b6ea4127a171be9001fe27ab26971284329308e4929f9bae2",
-      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "file": "docs/reports/v1-l1l10/L1-04/L1-04-story-proof.json",
+      "sha256": "e5764f30ad2f2ae9c44ab1d5011d09b13a029631a3ab43b7aed2e6872be950f9",
+      "what": "Current same-actor ledger or proof."
     },
     {
-      "file": "docs/reports/final-a/L1-04-current-proof.json",
-      "sha256": "abbe3872dbd4ca6cd6007aa70b482a46ebfa7d81f6f3bec807f78438a037fa41",
-      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "file": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/visual-qa-13j/01-l1-lab-return-prod-vs-cand.jpg",
+      "sha256": "3fd93c53d69845959178565bfff6a328d5aa438d8936fd7337972fde2ea0edcb",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
     },
     {
-      "file": "docs/reports/final-a/L1-04-story-proof.json",
-      "sha256": "cbfd8e63198784d2b2f8fc5e6c155146c5f19250cb0181df836002fc0b29a1c6",
-      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0060-npc-walk.png",
+      "sha256": "c3d3b8b390ac00da37a17d0259211461f0fccdef5f5d8dffa5e13ed32ee4e9d3",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
     },
     {
-      "file": "docs/reports/final-a/L1-04-PROD-reference.json",
-      "sha256": "c3405a0bdf9cddc17d7873b3249256083fe10cf77500f3d56882178ac5ba59a2",
-      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0141-npc-glance.png",
+      "sha256": "e08a7a95eacaf2304a485c94c86fc69f716f062367125e61580cf5b40871a04b",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0240-npc-sign.png",
+      "sha256": "0b0d2b9173880ad56a4bb8a0f76cd60d44cf606b01b13986984d414292a26368",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0505-npc-carry.png",
+      "sha256": "103cc573d99d60945a885da82e10a6481b8c886044c320227f6f5e27d5034349",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0600-npc-carry.png",
+      "sha256": "89580df70d63e12d9d29b54b67172d6648badb1eb9009b65451bc82a8609d3b5",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/high-0706-none.png",
+      "sha256": "570f10637e806457b21bf813b3008b1f77f7dd99aa631a13c21b7c4612688c1c",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0060-npc-walk.png",
+      "sha256": "2a96f0bf9a878abe40306aad8e387e5ad42066c11b33c51e93cb05a59e125014",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0141-npc-glance.png",
+      "sha256": "9566dad9beef888afe324be6057ca0fcb7cc34e69eb78596e6e8ddeca02f82f4",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0240-npc-sign.png",
+      "sha256": "7d713b55d6e4b97a100ef08275e35ee22670e806ad7a0d40ca2cef4a88cd5f9a",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0505-npc-carry.png",
+      "sha256": "7d625463752e259f145f3d5821fc9ef9d759f36f5e434f95c8a84656b744abd5",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0600-npc-carry.png",
+      "sha256": "fd4a3f6e26ead7d5d421f6359576653ded4e9912e3a1663d4e77198ce027a866",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
+    },
+    {
+      "file": "test-results/v1-l1l10/l1-annex/captures/low-0706-none.png",
+      "sha256": "7890556fcbb196ca86d621db3a7639f0f345bc4a36b71465b598bade1f6801c5",
+      "what": "Personally inspected current frame or archived labelled PROD comparison."
     }
   ],
-  "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "P for visual quality comparison; current frame selection and archived PROD reference personally inspected.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

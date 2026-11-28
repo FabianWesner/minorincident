@@ -1,33 +1,113 @@
 {
   "row": "L1-15",
-  "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "e9978f555d3cd18b89e1a038fbebfc20d7538187",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside.",
+      "clause": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry.",
       "verdict": "PASS",
-      "note": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
+      "note": "High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim."
+    },
+    {
+      "clause": "Shutter closes with the corgi inside.",
+      "verdict": "FAIL",
+      "note": "High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-15-measurement.json",
-      "sha256": "50cd215f2303ee9fe4a052e6968b91b77d02b3605a3263dc8586d46b38f98065",
-      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
+      "file": "docs/reports/v1-l1l10/L1-15/L1-15-measurement.json",
+      "sha256": "7754d800daa6d7dba5d4e3fb86d2528d13d47b36c150340e84f96113dd1325ed",
+      "what": "Per-tick fire station measurement and seven rejection controls."
     },
     {
-      "file": "docs/reports/final-a/L1-15-browser-ledger.json.gz",
-      "sha256": "33a6ef9d22914638c2adadc31cdb709e9eae77c64bc4af048b6fd49cc634db56",
-      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
+      "file": "test-results/v1-l1l10/L1-15/receipt.json",
+      "sha256": "6a66fe10b1361d067cd3a4f705000bf28d3049926e9d1c325044f03e0799df9a",
+      "what": "Both-tier physical keyboard sequence, samples and capture metadata."
     },
     {
-      "file": "docs/reports/final-a/L1-15-image-review.json",
-      "sha256": "b51c8a49c65e805c39ab3eb2ae1c42455fc0a80f024d08e976987961b7052bbf",
-      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
+      "file": "test-results/v1-l1l10/L1-15/captures/high-bay-open.png",
+      "sha256": "481efb2eb2b69723bb1c7ba103072f96d345a964a57f3885296272fc083839ba",
+      "what": "high bay-open: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-hold-4s.png",
+      "sha256": "9198bd1aaf6f9a60a4826187aa9663a563a670f89c0e5159e7e7c98932a7e94c",
+      "what": "high hold-4s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-hold-8s.png",
+      "sha256": "630ca94f3a92203ba0e234bd4019862f4e2e070e5a82c9b5f14c5399c55b7e25",
+      "what": "high hold-8s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-physical-1s.png",
+      "sha256": "bff5315776852c896b18dcde86697412c9a5d4db97c2614d4243057c048409d1",
+      "what": "high physical-1s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-physical-2s.png",
+      "sha256": "ef4a20e7e3747c36c76913f3401d1ea1fcf6b019e32c7e511857eca6a9836f81",
+      "what": "high physical-2s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-physical-inside.png",
+      "sha256": "460b6a024ea43056d28eb358b748be3ac4d9a8f3a40db168dbf0547920e781b5",
+      "what": "high physical-inside: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-entry-end.png",
+      "sha256": "460b6a024ea43056d28eb358b748be3ac4d9a8f3a40db168dbf0547920e781b5",
+      "what": "high entry-end: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/high-shutter-settled.png",
+      "sha256": "35c260d4713a69edd7f3fd8087b9d02642e2edce55837d3ecedc8e1bfbdb522a",
+      "what": "high shutter-settled: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-bay-open.png",
+      "sha256": "dbd7c137ac8461040c15ebaa3bb9d4363d12e7efa2efd051ded7446eec367f8b",
+      "what": "low bay-open: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-hold-4s.png",
+      "sha256": "2c3f048921ee39793102c7a2c98a79f8bb9e97e94ee8e0b055047af46a13d6e1",
+      "what": "low hold-4s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-hold-8s.png",
+      "sha256": "0b2d77d1b0477d18dafe0fb14618cc7371b752b3644fd377b64ab711d1413a2c",
+      "what": "low hold-8s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-physical-1s.png",
+      "sha256": "34ea90d6ef0f89f122e3bc3c1d676e1f53a0a3183fc9609542231049e7b0bfb8",
+      "what": "low physical-1s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-physical-2s.png",
+      "sha256": "973e962866fc91665573c758a861fa3c4bddc6f8e85b668541510bbae5511ad0",
+      "what": "low physical-2s: courier and infected near bay; Get in text visible during approach/hold where in frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-physical-inside.png",
+      "sha256": "2fa8738ff300621f6172c711648d9febcfa22fee3d79b4efbf488b5c456f340d",
+      "what": "low physical-inside: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-entry-end.png",
+      "sha256": "b5e330d975838ac603d7a626570a4ef3f7d6760db510d187b73a3b2a7e17befb",
+      "what": "low entry-end: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+    },
+    {
+      "file": "test-results/v1-l1l10/L1-15/captures/low-shutter-settled.png",
+      "sha256": "2a2cd640247e7c5092b48588052a8c0207db0f93894afe29a3bdaa7d71f772e4",
+      "what": "low shutter-settled: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
     }
   ],
-  "notes": "Frozen runtime source4e570db; no game code edits. Explicit limits retained in the observation.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "State-level gate closure and inside corgi pass; default-follow visual depiction of shutter closure fails. All 16 cited captures opened.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

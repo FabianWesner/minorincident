@@ -1,33 +1,28 @@
 {
   "row": "L1-09",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Infected speeds 4.4 m/s … tier × 1.04; ≥ 85 % faster than the 4.5 m/s run (\"should be a bit faster than me\").",
       "verdict": "PASS",
-      "note": "4 current native checks PASS across low/high. low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4. [full value in proof]; low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4 [full value in proof]; high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS)"
+      "note": "Both quality fixtures spawn 100 runners in each of three tiers. All 300 meet 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic sample."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-09-native.json",
-      "sha256": "d4fe0e6a82470c9103e46783bbf35cb694fae5c7b01d560ec77e5c3c99e0fe8d",
-      "what": "4 current native checks PASS across low/high. low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4. [full value in proof]; low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4 [full value in proof]; high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS)"
+      "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
+      "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
+      "what": "Current production runner spawn-speed fixture."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
-      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
-      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
-      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
-      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
+      "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
+      "what": "Current production runner spawn-speed fixture."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Controlled production spawn-speed fixture; equal tier mix disclosed.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

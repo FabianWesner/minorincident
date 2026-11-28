@@ -1,0 +1,214 @@
+{
+  "head": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
+  "method": "Native parcel pickup prefix; physical keyboard WASD/E afterwards, fixed-tick motion and read-only coordinate guidance. Separate focused speed and fence routes; wall observations from earlier current-source-equivalent runs.",
+  "tiers": {
+    "high": {
+      "speedReceipt": "test-results/v1-l1l10/L1-11-high-replay/receipt.json",
+      "speedSha256": "ca3a03f6cdda0f003c5c7256b0d414e24d8d05a3ffce21fa36000a95a822ff78",
+      "metrics": {
+        "forward": {
+          "maxCruiseTicks": 84,
+          "startHeading": -0.013585969453914272,
+          "endHeading": -0.013585966334763252
+        },
+        "left": {
+          "maxCruiseTicks": 30,
+          "startHeading": -0.016363744112541028,
+          "endHeading": -0.5050195688565101
+        },
+        "right": {
+          "maxCruiseTicks": 30,
+          "startHeading": -0.5200506440758328,
+          "endHeading": -0.14532737582634747
+        }
+      },
+      "fenceReceipt": "test-results/v1-l1l10/L1-11-high-fence/receipt.json",
+      "fenceSha256": "eca744b267d29df6439ca1a9f626ff8a5830014e3e7f2b85c315479545a03bc7",
+      "fence": {
+        "player": {
+          "x": -26.54582405090332,
+          "y": 0.8500000238418579,
+          "z": -12.641959190368652,
+          "yaw": -0.07344108143451082
+        },
+        "bike": {
+          "x": -26.64854916387275,
+          "y": 0.13,
+          "z": -11.24573300841767,
+          "yaw": -1.6442374082294073
+        },
+        "box": {
+          "id": "prop.privacy-fence:127",
+          "min": [
+            -25.635,
+            -11.6625
+          ],
+          "max": [
+            -25.365,
+            -9.325000000000001
+          ]
+        },
+        "mounted": false,
+        "sameSide": true
+      },
+      "wallReceipt": "test-results/v1-l1l10/bike-high/receipt.json",
+      "wallSha256": "be94c4893851fd50062364c485926b718cd8ca30fea53911cc5e8ec77cdfa2e7",
+      "wall": {
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "bike": {
+          "x": -38.736959838867186,
+          "y": 0.05,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "box": {
+          "id": "bld.courier-depot:782",
+          "min": [
+            -40.433,
+            -43.05
+          ],
+          "max": [
+            -35.166999999999994,
+            -38.5
+          ]
+        },
+        "mounted": false
+      },
+      "inspectedFrames": [
+        {
+          "file": "test-results/v1-l1l10/L1-11-high-replay/captures/04-forward.png",
+          "sha256": "dd49b88f1609478b63989c1f29dda4f67484121002ceada60d6f15f07b5a2cfc",
+          "label": "forward"
+        },
+        {
+          "file": "test-results/v1-l1l10/L1-11-high-fence/captures/06-fence-dismount.png",
+          "sha256": "0d825acee202b1aaa0edbec1dd916a878f1bf1eee3afd56a8dee35ce6b73607b",
+          "label": "fence-dismount"
+        },
+        {
+          "file": "test-results/v1-l1l10/L1-11-high-fence-zoom/captures/07-fence-dismount-z1.5.png",
+          "sha256": "ccecd9121e3b1a31fd8b2923f03ea8abf54e8f96af5ee744c12977bf3d6da75e",
+          "label": "fence-dismount-z1.5"
+        },
+        {
+          "file": "test-results/v1-l1l10/bike-high/captures/03-wall-dismount.png",
+          "sha256": "e9b36de4d483ac79fb4e0f235dd0da90c9f656a85d22166512a0023b1d095b00",
+          "label": "wall-dismount"
+        }
+      ],
+      "reverse": {
+        "minSignedSpeed": -1.8,
+        "receipt": "test-results/v1-l1l10/L1-11-high-replay/receipt.json"
+      }
+    },
+    "low": {
+      "speedReceipt": "test-results/v1-l1l10/L1-11-low-speed/receipt.json",
+      "speedSha256": "9fe7bcf6b650b7db5f6ed4daa25373810222ce7e4d2a03527bb85fb75ed46741",
+      "metrics": {
+        "forward": {
+          "maxCruiseTicks": 84,
+          "startHeading": -0.013585969453914272,
+          "endHeading": -0.013585966334763252
+        },
+        "left": {
+          "maxCruiseTicks": 30,
+          "startHeading": -0.016363744112541028,
+          "endHeading": -0.5050195688565101
+        },
+        "right": {
+          "maxCruiseTicks": 30,
+          "startHeading": -0.5200506440758328,
+          "endHeading": -0.14532737582634747
+        }
+      },
+      "fenceReceipt": "test-results/v1-l1l10/L1-11-low-fence/receipt.json",
+      "fenceSha256": "bb4a49edd4442eeb56ee548291bc38c764314c23b0e5123e4ef9a20038b814ac",
+      "fence": {
+        "player": {
+          "x": -26.54582405090332,
+          "y": 0.8500000238418579,
+          "z": -12.641959190368652,
+          "yaw": -0.07344108143451082
+        },
+        "bike": {
+          "x": -26.64854916387275,
+          "y": 0.13,
+          "z": -11.24573300841767,
+          "yaw": -1.6442374082294073
+        },
+        "box": {
+          "id": "prop.privacy-fence:127",
+          "min": [
+            -25.635,
+            -11.6625
+          ],
+          "max": [
+            -25.365,
+            -9.325000000000001
+          ]
+        },
+        "mounted": false,
+        "sameSide": true
+      },
+      "wallReceipt": "test-results/v1-l1l10/bike-low/receipt.json",
+      "wallSha256": "8d030b936a64d8fb2accbd5bbcb184d4777d2b8ab2de8a13eedf5708932c534b",
+      "wall": {
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "bike": {
+          "x": -38.736959838867186,
+          "y": 0.05,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "box": {
+          "id": "bld.courier-depot:782",
+          "min": [
+            -40.433,
+            -43.05
+          ],
+          "max": [
+            -35.166999999999994,
+            -38.5
+          ]
+        },
+        "mounted": false
+      },
+      "inspectedFrames": [
+        {
+          "file": "test-results/v1-l1l10/L1-11-low-speed/captures/04-forward.png",
+          "sha256": "8c10a89097df9844592734f27641af2b5266ae564587281cadd6a454bd418e33",
+          "label": "forward"
+        },
+        {
+          "file": "test-results/v1-l1l10/L1-11-low-fence/captures/06-fence-dismount.png",
+          "sha256": "7e893e415312d0caf2d9dd21f877ef102bee18740c14dd930011066be902d5b3",
+          "label": "fence-dismount"
+        },
+        {
+          "file": "test-results/v1-l1l10/L1-11-low-fence-zoom/captures/07-fence-dismount-z1.5.png",
+          "sha256": "513cd7cbc5f14bea53f3a6fea321c4fc9e9759c6dad2884c71703cb33a293432",
+          "label": "fence-dismount-z1.5"
+        },
+        {
+          "file": "test-results/v1-l1l10/bike-low/captures/03-wall-dismount.png",
+          "sha256": "66e85f89c9d620117c671b6d54c34bbdc3594fa574e87fdbcfe55fd7b694602f",
+          "label": "wall-dismount"
+        }
+      ],
+      "reverse": {
+        "minSignedSpeed": -1.8,
+        "receipt": "test-results/v1-l1l10/bike-low/receipt.json"
+      }
+    }
+  }
+}

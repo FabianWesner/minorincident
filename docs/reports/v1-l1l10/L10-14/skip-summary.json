@@ -1,0 +1,35 @@
+{
+  "status": "partial",
+  "method": "Native reached release snapshot, protected physical approach, E release, ordinary ending presentation; click real Skip credits. Re-pause observer after button resumes the clock. Two fixed simulation steps after click.",
+  "tiers": {
+    "high": {
+      "receipt": "test-results/v1-l1l10/L10-14-skip/high-physical.json.gz",
+      "sha256": "3aab23462e4db6a21a01054efd4c7a9978b6488041c4aaf5ddf23f945f6f5a51",
+      "errors": [],
+      "frames": [
+        {
+          "file": "test-results/v1-l1l10/L10-14-skip/high-1795826344018/credits-z1.5.jpg",
+          "sha256": "7edb35b72fca4d80c0fe894dae7b2a1ea401ee19fae72487a2965c5c65135311",
+          "label": "credits",
+          "phase": "credits",
+          "phaseTicks": 0
+        },
+        {
+          "file": "test-results/v1-l1l10/L10-14-skip/high-1795826344018/after-skip-z1.5.jpg",
+          "sha256": "0ab67a7f4387e9754a713b98dd32f9e01d480677393258cab5b9f2753853a28c",
+          "label": "after-skip",
+          "phase": "thanks",
+          "phaseTicks": 1
+        }
+      ]
+    },
+    "low": {
+      "receipt": "test-results/v1-l1l10/L10-14-skip/low-physical.json.gz",
+      "sha256": "05d2fd204e982938510886b0629cf5b55487df9e3809e752d88cbe541e16b9e4",
+      "errors": [
+        "AssertionError [ERR_ASSERTION]: Actual E must release cure"
+      ],
+      "frames": []
+    }
+  }
+}

@@ -1,33 +1,28 @@
 {
   "row": "L1-01",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Mission graph completable, no fail timer; start loadout empty.",
       "verdict": "PASS",
-      "note": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+      "note": "Both current native complete policies finish. At initial observation deadline is null, weapon racks are absent and owned actions contain only fists and kick. No physical-input run on this head is claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-01-native.json",
-      "sha256": "51a80cc78e189e2fdb5cdf125e75095825085969eecb6f7c4d71266d030457a1",
-      "what": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+      "file": "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
+      "sha256": "4abca42732f602e703d4a92943fa00c13845f551c512cf0f7e206a34482a6038",
+      "what": "Current native complete route and initial state."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
-      "sha256": "24d4c1141afa43b565ea6df3de3d35d94375a810a044c963ec2fdca683816f81",
-      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
-      "sha256": "49121e9b52fb11525c024b7861014a4c85a9b4dd6e6c76ceab6d7327e157e0f4",
-      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/v1-l1l10/L1-01/current-low-complete.json",
+      "sha256": "dd99d454dcd55b9b872386e032110466631b01b0db452657d064c3b1b03aa58f",
+      "what": "Current native complete route and initial state."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Native simulation; fists and kick treated as unarmed per acceptance evaluator.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

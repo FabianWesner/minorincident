@@ -1,0 +1,213 @@
+{
+  "method": "Correlate runs of zero admitted ordinary infected within 20 m, sampled each 30 ticks, with same-seed pacing beat ledger. These are candidates only: Mega excluded and audio/visual quiet not measured. Both routes use the complete-input seed 1 policy; time alignment is simulated tick.",
+  "tiers": {
+    "high": [
+      {
+        "firstSeconds": 29.5,
+        "lastSeconds": 61.0,
+        "sampledDurationSeconds": 32.0,
+        "beats": [
+          {
+            "seconds": 37.38333333333333,
+            "kind": "find",
+            "detail": "weapon.hunting-rifle"
+          },
+          {
+            "seconds": 39.016666666666666,
+            "kind": "vignette",
+            "detail": "decor-cure-vignette-r1-road-4-message-wall"
+          },
+          {
+            "seconds": 39.516666666666666,
+            "kind": "vignette",
+            "detail": "decor-cure-vignette-r1-road-4"
+          },
+          {
+            "seconds": 47.766666666666666,
+            "kind": "checkpoint",
+            "detail": "cure-residential"
+          },
+          {
+            "seconds": 58.516666666666666,
+            "kind": "vignette",
+            "detail": "decor-cure-vignette-crossing-0-400"
+          }
+        ]
+      },
+      {
+        "firstSeconds": 633.5,
+        "lastSeconds": 694.0,
+        "sampledDurationSeconds": 61.0,
+        "beats": [
+          {
+            "seconds": 637.15,
+            "kind": "objective",
+            "detail": "research-hangar"
+          },
+          {
+            "seconds": 637.15,
+            "kind": "checkpoint",
+            "detail": "cure-research-entry"
+          },
+          {
+            "seconds": 637.1666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-intro"
+          },
+          {
+            "seconds": 641.1666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-sample"
+          },
+          {
+            "seconds": 652.1666666666666,
+            "kind": "radio",
+            "detail": "L10.courier-carried"
+          },
+          {
+            "seconds": 654.6666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-cure"
+          },
+          {
+            "seconds": 658.1666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-delivery"
+          },
+          {
+            "seconds": 671.1666666666666,
+            "kind": "radio",
+            "detail": "L10.ruiz"
+          },
+          {
+            "seconds": 678.6666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-prototype"
+          },
+          {
+            "seconds": 682.6666666666666,
+            "kind": "radio",
+            "detail": "L10.sam-coming.reyes"
+          },
+          {
+            "seconds": 685.1666666666666,
+            "kind": "radio",
+            "detail": "L10.voss-stay"
+          },
+          {
+            "seconds": 689.1666666666666,
+            "kind": "radio",
+            "detail": "L10.sam-delivery.reyes"
+          },
+          {
+            "seconds": 693.1666666666666,
+            "kind": "objective",
+            "detail": "research"
+          }
+        ]
+      }
+    ],
+    "low": [
+      {
+        "firstSeconds": 546.5,
+        "lastSeconds": 602.0,
+        "sampledDurationSeconds": 56.0,
+        "beats": [
+          {
+            "seconds": 548.7333333333333,
+            "kind": "radio",
+            "detail": "L10.voss-sample"
+          },
+          {
+            "seconds": 559.7333333333333,
+            "kind": "radio",
+            "detail": "L10.courier-carried"
+          },
+          {
+            "seconds": 562.2333333333333,
+            "kind": "radio",
+            "detail": "L10.voss-cure"
+          },
+          {
+            "seconds": 565.7333333333333,
+            "kind": "radio",
+            "detail": "L10.voss-delivery"
+          },
+          {
+            "seconds": 578.7333333333333,
+            "kind": "radio",
+            "detail": "L10.ruiz"
+          },
+          {
+            "seconds": 586.2333333333333,
+            "kind": "radio",
+            "detail": "L10.voss-prototype"
+          },
+          {
+            "seconds": 590.2333333333333,
+            "kind": "radio",
+            "detail": "L10.sam-coming.reyes"
+          },
+          {
+            "seconds": 592.7333333333333,
+            "kind": "radio",
+            "detail": "L10.voss-stay"
+          },
+          {
+            "seconds": 596.7333333333333,
+            "kind": "radio",
+            "detail": "L10.sam-delivery.reyes"
+          },
+          {
+            "seconds": 600.7333333333333,
+            "kind": "objective",
+            "detail": "research"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "objective",
+            "detail": "cure"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "handover",
+            "detail": "weapon.handgun"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "handover",
+            "detail": "weapon.shotgun"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "handover",
+            "detail": "weapon.flamethrower"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "handover",
+            "detail": "weapon.rocket-launcher"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "handover",
+            "detail": "weapon.pipe-bomb"
+          },
+          {
+            "seconds": 601.6333333333333,
+            "kind": "checkpoint",
+            "detail": "cure-research"
+          }
+        ]
+      }
+    ]
+  },
+  "census": {
+    "file": "test-results/v1-l1l10/L10-04-local-census.json.gz",
+    "sha256": "586733e1329cb2f68daa33b9c6196b34b55e563f3e319d8cdd1c2ad70bce6c8f"
+  },
+  "pacing": {
+    "file": "docs/reports/v1-l1l10/L10-04/pacing.json",
+    "sha256": "0483108bc9faf5a6fbecf720004dcbaaedbe506ee97c48fe5034ac78afbb9492"
+  }
+}

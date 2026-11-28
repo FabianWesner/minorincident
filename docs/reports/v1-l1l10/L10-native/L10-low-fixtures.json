@@ -1,0 +1,1486 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "302832998415c0cfba8bb4a6640d105467a8766e47f37ec5e73934c51520a04f",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checks": [
+    {
+      "id": "L10-05",
+      "clause": "crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start",
+      "value": {
+        "setup": "fresh L10 unarmed start; walk east on the crash-site exit line for at most 1 s, then check no respawn",
+        "start": {
+          "x": 547,
+          "z": 0
+        },
+        "anchor": {
+          "x": 552,
+          "z": 0.5
+        },
+        "distance": 5.024937810560445,
+        "navClear": true,
+        "lineOfSight": true,
+        "initialRacks": {
+          "LEFT": [
+            "weapon.fists"
+          ],
+          "RIGHT": [
+            "weapon.kick"
+          ]
+        },
+        "initialHealth": 100,
+        "collected": {
+          "tick": 52,
+          "distance": 1.4343879757815758
+        },
+        "collectionCount": 1,
+        "healthAfter": 100,
+        "found": true,
+        "weapons": [
+          "weapon.fists",
+          "weapon.kick",
+          "weapon.machete"
+        ],
+        "pickupCopies": 0,
+        "authoredMacheteCount": 1
+      },
+      "target": "both racks fists-only; one machete ≤6 m, clear walk and sight; picked up within 1 s without health loss; no barn copy or respawn",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-05",
+      "clause": "inventory alone does not release enemies at the crash start",
+      "value": {
+        "ticks": 240,
+        "runs": [
+          {
+            "added": [],
+            "spawned": {
+              "crash-bend:infected.runner:0:0": 103,
+              "crash-bend:infected.runner:1:0": 104,
+              "crash-bend:infected.runner:2:0": 105
+            }
+          },
+          {
+            "added": [
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.nail-gun",
+              "weapon.assault-rifle"
+            ],
+            "spawned": {
+              "crash-bend:infected.runner:0:0": 103,
+              "crash-bend:infected.runner:1:0": 104,
+              "crash-bend:infected.runner:2:0": 105
+            }
+          }
+        ],
+        "identical": true
+      },
+      "target": "same seed and stationary input at the crash start, with or without all six pickup weapons: identical 240-tick infected census and encounter ledger",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-05",
+      "clause": "inventory alone does not change admissions at pickup locations",
+      "value": {
+        "ticks": 240,
+        "locationChecks": [
+          {
+            "anchor": "crash-machete",
+            "births": [
+              2,
+              2
+            ],
+            "identical": true
+          },
+          {
+            "anchor": "farmhouse-rifle",
+            "births": [
+              2,
+              2
+            ],
+            "identical": true
+          },
+          {
+            "anchor": "shed-molotov",
+            "births": [
+              0,
+              0
+            ],
+            "identical": true
+          },
+          {
+            "anchor": "workshop-nailgun",
+            "births": [
+              1,
+              1
+            ],
+            "identical": true
+          },
+          {
+            "anchor": "guard-tower-rifle",
+            "births": [
+              2,
+              2
+            ],
+            "identical": true
+          }
+        ]
+      },
+      "target": "matched fresh-world four-second stationary comparisons at all six pickup anchors, with and without all six weapons",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-05",
+      "clause": "six retained approach pickups and story-only objectives",
+      "value": {
+        "run": {
+          "level": "L10",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 1259.3833333333334,
+          "deaths": 3,
+          "kills": 23,
+          "damageTaken": 683.185999999976,
+          "failures": {
+            "player-died": 3
+          },
+          "objectiveTimeline": [
+            {
+              "id": "crash",
+              "t": 23.966666666666665
+            },
+            {
+              "id": "farmstead",
+              "t": 316.9
+            },
+            {
+              "id": "farmstead",
+              "t": 332.45
+            },
+            {
+              "id": "restricted-zone",
+              "t": 487.28333333333336
+            },
+            {
+              "id": "research-hangar",
+              "t": 544.7166666666667
+            },
+            {
+              "id": "research",
+              "t": 600.7333333333333
+            },
+            {
+              "id": "cure",
+              "t": 601.6333333333333
+            },
+            {
+              "id": "research-exit",
+              "t": 626.9666666666667
+            },
+            {
+              "id": "delivery-corridor",
+              "t": 645.0333333333333
+            },
+            {
+              "id": "dispersal-complex",
+              "t": 966.3166666666667
+            },
+            {
+              "id": "install",
+              "t": 1057.1
+            },
+            {
+              "id": "hold",
+              "t": 1191.1333333333334
+            },
+            {
+              "id": "mega",
+              "t": 1191.15
+            },
+            {
+              "id": "release",
+              "t": 1194.3833333333334
+            },
+            {
+              "id": "epilogue",
+              "t": 1259.3833333333334
+            },
+            {
+              "id": "credits",
+              "t": 1360.3833333333334
+            }
+          ],
+          "furthestObjective": "credits",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "cureReleases": 1,
+          "regions": [
+            {
+              "id": "crash-outskirts",
+              "seconds": 61.249999999997804,
+              "travelSeconds": 40.69999999999897,
+              "combatSeconds": 20.550000000000114,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 275.1647177687576
+            },
+            {
+              "id": "residential-fringe",
+              "seconds": 112.09999999999492,
+              "travelSeconds": 67.09999999999748,
+              "combatSeconds": 44.99999999999873,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 501.4226572002501
+            },
+            {
+              "id": "industrial-area",
+              "seconds": 139.16666666666956,
+              "travelSeconds": 99.06666666666233,
+              "combatSeconds": 40.09999999999901,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 624.8745819428156
+            },
+            {
+              "id": "military-zone",
+              "seconds": 179.46666666670163,
+              "travelSeconds": 125.73333333332748,
+              "combatSeconds": 51.749999999998344,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 1.9833333333333312,
+              "metres": 855.9326064568462
+            },
+            {
+              "id": "research-campus",
+              "seconds": 180.10000000003546,
+              "travelSeconds": 90.46666666666282,
+              "combatSeconds": 35.88333333333258,
+              "interactionSeconds": 40.499999999998984,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 13.250000000000238,
+              "metres": 690.0469812004474
+            },
+            {
+              "id": "destroyed-corridor",
+              "seconds": 308.58333333338135,
+              "travelSeconds": 193.5333333333795,
+              "combatSeconds": 110.51666666666168,
+              "interactionSeconds": 0.55,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 3.983333333333324,
+              "metres": 1899.4375725146504
+            },
+            {
+              "id": "dispersal-complex",
+              "seconds": 278.71666666674184,
+              "travelSeconds": 61.99999999999776,
+              "combatSeconds": 17.116666666666976,
+              "interactionSeconds": 0.55,
+              "holdSeconds": 134.04999999999882,
+              "epilogueSeconds": 64.9999999999976,
+              "otherSeconds": 0,
+              "metres": 665.137609218796
+            }
+          ],
+          "maxConcurrentInfected": 47,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 482,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "storyOnly": true,
+        "expected": [
+          "weapon.machete",
+          "weapon.hunting-rifle",
+          "weapon.molotov",
+          "weapon.nail-gun",
+          "weapon.assault-rifle"
+        ],
+        "finds": [
+          {
+            "action": "weapon.machete",
+            "tick": 51,
+            "retained": true
+          },
+          {
+            "action": "weapon.hunting-rifle",
+            "tick": 2243,
+            "retained": true
+          },
+          {
+            "action": "weapon.molotov",
+            "tick": 9345,
+            "retained": true
+          },
+          {
+            "action": "weapon.nail-gun",
+            "tick": 12455,
+            "retained": true
+          },
+          {
+            "action": "weapon.assault-rifle",
+            "tick": 21290,
+            "retained": true
+          }
+        ]
+      },
+      "target": "ordinary complete route collects each of six physical story finds into a rack; objective text names no weapon",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-05",
+      "clause": "inventory alone cannot release enemies",
+      "value": {
+        "ticks": 240,
+        "cases": [
+          {
+            "pickup": "barn-machete",
+            "captured": true,
+            "identical": true,
+            "births": [
+              0,
+              0
+            ]
+          },
+          {
+            "pickup": "farmhouse-rifle",
+            "captured": true,
+            "identical": true,
+            "births": [
+              0,
+              0
+            ]
+          },
+          {
+            "pickup": "shed-molotov",
+            "captured": true,
+            "identical": true,
+            "births": [
+              0,
+              0
+            ]
+          },
+          {
+            "pickup": "workshop-nailgun",
+            "captured": true,
+            "identical": true,
+            "births": [
+              0,
+              0
+            ]
+          },
+          {
+            "pickup": "guard-tower-rifle",
+            "captured": true,
+            "identical": true,
+            "births": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "target": "same naturally reached pre-pickup state with and without all six story weapons: identical infected census, births and encounter ledger over 240 ticks",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at interaction boundaries",
+      "value": [
+        {
+          "label": "alpha far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "shielded riot infected far/healthy",
+          "archetype": "infected.riot",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "pursuing Mega far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "engaged arena boss far/healthy",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner far/healthy unengaged",
+          "archetype": "infected.runner",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner targeting player at 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner targeting player at 6.01 m",
+          "archetype": "infected.runner",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner player-hit at 40 m",
+          "archetype": "infected.runner",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner dead after player hit",
+          "archetype": "infected.runner",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion far/healthy unengaged",
+          "archetype": "infected.lion",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion targeting player at 6 m",
+          "archetype": "infected.lion",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion targeting player at 6.01 m",
+          "archetype": "infected.lion",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion player-hit at 40 m",
+          "archetype": "infected.lion",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion dead after player hit",
+          "archetype": "infected.lion",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla far/healthy unengaged",
+          "archetype": "infected.gorilla",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla targeting player at 6 m",
+          "archetype": "infected.gorilla",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla targeting player at 6.01 m",
+          "archetype": "infected.gorilla",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla player-hit at 40 m",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla dead after player hit",
+          "archetype": "infected.gorilla",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra far/healthy unengaged",
+          "archetype": "infected.zebra",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra targeting player at 6 m",
+          "archetype": "infected.zebra",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra targeting player at 6.01 m",
+          "archetype": "infected.zebra",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra player-hit at 40 m",
+          "archetype": "infected.zebra",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra dead after player hit",
+          "archetype": "infected.zebra",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo far/healthy unengaged",
+          "archetype": "infected.flamingo",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo targeting player at 6 m",
+          "archetype": "infected.flamingo",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo targeting player at 6.01 m",
+          "archetype": "infected.flamingo",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo player-hit at 40 m",
+          "archetype": "infected.flamingo",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo dead after player hit",
+          "archetype": "infected.flamingo",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "runner heard the player within 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "elephant waiting in its arena, player-hit",
+          "archetype": "infected.elephant",
+          "distance": 6,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "elephant engaged finale boss far/healthy",
+          "archetype": "infected.elephant",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "healthy zoo animal near",
+          "archetype": "animal.zebra",
+          "distance": 3,
+          "expected": false,
+          "eligible": false
+        }
+      ],
+      "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release predicate missing-prerequisite matrix",
+      "value": [
+        {
+          "missing": "none",
+          "released": true,
+          "expected": true,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "charge",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "installed",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "boss",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "console",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "input",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        }
+      ],
+      "target": "release only with charge3600, installed cure, dead Mega, console range and fresh E",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "charge inside/outside/dead/resume boundary and pause instruction",
+      "value": {
+        "inside": 1,
+        "outside": 1,
+        "dead": 1,
+        "resumed": 2,
+        "instruction": "Back to the dispersal console · Charge paused · 0/60 s"
+      },
+      "target": "1/1/1/2 ticks; outside instruction says Charge paused",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-14",
+      "clause": "cure native living-species recovery and healthy immunity",
+      "value": {
+        "species": [
+          {
+            "role": "runner",
+            "id": 38,
+            "reached": 24,
+            "dead": 24,
+            "hp": 100
+          },
+          {
+            "role": "dog",
+            "id": 39,
+            "reached": 48,
+            "dead": 48,
+            "hp": 100
+          },
+          {
+            "role": "alpha",
+            "id": 40,
+            "reached": 72,
+            "dead": 72,
+            "hp": 100
+          },
+          {
+            "role": "lion",
+            "id": 41,
+            "reached": 96,
+            "dead": 96,
+            "hp": 100
+          },
+          {
+            "role": "gorilla",
+            "id": 42,
+            "reached": 120,
+            "dead": 120,
+            "hp": 100
+          },
+          {
+            "role": "elephant",
+            "id": 43,
+            "reached": 144,
+            "dead": 144,
+            "hp": 100
+          },
+          {
+            "role": "zebra",
+            "id": 44,
+            "reached": 168,
+            "dead": 168,
+            "hp": 100
+          },
+          {
+            "role": "flamingo",
+            "id": 45,
+            "reached": 192,
+            "dead": 192,
+            "hp": 100
+          }
+        ],
+        "healthyChecked": 37,
+        "harmed": []
+      },
+      "target": "regular, dog, Alpha and all zoo species recover as healthy actors ≤1 tick after front; healthy/player/corgi unchanged",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "native dog speed ratio",
+      "value": 1.65,
+      "target": "1.1× run",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "actual dog hit damage/reach",
+      "value": [
+        {
+          "tick": 40,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 1
+        },
+        {
+          "tick": 199,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 2
+        },
+        {
+          "tick": 358,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 3
+        },
+        {
+          "tick": 517,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 4
+        }
+      ],
+      "target": "10 HP each; reach≤2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "actual dog telegraph duration",
+      "value": [
+        {
+          "type": "telegraph",
+          "tick": 1,
+          "sourceId": 2,
+          "attackId": 1,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 160,
+          "sourceId": 2,
+          "attackId": 2,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": -7.628862874753395e-8,
+            "z": -7.628862874753395e-8
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 319,
+          "sourceId": 2,
+          "attackId": 3,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 478,
+          "sourceId": 2,
+          "attackId": 4,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": -7.628862874753395e-8,
+            "z": -7.628862874753395e-8
+          }
+        }
+      ],
+      "target": "≥0.6 s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "dog cooldown between hit and next windup",
+      "value": [
+        2,
+        2,
+        2
+      ],
+      "target": "≥2 s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun rounds and heat per full-speed second",
+      "value": {
+        "rounds": 20,
+        "heat": 0.12500000000000017
+      },
+      "target": "20 rounds; heat+0.125",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun overheat lock",
+      "value": {
+        "heat": 1,
+        "locked": true
+      },
+      "target": "locked at100%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun unlock threshold",
+      "value": {
+        "lockedAt40": true,
+        "afterCooling": {
+          "heat": 0.39666666666666667,
+          "locked": false
+        }
+      },
+      "target": "still locked at40%, unlock below40%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-02",
+      "clause": "walk Mega immunity including direct rockets",
+      "value": {
+        "hp": 3000,
+        "remaining": 1780.0996681894294
+      },
+      "target": "zero HP loss before installation",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-12",
+      "clause": "every damaging returned weapon hurts finale Mega",
+      "value": [
+        {
+          "id": "weapon.machete",
+          "amount": 45
+        },
+        {
+          "id": "weapon.handgun",
+          "amount": 20
+        },
+        {
+          "id": "weapon.shotgun",
+          "amount": 240
+        },
+        {
+          "id": "weapon.assault-rifle",
+          "amount": 26
+        },
+        {
+          "id": "weapon.hunting-rifle",
+          "amount": 300
+        },
+        {
+          "id": "weapon.nail-gun",
+          "amount": 14
+        },
+        {
+          "id": "weapon.flamethrower",
+          "amount": 4.5
+        },
+        {
+          "id": "weapon.rocket-launcher",
+          "amount": 300
+        },
+        {
+          "id": "weapon.molotov",
+          "amount": 90
+        },
+        {
+          "id": "weapon.pipe-bomb",
+          "amount": 270
+        }
+      ],
+      "target": "positive actual production damage for every damaging hangar weapon",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-12",
+      "clause": "Mega direct rocket9/10 HP threshold",
+      "value": {
+        "hp": 3000,
+        "remaining": [
+          2700,
+          2400,
+          2100,
+          1800,
+          1500,
+          1200,
+          900,
+          600,
+          300,
+          0
+        ]
+      },
+      "target": "survives9; dies on10",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "L10/crash-site-machete": {
+      "setup": "fresh L10 unarmed start; walk east on the crash-site exit line for at most 1 s, then check no respawn",
+      "start": {
+        "x": 547,
+        "z": 0
+      },
+      "anchor": {
+        "x": 552,
+        "z": 0.5
+      },
+      "distance": 5.024937810560445,
+      "navClear": true,
+      "lineOfSight": true,
+      "initialRacks": {
+        "LEFT": [
+          "weapon.fists"
+        ],
+        "RIGHT": [
+          "weapon.kick"
+        ]
+      },
+      "initialHealth": 100,
+      "collected": {
+        "tick": 52,
+        "distance": 1.4343879757815758
+      },
+      "collectionCount": 1,
+      "healthAfter": 100,
+      "found": true,
+      "weapons": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.machete"
+      ],
+      "pickupCopies": 0,
+      "authoredMacheteCount": 1
+    },
+    "L10/inventory-only-opening": {
+      "ticks": 240,
+      "runs": [
+        {
+          "added": [],
+          "spawned": {
+            "crash-bend:infected.runner:0:0": 103,
+            "crash-bend:infected.runner:1:0": 104,
+            "crash-bend:infected.runner:2:0": 105
+          }
+        },
+        {
+          "added": [
+            "weapon.machete",
+            "weapon.hunting-rifle",
+            "weapon.molotov",
+            "weapon.nail-gun",
+            "weapon.assault-rifle"
+          ],
+          "spawned": {
+            "crash-bend:infected.runner:0:0": 103,
+            "crash-bend:infected.runner:1:0": 104,
+            "crash-bend:infected.runner:2:0": 105
+          }
+        }
+      ],
+      "identical": true
+    },
+    "L10/inventory-only-locations": {
+      "ticks": 240,
+      "locationChecks": [
+        {
+          "anchor": "crash-machete",
+          "births": [
+            2,
+            2
+          ],
+          "identical": true
+        },
+        {
+          "anchor": "farmhouse-rifle",
+          "births": [
+            2,
+            2
+          ],
+          "identical": true
+        },
+        {
+          "anchor": "shed-molotov",
+          "births": [
+            0,
+            0
+          ],
+          "identical": true
+        },
+        {
+          "anchor": "workshop-nailgun",
+          "births": [
+            1,
+            1
+          ],
+          "identical": true
+        },
+        {
+          "anchor": "guard-tower-rifle",
+          "births": [
+            2,
+            2
+          ],
+          "identical": true
+        }
+      ]
+    },
+    "L10/story-pickup-route": {
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1259.3833333333334,
+        "deaths": 3,
+        "kills": 23,
+        "damageTaken": 683.185999999976,
+        "failures": {
+          "player-died": 3
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 23.966666666666665
+          },
+          {
+            "id": "farmstead",
+            "t": 316.9
+          },
+          {
+            "id": "farmstead",
+            "t": 332.45
+          },
+          {
+            "id": "restricted-zone",
+            "t": 487.28333333333336
+          },
+          {
+            "id": "research-hangar",
+            "t": 544.7166666666667
+          },
+          {
+            "id": "research",
+            "t": 600.7333333333333
+          },
+          {
+            "id": "cure",
+            "t": 601.6333333333333
+          },
+          {
+            "id": "research-exit",
+            "t": 626.9666666666667
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 645.0333333333333
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 966.3166666666667
+          },
+          {
+            "id": "install",
+            "t": 1057.1
+          },
+          {
+            "id": "hold",
+            "t": 1191.1333333333334
+          },
+          {
+            "id": "mega",
+            "t": 1191.15
+          },
+          {
+            "id": "release",
+            "t": 1194.3833333333334
+          },
+          {
+            "id": "epilogue",
+            "t": 1259.3833333333334
+          },
+          {
+            "id": "credits",
+            "t": 1360.3833333333334
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 61.249999999997804,
+            "travelSeconds": 40.69999999999897,
+            "combatSeconds": 20.550000000000114,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 275.1647177687576
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 112.09999999999492,
+            "travelSeconds": 67.09999999999748,
+            "combatSeconds": 44.99999999999873,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 501.4226572002501
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 139.16666666666956,
+            "travelSeconds": 99.06666666666233,
+            "combatSeconds": 40.09999999999901,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 624.8745819428156
+          },
+          {
+            "id": "military-zone",
+            "seconds": 179.46666666670163,
+            "travelSeconds": 125.73333333332748,
+            "combatSeconds": 51.749999999998344,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 855.9326064568462
+          },
+          {
+            "id": "research-campus",
+            "seconds": 180.10000000003546,
+            "travelSeconds": 90.46666666666282,
+            "combatSeconds": 35.88333333333258,
+            "interactionSeconds": 40.499999999998984,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.250000000000238,
+            "metres": 690.0469812004474
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 308.58333333338135,
+            "travelSeconds": 193.5333333333795,
+            "combatSeconds": 110.51666666666168,
+            "interactionSeconds": 0.55,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 3.983333333333324,
+            "metres": 1899.4375725146504
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 278.71666666674184,
+            "travelSeconds": 61.99999999999776,
+            "combatSeconds": 17.116666666666976,
+            "interactionSeconds": 0.55,
+            "holdSeconds": 134.04999999999882,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 665.137609218796
+          }
+        ],
+        "maxConcurrentInfected": 47,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 482,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "storyOnly": true,
+      "expected": [
+        "weapon.machete",
+        "weapon.hunting-rifle",
+        "weapon.molotov",
+        "weapon.nail-gun",
+        "weapon.assault-rifle"
+      ],
+      "finds": [
+        {
+          "action": "weapon.machete",
+          "tick": 51,
+          "retained": true
+        },
+        {
+          "action": "weapon.hunting-rifle",
+          "tick": 2243,
+          "retained": true
+        },
+        {
+          "action": "weapon.molotov",
+          "tick": 9345,
+          "retained": true
+        },
+        {
+          "action": "weapon.nail-gun",
+          "tick": 12455,
+          "retained": true
+        },
+        {
+          "action": "weapon.assault-rifle",
+          "tick": 21290,
+          "retained": true
+        }
+      ]
+    },
+    "L10/inventory-only-natural-route": {
+      "ticks": 240,
+      "cases": [
+        {
+          "pickup": "barn-machete",
+          "captured": true,
+          "identical": true,
+          "births": [
+            0,
+            0
+          ]
+        },
+        {
+          "pickup": "farmhouse-rifle",
+          "captured": true,
+          "identical": true,
+          "births": [
+            0,
+            0
+          ]
+        },
+        {
+          "pickup": "shed-molotov",
+          "captured": true,
+          "identical": true,
+          "births": [
+            0,
+            0
+          ]
+        },
+        {
+          "pickup": "workshop-nailgun",
+          "captured": true,
+          "identical": true,
+          "births": [
+            0,
+            0
+          ]
+        },
+        {
+          "pickup": "guard-tower-rifle",
+          "captured": true,
+          "identical": true,
+          "births": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  }
+}

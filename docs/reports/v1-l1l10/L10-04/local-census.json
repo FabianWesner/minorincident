@@ -1,0 +1,449 @@
+{
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "2609b1db4c786984644c9307b2b3cf4b349bf7d7",
+  "toolSha256": "9b4fdb2891c5f59a19808de6e7cdb26353b02218a3faa89fe8f512e6261bf852",
+  "method": "Read-only census every 30 ticks on native complete-input route before cure installation; count admitted living ordinary infected in 12 m and 20 m circles around courier, moving means >=0.05 m since prior half-second sample. Excludes hidden, pending, dead and pursuing Mega; not a physical player or visual group partition. Final hash equals previous independent canonical control; intervening main change affects L9 only.",
+  "rows": [
+    {
+      "tier": "high",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1414.3666666666666,
+        "deaths": 4,
+        "kills": 24,
+        "damageTaken": 995.9596666666266,
+        "failures": {
+          "player-died": 4
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 23.966666666666665
+          },
+          {
+            "id": "farmstead",
+            "t": 414.8
+          },
+          {
+            "id": "farmstead",
+            "t": 422.8
+          },
+          {
+            "id": "restricted-zone",
+            "t": 579.6333333333333
+          },
+          {
+            "id": "research-hangar",
+            "t": 637.15
+          },
+          {
+            "id": "research",
+            "t": 693.1666666666666
+          },
+          {
+            "id": "cure",
+            "t": 694.0666666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 719.4666666666667
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 737.6166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 1001.6
+          },
+          {
+            "id": "install",
+            "t": 1091.55
+          },
+          {
+            "id": "hold",
+            "t": 1205.1
+          },
+          {
+            "id": "mega",
+            "t": 1347.4
+          },
+          {
+            "id": "release",
+            "t": 1349.3666666666666
+          },
+          {
+            "id": "epilogue",
+            "t": 1414.3666666666666
+          },
+          {
+            "id": "credits",
+            "t": 1515.3666666666666
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 61.249999999997804,
+            "travelSeconds": 39.09999999999906,
+            "combatSeconds": 22.150000000000023,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 275.1647177687576
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 112.73333333332822,
+            "travelSeconds": 63.94999999999765,
+            "combatSeconds": 48.783333333331846,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 503.9634568106399
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 236.43333333341363,
+            "travelSeconds": 149.45000000001107,
+            "combatSeconds": 85.01666666666313,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9666666666666646,
+            "metres": 1464.3826092252993
+          },
+          {
+            "id": "military-zone",
+            "seconds": 173.9166666666972,
+            "travelSeconds": 113.68333333332816,
+            "combatSeconds": 58.249999999997975,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 793.2023808363483
+          },
+          {
+            "id": "research-campus",
+            "seconds": 184.5666666667057,
+            "travelSeconds": 99.033333333329,
+            "combatSeconds": 31.69999999999948,
+            "interactionSeconds": 40.33333333333233,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.50000000000025,
+            "metres": 722.2082016199942
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 247.0833333334221,
+            "travelSeconds": 129.0833333333282,
+            "combatSeconds": 115.4166666666614,
+            "interactionSeconds": 0.5833333333333335,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9999999999999978,
+            "metres": 2102.8785641670706
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 398.3833333332997,
+            "travelSeconds": 61.26666666666447,
+            "combatSeconds": 15.716666666667027,
+            "interactionSeconds": 0.55,
+            "holdSeconds": 255.85000000009575,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 1622.659459180511
+          }
+        ],
+        "maxConcurrentInfected": 70,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 722,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "f888020e",
+      "controlIdentical": true,
+      "stats": {
+        "n12": {
+          "samples": 2183,
+          "zero": 1588,
+          "oneToSeven": 492,
+          "eightToFifteen": 101,
+          "aboveFifteen": 2,
+          "median": 0,
+          "p95": 7,
+          "max": 17
+        },
+        "n20": {
+          "samples": 2183,
+          "zero": 1258,
+          "oneToSeven": 707,
+          "eightToFifteen": 205,
+          "aboveFifteen": 13,
+          "median": 0,
+          "p95": 10,
+          "max": 21
+        },
+        "moving12": {
+          "samples": 2183,
+          "zero": 1593,
+          "oneToSeven": 488,
+          "eightToFifteen": 101,
+          "aboveFifteen": 1,
+          "median": 0,
+          "p95": 7,
+          "max": 16
+        },
+        "moving20": {
+          "samples": 2183,
+          "zero": 1276,
+          "oneToSeven": 696,
+          "eightToFifteen": 206,
+          "aboveFifteen": 5,
+          "median": 0,
+          "p95": 10,
+          "max": 16
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1259.3833333333334,
+        "deaths": 3,
+        "kills": 23,
+        "damageTaken": 683.185999999976,
+        "failures": {
+          "player-died": 3
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 23.966666666666665
+          },
+          {
+            "id": "farmstead",
+            "t": 316.9
+          },
+          {
+            "id": "farmstead",
+            "t": 332.45
+          },
+          {
+            "id": "restricted-zone",
+            "t": 487.28333333333336
+          },
+          {
+            "id": "research-hangar",
+            "t": 544.7166666666667
+          },
+          {
+            "id": "research",
+            "t": 600.7333333333333
+          },
+          {
+            "id": "cure",
+            "t": 601.6333333333333
+          },
+          {
+            "id": "research-exit",
+            "t": 626.9666666666667
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 645.0333333333333
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 966.3166666666667
+          },
+          {
+            "id": "install",
+            "t": 1057.1
+          },
+          {
+            "id": "hold",
+            "t": 1191.1333333333334
+          },
+          {
+            "id": "mega",
+            "t": 1191.15
+          },
+          {
+            "id": "release",
+            "t": 1194.3833333333334
+          },
+          {
+            "id": "epilogue",
+            "t": 1259.3833333333334
+          },
+          {
+            "id": "credits",
+            "t": 1360.3833333333334
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 61.249999999997804,
+            "travelSeconds": 40.69999999999897,
+            "combatSeconds": 20.550000000000114,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 275.1647177687576
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 112.09999999999492,
+            "travelSeconds": 67.09999999999748,
+            "combatSeconds": 44.99999999999873,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 501.4226572002501
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 139.16666666666956,
+            "travelSeconds": 99.06666666666233,
+            "combatSeconds": 40.09999999999901,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 624.8745819428156
+          },
+          {
+            "id": "military-zone",
+            "seconds": 179.46666666670163,
+            "travelSeconds": 125.73333333332748,
+            "combatSeconds": 51.749999999998344,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 855.9326064568462
+          },
+          {
+            "id": "research-campus",
+            "seconds": 180.10000000003546,
+            "travelSeconds": 90.46666666666282,
+            "combatSeconds": 35.88333333333258,
+            "interactionSeconds": 40.499999999998984,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.250000000000238,
+            "metres": 690.0469812004474
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 308.58333333338135,
+            "travelSeconds": 193.5333333333795,
+            "combatSeconds": 110.51666666666168,
+            "interactionSeconds": 0.55,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 3.983333333333324,
+            "metres": 1899.4375725146504
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 278.71666666674184,
+            "travelSeconds": 61.99999999999776,
+            "combatSeconds": 17.116666666666976,
+            "interactionSeconds": 0.55,
+            "holdSeconds": 134.04999999999882,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 665.137609218796
+          }
+        ],
+        "maxConcurrentInfected": 47,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 482,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "057fea60",
+      "controlIdentical": true,
+      "stats": {
+        "n12": {
+          "samples": 2114,
+          "zero": 1428,
+          "oneToSeven": 643,
+          "eightToFifteen": 43,
+          "aboveFifteen": 0,
+          "median": 0,
+          "p95": 5,
+          "max": 11
+        },
+        "n20": {
+          "samples": 2114,
+          "zero": 1055,
+          "oneToSeven": 833,
+          "eightToFifteen": 226,
+          "aboveFifteen": 0,
+          "median": 1,
+          "p95": 10,
+          "max": 15
+        },
+        "moving12": {
+          "samples": 2114,
+          "zero": 1443,
+          "oneToSeven": 636,
+          "eightToFifteen": 35,
+          "aboveFifteen": 0,
+          "median": 0,
+          "p95": 5,
+          "max": 11
+        },
+        "moving20": {
+          "samples": 2114,
+          "zero": 1077,
+          "oneToSeven": 853,
+          "eightToFifteen": 184,
+          "aboveFifteen": 0,
+          "median": 0,
+          "p95": 9,
+          "max": 12
+        }
+      }
+    }
+  ],
+  "fullReceipt": "test-results/v1-l1l10/L10-04-local-census.json.gz",
+  "fullReceiptSha256": "586733e1329cb2f68daa33b9c6196b34b55e563f3e319d8cdd1c2ad70bce6c8f"
+}

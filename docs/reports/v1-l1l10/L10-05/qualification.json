@@ -1,0 +1,125 @@
+{
+  "head": "233eab905766440b4092ce718aa2191370de2b3c",
+  "summaries": [
+    {
+      "tier": "high",
+      "machete": {
+        "start": {
+          "x": 547,
+          "z": 0
+        },
+        "anchor": {
+          "x": 552,
+          "z": 0.5
+        },
+        "distance": 5.024937810560445,
+        "initialRacks": {
+          "LEFT": [
+            "weapon.fists"
+          ],
+          "RIGHT": [
+            "weapon.kick"
+          ]
+        },
+        "collected": {
+          "tick": 52,
+          "distance": 1.4343879757815758
+        }
+      },
+      "route": {
+        "completed": true,
+        "storyOnly": true,
+        "finds": [
+          {
+            "action": "weapon.machete",
+            "tick": 51,
+            "retained": true
+          },
+          {
+            "action": "weapon.hunting-rifle",
+            "tick": 2243,
+            "retained": true
+          },
+          {
+            "action": "weapon.molotov",
+            "tick": 9346,
+            "retained": true
+          },
+          {
+            "action": "weapon.nail-gun",
+            "tick": 12468,
+            "retained": true
+          },
+          {
+            "action": "weapon.assault-rifle",
+            "tick": 26711,
+            "retained": true
+          }
+        ]
+      },
+      "fixtureSha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
+      "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json"
+    },
+    {
+      "tier": "low",
+      "machete": {
+        "start": {
+          "x": 547,
+          "z": 0
+        },
+        "anchor": {
+          "x": 552,
+          "z": 0.5
+        },
+        "distance": 5.024937810560445,
+        "initialRacks": {
+          "LEFT": [
+            "weapon.fists"
+          ],
+          "RIGHT": [
+            "weapon.kick"
+          ]
+        },
+        "collected": {
+          "tick": 52,
+          "distance": 1.4343879757815758
+        }
+      },
+      "route": {
+        "completed": true,
+        "storyOnly": true,
+        "finds": [
+          {
+            "action": "weapon.machete",
+            "tick": 51,
+            "retained": true
+          },
+          {
+            "action": "weapon.hunting-rifle",
+            "tick": 2243,
+            "retained": true
+          },
+          {
+            "action": "weapon.molotov",
+            "tick": 9345,
+            "retained": true
+          },
+          {
+            "action": "weapon.nail-gun",
+            "tick": 12455,
+            "retained": true
+          },
+          {
+            "action": "weapon.assault-rifle",
+            "tick": 21290,
+            "retained": true
+          }
+        ]
+      },
+      "fixtureSha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
+      "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json"
+    }
+  ],
+  "conflict": "Acceptance row requires checkpoint flashbang; f8cfdad7 (2026-11-20) deliberately removes it, and docs/reports/s208-noflashbang/README.md records removal. Current authored pickup list contains five actions and no flashbang. The underlying PO instruction has not been located, so precedence is unresolved.",
+  "checkerCaveat": "The crash-site fixture fails solely because its fists-only test rejects kick, while current L9 handover fixture explicitly expects fists and kick. Its six-pickup expectation is generated from a five-item list and therefore cannot detect a missing sixth item."
+}
