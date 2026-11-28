@@ -898,7 +898,13 @@ export class GameView implements Lifecycle {
       }
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
-      if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
+      if (this.world.scenario === 'L3') {
+        const yardAttack = l3AttackView(this.world);
+        // Keep the courier and east gate together in the yard fight. Pull the
+        // frame partway toward the gate rather than widening beyond the row's
+        // 1.5x attack view or adding a directional player hint.
+        this.view.pull(rescue ? 202 : -130, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : yardAttack ? .55 : 0, rescue ? 1.6 : undefined);
+      }
       // PO 2026-11-25 (gorilla below the screen edge, "I cannot move around and zoom freely here"): no arena-centre pull in L8.
       // The camera follows the courier with free zoom; a pull made the view 'scripted' and locked the zoom.
       if (this.world.scenario === 'L8') this.view.pull(0, 0, 0, 0);
@@ -1312,7 +1318,8 @@ export class GameView implements Lifecycle {
     // L4's bulky riot/firefighter bodies overlap her well before five centres enter the usual 3 m band.
     // Tall static props already clear their foreground through the placement lens; proximity to that cut is not x-ray cover.
     const courier = this.world.entities.get(1);
-    const behindHull = !!current && !!(this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
+    const l2Dismount = this.world.missions?.state.l2?.phase === 'arrived' && courier?.survivor?.scriptedClip === 'dismount';
+    const behindHull = !!current && !!(l2Dismount || this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
     courierXray.value = behindHull ? 1 : 0;
     this.courierForeground = !!current && courierForegroundWanted(bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
     // The seated copy shares the courier's prewarmed depth slice: retain her
