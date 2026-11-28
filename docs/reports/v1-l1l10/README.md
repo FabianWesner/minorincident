@@ -357,3 +357,11 @@ High credits show the title, readable initial attribution lines, Pause and Skip 
 | L10-02 | stale PASS → fresh FAIL | One overhead HP bar in 2 / 2 inspected zoom frames while cure-installed is false. Native first sighting 71.8 / 69.53 s; earlier direct-hit fixture leaves 1780.10 / 1780.10 HP of 3000. | [Review](../../qa/reviews/L10-02.json), [bar frames and native snapshot](L10-02/bar-summary.json), [earlier qualification](L10-02/qualification.json). | Product: reconcile no-bar row with G-24's explicit pursuit-bar requirement. |
 
 **Acceptance mismatch and repro:** Reach the dispersal approach before installing the cure and look at the pursuing Mega: an overhead red health bar is visible above it on both tiers at zoom 1 and 1.5. This obeys G-24 but conflicts with the literal no-HP-bar wording in this row. There is no full-width finale boss bar in these frames. The natural native snapshots matched prior complete-route final hashes and were normally resumed with player protection; no actor was relocated by the observer. The broad route encounter count and terrain-gap evasion still require physical qualification. No game, spec or checker change.
+
+### L10-12 pre-finale health-bar verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-12 | stale PASS → fresh FAIL | One overhead HP bar in 2 / 2 inspected zoom frames before cure installation. Controlled finale diagnostics above remain separate and incomplete. | [Review](../../qa/reviews/L10-12.json), [same both-tier bar evidence](L10-02/bar-summary.json). | Product: reconcile finale-only row with G-24's explicit pursuit-bar requirement. |
+
+**Acceptance mismatch and repro:** Before installing the cure, encounter the pursuing Mega on the dispersal approach: its red overhead HP bar is already present. G-24 expressly requires this presentation, while L10-12 says the Mega health bar appears only for the finale. This is an explicitly qualified criterion conflict. The wide finale boss bar is a separate HUD element and is absent in these pre-finale frames. Mounted shield, stairs, gun and survivability are not established by this counterexample; their partial diagnostic is above. No game, spec or checker change.
