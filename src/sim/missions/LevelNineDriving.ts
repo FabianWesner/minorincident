@@ -69,7 +69,7 @@ export class LevelNineDriving {
   private get car() { return this.w.vehicles!.cars.get(this.mission.l9!.state.carId)!; }
   private signal(name: string, actorId?: number) { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l9.${name}`, ...(actorId === undefined ? {} : { actorId }) }); }
   private line(id: string, delay = 0): void { this.state.lines.push({ id, at: this.w.tick + delay }); }
-  private checkpoint(id: string): void { if (this.w.entities.get(1)!.health.current > 0 && this.w.vehicles!.active === this.mission.l9!.state.carId && !this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id); } }
+  private checkpoint(id: string, anchor?: { x: number; z: number }): void { if (this.w.entities.get(1)!.health.current > 0 && this.w.vehicles!.active === this.mission.l9!.state.carId && !this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id, anchor); } }
   prepare(): void {
     const s = this.state, w = this.w;
     w.npcs!.setAmbient(0); w.infected!.director.levelCap = 200; w.infected!.director.ambientTarget = 0; w.infected!.director.strict = true;
@@ -819,7 +819,9 @@ export class LevelNineDriving {
     }
     const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
     if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
-      s.evacuationDone = true; s.boostUntil = w.tick + 420; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
+      s.evacuationDone = true; s.boostUntil = w.tick + 420; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete');
+      // A bridge retry restarts on the authored bridge-start pose (safeBridgeStart), so the checkpoint records that pose (G-21).
+      this.checkpoint('bridge', { x: cfg.bridgeStart.x, z: cfg.bridgeStart.z });
     }
   }
   /** r43-l9loop: put survivors that were already at the trucks before a reload back there (hidden in the truck, out of the APC). */
