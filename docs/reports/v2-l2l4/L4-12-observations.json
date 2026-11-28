@@ -1,0 +1,71 @@
+{
+  "trace": "docs/reports/v2-l2l4/L4-12-native-mix.json.gz",
+  "traceSha256": "fb61e249a0eb6a86e3644c857805cd486801db65ebaddd0b44c5846224ef4bb9",
+  "rows": [
+    {
+      "tier": "high",
+      "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+      "revision": "71711f8f080e2451e4cbeeac1a02ee8b4f8ba631",
+      "mixChecks": 10692,
+      "changedSamples": 1172,
+      "minimumLooks": 5,
+      "worstTick": 5799,
+      "worstModels": [
+        "infected.riot",
+        "infected.butcher",
+        "infected.hazmat",
+        "infected.brute",
+        "infected.armored"
+      ],
+      "fullTraceSha256": "bd7bbc76c41f17606db17d05108d81d730b63868241892c0c4864d7afdfe1e0c"
+    },
+    {
+      "tier": "low",
+      "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+      "revision": "71711f8f080e2451e4cbeeac1a02ee8b4f8ba631",
+      "mixChecks": 10692,
+      "changedSamples": 1289,
+      "minimumLooks": 5,
+      "worstTick": 5584,
+      "worstModels": [
+        "infected.riot",
+        "infected.butcher",
+        "infected.armored",
+        "infected.hazmat",
+        "infected.firefighter"
+      ],
+      "fullTraceSha256": "f03ce540bcfa029ee23b3b9e2ddf65a08c8581bc5312af2d011191c300090140"
+    }
+  ],
+  "frameFiles": [
+    {
+      "tier": "high",
+      "routeZoom": 1.5,
+      "path": "test-results/playtest/v2-l4-opening-high-z15/captures/campaign-L4-t2723.jpg",
+      "sha256": "ec1664cb7e196f0e8a5522e70432282c49b008990e0b634b41df70eb9af02817",
+      "observation": "Wide plaza with soldiers, mixed infected near generator, corpses and blood; courier is partly obscured."
+    },
+    {
+      "tier": "high",
+      "routeZoom": 1,
+      "path": "test-results/playtest/v2-l4-opening-high-z1/captures/campaign-L4-t2720.jpg",
+      "sha256": "d4c09620dd3ce055d573effbf2e7c696522b7cd7e55f0b87cdcd7a75e12d219b",
+      "observation": "Close fight with armed soldiers, a large pale infected and other figures; many are partly occluded."
+    },
+    {
+      "tier": "low",
+      "routeZoom": 1.5,
+      "path": "test-results/playtest/v2-l4-opening-low-z15/captures/campaign-L4-t2715.jpg",
+      "sha256": "6a7b2130356eabf1c3abc0a93f3bbbda307ab3d6e483f29ec662dab4c9114e16",
+      "observation": "Wide plaza with soldiers, large pale infected, a small corpse pile and blood; HUD covers the center."
+    },
+    {
+      "tier": "low",
+      "routeZoom": 1,
+      "path": "test-results/playtest/v2-l4-opening-low-z1/captures/campaign-L4-t2720.jpg",
+      "sha256": "3018c85c7794b624fd145d044349458d77d9ac5ac071bcc5d2e32cb0ee0284fa",
+      "observation": "Close encounter with a shielded riot infected, pale large infected and soldiers; large foreground occlusion."
+    }
+  ],
+  "limitations": "Native roster model IDs are not proof of distinct rendered appearance; nearest-20 sampling is one seed and policy, not every possible group of 20. Physical frames are isolated opening images, not continuous census or same-frame actual zoom proofs."
+}
