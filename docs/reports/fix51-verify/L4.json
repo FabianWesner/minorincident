@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:51:15.265Z",
+  "generatedAt": "2026-11-28T00:53:22.558Z",
   "policies": [
     {
       "tier": "low",
@@ -62,6 +62,20 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json"
     }
   ],
   "globals": [
@@ -5210,15 +5224,17 @@
     },
     {
       "id": "L4-03",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS) Manual review PASS (Codex/v2-l2l4): Physical MG pickup, gun and first-turn events, active positive-gain klaxon graph, and 36 living infected admissions share tick: high zoom 1.5/1 = 2091/2239; low = 2173/2235. Four voices per cell; 28 delayed/missing controls reject PASS.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/complete war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary war starts on MG pickup tick: 0 (target 0 ≤ value ≤ 0; PASS); low/real-input-webgl2 actual MG pickup klaxon and attack start share simulation tick: {\"cells\":[{\"zoom\":1.5,\"tick\":2173,\"gunTicks\":[2173],\"turnTicks\":[2173],\"voices\":4,\"admissions\":36,\"controls\":[{\"name\":\"l4.gun delayed\",\"status\":\"FAIL\"},{\"name\":\"l4.firstTurn delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-klaxon-start delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-l4-admissions delayed\",\"status\":\"FAIL\"},{\"name\":\"observed tick delayed\",\"status\":\"FAIL\"},{\"name\":\"missing voices\",\"status\":\"FAIL\"… (full values in JSON) (target actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick; PASS); high/real-input-webgl2 actual MG pickup klaxon and attack start share simulation tick: {\"cells\":[{\"zoom\":1.5,\"tick\":2091,\"gunTicks\":[2091],\"turnTicks\":[2091],\"voices\":4,\"admissions\":36,\"controls\":[{\"name\":\"l4.gun delayed\",\"status\":\"FAIL\"},{\"name\":\"l4.firstTurn delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-klaxon-start delayed\",\"status\":\"FAIL\"},{\"name\":\"actual-l4-admissions delayed\",\"status\":\"FAIL\"},{\"name\":\"observed tick delayed\",\"status\":\"FAIL\"},{\"name\":\"missing voices\",\"status\":\"FAIL\"… (full values in JSON) (target actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick; PASS) Manual review PASS (Codex/v2-l2l4): Physical MG pickup, gun and first-turn events, active positive-gain klaxon graph, and 36 living infected admissions share tick: high zoom 1.5/1 = 2091/2239; low = 2173/2235. Four voices per cell; 28 delayed/missing controls reject PASS.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L4-high-complete.json",
         "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+        "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+        "docs/reports/fix51-verify/receipts/L4-high-browser.json",
         "docs/reports/v2-l2l4/L4-03-opening.json"
       ],
       "expected": "Alarm (klaxon) and attack start **on the MG pickup tick**. PO: \"start the alam and attack at the moment when I picked up the MP\".",
@@ -5266,6 +5282,206 @@
           "value": 0,
           "target": "0 ≤ value ≤ 0",
           "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+        },
+        {
+          "id": "L4-03",
+          "clause": "actual MG pickup klaxon and attack start share simulation tick",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "cells": [
+              {
+                "zoom": 1.5,
+                "tick": 2173,
+                "gunTicks": [
+                  2173
+                ],
+                "turnTicks": [
+                  2173
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              },
+              {
+                "zoom": 1,
+                "tick": 2235,
+                "gunTicks": [
+                  2235
+                ],
+                "turnTicks": [
+                  2235
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              }
+            ],
+            "proofPath": "docs/reports/v2-l2l4/L4-03-opening.json",
+            "proofSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
+          },
+          "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+          "level": "L4"
+        },
+        {
+          "id": "L4-03",
+          "clause": "actual MG pickup klaxon and attack start share simulation tick",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "cells": [
+              {
+                "zoom": 1.5,
+                "tick": 2091,
+                "gunTicks": [
+                  2091
+                ],
+                "turnTicks": [
+                  2091
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              },
+              {
+                "zoom": 1,
+                "tick": 2239,
+                "gunTicks": [
+                  2239
+                ],
+                "turnTicks": [
+                  2239
+                ],
+                "voices": 4,
+                "admissions": 36,
+                "controls": [
+                  {
+                    "name": "l4.gun delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "l4.firstTurn delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-klaxon-start delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "actual-l4-admissions delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "observed tick delayed",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing voices",
+                    "status": "FAIL"
+                  },
+                  {
+                    "name": "missing admissions",
+                    "status": "NOT CHECKED"
+                  }
+                ]
+              }
+            ],
+            "proofPath": "docs/reports/v2-l2l4/L4-03-opening.json",
+            "proofSha256": "a19e7128d735699cdb89a044d16078cc0d9efad08768508bb253eda4936e01b8"
+          },
+          "target": "actual pickup, gun/turn events, live positive-gain klaxon voices and first living admissions all share the same simulation tick",
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+          "level": "L4"
         }
       ],
       "historical": {
@@ -5276,10 +5492,7 @@
         "evidence": [],
         "method": "NEXT: Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event."
       },
-      "remaining": "NEXT: Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event.",
-      "checkKinds": [
-        "browser-input"
-      ],
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L4-03",
         "status": "PASS",
