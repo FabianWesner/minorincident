@@ -301,3 +301,11 @@ The protected physical high/low handoffs were repeated from the same naturally r
 ### L1-05 quiet admission attempt on main 233eab90
 
 An exclusive quiet-run reservation was granted, but quiet preflight remained false for approximately 120 seconds: load was 5.8–6.7 with four other active acceptance processes. The bounded attempt was cancelled and exited 75; no timing browser or measurement started. [Admission summary](L1-05/admission.json) hashes the full log. `MI_PERF_ADMISSION_TIMEOUT_SECONDS=120` did not bound the pool wrapper's admission loop in this configuration, so the attempt was explicitly cancelled; no checker change was made. The prepared adapter is retained under `test-results/v1-l1l10/L1-05-timing-adapter.ts` for a future quiet window. L1-05 remains NOT CHECKED; old timing is not current evidence.
+
+### L10-08 road framing partial on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-08 | stale PASS → still NOT CHECKED | Five progressed locations per tier, each inspected at zoom 1 and 1.5; 10 / 10 camera samples report road scale 1.3 and maximum zoom 1.5, product 1.95. | [Road summary](L10-08/road-summary.json) records hashes and paths of all 20 inspected frames and both receipts. | — |
+
+The road bridge shows verges and a cow; the farm view shows cornfields and a fire. The restricted-zone views are very dark beyond the flashlight; the low-tier fifth location shows a group of enemies and corpses. These snapshots do not establish whether all suit crowds are readable, nor whether the slam telegraph is a ground effect or the scale switches off in the finale. Native route snapshots were resumed for each view with protected player and physical KeyD; this is not a continuous physical run. The low charge snapshot was captured after a restored release and was excluded from finale evidence. Producers and native proof are retained in `test-results/v1-l1l10/L10-08-prefix/`. No game or checker change.
