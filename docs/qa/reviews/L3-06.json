@@ -14,10 +14,10 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+      "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
       "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
     }
   ],
-  "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
+  "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }

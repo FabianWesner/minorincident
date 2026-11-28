@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:08:14.161Z",
+  "generatedAt": "2026-11-28T00:18:17.362Z",
   "policies": [
     {
       "tier": "low",
@@ -6032,26 +6032,26 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-            "sha256": "105f0b04cb27abfa85b053d9e852e112f8a1c74ca1bc6b3175e468bd2c7902c2",
+            "sha256": "3ef754c4095fc207e9c95a8e6661d28bdf7380bfd06ac77c81953d9beab69ba5",
             "what": "Current low-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-            "sha256": "4c2d5fe02b152915592cb1b9b208c9ace33ca881a74aff678e5aa557487f34ed",
+            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
             "what": "Current low-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-            "sha256": "94eaf7882f627252c9381bbca92044908d57491a84e7e1798e61d2faa59f1bd4",
+            "sha256": "a1ab38b6b157c72da8572dd7c1a3fce1d66422464c3dd874bec7802978864f8d",
             "what": "Current high-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-            "sha256": "f634d21c8c87b0bd039f11ab8aa21ded6d1c7f82abb527e9fad93bf2fbda4b3d",
+            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
             "what": "Current high-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
           }
         ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6437,26 +6437,26 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-            "sha256": "4c2d5fe02b152915592cb1b9b208c9ace33ca881a74aff678e5aa557487f34ed",
+            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
             "what": "Current low-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-            "sha256": "f634d21c8c87b0bd039f11ab8aa21ded6d1c7f82abb527e9fad93bf2fbda4b3d",
+            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
             "what": "Current high-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
             "what": "Current low-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
             "what": "Current high-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
           }
         ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6877,11 +6877,11 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
             "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
           }
         ],
-        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
+        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -7221,16 +7221,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
             "what": "Current low-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
             "what": "Current high-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
           }
         ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -7327,16 +7327,16 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
             "what": "Current both-tier spawn census and sprinter fraction."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
+            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
             "what": "Current both-tier spawn census and sprinter fraction."
           }
         ],
-        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
+        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -9957,17 +9957,15 @@
     },
     {
       "id": "L3-14",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); low/stationary actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); high/complete actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); high/stationary actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS) Manual review FAIL (Codex/v2-l2l4): High seed 1 mortal native complete route: runner #1096 active in chase at x=207.811,z=-0.370 on crossing tick 13083, within 20 m of courier; remains living and active through all 301 samples to tick 13383. Target no active infected during rest. Low has zero within20m; its x>201.5 actor is not claimed inside the barrier.; High crossing 13083→done 13983; low 10338→11238, both 900 ticks.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); low/stationary actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); high/complete actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS); high/stationary actual army soldier identities: 9 (target 8 ≤ value ≤ Infinity; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/v2-l2l4/L3-14-native-rest.json.gz",
-        "tools/qa/v2-l3-compound.ts"
+        "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
       ],
       "expected": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
       "checks": [
@@ -10027,45 +10025,13 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait 15 s."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
         "clause": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**."
-      },
-      "reviewDecision": {
-        "row": "L3-14",
-        "status": "FAIL",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
-        "clauses": [
-          {
-            "clause": "No active infected in the 5 s rest",
-            "verdict": "FAIL",
-            "note": "High seed 1 mortal native complete route: runner #1096 active in chase at x=207.811,z=-0.370 on crossing tick 13083, within 20 m of courier; remains living and active through all 301 samples to tick 13383. Target no active infected during rest. Low has zero within20m; its x>201.5 actor is not claimed inside the barrier."
-          },
-          {
-            "clause": "Evacuation wait 15 s",
-            "verdict": "PASS",
-            "note": "High crossing 13083→done 13983; low 10338→11238, both 900 ticks."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/v2-l2l4/L3-14-native-rest.json.gz",
-            "sha256": "78632cc074f8a07eccb9af8a624f2d488bbe26344aff48545b9e9877f420df7f",
-            "what": "Both-tier 301-sample current-head mortal rest ledger with entity IDs, positions and AI states."
-          },
-          {
-            "file": "tools/qa/v2-l3-compound.ts",
-            "sha256": "df8f8ea65543ad1183b8bc5ce6d24c073968c7f1f86838b90966f8bd27aefdc5",
-            "what": "Read-only observer derived from existing rest probe; exact reproduction command."
-          }
-        ],
-        "notes": "Repro: node --import tsx/esm tools/qa/v2-l3-compound.ts; inspect high runner 1096 in first 301 samples. Compound vehicles, buses and ring presentation remain unverified; a single failed clause establishes FAIL.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {

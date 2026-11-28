@@ -14,25 +14,25 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "105f0b04cb27abfa85b053d9e852e112f8a1c74ca1bc6b3175e468bd2c7902c2",
+      "sha256": "3ef754c4095fc207e9c95a8e6661d28bdf7380bfd06ac77c81953d9beab69ba5",
       "what": "Current low-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-      "sha256": "4c2d5fe02b152915592cb1b9b208c9ace33ca881a74aff678e5aa557487f34ed",
+      "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
       "what": "Current low-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "94eaf7882f627252c9381bbca92044908d57491a84e7e1798e61d2faa59f1bd4",
+      "sha256": "a1ab38b6b157c72da8572dd7c1a3fce1d66422464c3dd874bec7802978864f8d",
       "what": "Current high-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-      "sha256": "f634d21c8c87b0bd039f11ab8aa21ded6d1c7f82abb527e9fad93bf2fbda4b3d",
+      "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
       "what": "Current high-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     }
   ],
-  "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+  "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }

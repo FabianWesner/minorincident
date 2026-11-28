@@ -14,15 +14,15 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
+      "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
       "what": "Current low-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
+      "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
       "what": "Current high-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
     }
   ],
-  "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+  "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }
