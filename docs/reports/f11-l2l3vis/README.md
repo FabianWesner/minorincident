@@ -23,6 +23,8 @@ Follow-up: browser access was restored and later captures are documented below. 
 
 ## Validation so far
 
+- Latest-source L2/L3 threat audit: zero level flags; the only flag is the lane-excluded `PARTIAL_LEVEL_SELECTION`. Repeated the selected scene gate after the camera and smoke changes: 2/2 pass (`inf-chase-l3@high-z0.5` WebGPU, `l3-bar-cap-horde@low-z1.5` WebGL2). Opened both generated sheets: HIGH shows the courier followed and surrounded on a street; LOW shows a group with health bars partly obscured by smoke. Neither gate is a substitute for the requested row reviews.
+
 - Latest-source L2 native recheck, source hash `808b042c3322b9f92d2219da6c83c827e41d7c8191dd257d9ce653675dfad19f`: HIGH 1 failing/15 incomplete; LOW 1 failing/13 incomplete. Both tiers' 27 fixture clauses completed with zero errors and all four checkpoint controls passed. The reported failing check remains the pre-existing L2-12 bridge attack rate. This does not establish visual L2-03.
 
 - Latest-source L3 native recheck after zoom and smoke changes, source hash `808b042c3322b9f92d2219da6c83c827e41d7c8191dd257d9ce653675dfad19f`: HIGH 1 failing/15 incomplete; LOW 2 failing/13 incomplete. Both tiers' 21 fixtures completed with zero errors and all six checkpoint controls passed. The reported failing checks remain L3-06 and L3-09; this native run does not qualify the visual rows.
