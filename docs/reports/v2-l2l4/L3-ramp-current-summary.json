@@ -1,0 +1,175 @@
+{
+  "head": "4d3932b0bd4aaa5c21cf941662a3acfcf2da479b",
+  "method": "Protected courier; native evade prefix to x135 followed by physical WASD; existing sweep-a2-ramps probe, actual zoom 0.5/1.5. Four listed original 1.5 images personally opened.",
+  "cells": [
+    {
+      "tier": "high",
+      "receipt": "test-results/v2-l3-ramp-high/receipt.json",
+      "receiptSha256": "5e29930f2f9f4551cb036198bf52af6d35959384c775e9fe10fcddba46c85742",
+      "final": {
+        "x": 216.107666015625,
+        "y": 0.7049999833106995,
+        "z": 0.11747078597545624,
+        "yaw": -0.7853981633974484
+      },
+      "errors": [],
+      "observationTicks": [
+        7580,
+        7640,
+        7700,
+        7760,
+        7820,
+        7880,
+        7940,
+        8000,
+        8060,
+        8120
+      ],
+      "stationary": [
+        {
+          "id": 358,
+          "x": 199.49672504296512,
+          "z": 7.56442949789017,
+          "y": 0.7
+        },
+        {
+          "id": 448,
+          "x": 200.4611235417596,
+          "z": 3.4940386538913537,
+          "y": 0.7
+        },
+        {
+          "id": 562,
+          "x": 199.76861369500293,
+          "z": 10.02892645205122,
+          "y": 0.7
+        },
+        {
+          "id": 612,
+          "x": 199.5520757764024,
+          "z": 6.00590731118921,
+          "y": 0.7
+        },
+        {
+          "id": 690,
+          "x": 200.17831494779924,
+          "z": 2.6190170004627693,
+          "y": 0.7
+        },
+        {
+          "id": 764,
+          "x": 201.09707657819322,
+          "z": 2.583277905870994,
+          "y": 0.7
+        },
+        {
+          "id": 820,
+          "x": 200.6497359094823,
+          "z": 9.7663994742968,
+          "y": 0.7
+        }
+      ],
+      "frames": [
+        {
+          "file": "test-results/v2-l3-ramp-high/captures/high-x139-z1.5.png",
+          "sha256": "54b12b2aa50938a8a88159ea38cc6d97d649c0854c56838c648c4a1d119d472a",
+          "tick": 6267,
+          "actualZoom": 1.5,
+          "observation": "Courier on approach with nearby infected and smoke; ramp deck and barrier in frame."
+        },
+        {
+          "file": "test-results/v2-l3-ramp-high/captures/high-settled-10s-z1.5.png",
+          "sha256": "463e04f4f92a2ac193bb9468d77f44d49b93a6324d5eb6f1386e97e826aaf1d3",
+          "tick": 8120,
+          "actualZoom": 1,
+          "observation": "Wide ramp and checkpoint view; infected group visible on ground beside ramp; ring visible in compound."
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "receipt": "test-results/v2-l3-ramp-low/receipt.json",
+      "receiptSha256": "8a3761a24f2771c5321499a7dceea5120a954d427d27a896482804b69224a5a9",
+      "final": {
+        "x": 216.13279724121094,
+        "y": 0.7049999833106995,
+        "z": 0.030359119176864624,
+        "yaw": -0.8377580409572781
+      },
+      "errors": [],
+      "observationTicks": [
+        7860,
+        7920,
+        7980,
+        8040,
+        8100,
+        8160,
+        8220,
+        8280,
+        8340,
+        8400
+      ],
+      "stationary": [
+        {
+          "id": 585,
+          "x": 200.8219174764872,
+          "z": 3.662354711968508,
+          "y": 0.7
+        },
+        {
+          "id": 657,
+          "x": 201.65888760764403,
+          "z": 3.2828224458498547,
+          "y": 0.7
+        },
+        {
+          "id": 685,
+          "x": 199.62452096589107,
+          "z": 3.682917032519877,
+          "y": 0.7
+        },
+        {
+          "id": 719,
+          "x": 199.91798700145256,
+          "z": 4.55421285513891,
+          "y": 0.7
+        },
+        {
+          "id": 748,
+          "x": 200.2577908299804,
+          "z": 2.9362938012938646,
+          "y": 0.7
+        },
+        {
+          "id": 802,
+          "x": 201.0321037208979,
+          "z": 4.557468207701013,
+          "y": 0.7
+        },
+        {
+          "id": 878,
+          "x": 201.0509384440132,
+          "z": 2.4718007255444525,
+          "y": 0.7
+        }
+      ],
+      "frames": [
+        {
+          "file": "test-results/v2-l3-ramp-low/captures/low-x139-z1.5.png",
+          "sha256": "4c66d435a1cd00d310609b0bc12e42fcce0478a943d2cdabdca33169fd7436c1",
+          "tick": 6571,
+          "actualZoom": 1.5,
+          "observation": "Courier on approach with nearby infected and smoke; ramp deck and barrier in frame."
+        },
+        {
+          "file": "test-results/v2-l3-ramp-low/captures/low-settled-10s-z1.5.png",
+          "sha256": "2601f430ee007a71617490a48143b62f2ef2a444a128b8c5de0fe15ee9a310ff",
+          "tick": 8400,
+          "actualZoom": 1,
+          "observation": "Wide ramp and checkpoint view; infected group visible on ground beside ramp; ring visible in compound."
+        }
+      ]
+    }
+  ],
+  "limitations": "Ground-level stationary groups may reflect staging or navigation; positions alone do not prove trapped between barrier rows. Full frame set and camera zoom 1 remain unreviewed."
+}
