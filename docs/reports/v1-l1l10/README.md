@@ -389,3 +389,11 @@ Both bench routes used physical WASD on foot carrying the parcel, with read-only
 | L1-12 | stale PASS → still NOT CHECKED | Ten street-side legs per tier, maximum endpoint error 0.113 / 0.113 m and maximum stopped 0 / 0 ticks. Twenty endpoint frames per tier inspected at zoom 1 and 1.5. | [Street summary](L1-12/street-summary.json); [bench summary](L1-12/bench-summary.json). | — |
 
 The physical on-foot route uses a native parcel prefix and read-only coordinate assistance. Frames show the courier beside trash bags, pallets and fences and then near the Annex; the courier is visible in the sampled endpoint images. Combined with the separate seven-leg bench test, these measurements cover the named prop types on a reachable route. They do not establish continuous visibility between endpoint captures or every possible alley/fence angle, so the absolute camera-side “never hides” clause remains open. The previously sealed rear lane is excluded as documented above. No game or checker change.
+
+### L1-12 moving camera review and verdict on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-12 | stale PASS → fresh PASS, sampled | Seven bench plus ten reachable street/alley legs each tier; endpoint error ≤0.113 m, longest stop 1 tick. Inspected 86 / 86 paired-zoom moving stills, sampled every 30 ticks through four fence-lined legs, plus the earlier endpoint frames. | [Review](../../qa/reviews/L1-12.json), [motion frame hashes and receipt](L1-12/motion-summary.json), [street](L1-12/street-summary.json), [bench](L1-12/bench-summary.json). | — |
+
+On the tested physical on-foot route, the courier passes the named trash-bag, pallet and bench areas and remains visible in the sampled fence-line views. In a full-size high-tier roof-crossing frame, the foreground cutout exposes the courier. This PASS is qualified to the selected legal route and 2 Hz capture sampling; it does not prove every intervening frame or every possible camera angle. Native input is used only for the parcel prefix, and coordinate guidance is disclosed. The old rear lane was intentionally sealed and is excluded as described above. No game or checker change.
