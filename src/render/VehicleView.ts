@@ -368,15 +368,21 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
     const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
     const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
-    if (l2?.truckId !== id && transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
+    if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: l2?.truckId === id ? 'crewSeat0' : 'driverSeat', driver: l2?.truckId !== id });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
     for (const [i, passenger] of (car.entity.vehicle!.passengers ?? []).slice(0, car.physics.def.transport?.seats.length ?? 0).entries()) {
       if (this.world.entities.get(passenger.id)?.companion) continue; // Retained in the closed troop bay.
       if (passenger.phase !== 'exit' || this.world.tick - passenger.started < 12) wanted.push({ actorId: passenger.id, seat: `passenger${passenger.seat ?? i}`, driver: false });
     }
-    // Engine 3's riders are enclosed by its authored body. The generic seated
-    // rigs extend through the cab windows, so show the world actors only while
-    // they enter or leave and keep them hidden while aboard.
+    // The scripted rescue ride owns its passengers outside the vehicle roster.
+    // Add their seated copies explicitly while the world actors are hidden.
+    if (l2?.truckId === id) {
+      if (l2.seated && this.world.entities.get(1)?.hidden) wanted.push({ actorId: 1, seat: 'crewSeat0', driver: false });
+      for (const [i, actorId] of l2.crewIds.entries()) {
+        const actor = this.world.entities.get(actorId);
+        if (actor?.hidden && actor.passengerOf === id) wanted.push({ actorId, seat: i === 0 ? 'driverSeat' : `crewSeat${i}`, driver: false });
+      }
+    }
     const ids = new Set(wanted.map(o => o.actorId));
     for (const occupant of this.occupants.values()) if ((occupant.parent === record.model || occupant.parent === record.parent) && !ids.has(occupant.actorId)) occupant.visible = false;
     for (const w of wanted) {
@@ -535,7 +541,8 @@ export class VehicleView extends Group {
       // scripted truck is not registered as the player's active vehicle. Reuse
       // the seated crew cutaway below.
       const l2Ride = this.world.missions?.state.l2;
-      const carryingL2Crew = l2Ride?.truckId === id && l2Ride.seated && ['ride', 'arrived'].includes(l2Ride.phase);
+      const carryingL2Crew = l2Ride?.truckId === id && (l2Ride.phase === 'ride' && l2Ride.seated
+        || l2Ride.phase === 'arrived' && l2Ride.crewIds.some(crewId => this.world.entities.get(crewId)?.passengerOf === id));
       const reveal = this.reveal.get(id)!, full = this.silhouette?.id === id && this.silhouette.mode === 'full';
       const speakingPassenger = this.world.scenario === 'L9' && record.model.userData.assetId === 'veh.military-apc'
         && [...this.occupants.values()].some(occupant => occupant.parent === record.model && occupant.visible && speakingNpc(this.world, occupant.actorId));
@@ -544,9 +551,10 @@ export class VehicleView extends Group {
       // The L9 APC is an armored vehicle: its shell is never cut open to show seated crew.
       // The courier visibility path uses the normal foreground silhouette instead.
       const apc = record.model.userData.assetId === 'veh.military-apc';
-      // Engine 3 has an enclosed crew compartment. Keep its authored roof on
-      // during the ride; the generic crew cutaway made it read as open-topped.
-      if (!apc && !carryingL2Crew && speakingPassenger && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
+      // The L2 rescue truck must show its seated firefighters and courier
+      // during the ride and at arrival. Reuse the same bounded roof cutaway as
+      // the speaking passenger path; the doors and lower body remain intact.
+      if (!apc && (carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
       if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
       const transportRoof = record.model.getObjectByName('transportRoof');

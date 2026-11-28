@@ -654,7 +654,7 @@ export class Blasts extends Group {
     const vehicles = new Set<number>();
     const seen = new Set<number>(), clouds = new Set<number>(), low = this.quality === 'low';
     const player = this.world.entities.get(1);
-    if (this.world.scenario === 'L3' && player) {
+    if (this.world.scenario === 'L3' && player && player.transform.x >= -126) {
       // Choose authored columns by their actual projected stems: a fixed
       // world offset clipped them at close zoom while the camera followed.
       const focus = player.transform, camera = this.host.camera?.();
@@ -669,11 +669,11 @@ export class Blasts extends Group {
         if (camera) for (const [key, column] of this.cloudColumns) {
           if (!column.street) continue;
           const i = -2_000_000 - key, plume = l3SmokePlumes[i];
-          if (!plume || (plume.x - focus.x) ** 2 + (plume.z - focus.z) ** 2 > 225) continue;
+          if (!plume || (plume.x - focus.x) ** 2 + (plume.z - focus.z) ** 2 > 400) continue;
           const ground = this.world.districts?.groundHeight(plume.x, plume.z) ?? 0;
           this.sourcePoint.set(plume.x, ground + plume.baseY + 1, plume.z).project(camera);
           const right = this.sourcePoint.x * side;
-          if (right < .18 || right > .7 || this.sourcePoint.y < -.25 || this.sourcePoint.y > .98 || Math.abs(this.sourcePoint.z) > 1) continue;
+          if (right < .12 || right > .82 || this.sourcePoint.y < -.75 || this.sourcePoint.y > .15 || Math.abs(this.sourcePoint.z) > 1) continue;
           this.sourcePoint.set(plume.x, ground + plume.baseY + 1.5, plume.z);
           if (this.world.combat && !this.world.combat.query.visible(camera.position, this.sourcePoint)) continue;
           retained = i; break;
@@ -682,7 +682,7 @@ export class Blasts extends Group {
         let nearest = -1, score = Infinity;
         for (const [i, plume] of l3SmokePlumes.entries()) {
           const dx = plume.x - focus.x, dz = plume.z - focus.z;
-          if (dx * dx + dz * dz > 100) continue;
+          if (dx * dx + dz * dz > 196) continue;
           // Foreground stems cross the courier/attacker reveal area and become
           // faint haze. Background sources rise clear of that protected space.
           const foreground = (dx * cameraX + dz * cameraZ) / cameraDistance > -.75;
@@ -692,14 +692,16 @@ export class Blasts extends Group {
             // the viewport can still provide a complete readable smoke column.
             this.sourcePoint.set(plume.x, (this.world.districts?.groundHeight(plume.x, plume.z) ?? 0) + plume.baseY + 1, plume.z).project(camera);
             right = this.sourcePoint.x * side; vertical = this.sourcePoint.y;
-            if (right < .2 || right > .65 || vertical < -.2 || vertical > .9 || Math.abs(this.sourcePoint.z) > 1) continue;
+            if (right < .12 || right > .82 || vertical < -.75 || vertical > .15 || Math.abs(this.sourcePoint.z) > 1) continue;
           } else if (right < 1.2 || right > 2.4) continue;
           // A projected base can sit behind a parked car or frontage. Prefer
           // an unobstructed lower stem, where the rising shape is readable;
           // retain the projected fallback when the camera itself is enclosed.
           this.sourcePoint.set(plume.x, (this.world.districts?.groundHeight(plume.x, plume.z) ?? 0) + plume.baseY + 1.5, plume.z);
           const obscured = camera && this.world.combat && !this.world.combat.query.visible(camera.position, this.sourcePoint);
-          const distance = (right - (camera ? .4 : 1.8)) ** 2 + (vertical - (camera ? .55 : 0)) ** 2 + (obscured ? 10 : 0) + (foreground ? 2 : 0);
+          // The stem must start in the lower half of the image: puffs rise
+          // toward the top, so a high stem leaves only a cropped fragment.
+          const distance = (right - (camera ? .45 : 1.8)) ** 2 + (vertical - (camera ? -.35 : 0)) ** 2 + (obscured ? 10 : 0) + (foreground ? 2 : 0);
           if (distance < score) { score = distance; nearest = i; }
         }
         if (nearest >= 0) nearby.push({ i: nearest, plume: l3SmokePlumes[nearest] });
@@ -710,7 +712,7 @@ export class Blasts extends Group {
         if (!c) {
           // Seed an already-burning skyline, rather than waiting ten seconds
           // for smoke to reach the roof. Reuse the existing bounded puff pool.
-          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size * (low ? 1.2 : 1), heat: 2, acc: low ? 18 : 24, shade: .05, cloud: 0, street: true };
+          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size, heat: 2, acc: low ? 18 : 24, shade: .05, cloud: 0, street: true };
           this.cloudColumns.set(key, c);
         }
         c.rate = low ? 3 : 4;
