@@ -529,7 +529,14 @@ export class Mission {
     const consumed = new Set<number>(this.world.chunks?.consumedPickups());
     for (const e of this.world.entities.iterate()) if (e.pickup && 'kind' in e.pickup && e.pickup.collected && e.pickup.kind !== 'item' && e.pickup.kind !== 'throwable') consumed.add(e.id);
     for (const e of entities) if (e.pickup && 'kind' in e.pickup && consumed.has(e.id)) e.pickup.collected = true;
-    for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
+    for (const [actor, entityId] of Object.entries(this.state.actors)) {
+      const entity = entities.find(e => e.id === entityId);
+      // A kill is permanent only when it was already part of this checkpoint.
+      // In particular, a Mega killed after saving cure-disperse-ready must be
+      // restored alive from that snapshot on an ordinary death.
+      if (entity && entity.health.current > 0) this.deadBosses.delete(actor);
+      else if (entity && this.deadBosses.has(actor)) entity.health.current = 0;
+    }
     // Keep Player's live object because its controller holds that reference.
     const player = this.world.entities.get(1)!;
     const pendingCollider = player.pendingAdmission?.colliderEnabled;

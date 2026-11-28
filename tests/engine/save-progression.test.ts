@@ -278,12 +278,13 @@ async function checkCheckpointRacks() {
     expect(ids(l10)).toEqual(expectedHangar);
     expect(l10.progression!.campaign!.racks).toEqual(expectedHangar);
     const megaId = l10.megaPursuit!.introduce({ x: 620, z: 0 });
+    const checkpointHp = l10.megaPursuit!.entity()!.health.current;
     l10.missions!.checkpoint('cure-disperse-ready');
     l10.entities.get(megaId)!.health.current = 0;
     l10.megaPursuit!.state.mode = 'dead';
     l10.missions!.restore('cure-disperse-ready');
-    expect(l10.megaPursuit!.state.mode, 'a later Mega kill survives an arena checkpoint retry').toBe('dead');
-    expect(l10.megaPursuit!.entity()!.health.current).toBe(0);
+    expect(l10.megaPursuit!.state.mode, 'a later Mega kill is rolled back to the arena checkpoint').not.toBe('dead');
+    expect(l10.megaPursuit!.entity()!.health.current).toBe(checkpointHp);
     const group = curePaceEncounters.find(g => g.id === 'setpiece-quarantine-gate')!;
     const slots = cureEncounterSlots(group, 'low'), ledger = l10.l10Encounters!.state.spawned;
     const defender = l10.entities.get(l10.infected!.spawn('infected.runner', { x: 620, z: 0 }))!;
@@ -627,7 +628,7 @@ test('rewards: a saved reward screen round-trips at each phase and cannot be cla
   expect(epilogueSurvivorLines(undefined)).toEqual([]);
 });
 
-test('L10 roadblocks open on the final permanent cohort kill on both tiers', async () => {
+test('L10 roadblocks open when the admitted cohort is down on both tiers', async () => {
   const groups = ['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'];
   for (const tier of ['high', 'low'] as const) {
     const world = await loadLevel('L10', 1, undefined, 0, { quality: tier });
@@ -658,11 +659,13 @@ test('L10 roadblocks open on the final permanent cohort kill on both tiers', asy
         const tick = world.tick;
         world.combat!.damage.apply({ ...hit, actionId: 'weapon.rocket-launcher', type: 'explosive' });
         expect(gate.interactable!.open, `${tier}/${groupId} surviving member`).toBe(false);
-        world.combat!.damage.apply({ ...hit, targetId: survivorId, base: survivor.health.current, actionId: 'weapon.rocket-launcher', type: 'explosive' });
-        expect(world.tick).toBe(tick);
-        expect(gate.interactable!.open, `${tier}/${groupId} final admitted kill with an unfilled slot`).toBe(true);
+        world.combat!.damage.apply({ ...hit, targetId: survivorId, base: survivor.health.current });
+        world.update();
+        expect(world.tick).toBe(tick + 1);
+        expect(gate.interactable!.open, `${tier}/${groupId} final admitted knockdown with an unfilled slot`).toBe(true);
         expect(world.interactables!.walls.some(w => w.entityId === gateId)).toBe(false);
         expect(world.entities.get(actorId)).toBeDefined();
+        expect(world.entities.get(survivorId)?.infected?.recoverAt).toBeGreaterThan(world.tick);
       }
     } finally { world.dispose(); }
   }

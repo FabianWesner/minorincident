@@ -74,9 +74,16 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // capsule when it turns through the threshold. Keep a 4 m clear bay.
     wall('l10-hangar-door-west', h.min.x, h.min.z - .2, h.entrance.x - 2, h.min.z + .2);
     wall('l10-hangar-door-east', h.entrance.x + 2, h.min.z - .2, h.max.x, h.min.z + .2);
-    place('l10-hangar-generator', 'prop.cure-generator', 2719, 73, [1.2, 1.2, 1]);
-    place('l10-hangar-tent', 'prop.cure-iso-tent', 2694, 73, [2.5, 1.7, 2]);
-    place('l10-hangar-light', 'prop.emergency-light', 2707, 76, [.4, 1.5, .4]);
+    // Keep the research floor legible and clear: the staging props sit along
+    // the perimeter, away from the cast, terminal, canister and entrance lane.
+    for (const [i, [x, z]] of ([[2692, 74], [2722, 74], [2692, 58]] as const).entries())
+      place(`l10-hangar-generator-${i}`, 'prop.cure-generator', x, z, [1.2, 1.2, 1]);
+    for (const [i, [x, z]] of ([[2693, 68], [2721, 68], [2721, 57]] as const).entries())
+      place(`l10-hangar-tent-${i}`, 'prop.cure-iso-tent', x, z, [1.6, 1, 2], 0, [.5, .7, .5]);
+    for (const [i, [x, z]] of ([[2691, 66], [2722, 66], [2700, 77], [2714, 77]] as const).entries())
+      place(`l10-hangar-light-${i}`, 'prop.emergency-light', x, z, [.4, 1.5, .4]);
+    for (const [i, [x, z]] of ([[2692, 62], [2722, 72], [2718, 61]] as const).entries())
+      place(`l10-hangar-containers-${i}`, 'prop.cure-container-stack', x, z, [1.5, 1, 1.3], 0, [.45, .6, .45]);
     // Finds belong to visible, open buildings beside the walking line. The farm
     // shells receive their post/sill collision in applyFarmLandscape.
     place('l10-find-farm-house', 'bld.farm-house-ruin', 705, 38, [4, 1.4, 3.5], 0, [1, 1, 1], true);

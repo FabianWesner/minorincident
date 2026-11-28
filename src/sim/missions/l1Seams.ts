@@ -51,9 +51,9 @@ export function restoreSeams(world: SimWorld, saved: Record<string, unknown> | u
     const snapshot = structuredClone(saved[name]);
     if (name === 'megaPursuit') {
       const ready = world.missions?.state.checkpoint === 'cure-disperse-ready';
-      // The arena checkpoint restores a living boss at its captured position,
-      // but a boss killed after that capture stays dead on a retry.
-      world.megaPursuit!.restore(snapshot, respawn && !ready, respawn || !ready);
+      // L10 restores the Mega's exact checkpoint alive/dead state. Other
+      // pursuits keep their existing post-checkpoint kill persistence rule.
+      world.megaPursuit!.restore(snapshot, respawn && !ready, world.scenario !== 'L10' && (respawn || !ready));
     }
     else seam.restore(snapshot);
   }
