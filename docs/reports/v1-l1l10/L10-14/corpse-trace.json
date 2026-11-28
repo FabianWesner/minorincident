@@ -1,0 +1,347 @@
+{
+  "head": "556d5cba251099dd37c9f3b60fbb5f5c97aa6162",
+  "status": "partial",
+  "method": "Both quality settings resume same naturally progressed high-tier release snapshot. Read-only spawn wrapper and per-tick state transition observer; E physically activates cure; no game-state writes by observer.",
+  "tiers": {
+    "high": {
+      "receipt": "test-results/v1-l1l10/L10-14-corpse-trace/high-physical.json.gz",
+      "sha256": "847712390be2972233fa04e5b644c152a11ece4edca73e7cd62ab336b914240e",
+      "errors": [],
+      "deadBefore": [
+        {
+          "id": 115,
+          "archetype": "infected.alpha",
+          "hp": 0,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": "dead",
+          "position": {
+            "x": 4002.771392388385,
+            "y": 0.7,
+            "z": -26.96759113693518,
+            "yaw": 0.05375133047412011
+          }
+        },
+        {
+          "id": 651,
+          "archetype": "hazard.propane",
+          "hp": 0,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": null,
+          "position": {
+            "x": 3984,
+            "z": -17,
+            "y": 0.7,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 710,
+          "archetype": "infected.firefighter",
+          "hp": 0,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": "dead",
+          "position": {
+            "x": 3998.37945143054,
+            "y": 0.7,
+            "z": -34.76767687801742,
+            "yaw": -12.363572012708929
+          }
+        },
+        {
+          "id": 712,
+          "archetype": "hazard.fire",
+          "hp": 0,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": null,
+          "position": {
+            "x": 3986,
+            "z": -13,
+            "y": 0.7,
+            "yaw": 0
+          }
+        }
+      ],
+      "deadAfter": [
+        {
+          "id": 115,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "infected.alpha",
+          "infected": true,
+          "civilian": false
+        },
+        {
+          "id": 651,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "hazard.propane",
+          "infected": false,
+          "civilian": false
+        },
+        {
+          "id": 710,
+          "exists": true,
+          "hp": 100,
+          "corpse": false,
+          "archetype": "npc.resident",
+          "infected": false,
+          "civilian": true
+        },
+        {
+          "id": 712,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "hazard.fire",
+          "infected": false,
+          "civilian": false
+        }
+      ],
+      "watched710": [
+        {
+          "tick": 679,
+          "exists": true,
+          "hp": 0,
+          "archetype": "infected.firefighter",
+          "infectedState": "dead",
+          "deadAt": -90,
+          "recoverAt": 869,
+          "revived": false,
+          "reviveUsed": false,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "affected": false
+        },
+        {
+          "tick": 869,
+          "exists": true,
+          "hp": 100,
+          "archetype": "npc.resident",
+          "infectedState": null,
+          "deadAt": null,
+          "recoverAt": null,
+          "revived": null,
+          "reviveUsed": null,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "affected": true
+        }
+      ],
+      "spawn710": [],
+      "touch710": [
+        {
+          "id": 710,
+          "archetype": "infected.firefighter",
+          "touched": 869,
+          "position": {
+            "x": 3998.37945143054,
+            "y": 0.7,
+            "z": -34.76767687801742,
+            "yaw": -12.363572012708929
+          },
+          "hpBefore": 210,
+          "dead": 869,
+          "transition": {
+            "exists": true,
+            "hp": 100,
+            "archetype": "npc.resident",
+            "infected": false,
+            "civilian": true,
+            "corpse": false,
+            "story": {
+              "clip": "npc-cower",
+              "start": 869
+            },
+            "affected": true
+          }
+        }
+      ]
+    },
+    "low": {
+      "receipt": "test-results/v1-l1l10/L10-14-corpse-trace/low-physical.json.gz",
+      "sha256": "ac023fc6b0a913e9e805547aee9bee7865d9b3cae7e802035546c3ba9d09200c",
+      "errors": [],
+      "deadBefore": [
+        {
+          "id": 115,
+          "archetype": "infected.alpha",
+          "hp": 0,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": "dead",
+          "position": {
+            "x": 4002.771392388385,
+            "y": 0.7,
+            "z": -26.96759113693518,
+            "yaw": 0.05375133047412011
+          }
+        },
+        {
+          "id": 651,
+          "archetype": "hazard.propane",
+          "hp": 0,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": null,
+          "position": {
+            "x": 3984,
+            "z": -17,
+            "y": 0.7,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 710,
+          "archetype": "infected.firefighter",
+          "hp": 0,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": "dead",
+          "position": {
+            "x": 3998.37945143054,
+            "y": 0.7,
+            "z": -34.76767687801742,
+            "yaw": -12.363572012708929
+          }
+        },
+        {
+          "id": 712,
+          "archetype": "hazard.fire",
+          "hp": 0,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "hidden": false,
+          "infectedState": null,
+          "position": {
+            "x": 3986,
+            "z": -13,
+            "y": 0.7,
+            "yaw": 0
+          }
+        }
+      ],
+      "deadAfter": [
+        {
+          "id": 115,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "infected.alpha",
+          "infected": true,
+          "civilian": false
+        },
+        {
+          "id": 651,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "hazard.propane",
+          "infected": false,
+          "civilian": false
+        },
+        {
+          "id": 710,
+          "exists": true,
+          "hp": 100,
+          "corpse": false,
+          "archetype": "npc.resident",
+          "infected": false,
+          "civilian": true
+        },
+        {
+          "id": 712,
+          "exists": true,
+          "hp": 0,
+          "corpse": false,
+          "archetype": "hazard.fire",
+          "infected": false,
+          "civilian": false
+        }
+      ],
+      "watched710": [
+        {
+          "tick": 679,
+          "exists": true,
+          "hp": 0,
+          "archetype": "infected.firefighter",
+          "infectedState": "dead",
+          "deadAt": -90,
+          "recoverAt": 869,
+          "revived": false,
+          "reviveUsed": false,
+          "corpse": false,
+          "active": true,
+          "pooled": false,
+          "affected": false
+        },
+        {
+          "tick": 869,
+          "exists": true,
+          "hp": 100,
+          "archetype": "npc.resident",
+          "infectedState": null,
+          "deadAt": null,
+          "recoverAt": null,
+          "revived": null,
+          "reviveUsed": null,
+          "corpse": false,
+          "active": false,
+          "pooled": false,
+          "affected": true
+        }
+      ],
+      "spawn710": [],
+      "touch710": [
+        {
+          "id": 710,
+          "archetype": "infected.firefighter",
+          "touched": 869,
+          "position": {
+            "x": 3998.37945143054,
+            "y": 0.7,
+            "z": -34.76767687801742,
+            "yaw": -12.363572012708929
+          },
+          "hpBefore": 210,
+          "dead": 869,
+          "transition": {
+            "exists": true,
+            "hp": 100,
+            "archetype": "npc.resident",
+            "infected": false,
+            "civilian": true,
+            "corpse": false,
+            "story": {
+              "clip": "npc-cower",
+              "start": 869
+            },
+            "affected": true
+          }
+        }
+      ]
+    }
+  }
+}
