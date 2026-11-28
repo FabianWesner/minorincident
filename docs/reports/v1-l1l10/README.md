@@ -333,3 +333,11 @@ A second bounded exclusive admission attempt ended after 120 s without starting 
 ### L1-11 third route attempt on main 4d3932b0
 
 A third high-tier physical bicycle route attempted the depot street fence using coordinate-assisted cautious steering for 900 ticks. It ended at (−36.02, −34.97), near the depot and hydrant rather than the target fence; E dismounted with the bicycle 1.20 m away. The opened [frame and receipt summary](L1-11/high-r3-summary.json) show courier, corgi and bicycle on the sidewalk outside the depot, with a hydrant in front. This is an inconclusive driver route, not a fence counterexample; low was not repeated on the same failed path. The prior measured 7.5 m/s and wall dismount remain documented above. L1-11 remains NOT CHECKED; no game change.
+
+### L10-14 credits skip partial on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-14 | stale PASS → still NOT CHECKED | Physical click on actual Skip credits advanced high from credits phase tick 0 to thanks phase tick 1 in two simulation ticks; low release setup did not trigger and has no skip result. | [Skip summary](L10-14/skip-summary.json), exact two opened high frames and receipt hashes. | Earlier full-L10 pullback visual question remains open. |
+
+High credits show the title, readable initial attribution lines, Pause and Skip buttons over the pulled-back scene; the post-click frame shows “Thanks for playing” over the courier, corgi and survivors. The click resumes the game clock, so the measurement re-paused it before stepping; the initial observer attempt failed to do so and was discarded. Low twice failed to release the cure after reaching the console prompt, including a held-E retry; this is an inconclusive setup observation, not a diagnosed defect or skip result. The inherited touched/dead observer field is still misleading as described above. Corpse retention, repeat-view cinematic skip, low credits skip and full readability remain open. No game or checker change.
