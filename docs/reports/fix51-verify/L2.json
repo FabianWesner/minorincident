@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L2",
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
-  "observerHash": "d5cde71e96dc06637bd84b03207ce9d21a5e36c5eb4d6f6d3c9313fff03b1431",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T18:20:12.879Z",
+  "generatedAt": "2026-11-28T00:14:06.466Z",
   "policies": [
     {
       "tier": "low",
@@ -136,7 +136,7 @@
         "notes": "One valid counterexample rejects the universal six-second gate. No claim that later shared-load slow timings qualify. Confirmation PASS and lack of continuous sampling for initial cell are explicitly disclosed.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -348,7 +348,7 @@
         "notes": "PO: inspect low-L7-east-perimeter-z0.5.png at player center and the retained L1 Annex doorstep frame. Decide whether the stride/overlap reads as a coherent body. This is a visual-readability P, not a claim of a measured detached limb.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -417,14 +417,14 @@
         "notes": "The silhouette mechanism is directly measured and visibly reviewed. Pose-camera duplicate zoom requests and rejected APC fixture are excluded from additional coverage claims.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":5790,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10505,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":6651,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10505,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":5790,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10505,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":4704,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"ti… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l2-board\",\"x\":-70.6,\"z\":41.1,\"samples\":94,\"maxDisplacement\":0},{\"id\":\"l2-truck-stop\",\"x\":-43,\"z\":-32,\"samples\":1648,\"maxDisplacement\":0},{\"id\":\"l2-gate-inside\",\"x\":79.5,\"z\":30,\"samples\":10505,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"calm,axe\",\"marker\":null},{\"tick\":1386,\"step\":\"calm\",\"marker\":null},{\"tick\":1389,\"step\":\"board\",\"marker\":\"l2-board\",\"x\":-70.6,\"z\":41.1},{\"t… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -612,7 +612,7 @@
                 "id": "l2-gate-inside",
                 "x": 79.5,
                 "z": 30,
-                "samples": 6651,
+                "samples": 4704,
                 "maxDisplacement": 0
               }
             ],
@@ -654,7 +654,7 @@
                 "z": 30
               },
               {
-                "tick": 10547,
+                "tick": 8600,
                 "step": "",
                 "marker": null
               }
@@ -772,7 +772,7 @@
         "notes": "PO decision: should the Kill-the-Mega objective ring follow the physically moving boss, or stay at the dispersal arena under the fixed-destination rule? Exact thing: cure-mega in L10/mega, source LevelTenFinale.update;510.898m observed span. L6 handoffs use fixed actionable gate spots, with the exit-platform fallback. This P concerns the moving target design, not missing performance evidence.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -829,14 +829,14 @@
         "notes": "PO: approve native story-camera zoom clamping and temporary direction-pin suppression while destination text remains. Retained exact full-size frames: L1-high/captures/accept-L1-deliver-t1030-high-z1.jpg (actual1.5) and accept-L1-escape-t5237-high-z1.jpg (actual1). Original firestation photo was inspected and then archived during raw cleanup; its digest/state remain in the receipt. No full five-step zoom1 PASS is claimed. Additional current-observer complete low repeat retains firestation-t6608-low-z1.jpg: requested zoom1, actual camera zoom/targetZoom1.5 at tick6609, fixed story framing. This supplies a new exact fire-station PO comparison; it does not claim unclamped zoom1 coverage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":7645,\"id\":106,\"item\":null,\"collector\":null,\"distance\":0.8848148407274633,\"shelf\":false,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":5704,\"id\":106,\"item\":null,\"collector\":null,\"distance\":0.8909214569473874,\"shelf\":false,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -879,11 +879,11 @@
           "status": "PASS",
           "value": [
             {
-              "tick": 7645,
+              "tick": 5704,
               "id": 106,
               "item": null,
               "collector": null,
-              "distance": 0.8848148407274633,
+              "distance": 0.8909214569473874,
               "shelf": false,
               "interact": false,
               "speed": 0
@@ -991,7 +991,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -1162,7 +1162,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -1256,7 +1256,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -1570,29 +1570,21 @@
               },
               {
                 "key": "step/bridge|phase/collapse",
-                "escortTicks": 1168,
+                "escortTicks": 776,
                 "stationaryFarTicks": 0,
                 "arenaWaitTicks": 0
               },
               {
                 "key": "step/bridge|phase/escape",
-                "escortTicks": 5327,
+                "escortTicks": 3772,
                 "stationaryFarTicks": 0,
                 "arenaWaitTicks": 0
               },
               {
                 "key": "step/bridge|phase/checkpoint",
                 "escortTicks": 156,
-                "stationaryFarTicks": 5,
-                "arenaWaitTicks": 0,
-                "first": {
-                  "tick": 10428,
-                  "playerX": 81.40209197998047,
-                  "playerZ": 32.93735885620117,
-                  "followerId": 107,
-                  "followerX": 81.44326988503201,
-                  "followerZ": 43.517766554486954
-                }
+                "stationaryFarTicks": 0,
+                "arenaWaitTicks": 0
               },
               {
                 "key": "phase/run-out",
@@ -1601,15 +1593,15 @@
                 "arenaWaitTicks": 0
               }
             ],
-            "escortTicks": 8904,
-            "stationaryFarTicks": 24,
+            "escortTicks": 6957,
+            "stationaryFarTicks": 19,
             "arenaWaitTicks": 0,
-            "upperBoundPercent": 0.2695417789757412,
+            "upperBoundPercent": 0.27310622394710365,
             "followers": [
               {
                 "id": 107,
-                "escortTicks": 8904,
-                "stationaryFarTicks": 24
+                "escortTicks": 6957,
+                "stationaryFarTicks": 19
               }
             ],
             "paceWindows": [
@@ -1685,37 +1677,30 @@
               },
               {
                 "key": "step/bridge|phase/collapse",
-                "samples": 39,
-                "p50GapM": 1.8788497065685201,
-                "p90GapM": 2.8280294662017242,
-                "maxGapM": 2.9782656699635104,
+                "samples": 26,
+                "p50GapM": 1.2649999999999992,
+                "p90GapM": 2.5098460464540997,
+                "maxGapM": 2.9351369441670863,
                 "waitingTicks": 0,
                 "backtrackTicks": 0,
                 "stuckFollowers": []
               },
               {
                 "key": "step/bridge|phase/escape",
-                "samples": 178,
-                "p50GapM": 2.015984255144955,
-                "p90GapM": 21.51547672472825,
-                "maxGapM": 31.232979067978235,
+                "samples": 126,
+                "p50GapM": 2.0109948409937277,
+                "p90GapM": 5.181987759193818,
+                "maxGapM": 12.802096332767213,
                 "waitingTicks": 0,
                 "backtrackTicks": 0,
-                "stuckFollowers": [
-                  {
-                    "id": 107,
-                    "maxSeconds": 0.016666666666666666,
-                    "geometryContactTicks": 4,
-                    "bodyContactTicks": 0
-                  }
-                ]
+                "stuckFollowers": []
               },
               {
                 "key": "step/bridge|phase/checkpoint",
                 "samples": 5,
-                "p50GapM": 6.534740752784134,
-                "p90GapM": 11.69797258041905,
-                "maxGapM": 11.69797258041905,
+                "p50GapM": 1.2650000000000012,
+                "p90GapM": 1.9982472804455822,
+                "maxGapM": 1.9982472804455822,
                 "waitingTicks": 0,
                 "backtrackTicks": 0,
                 "stuckFollowers": []
@@ -1723,9 +1708,9 @@
               {
                 "key": "phase/run-out",
                 "samples": 10,
-                "p50GapM": 3.951035063587138,
-                "p90GapM": 4.848541964661536,
-                "maxGapM": 5.108716746109187,
+                "p50GapM": 1.265000000000001,
+                "p90GapM": 1.2650000000000023,
+                "maxGapM": 2.6256540132860966,
                 "waitingTicks": 0,
                 "backtrackTicks": 0,
                 "stuckFollowers": []
@@ -1799,7 +1784,7 @@
         "notes": "Fresh complete native low/high, seeds1–3. Strict measured individual speed failures establish the global FAIL; no large visible babysitting or causal waiting failure is inferred from pace or stationary upper bounds.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -1911,7 +1896,7 @@
         "notes": "Fresh visual counterexample, not a PO taste deferral. No pile-height PASS is inferred from placement lift alone.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -1964,7 +1949,7 @@
         "notes": "Production courier/input/attack systems in an explicit isolated presentation fixture. Physical Playwright keys and pointer only; no injected input frames. Aim assist disabled for the test.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -2069,7 +2054,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -2129,7 +2114,7 @@
         "notes": "PO: judge whether woman-B aftermath wander reads as a walking infected or an exaggerated crouch. Exact evidence: test-results/final-g/G-17/body-strips.jpg, wander0–7 against chase0–7; original wander4 retained. The prior setup rejected a high-page→low-tier swap and is excluded from qualification.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -2186,14 +2171,14 @@
         "notes": "Explicit isolated perception fixtures, with courier/escort placement and paused director disclosed. Not a damage/difficulty or full-campaign console qualification. Prior finite-focus counterexample is freshly retested.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":9986} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":10847} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":9986} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":8900} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[107],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -2255,7 +2240,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 10847
+            "samples": 8900
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -2350,14 +2335,14 @@
         "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence. Later low L10 follow lag is separately recorded under G27; exact full-footprint static query remains clear despite nav blockage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-20",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete engaged run-out duration and invulnerability: {\"tick\":9686,\"until\":9986,\"minimumInvulnerableUntil\":9986} (target 300 ticks ±1; invulnerability through deadline; PASS); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: {\"tick\":10547,\"until\":10847,\"minimumInvulnerableUntil\":10847} (target 300 ticks ±1; invulnerability through deadline; PASS); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
+      "value": "low/complete engaged run-out duration and invulnerability: {\"tick\":9686,\"until\":9986,\"minimumInvulnerableUntil\":9986} (target 300 ticks ±1; invulnerability through deadline; PASS); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: {\"tick\":8600,\"until\":8900,\"minimumInvulnerableUntil\":8900} (target 300 ticks ±1; invulnerability through deadline; PASS); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -2401,9 +2386,9 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "tick": 10547,
-            "until": 10847,
-            "minimumInvulnerableUntil": 10847
+            "tick": 8600,
+            "until": 8900,
+            "minimumInvulnerableUntil": 8900
           },
           "target": "300 ticks ±1; invulnerability through deadline",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -2460,14 +2445,14 @@
         "notes": "Fixture setup is explicit; full campaign routes are separate. The cap-safe L5 producer is retained; the original setup errors remain in the first receipt.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1ea91a38db547e84544e8bcf01144e7d8aee58e9f1dba4c26b706d474b8a5e69\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8b50acac0ba1faa3f0514846d62c43a8a802f26bf8c7717db75abcfabbc9e644\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-46.68324279785156,\"y\":0.7049999833106995,\"z\":-36.73768615722656,\"yaw\":1.4266371514641984},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4b9054c1b0461dfd1879c07a0ad40c0d760d49627d59d356c581ba7314888f99\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-31.797948837280273,\"y\":0.7049999833106995,\"z\":39.142940521240234,\"yaw\":-1.4332913750067666},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6e1ab7aad40a87cbb1cfbf21ad3d5d17e048db3dd7f8fe84f8cca140a44821dc\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.237567901611328,\"y\":0.7099999785423279,\"z\":48.00020980834961,\"yaw\":0.00000585444695268283},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"p… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"989aa9b249cf158ead26fafde4c676ed49826df8a36ddc8e3007d58f75d2f5db\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d0a9725478b4105b6fcf4301b5a5af1b4b39c95f537529856fbd80a58f263b6e\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-46.68324279785156,\"y\":0.7049999833106995,\"z\":-36.73768615722656,\"yaw\":1.4266371514641984},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"29413be5cd9d58e31b0690f7266b36d1abbd09902e23614c4043492386f89434\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-68.85600280761719,\"y\":0.7099999785423279,\"z\":15.118167877197266,\"yaw\":0.7425039964289296},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickup… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"40e70ef10fb9b11aef771574cf14ee67a59aa8753661b3db1d6e813c797546bf\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.424375534057617,\"y\":0.7099999785423279,\"z\":47.9998893737793,\"yaw\":-0.0000031030653738198034},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1ea91a38db547e84544e8bcf01144e7d8aee58e9f1dba4c26b706d474b8a5e69\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8b50acac0ba1faa3f0514846d62c43a8a802f26bf8c7717db75abcfabbc9e644\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-46.68324279785156,\"y\":0.7049999833106995,\"z\":-36.73768615722656,\"yaw\":1.4266371514641984},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"4b9054c1b0461dfd1879c07a0ad40c0d760d49627d59d356c581ba7314888f99\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-31.797948837280273,\"y\":0.7049999833106995,\"z\":39.142940521240234,\"yaw\":-1.4332913750067666},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6e1ab7aad40a87cbb1cfbf21ad3d5d17e048db3dd7f8fe84f8cca140a44821dc\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.237567901611328,\"y\":0.7099999785423279,\"z\":48.00020980834961,\"yaw\":0.00000585444695268283},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"p… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/axe: {\"checkpoint\":\"axe\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"989aa9b249cf158ead26fafde4c676ed49826df8a36ddc8e3007d58f75d2f5db\",\"damage\":100,\"expected\":{\"id\":\"axe\",\"anchor\":{\"x\":-73.97700500488281,\"y\":1.1200000047683716,\"z\":47.08124923706055,\"yaw\":-1.9625597386959133},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[10… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/doors: {\"checkpoint\":\"doors\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d0a9725478b4105b6fcf4301b5a5af1b4b39c95f537529856fbd80a58f263b6e\",\"damage\":100,\"expected\":{\"id\":\"doors\",\"anchor\":{\"x\":-46.68324279785156,\"y\":0.7049999833106995,\"z\":-36.73768615722656,\"yaw\":1.4266371514641984},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/escape: {\"checkpoint\":\"escape\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"3acb87c51d2e9b10958b18ae3b331c6e30048f16d7d4b6ce08f3db75c68c1d66\",\"damage\":100,\"expected\":{\"id\":\"escape\",\"anchor\":{\"x\":-64.50546264648438,\"y\":0.7099999785423279,\"z\":30.22164535522461,\"yaw\":1.627148857877612},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L2/cluster: {\"checkpoint\":\"cluster\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"7645df9bdf8841a93bee976261b97d9c85bab2fa7b24aa32f966bc1be0aaea8c\",\"damage\":100,\"expected\":{\"id\":\"cluster\",\"anchor\":{\"x\":24.206317901611328,\"y\":0.7099999785423279,\"z\":48.000125885009766,\"yaw\":0.000003509607817264772},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json",
@@ -2898,15 +2883,15 @@
           "value": {
             "checkpoint": "escape",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "29413be5cd9d58e31b0690f7266b36d1abbd09902e23614c4043492386f89434",
+            "snapshotSha256": "3acb87c51d2e9b10958b18ae3b331c6e30048f16d7d4b6ce08f3db75c68c1d66",
             "damage": 100,
             "expected": {
               "id": "escape",
               "anchor": {
-                "x": -68.85600280761719,
+                "x": -64.50546264648438,
                 "y": 0.7099999785423279,
-                "z": 15.118167877197266,
-                "yaw": 0.7425039964289296
+                "z": 30.22164535522461,
+                "yaw": 1.627148857877612
               },
               "gates": {},
               "racks": {
@@ -2921,8 +2906,7 @@
               "followers": [],
               "pickups": [
                 104,
-                105,
-                106
+                105
               ],
               "removedPickups": [],
               "cure": false
@@ -2930,8 +2914,8 @@
             "observed": {
               "id": "escape",
               "position": {
-                "x": -68.85600280761719,
-                "z": 15.118167877197266
+                "x": -64.50546264648438,
+                "z": 30.22164535522461
               },
               "gates": {},
               "racks": {
@@ -2967,15 +2951,15 @@
           "value": {
             "checkpoint": "cluster",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "40e70ef10fb9b11aef771574cf14ee67a59aa8753661b3db1d6e813c797546bf",
+            "snapshotSha256": "7645df9bdf8841a93bee976261b97d9c85bab2fa7b24aa32f966bc1be0aaea8c",
             "damage": 100,
             "expected": {
               "id": "cluster",
               "anchor": {
-                "x": 24.424375534057617,
+                "x": 24.206317901611328,
                 "y": 0.7099999785423279,
-                "z": 47.9998893737793,
-                "yaw": -0.0000031030653738198034
+                "z": 48.000125885009766,
+                "yaw": 0.000003509607817264772
               },
               "gates": {},
               "racks": {
@@ -2998,8 +2982,8 @@
             "observed": {
               "id": "cluster",
               "position": {
-                "x": 24.424375534057617,
-                "z": 47.9998893737793
+                "x": 24.206317901611328,
+                "z": 48.000125885009766
               },
               "gates": {},
               "racks": {
@@ -3062,14 +3046,14 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "G-22",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete announcement cohort market-ambush: {\"seconds\":101.5,\"spawned\":24,\"firstAttackSeconds\":2.9166666666666665,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort market-ambush: {\"seconds\":175.06666666666666,\"spawned\":24,\"firstAttackSeconds\":2.9166666666666665,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort market-ambush: {\"seconds\":115.85,\"spawned\":24,\"firstAttackSeconds\":2.683333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort market-ambush: {\"seconds\":175.06666666666666,\"spawned\":24,\"firstAttackSeconds\":2.683333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS)",
+      "value": "low/complete announcement cohort market-ambush: {\"seconds\":101.5,\"spawned\":24,\"firstAttackSeconds\":2.9166666666666665,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort market-ambush: {\"seconds\":175.06666666666666,\"spawned\":24,\"firstAttackSeconds\":2.9166666666666665,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort market-ambush: {\"seconds\":83.4,\"spawned\":24,\"firstAttackSeconds\":2.683333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort market-ambush: {\"seconds\":175.06666666666666,\"spawned\":24,\"firstAttackSeconds\":2.683333333333333,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -3119,7 +3103,7 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 115.85,
+            "seconds": 83.4,
             "spawned": 24,
             "firstAttackSeconds": 2.683333333333333,
             "flags": []
@@ -3179,7 +3163,7 @@
         "notes": "Fresh measured FAIL; exact current native counterexample.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -3247,7 +3231,7 @@
         "notes": "PO: exact low-L7-east-perimeter-z1.5.png, dark area outside and alongside the raised wall. Judge boundary finish/readability, with its zero-failure physical sweep as context.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -3799,7 +3783,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -3949,7 +3933,7 @@
         "notes": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -4021,7 +4005,7 @@
         "notes": "Current source, both render tiers, native-sized original images opened. Representative authored human/prop/hat/seat fixtures plus the explicit heroine/adult comparison; not an exhaustive census of every campaign frame.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -4093,7 +4077,7 @@
         "notes": "Measured Codex blocking babysitting finding; required Opus/PO taste signoff is separate and is not claimed. This is a failure of one ordinary tested boarding position, not a claim that every human route stalls.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -4417,7 +4401,7 @@
         "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -4515,7 +4499,7 @@
         "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -4765,7 +4749,7 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -5049,7 +5033,7 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -5241,7 +5225,7 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -5523,14 +5507,14 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L2-07",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":45.06666666666667,\"playerWindups\":14,\"groupWindups\":0,\"attacksPerMinute\":18.63905325443787} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.63905325443787 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1178,\"groupWindups\":0,\"attacksPerMinute\":785.3333333333334} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.9166666666666665,\"windowSeconds\":90} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 785.3333333333334 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":678,\"groupAttacks\":0,\"firstAttackSeconds\":3.3333333333333335} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 338.9529232051104 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":19.466666666666665,\"playerWindups\":8,\"groupWindups\":0,\"attacksPerMinute\":24.65753424657534} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 24.65753424657534 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1654,\"groupWindups\":0,\"attacksPerMinute\":1102.6666666666667} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.683333333333333,\"windowSeconds\":90} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 1102.6666666666667 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 96.36363636363636 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":775,\"groupAttacks\":0,\"firstAttackSeconds\":3.1333333333333333} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 387.44618802944035 (target 4 ≤ value ≤ Infinity; PASS)",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":45.06666666666667,\"playerWindups\":14,\"groupWindups\":0,\"attacksPerMinute\":18.63905325443787} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.63905325443787 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1178,\"groupWindups\":0,\"attacksPerMinute\":785.3333333333334} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.9166666666666665,\"windowSeconds\":90} (target ≤15 s; PASS); low/stationary real player/group windups per minute: 785.3333333333334 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":678,\"groupAttacks\":0,\"firstAttackSeconds\":3.3333333333333335} (target first attack ≤15 s; PASS); low/stationary stationary player windups/min after doors open: 338.9529232051104 (target 4 ≤ value ≤ Infinity; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 32.47422680412371 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":90,\"playerWindups\":1654,\"groupWindups\":0,\"attacksPerMinute\":1102.6666666666667} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.683333333333333,\"windowSeconds\":90} (target ≤15 s; PASS); high/stationary real player/group windups per minute: 1102.6666666666667 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 96.36363636363636 (target 90 ≤ value ≤ 100; PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":775,\"groupAttacks\":0,\"firstAttackSeconds\":3.1333333333333333} (target first attack ≤15 s; PASS); high/stationary stationary player windups/min after doors open: 387.44618802944035 (target 4 ≤ value ≤ Infinity; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -5665,10 +5649,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 19.466666666666665,
-            "playerWindups": 8,
+            "seconds": 12.933333333333334,
+            "playerWindups": 7,
             "groupWindups": 0,
-            "attacksPerMinute": 24.65753424657534
+            "attacksPerMinute": 32.47422680412371
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -5680,7 +5664,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 24.65753424657534,
+          "value": 32.47422680412371,
           "target": "4 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
         },
@@ -5829,15 +5813,15 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L2-08",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/controlled-fixture idle firefighter combat and turns: {\"hits\":29,\"turnedBy90\":0,\"turns\":[]} (target ≥1 firefighter hit;≥2 turn by90s; FAIL); high/controlled-fixture idle firefighter combat and turns: {\"hits\":18,\"turnedBy90\":0,\"turns\":[]} (target ≥1 firefighter hit;≥2 turn by90s; FAIL)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":29,\"rescue\":21},\"at120\":{\"all\":30,\"rescue\":18},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":19,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":2.9833333333333334,\"sameAsset\":true},{\"id\":122,\"seconds\":3.4833333333333334,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":621,\"protectedTicks\":0},{\"id\":122,\"samples\":426,\"protectedTicks\":0},{\"id\":123,\"samples\":689,\"protectedTicks\":0},{\"id\":124,\"samples\":438,\"protectedTicks\":0},{\"id\":125,\"samples\":542,\"protectedTicks\":0},{\"id\":126,\"samples\":580,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":25},\"at120\":{\"all\":59,\"rescue\":25},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":46,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":3.2333333333333334,\"sameAsset\":true},{\"id\":126,\"seconds\":3.183333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":812,\"protectedTicks\":0},{\"id\":122,\"samples\":652,\"protectedTicks\":0},{\"id\":123,\"samples\":833,\"protectedTicks\":0},{\"id\":124,\"samples\":549,\"protectedTicks\":0},{\"id\":125,\"samples\":693,\"protectedTicks\":0},{\"id\":126,\"samples\":552,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
@@ -5849,12 +5833,12 @@
           "clause": "idle snowball live infected census",
           "value": {
             "at60": {
-              "all": 30,
-              "rescue": 20
+              "all": 29,
+              "rescue": 21
             },
             "at120": {
               "all": 30,
-              "rescue": 14
+              "rescue": 18
             },
             "protected": true
           },
@@ -5869,12 +5853,23 @@
           "id": "L2-08",
           "clause": "idle firefighter combat and turns",
           "value": {
-            "hits": 29,
-            "turnedBy90": 0,
-            "turns": []
+            "hits": 19,
+            "turnedBy90": 2,
+            "turns": [
+              {
+                "id": 124,
+                "seconds": 2.9833333333333334,
+                "sameAsset": true
+              },
+              {
+                "id": 122,
+                "seconds": 3.4833333333333334,
+                "sameAsset": true
+              }
+            ]
           },
           "target": "≥1 firefighter hit;≥2 turn by90s",
-          "status": "FAIL",
+          "status": "PASS",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -5886,32 +5881,32 @@
           "value": [
             {
               "id": 121,
-              "samples": 678,
+              "samples": 621,
               "protectedTicks": 0
             },
             {
               "id": 122,
-              "samples": 425,
+              "samples": 426,
               "protectedTicks": 0
             },
             {
               "id": 123,
-              "samples": 797,
+              "samples": 689,
               "protectedTicks": 0
             },
             {
               "id": 124,
-              "samples": 994,
+              "samples": 438,
               "protectedTicks": 0
             },
             {
               "id": 125,
-              "samples": 809,
+              "samples": 542,
               "protectedTicks": 0
             },
             {
               "id": 126,
-              "samples": 694,
+              "samples": 580,
               "protectedTicks": 0
             }
           ],
@@ -5931,7 +5926,7 @@
               "rescue": 25
             },
             "at120": {
-              "all": 58,
+              "all": 59,
               "rescue": 25
             },
             "protected": true
@@ -5947,12 +5942,23 @@
           "id": "L2-08",
           "clause": "idle firefighter combat and turns",
           "value": {
-            "hits": 18,
-            "turnedBy90": 0,
-            "turns": []
+            "hits": 46,
+            "turnedBy90": 2,
+            "turns": [
+              {
+                "id": 124,
+                "seconds": 3.2333333333333334,
+                "sameAsset": true
+              },
+              {
+                "id": 126,
+                "seconds": 3.183333333333333,
+                "sameAsset": true
+              }
+            ]
           },
           "target": "≥1 firefighter hit;≥2 turn by90s",
-          "status": "FAIL",
+          "status": "PASS",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
@@ -5964,32 +5970,32 @@
           "value": [
             {
               "id": 121,
-              "samples": 777,
+              "samples": 812,
               "protectedTicks": 0
             },
             {
               "id": 122,
-              "samples": 638,
+              "samples": 652,
               "protectedTicks": 0
             },
             {
               "id": 123,
-              "samples": 992,
+              "samples": 833,
               "protectedTicks": 0
             },
             {
               "id": 124,
-              "samples": 555,
+              "samples": 549,
               "protectedTicks": 0
             },
             {
               "id": 125,
-              "samples": 530,
+              "samples": 693,
               "protectedTicks": 0
             },
             {
               "id": 126,
-              "samples": 797,
+              "samples": 552,
               "protectedTicks": 0
             }
           ],
@@ -6009,7 +6015,7 @@
         "evidence": [],
         "method": "NEXT: Hold a stationary native observer at the opened doors for 120 seconds; census at +60/+120 s and record firefighter turns/attacks with persistent IDs."
       },
-      "remaining": "Fix measured idle snowball/turned-firefighter shortfall; rerun idle full120s contact windows at both qualities.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L2-08",
         "status": "PASS",
@@ -6043,14 +6049,14 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L2-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":88.35,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":15,\"rescue\":15}},\"deathsAt\":[\"88s@-49,-35/collapse\"]} (target player reaches0HP within120s after doors; PASS); low/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":15,\"rescue\":15},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); low/controlled-fixture uninterrupted protected camping live census at10/90s: {\"early\":{\"all\":28,\"rescue\":22},\"late\":{\"all\":30,\"rescue\":14},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":14.396180554999512,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS); high/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":92.18333333333334,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":52,\"rescue\":17}},\"deathsAt\":[\"92s@-50,-32/collapse\"]} (target player reaches0HP within120s after doors; PASS); high/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":52,\"rescue\":17},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); high/controlled-fixture uninterrupted protected camping live census at10/90s: {\"early\":{\"all\":59,\"rescue\":24},\"late\":{\"all\":60,\"rescue\":25},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":14.396180554999512,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS)",
+      "value": "low/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":86.33333333333333,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":15,\"rescue\":15}},\"deathsAt\":[\"86s@-49,-34/collapse\"]} (target player reaches0HP within120s after doors; PASS); low/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":15,\"rescue\":15},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); low/controlled-fixture uninterrupted protected camping live census at10/90s: {\"early\":{\"all\":26,\"rescue\":20},\"late\":{\"all\":30,\"rescue\":18},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":14.396180554999512,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS); high/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":92.18333333333334,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":52,\"rescue\":17}},\"deathsAt\":[\"92s@-50,-32/collapse\"]} (target player reaches0HP within120s after doors; PASS); high/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":52,\"rescue\":17},\"stoppedAtFirstDeath\":true} (target +90s live infected≥+10s; missing post-death observation stays open; NOT CHECKED); high/controlled-fixture uninterrupted protected camping live census at10/90s: {\"early\":{\"all\":58,\"rescue\":23},\"late\":{\"all\":60,\"rescue\":25},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":14.396180554999512,\"outside15mTicks\":0},\"deaths\":0} (target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -6064,7 +6070,7 @@
           "value": {
             "axe": true,
             "diedBy120": true,
-            "firstDeathS": 88.35,
+            "firstDeathS": 86.33333333333333,
             "infectedAt": {
               "0": {
                 "all": 0,
@@ -6076,7 +6082,7 @@
               }
             },
             "deathsAt": [
-              "88s@-49,-35/collapse"
+              "86s@-49,-34/collapse"
             ]
           },
           "target": "player reaches0HP within120s after doors",
@@ -6108,12 +6114,12 @@
           "clause": "uninterrupted protected camping live census at10/90s",
           "value": {
             "early": {
-              "all": 28,
-              "rescue": 22
+              "all": 26,
+              "rescue": 20
             },
             "late": {
               "all": 30,
-              "rescue": 14
+              "rescue": 18
             },
             "protected": true,
             "countOnly": true,
@@ -6182,8 +6188,8 @@
           "clause": "uninterrupted protected camping live census at10/90s",
           "value": {
             "early": {
-              "all": 59,
-              "rescue": 24
+              "all": 58,
+              "rescue": 23
             },
             "late": {
               "all": 60,
@@ -6252,7 +6258,7 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -6496,7 +6502,7 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -6668,14 +6674,14 @@
         ],
         "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L2-12",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete competent bridge player attack rate: 13.678756476683938 (target 2 ≤ value ≤ 30; PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":256.6323035025252,\"ticks\":5790,\"discontinuities\":0,\"maxEncounterGapM\":79.41588961876215,\"encounterIds\":[185,193,195,203,211,213,221,229,187,183,197,191,189,209,201,199,217,227,219,125,232,238,236,234,240,254,256,252,258,260,262,264,266,294,302,306,288,290,308,282,298,292,300,284,296],\"infectedPer30m\":5.26044454098397} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; PASS); high/complete competent bridge player attack rate: 26.52232746955345 (target 2 ≤ value ≤ 30; PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":371.8745550930014,\"ticks\":6531,\"discontinuities\":0,\"maxEncounterGapM\":42.25810249540074,\"encounterIds\":[195,203,205,213,221,223,231,239,193,197,201,207,211,199,215,219,209,227,237,229,161,242,244,248,246,159,252,250,254,256,192,200,202,210,218,220,190,198,228,216,206,208,306,224,304,226,232,234,238,236,240,268,258,262,260,280,284,290,276],\"infectedPer30m\":4.759669559960466} (target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities; NOT CHECKED)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -6764,8 +6770,8 @@
           "level": "L2",
           "tier": "high",
           "policy": "complete",
-          "status": "PASS",
-          "value": 26.52232746955345,
+          "status": "FAIL",
+          "value": 31.377551020408163,
           "target": "2 ≤ value ≤ 30",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
         },
@@ -6775,12 +6781,12 @@
           "level": "L2",
           "tier": "high",
           "policy": "complete",
-          "status": "NOT CHECKED",
+          "status": "PASS",
           "value": {
-            "metres": 371.8745550930014,
-            "ticks": 6531,
+            "metres": 269.737698512207,
+            "ticks": 4704,
             "discontinuities": 0,
-            "maxEncounterGapM": 42.25810249540074,
+            "maxEncounterGapM": 40.14769639772733,
             "encounterIds": [
               195,
               203,
@@ -6807,42 +6813,21 @@
               244,
               248,
               246,
-              159,
               252,
+              256,
               250,
               254,
-              256,
-              192,
-              200,
-              202,
-              210,
-              218,
-              220,
-              190,
-              198,
-              228,
-              216,
-              206,
-              208,
-              306,
-              224,
-              304,
-              226,
-              232,
-              234,
-              238,
-              236,
-              240,
+              278,
               268,
-              258,
-              262,
-              260,
-              280,
-              284,
-              290,
-              276
+              266,
+              270,
+              272,
+              288,
+              286,
+              304,
+              292
             ],
-            "infectedPer30m": 4.759669559960466
+            "infectedPer30m": 4.226328044941072
           },
           "target": "≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route, no deaths or discontinuities",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
@@ -6859,9 +6844,6 @@
         "method": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
       },
       "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target.",
-      "checkKinds": [
-        "browser-input"
-      ],
       "reviewDecision": {
         "row": "L2-12",
         "status": "PASS",
@@ -6895,7 +6877,7 @@
         "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -7107,14 +7089,14 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L2-14",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); high/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); low/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":6,\"ratio\":0.46153846153846156,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); low/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":1,\"cluster\":null,\"size\":10,\"killed\":3,\"ratio\":0.3,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED); high/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":1,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":0,\"ratio\":0,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED); high/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":37,\"ratio\":2.8461538461538463,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED)",
+      "value": "low/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); high/complete maximum admitted Elm cluster identities before retry thinning: 13 (target 12 ≤ value ≤ 16; PASS); low/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":6,\"ratio\":0.46153846153846156,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); low/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":1,\"cluster\":null,\"size\":12,\"killed\":5,\"ratio\":0.4166666666666667,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED); high/controlled-fixture native side approach completion and cluster kill share: {\"protected\":false,\"qualified\":true,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":0,\"ratio\":0,\"visitedSide\":true,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; PASS); high/controlled-fixture native alarm approach completion and cluster kill share: {\"protected\":false,\"qualified\":false,\"outcome\":\"complete\",\"deaths\":0,\"cluster\":{\"atApproach\":13,\"size\":13},\"size\":13,\"killed\":49,\"ratio\":3.769230769230769,\"visitedSide\":false,\"alarms\":[]} (target complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted; NOT CHECKED)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -7180,9 +7162,9 @@
             "outcome": "complete",
             "deaths": 1,
             "cluster": null,
-            "size": 10,
-            "killed": 3,
-            "ratio": 0.3,
+            "size": 12,
+            "killed": 5,
+            "ratio": 0.4166666666666667,
             "visitedSide": false,
             "alarms": []
           },
@@ -7198,9 +7180,9 @@
           "clause": "native side approach completion and cluster kill share",
           "value": {
             "protected": false,
-            "qualified": false,
+            "qualified": true,
             "outcome": "complete",
-            "deaths": 1,
+            "deaths": 0,
             "cluster": {
               "atApproach": 13,
               "size": 13
@@ -7212,7 +7194,7 @@
             "alarms": []
           },
           "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
-          "status": "NOT CHECKED",
+          "status": "PASS",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
@@ -7231,8 +7213,8 @@
               "size": 13
             },
             "size": 13,
-            "killed": 37,
-            "ratio": 2.8461538461538463,
+            "killed": 49,
+            "ratio": 3.769230769230769,
             "visitedSide": false,
             "alarms": []
           },
@@ -7294,7 +7276,7 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -7545,7 +7527,7 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -7615,7 +7597,7 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
         "freshness": "STALE",
-        "latestRelevantCommit": "dd357ddfe6bb5017ad2c654627f0dc75e38cd4a8"
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }
   ]

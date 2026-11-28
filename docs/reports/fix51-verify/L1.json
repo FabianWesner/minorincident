@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L1",
-  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:06:15.618Z",
+  "generatedAt": "2026-11-28T00:10:33.131Z",
   "policies": [
     {
       "tier": "low",
@@ -3800,13 +3800,11 @@
       "id": "L1-01",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete native mission graph completion: complete (target complete; PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]} (target no global fail timer; no starting weapons; PASS); high/complete native mission graph completion: complete (target complete; PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]} (target no global fail timer; no starting weapons; PASS) Manual review PASS (Codex v1-l1l10): Both current native complete policies finish. At initial observation deadline is null, weapon racks are absent and owned actions contain only fists and kick. No physical-input run on this head is claimed.",
+      "value": "low/complete native mission graph completion: complete (target complete; PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]} (target no global fail timer; no starting weapons; PASS); high/complete native mission graph completion: complete (target complete; PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]} (target no global fail timer; no starting weapons; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L1-high-complete.json",
-        "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
-        "docs/reports/v1-l1l10/L1-01/current-low-complete.json"
+        "docs/reports/fix51-verify/receipts/L1-high-complete.json"
       ],
       "expected": "Mission graph completable, no fail timer; start loadout empty.",
       "checks": [
@@ -3877,49 +3875,50 @@
       "reviewDecision": {
         "row": "L1-01",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
         "clauses": [
           {
             "clause": "Mission graph completable, no fail timer; start loadout empty.",
             "verdict": "PASS",
-            "note": "Both current native complete policies finish. At initial observation deadline is null, weapon racks are absent and owned actions contain only fists and kick. No physical-input run on this head is claimed."
+            "note": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
-            "sha256": "4abca42732f602e703d4a92943fa00c13845f551c512cf0f7e206a34482a6038",
-            "what": "Current native complete route and initial state."
+            "file": "docs/reports/final-a/L1-01-native.json",
+            "sha256": "51a80cc78e189e2fdb5cdf125e75095825085969eecb6f7c4d71266d030457a1",
+            "what": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-01/current-low-complete.json",
-            "sha256": "dd99d454dcd55b9b872386e032110466631b01b0db452657d064c3b1b03aa58f",
-            "what": "Current native complete route and initial state."
+            "file": "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
+            "sha256": "24d4c1141afa43b565ea6df3de3d35d94375a810a044c963ec2fdca683816f81",
+            "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
+            "sha256": "49121e9b52fb11525c024b7861014a4c85a9b4dd6e6c76ceab6d7327e157e0f4",
+            "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
           }
         ],
-        "notes": "Native simulation; fists and kick treated as unarmed per acceptance evaluator.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L1-02",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); low/stationary initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/complete initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/stationary initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS) Manual review PASS (Codex v1-l1l10): Untouched stationary native opening, every tick 0–3600: 58 high / 51 low civilians; 0 living infected and 0 combat events both. Maximum unfaced stationary interval 133 ticks (2.2167 s) both. Four broken/boundary controls pass. Hidden interiors excluded from visible idle; missing or behind authored facing target counts as unfaced, and >0.1 m travel resets idle. Inspected physical opening frames show courier, corgi and a seated civilian on warm street.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); low/stationary initial civilian entity census: 53 (target 50 ≤ value ≤ 60; PASS); low/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/complete initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/complete morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS); high/stationary initial civilian entity census: 60 (target 50 ≤ value ≤ 60; PASS); high/stationary morning infected/combat census: {\"ticks\":2679,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":2679} (target zero infected and combat events during morning; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
         "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
-        "docs/reports/v1-l1l10/L1-02/L1-02-current-review.json",
-        "docs/reports/v1-l1l10/L1-02/L1-02-current-ledger.json.gz",
-        "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
-        "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg"
+        "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
       ],
       "expected": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
       "checks": [
@@ -4041,6 +4040,9 @@
         "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: 50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
@@ -4049,76 +4051,41 @@
       "reviewDecision": {
         "row": "L1-02",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
         "clauses": [
           {
             "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
             "verdict": "PASS",
-            "note": "Untouched stationary native opening, every tick 0–3600: 58 high / 51 low civilians; 0 living infected and 0 combat events both. Maximum unfaced stationary interval 133 ticks (2.2167 s) both. Four broken/boundary controls pass. Hidden interiors excluded from visible idle; missing or behind authored facing target counts as unfaced, and >0.1 m travel resets idle. Inspected physical opening frames show courier, corgi and a seated civilian on warm street."
+            "note": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-02/L1-02-current-review.json",
-            "sha256": "b67a2ea7c56710be0bd508f19467af911442fe033bef089d0cb99233d7e2a26f",
-            "what": "Current stationary morning census and per-tick actor ledger."
+            "file": "docs/reports/final-a/L1-02-current-review.json",
+            "sha256": "e02dee81c8705d57662abdfd8a9bbfcc558bd7f0655e5adc78dc570fefcb9149",
+            "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-02/L1-02-current-ledger.json.gz",
-            "sha256": "26a83f16600c9d7c97b2e8185f6f24632b6133408534e7d78286960514a88688",
-            "what": "Current stationary morning census and per-tick actor ledger."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
-            "sha256": "9308194e76af1b6f2736f175667cd672d048b77547130f87886c3b2c6d12e928",
-            "what": "Personally inspected current physical opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg",
-            "sha256": "4fd668d2df513788ab017b5d22c1139b26cf4a99a4672b38826a5f24da4cd5d1",
-            "what": "Personally inspected current physical opening frame."
+            "file": "docs/reports/final-a/L1-02-current-ledger.json.gz",
+            "sha256": "d567286a726381d7265d73bc5eca119c6ca42ddf15939a91c858230af9ed5b2e",
+            "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
           }
         ],
-        "notes": "Facing observation is an authored-target proxy, with no player input or relocation. Physical frames are context; census is native.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L1-03",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "Manual review PASS (Codex v1-l1l10): Both quality sequences: 321 tick samples, same clerk ID 155 high / 148 low, 94 transfer ticks with zero hidden transfer ticks, parcel transfers, return walks inside to z -39.34 before clerk removal, and door latch closes. All 22 frames inspected: clerk carries parcel, offers it, waves, turns toward doorway; later the open door and then closed door remain with courier holding parcel. Entry/return inside is partly occluded by shop wall. Seven broken-data controls reject. Native bot reaches onset, then idle capture; separate current physical L1 runs completed both tiers.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "",
       "automatedComplete": true,
-      "receipt": [
-        "docs/reports/v1-l1l10/L1-03/browser-ledger.json.gz",
-        "docs/reports/v1-l1l10/L1-03/L1-03-story-proof.json",
-        "test-results/v1-l1l10/l1-depot/captures/high-0000-npc-carry.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0060-npc-carry.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0082-npc-give.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0120-npc-give.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0136-npc-wave.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0176-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0180-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0240-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0260-none.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0300-none.png",
-        "test-results/v1-l1l10/l1-depot/captures/high-0320-none.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0000-npc-carry.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0060-npc-carry.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0082-npc-give.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0120-npc-give.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0136-npc-wave.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0176-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0180-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0240-npc-walk.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0260-none.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0300-none.png",
-        "test-results/v1-l1l10/l1-depot/captures/low-0320-none.png"
-      ],
+      "receipt": [],
       "expected": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
       "checks": [],
       "historical": {
@@ -4132,6 +4099,9 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record a real-input depot handover burst through clerk return and door closure with tools/playtest/session.ts; require continuous actor identity and visible handover."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "Inspect the continuous same-actor depot handover, walk back through the shop door and door closure in both qualities.",
@@ -4140,141 +4110,36 @@
       "reviewDecision": {
         "row": "L1-03",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
         "clauses": [
           {
             "clause": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
             "verdict": "PASS",
-            "note": "Both quality sequences: 321 tick samples, same clerk ID 155 high / 148 low, 94 transfer ticks with zero hidden transfer ticks, parcel transfers, return walks inside to z -39.34 before clerk removal, and door latch closes. All 22 frames inspected: clerk carries parcel, offers it, waves, turns toward doorway; later the open door and then closed door remain with courier holding parcel. Entry/return inside is partly occluded by shop wall. Seven broken-data controls reject. Native bot reaches onset, then idle capture; separate current physical L1 runs completed both tiers."
+            "note": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-03/browser-ledger.json.gz",
-            "sha256": "6ef750e8cfebc32bcfd38e723f2e292e1cfe91648a689287dedf8921e8f9060b",
-            "what": "Current same-actor ledger or qualification proof."
+            "file": "docs/reports/final-a/L1-03-input-ledger.json.gz",
+            "sha256": "43ecd80d8a3722f2dce5b3f8a82e84efd65e1e9ff2ed88271c1e36bfa9937717",
+            "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-03/L1-03-story-proof.json",
-            "sha256": "25d1fa4ea71bf0dff663dc22b3fcbcf4129116184f40be0437820d30eb1801bd",
-            "what": "Current same-actor ledger or qualification proof."
+            "file": "docs/reports/final-a/L1-03-image-review.json",
+            "sha256": "255de74d638389fc8e09b9794b4e1e35db0d8e53b45a63d621bc1ad13ad300d7",
+            "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
           },
           {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0000-npc-carry.png",
-            "sha256": "c4f7db0b423030a8f400bd8eb7ddcab7a5d56e2cc190679ead7830f4d2bcf6cb",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0060-npc-carry.png",
-            "sha256": "938c850ec12d350ff5611582509313f2407a98ac5890893db32f9ba9932ccf33",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0082-npc-give.png",
-            "sha256": "24ddc65b3aa88155d2a460580db33bff8799223b07efc6f3ab7923b2c8ffc910",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0120-npc-give.png",
-            "sha256": "d17555a5365117c67b8822f032b815641d1650ffea5cd3580478aaf0ec336f51",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0136-npc-wave.png",
-            "sha256": "824b94068e3f34da965206b7ed93efdf3b31df3e4dfa42dfb1efda8332cecbb2",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0176-npc-walk.png",
-            "sha256": "17cd98fabf783c3b0dfc3a9f2671bd3db02c67b630fda212e0c6494fb274ae5d",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0180-npc-walk.png",
-            "sha256": "45b215a40cf89b2813da3484fdca7f9eef0347532bbaa8adea0b13e8d715c98b",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0240-npc-walk.png",
-            "sha256": "88337ed13ba5b7607d8f0e8638a6a93dd45a19e0b4cf476dbc2adb20c5506a06",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0260-none.png",
-            "sha256": "1b36368438debd671a99b17819c997f8474447cd1045fb310dddd70801900d79",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0300-none.png",
-            "sha256": "ec27a211fb91bf2a41e80021d1a077ed54036b4f5bcac0157a96afb6938284ef",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/high-0320-none.png",
-            "sha256": "1fd8de4b40145cfbc5afebe49789593d5278ecd87ff420ecce7dfeb3118c1135",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0000-npc-carry.png",
-            "sha256": "90b05f70cec186329029897501fe2d3dd0679f4cdaafa54b98225345eaaaa768",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0060-npc-carry.png",
-            "sha256": "0cf8ebd2c625fccd1c30d0e84c42f8a1172e9e058cc93c9887bce49d21f5770e",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0082-npc-give.png",
-            "sha256": "379a5158500f2825625cf2449912965dbdac982162c98dbf83e363d1e8a3fe15",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0120-npc-give.png",
-            "sha256": "ddd58138e682774138cf7673689bd4876f559f1dfc96440a9a1727fb0dbef231",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0136-npc-wave.png",
-            "sha256": "054b176f985952c1111198001eb6f4949f223ffa8a87ad773b5b2537eb1842dd",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0176-npc-walk.png",
-            "sha256": "e518604a2ef7f349a0fa2db5de1582ab05584341ccdf7b21b5f768e631f0346c",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0180-npc-walk.png",
-            "sha256": "cc52bc27b59ca3db75b56f9fb065940346dd23c3ddf54577a5a7ec70fac3d18a",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0240-npc-walk.png",
-            "sha256": "ae4b8d26f4fcafa8c5e5b98fffe3a17fd33d7687aed8ee88fa12a25ced3186ec",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0260-none.png",
-            "sha256": "89bde756d169b2c3ebe45989412751eb678aa5f03ec9e5f9027c988ca18eae3b",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0300-none.png",
-            "sha256": "2a69bc163d51c1e302767e837f4abdb9e31a3cfa84354564658f0be06e244fdb",
-            "what": "Personally inspected depot handover frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-depot/captures/low-0320-none.png",
-            "sha256": "368626899b1a38094de10f85efa10808286d87858fd04d8b19b1792ba58d81d4",
-            "what": "Personally inspected depot handover frame."
+            "file": "docs/reports/final-a/L1-03-story-proof.json",
+            "sha256": "75fdadc6a4af349de8bb42f92d616761039027504ac45df6ff6eccc1ac49fa53",
+            "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
           }
         ],
-        "notes": "High-first original receipt reordered only for existing proof script, whose duplicate-tier mutation assumes low first. Drawn flags between rendered frames are diagnostic, not visibility proof.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -4282,25 +4147,9 @@
       "id": "L1-04",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review P (Codex v1-l1l10): Both tiers: same technician ID 154 high / 147 low over 707 ticks, 364 transfer ticks with zero hidden transfer ticks; parcel transfers and technician returns to z -16.5 inside; six broken-data controls reject. Inspected 12 selected frames and archived labelled PROD comparison. Current coat, goggles, gloves and parcel are visible; parcel appears offset from hand in selected signing/carry view, and return is partly occluded. PO: do these exact frames meet PROD quality? Capture uses native bot to reach onset and idle sequence; separate current physical L1 runs completed.",
+      "value": "",
       "automatedComplete": true,
-      "receipt": [
-        "docs/reports/v1-l1l10/L1-04/browser-ledger.json.gz",
-        "docs/reports/v1-l1l10/L1-04/L1-04-story-proof.json",
-        "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/visual-qa-13j/01-l1-lab-return-prod-vs-cand.jpg",
-        "test-results/v1-l1l10/l1-annex/captures/high-0060-npc-walk.png",
-        "test-results/v1-l1l10/l1-annex/captures/high-0141-npc-glance.png",
-        "test-results/v1-l1l10/l1-annex/captures/high-0240-npc-sign.png",
-        "test-results/v1-l1l10/l1-annex/captures/high-0505-npc-carry.png",
-        "test-results/v1-l1l10/l1-annex/captures/high-0600-npc-carry.png",
-        "test-results/v1-l1l10/l1-annex/captures/high-0706-none.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0060-npc-walk.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0141-npc-glance.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0240-npc-sign.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0505-npc-carry.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0600-npc-carry.png",
-        "test-results/v1-l1l10/l1-annex/captures/low-0706-none.png"
-      ],
+      "receipt": [],
       "expected": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
       "checks": [],
       "historical": {
@@ -4324,97 +4173,47 @@
       },
       "reviewDecision": {
         "row": "L1-04",
-        "status": "P",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "status": "PASS",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "00e40b5009d68c9627fe3ec5330961d9d7e379fb",
         "clauses": [
           {
             "clause": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
-            "verdict": "P",
-            "note": "Both tiers: same technician ID 154 high / 147 low over 707 ticks, 364 transfer ticks with zero hidden transfer ticks; parcel transfers and technician returns to z -16.5 inside; six broken-data controls reject. Inspected 12 selected frames and archived labelled PROD comparison. Current coat, goggles, gloves and parcel are visible; parcel appears offset from hand in selected signing/carry view, and return is partly occluded. PO: do these exact frames meet PROD quality? Capture uses native bot to reach onset and idle sequence; separate current physical L1 runs completed."
+            "verdict": "PASS",
+            "note": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-04/browser-ledger.json.gz",
-            "sha256": "d02b4d598c061b7bc044d15fb8d2a13af4a3bea219ecad8f74f97cf62a24fdbf",
-            "what": "Current same-actor ledger or proof."
+            "file": "docs/reports/final-a/L1-04-browser-ledger.json.gz",
+            "sha256": "f2d078fdc8e4692053d222d609d0794bdb77a00df22079f4398d87807e7e298d",
+            "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-04/L1-04-story-proof.json",
-            "sha256": "e5764f30ad2f2ae9c44ab1d5011d09b13a029631a3ab43b7aed2e6872be950f9",
-            "what": "Current same-actor ledger or proof."
+            "file": "docs/reports/final-a/L1-04-image-review.json",
+            "sha256": "aabca903d1ad3f4b6ea4127a171be9001fe27ab26971284329308e4929f9bae2",
+            "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           },
           {
-            "file": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/visual-qa-13j/01-l1-lab-return-prod-vs-cand.jpg",
-            "sha256": "3fd93c53d69845959178565bfff6a328d5aa438d8936fd7337972fde2ea0edcb",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
+            "file": "docs/reports/final-a/L1-04-current-proof.json",
+            "sha256": "abbe3872dbd4ca6cd6007aa70b482a46ebfa7d81f6f3bec807f78438a037fa41",
+            "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           },
           {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0060-npc-walk.png",
-            "sha256": "c3d3b8b390ac00da37a17d0259211461f0fccdef5f5d8dffa5e13ed32ee4e9d3",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
+            "file": "docs/reports/final-a/L1-04-story-proof.json",
+            "sha256": "cbfd8e63198784d2b2f8fc5e6c155146c5f19250cb0181df836002fc0b29a1c6",
+            "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           },
           {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0141-npc-glance.png",
-            "sha256": "e08a7a95eacaf2304a485c94c86fc69f716f062367125e61580cf5b40871a04b",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0240-npc-sign.png",
-            "sha256": "0b0d2b9173880ad56a4bb8a0f76cd60d44cf606b01b13986984d414292a26368",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0505-npc-carry.png",
-            "sha256": "103cc573d99d60945a885da82e10a6481b8c886044c320227f6f5e27d5034349",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0600-npc-carry.png",
-            "sha256": "89580df70d63e12d9d29b54b67172d6648badb1eb9009b65451bc82a8609d3b5",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/high-0706-none.png",
-            "sha256": "570f10637e806457b21bf813b3008b1f77f7dd99aa631a13c21b7c4612688c1c",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0060-npc-walk.png",
-            "sha256": "2a96f0bf9a878abe40306aad8e387e5ad42066c11b33c51e93cb05a59e125014",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0141-npc-glance.png",
-            "sha256": "9566dad9beef888afe324be6057ca0fcb7cc34e69eb78596e6e8ddeca02f82f4",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0240-npc-sign.png",
-            "sha256": "7d713b55d6e4b97a100ef08275e35ee22670e806ad7a0d40ca2cef4a88cd5f9a",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0505-npc-carry.png",
-            "sha256": "7d625463752e259f145f3d5821fc9ef9d759f36f5e434f95c8a84656b744abd5",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0600-npc-carry.png",
-            "sha256": "fd4a3f6e26ead7d5d421f6359576653ded4e9912e3a1663d4e77198ce027a866",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-annex/captures/low-0706-none.png",
-            "sha256": "7890556fcbb196ca86d621db3a7639f0f345bc4a36b71465b598bade1f6801c5",
-            "what": "Personally inspected current frame or archived labelled PROD comparison."
+            "file": "docs/reports/final-a/L1-04-PROD-reference.json",
+            "sha256": "c3405a0bdf9cddc17d7873b3249256083fe10cf77500f3d56882178ac5ba59a2",
+            "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
           }
         ],
-        "notes": "P for visual quality comparison; current frame selection and archived PROD reference personally inspected.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -4614,9 +4413,9 @@
     },
     {
       "id": "L1-06",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); low/complete technician is first exit identity: {\"technician\":147,\"exits\":[147,151,153,155,157],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); low/stationary native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary technician is first exit identity: {\"technician\":147,\"exits\":[147,151,153,155,157],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); high/complete native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); high/complete technician is first exit identity: {\"technician\":154,\"exits\":[154,158,160,162,164],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); high/stationary native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary technician is first exit identity: {\"technician\":154,\"exits\":[154,158,160,162,164],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); low/controlled-fixture observed front-door crossing order and departure headings: {\"technicianId\":147,\"crossings\":[{\"id\":147,\"start\":{\"x\":66,\"z\":-13.708692072821643,\"tick\":4197},\"end\":{\"x\":64.92236611982854,\"z\":-9.832209535652703,\"tick\":4344,\"headingDeg\":105.53554285280504}},{\"id\":151,\"start\":{\"x\":66.31839493238229,\"z\":-13.884267791552897,\"tick\":4300},\"end\":{\"x\":62.36468974138424,\"z\":-13.22132756465394,\"tick\":4349,\"headingDeg\":170.48143701023287}},{\"id\":155,\"start\":{\"x\":66.5788… (full values in JSON) (target 5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees; PASS); high/controlled-fixture observed front-door crossing order and departure headings: {\"technicianId\":154,\"crossings\":[{\"id\":154,\"start\":{\"x\":66,\"z\":-13.708692072821643,\"tick\":4197},\"end\":{\"x\":64.66859175307984,\"z\":-9.896696096937214,\"tick\":4342,\"headingDeg\":109.25267469866886}},{\"id\":158,\"start\":{\"x\":66.25356403252354,\"z\":-13.841708000562436,\"tick\":4301},\"end\":{\"x\":62.27899382053807,\"z\":-13.242751544865483,\"tick\":4350,\"headingDeg\":171.4301728592477}},{\"id\":162,\"start\":{\"x\":66.3396… (full values in JSON) (target 5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees; PASS) Manual review PASS (Codex v1-l1l10): Both native fixtures observe five crossings with technician first (ID 154 high / 147 low). Actual four-metre departure headings include 26.82/109.25/171.43° high and 26.49/105.54/170.48° low, minimum pairwise separations 62.18°/64.95°. All 14 browser burst frames inspected: white-coated first figure emerges, then four others move through the door and disperse. Browser burst uses native bot and fixed inspection camera; separate current mortal real-input runs completed both tiers, but did not capture the full exit sequence.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); low/complete technician is first exit identity: {\"technician\":147,\"exits\":[147,151,153,155,157],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); low/stationary native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary technician is first exit identity: {\"technician\":147,\"exits\":[147,151,153,155,157],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); high/complete native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); high/complete technician is first exit identity: {\"technician\":154,\"exits\":[154,158,160,162,164],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); high/stationary native Annex exit identities: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary technician is first exit identity: {\"technician\":154,\"exits\":[154,158,160,162,164],\"headings\":[125,95,170,215,250]} (target exitIds[0] equals technician id; PASS); low/controlled-fixture observed front-door crossing order and departure headings: {\"technicianId\":147,\"crossings\":[{\"id\":147,\"start\":{\"x\":66,\"z\":-13.708692072821643,\"tick\":4197},\"end\":{\"x\":64.92236611982854,\"z\":-9.832209535652703,\"tick\":4344,\"headingDeg\":105.53554285280504}},{\"id\":151,\"start\":{\"x\":66.31839493238229,\"z\":-13.884267791552897,\"tick\":4300},\"end\":{\"x\":62.36468974138424,\"z\":-13.22132756465394,\"tick\":4349,\"headingDeg\":170.48143701023287}},{\"id\":155,\"start\":{\"x\":66.5788… (full values in JSON) (target 5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees; PASS); high/controlled-fixture observed front-door crossing order and departure headings: {\"technicianId\":154,\"crossings\":[{\"id\":154,\"start\":{\"x\":66,\"z\":-13.708692072821643,\"tick\":4197},\"end\":{\"x\":64.66859175307984,\"z\":-9.896696096937214,\"tick\":4342,\"headingDeg\":109.25267469866886}},{\"id\":158,\"start\":{\"x\":66.25356403252354,\"z\":-13.841708000562436,\"tick\":4301},\"end\":{\"x\":62.27899382053807,\"z\":-13.242751544865483,\"tick\":4350,\"headingDeg\":171.4301728592477}},{\"id\":162,\"start\":{\"x\":66.3396… (full values in JSON) (target 5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
@@ -4624,24 +4423,7 @@
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
         "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-06/browser-receipt.json.gz",
-        "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-0.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-30.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-60.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-120.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-180.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-240.png",
-        "test-results/v1-l1l10/l1-exits/captures/high-z1.5-360.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-0.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-30.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-60.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-120.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-180.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-240.png",
-        "test-results/v1-l1l10/l1-exits/captures/low-z1.5-360.png"
+        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json"
       ],
       "expected": "Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart.",
       "checks": [
@@ -4979,6 +4761,9 @@
         "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart.",
@@ -4987,106 +4772,36 @@
       "reviewDecision": {
         "row": "L1-06",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "519fcf6e1711336e4e6c0948038801061cf4d1ba",
         "clauses": [
           {
             "clause": "Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart.",
             "verdict": "PASS",
-            "note": "Both native fixtures observe five crossings with technician first (ID 154 high / 147 low). Actual four-metre departure headings include 26.82/109.25/171.43° high and 26.49/105.54/170.48° low, minimum pairwise separations 62.18°/64.95°. All 14 browser burst frames inspected: white-coated first figure emerges, then four others move through the door and disperse. Browser burst uses native bot and fixed inspection camera; separate current mortal real-input runs completed both tiers, but did not capture the full exit sequence."
+            "note": "All14 current WebGPU low/high six-second emergence frames personally inspected at original resolution on four sheets. Five distinct infected emerge through actual front doorway; white-coated technician visibly first, then the others diverge left/forward/right. Both361-sample every-tick browser ledgers retain same five exit identities. Current native physical crossings identify technician147low/154high first; actual4m departure headings low26.49/105.54/170.48 and high26.82/109.25/171.43 provide three pairwise separations≥60degrees (minimum64.95low/62.18high). Ordinary complete keyboard InputFrames, no actor relocation/protection/skips. Camera-only doorway inspection is explicitly labelled; no freely controlled production zoom or performance claim."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-06/browser-receipt.json.gz",
-            "sha256": "5034dc539c0c072104ba3679fefe1da8e9c26fe79004082733fb5c43cb62fb1e",
-            "what": "Current browser ledger or native crossing fixture."
+            "file": "docs/reports/final-a/L1-06-browser-ledger.json.gz",
+            "sha256": "d034edbad7b017bcbfe9bfee177cd139acbb70e64e26b2140c362ab92f5083a4",
+            "what": "All14 current WebGPU low/high six-second emergence frames personally inspected at original resolution on four sheets. Five distinct infected emerge through actual front doorway; white-coated technician visibly first, then the others diverge left/forward/right. Both361-sample every-tick browser ledgers retain same five exit identities. Current native physical crossings identify technician147low/154high first; actual4m departure headings low26.49/105.54/170.48 and high26.82/109.25/171.43 provide three pairwise separations≥60degrees (minimum64.95low/62.18high). Ordinary complete keyboard InputFrames, no actor relocation/protection/skips. Camera-only doorway inspection is explicitly labelled; no freely controlled production zoom or performance claim."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-            "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
-            "what": "Current browser ledger or native crossing fixture."
+            "file": "docs/reports/final-a/L1-06-image-review.json",
+            "sha256": "c388f58c9e48811d05f1e7af04675ad3510c9d7b3dbd87e7ee1ae0b35a261cce",
+            "what": "All14 current WebGPU low/high six-second emergence frames personally inspected at original resolution on four sheets. Five distinct infected emerge through actual front doorway; white-coated technician visibly first, then the others diverge left/forward/right. Both361-sample every-tick browser ledgers retain same five exit identities. Current native physical crossings identify technician147low/154high first; actual4m departure headings low26.49/105.54/170.48 and high26.82/109.25/171.43 provide three pairwise separations≥60degrees (minimum64.95low/62.18high). Ordinary complete keyboard InputFrames, no actor relocation/protection/skips. Camera-only doorway inspection is explicitly labelled; no freely controlled production zoom or performance claim."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-            "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
-            "what": "Current browser ledger or native crossing fixture."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-0.png",
-            "sha256": "e7d13192f7034522c08543e353fe525f6cb8bb1364dc49a7942ccbe8f74fa0c9",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-30.png",
-            "sha256": "92c17814e88fa36151c0d83df48fecc6278dd3b0e7175c9d9e813a66fc45902e",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-60.png",
-            "sha256": "40cdbdf54b6ca745b88d8771e191b6b25224d4c6a0f831b5402fee8256fbbdc2",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-120.png",
-            "sha256": "df62b5dcc1d835f26144f0627c23d9f4b1e294074f940ee92b85a7ef375885f2",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-180.png",
-            "sha256": "11a9dbff0182d44d794b1e132e9560db738763f0e646c4415d916da81b37bad7",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-240.png",
-            "sha256": "6423fecbc2197493e3fe15a7f1256d1af33c8e6eb69f0566eb2b159ea1c4a06a",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/high-z1.5-360.png",
-            "sha256": "69ac57b50effbc3b6cf859157fc4320f2b42f55c130d0655cc331d9e6b120794",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-0.png",
-            "sha256": "dae5dae890da690f8d142d4327cb281c72ca49d9c119ceb79cf4af3afd0568f6",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-30.png",
-            "sha256": "b8f78adde1712339a623c8a96c3f24a30438ebd1da90d0ae4847eaca0cfbd540",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-60.png",
-            "sha256": "f4b6bd44c301442c3c0631280ff90c493ab3b2db4c490a66097f4418320d51cb",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-120.png",
-            "sha256": "2f570b508fd1c666f2ad0140f574500edd77d7acb0eedd34219f0e1804dbe6dd",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-180.png",
-            "sha256": "0b155a5125205f14c511f7567d0cc541505325db731a489abb390d504cebc5bd",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-240.png",
-            "sha256": "0095f5d7258ce9e4e03637396eca4123be7086bd8c00f5a4b3dcb4eea5d5d176",
-            "what": "Personally inspected doorway sequence frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-exits/captures/low-z1.5-360.png",
-            "sha256": "ddb9360ce9a1c9786cf55972984826bb4c44583885ccb8db1a5094887cc29e4e",
-            "what": "Personally inspected doorway sequence frame."
+            "file": "docs/reports/final-a/L1-06-current-proof.json",
+            "sha256": "8854ded3de91452eb7cadd479246ae3f058e9a7476d87ba212edcfaa092a7d3f",
+            "what": "All14 current WebGPU low/high six-second emergence frames personally inspected at original resolution on four sheets. Five distinct infected emerge through actual front doorway; white-coated technician visibly first, then the others diverge left/forward/right. Both361-sample every-tick browser ledgers retain same five exit identities. Current native physical crossings identify technician147low/154high first; actual4m departure headings low26.49/105.54/170.48 and high26.82/109.25/171.43 provide three pairwise separations≥60degrees (minimum64.95low/62.18high). Ordinary complete keyboard InputFrames, no actor relocation/protection/skips. Camera-only doorway inspection is explicitly labelled; no freely controlled production zoom or performance claim."
           }
         ],
-        "notes": "No actor relocation or protection in burst. Fixed camera is presentation-only; no production camera or timing claim.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5094,13 +4809,11 @@
       "id": "L1-07",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture remote idle initial five infected: 5 (target exactly5 at release; PASS); low/controlled-fixture remote idle living infected at120s: 30 (target ≥15 at+120s; PASS); low/controlled-fixture remote idle living infected at240s: 30 (target ≥25 at+240s; PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5822,\"bitten\":true},{\"id\":138,\"tick\":6208,\"bitten\":true},{\"id\":115,\"tick\":6352,\"bitten\":true},{\"id\":103,\"tick\":6397,\"bitten\":true},{\"id\":107,\"tick\":6479,\"bitten\":true},{\"id\":105,\"tick\":659… (full values in JSON) (target every new turn has a preceding bite on the same ID; no direct additions; PASS); low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0} (target zero deaths, damage and player knockdowns/kills; PASS); high/controlled-fixture remote idle initial five infected: 5 (target exactly5 at release; PASS); high/controlled-fixture remote idle living infected at120s: 44 (target ≥15 at+120s; PASS); high/controlled-fixture remote idle living infected at240s: 50 (target ≥25 at+240s; PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":109,\"tick\":6249,\"bitten\":true},{\"id\":108,\"tick\":6513,\"bitten\":true},{\"id\":110,\"tick\":6588,\"bitten\":true},{\"id\":143,\"tick\":6737,\"bitten\":true},{\"id\":135,\"tick\":6771,\"bitten\":true},{\"id\":144,\"tick\":6829,\"bitten\":true},{\"id\":134,\"tick\":6987,\"bitten\":true},{\"id\":140,\"tick\":7158,\"bitten\":true},{\"id\":113,\"tick\":723… (full values in JSON) (target every new turn has a preceding bite on the same ID; no direct additions; PASS); high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0} (target zero deaths, damage and player knockdowns/kills; PASS) Manual review PASS (Codex v1-l1l10): Both tiers start with 5; low 30/30 and high 44/50 at +120/+240 seconds. All additional turns follow bites, no direct additions; observer has zero deaths, damage, knockdowns and kills.",
+      "value": "low/controlled-fixture remote idle initial five infected: 5 (target exactly5 at release; PASS); low/controlled-fixture remote idle living infected at120s: 30 (target ≥15 at+120s; PASS); low/controlled-fixture remote idle living infected at240s: 30 (target ≥25 at+240s; PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5822,\"bitten\":true},{\"id\":138,\"tick\":6208,\"bitten\":true},{\"id\":115,\"tick\":6352,\"bitten\":true},{\"id\":103,\"tick\":6397,\"bitten\":true},{\"id\":107,\"tick\":6479,\"bitten\":true},{\"id\":105,\"tick\":659… (full values in JSON) (target every new turn has a preceding bite on the same ID; no direct additions; PASS); low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0} (target zero deaths, damage and player knockdowns/kills; PASS); high/controlled-fixture remote idle initial five infected: 5 (target exactly5 at release; PASS); high/controlled-fixture remote idle living infected at120s: 44 (target ≥15 at+120s; PASS); high/controlled-fixture remote idle living infected at240s: 50 (target ≥25 at+240s; PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":109,\"tick\":6249,\"bitten\":true},{\"id\":108,\"tick\":6513,\"bitten\":true},{\"id\":110,\"tick\":6588,\"bitten\":true},{\"id\":143,\"tick\":6737,\"bitten\":true},{\"id\":135,\"tick\":6771,\"bitten\":true},{\"id\":144,\"tick\":6829,\"bitten\":true},{\"id\":134,\"tick\":6987,\"bitten\":true},{\"id\":140,\"tick\":7158,\"bitten\":true},{\"id\":113,\"tick\":723… (full values in JSON) (target every new turn has a preceding bite on the same ID; no direct additions; PASS); high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0} (target zero deaths, damage and player knockdowns/kills; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json"
       ],
       "expected": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
       "checks": [
@@ -5595,31 +5308,36 @@
       "reviewDecision": {
         "row": "L1-07",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
         "clauses": [
           {
             "clause": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
             "verdict": "PASS",
-            "note": "Both tiers start with 5; low 30/30 and high 44/50 at +120/+240 seconds. All additional turns follow bites, no direct additions; observer has zero deaths, damage, knockdowns and kills."
+            "note": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-            "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
-            "what": "Current native L1 controlled fixture."
+            "file": "docs/reports/final-a/L1-07-native.json",
+            "sha256": "c9d42c43f3d6c4f021bc018aae8a2fa5372713d56853e27620b205229fb3a5e3",
+            "what": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-            "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
-            "what": "Current native L1 controlled fixture."
+            "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+            "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+            "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+            "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+            "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
           }
         ],
-        "notes": "Native fixture uses ordinary opening then relocates observer remotely.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5627,17 +5345,13 @@
       "id": "L1-08",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":40.81666666666667,\"playerWindups\":19,\"groupWindups\":0,\"attacksPerMinute\":27.929767251939566} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 27.929767251939566 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1599,\"groupWindups\":0,\"attacksPerMinute\":330.18240220259264} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 330.18240220259264 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":40.63333333333333,\"playerWindups\":13,\"groupWindups\":0,\"attacksPerMinute\":19.196062346185396} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 19.196062346185396 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1599,\"groupWindups\":0,\"attacksPerMinute\":330.18240220259264} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 330.18240220259264 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (Codex v1-l1l10): Both tiers: stationary first player windup 2.3167 s, 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples. Complete policies: low/high 27.93/19.20 windups/min and 100% minimum across 23 samples each. Reachability is sampled within 30 m with path ≤2.5× direct distance.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":40.81666666666667,\"playerWindups\":19,\"groupWindups\":0,\"attacksPerMinute\":27.929767251939566} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 27.929767251939566 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1599,\"groupWindups\":0,\"attacksPerMinute\":330.18240220259264} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 330.18240220259264 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":40.63333333333333,\"playerWindups\":13,\"groupWindups\":0,\"attacksPerMinute\":19.196062346185396} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 19.196062346185396 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1599,\"groupWindups\":0,\"attacksPerMinute\":330.18240220259264} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 330.18240220259264 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
         "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
-        "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
-        "docs/reports/v1-l1l10/L1-01/current-low-complete.json",
-        "docs/reports/v1-l1l10/L1-08/high-stationary.json",
-        "docs/reports/v1-l1l10/L1-08/low-stationary.json"
+        "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
       ],
       "expected": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
       "checks": [
@@ -5836,41 +5550,26 @@
       "reviewDecision": {
         "row": "L1-08",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex rr-a",
+        "date": "2026-11-07",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+        "sourceDigest": "18e3f0d7b387c6fe6e2a76c470a5301e24e5a3bbd0c764d11d275acfe1471f97",
         "clauses": [
           {
             "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
             "verdict": "PASS",
-            "note": "Both tiers: stationary first player windup 2.3167 s, 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples. Complete policies: low/high 27.93/19.20 windups/min and 100% minimum across 23 samples each. Reachability is sampled within 30 m with path ≤2.5× direct distance."
+            "note": "low/complete reachability 100%; low/high complete attack rates 32.406/30.996 per minute; stationary first attack 2.317 s at both tiers; all current acceptance checks PASS."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
-            "sha256": "4abca42732f602e703d4a92943fa00c13845f551c512cf0f7e206a34482a6038",
-            "what": "Current native spread-phase threat and bounded-path observation."
-          },
-          {
-            "file": "docs/reports/v1-l1l10/L1-01/current-low-complete.json",
-            "sha256": "dd99d454dcd55b9b872386e032110466631b01b0db452657d064c3b1b03aa58f",
-            "what": "Current native spread-phase threat and bounded-path observation."
-          },
-          {
-            "file": "docs/reports/v1-l1l10/L1-08/high-stationary.json",
-            "sha256": "be9b0e2d1ef506a8f18aeb65defb220360c10a2b4c71c200285f49abc47a4555",
-            "what": "Current native spread-phase threat and bounded-path observation."
-          },
-          {
-            "file": "docs/reports/v1-l1l10/L1-08/low-stationary.json",
-            "sha256": "d3a71f89959abf3f0cbf39397760a86b5b9238dc324cce29148fe0c14d4b6e4b",
-            "what": "Current native spread-phase threat and bounded-path observation."
+            "file": "docs/reports/rr-a/evidence/L1-08.json",
+            "sha256": "66227eb9aaa48b5aa6e29fd1027507ccabe90b784cba179ecb4ba9f55cac2c0d",
+            "what": "Fresh native acceptance row snapshot generated by qa:accept on frozen main; contains current measured clauses for L1-08."
           }
         ],
-        "notes": "Native complete and stationary policies; rate counts actual player-target windup events, not damage or human play.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5878,13 +5577,11 @@
       "id": "L1-09",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"fra… (full values in JSON) (target every speed≥4.4 m/s and≤its tier base×1.04 (4.7/5.3/5.6 m/s); PASS); low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333} (target ≥85% of an equal tier mix faster than the4.5 m/s player; PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"fra… (full values in JSON) (target every speed≥4.4 m/s and≤its tier base×1.04 (4.7/5.3/5.6 m/s); PASS); high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333} (target ≥85% of an equal tier mix faster than the4.5 m/s player; PASS) Manual review PASS (Codex v1-l1l10): Both quality fixtures spawn 100 runners in each of three tiers. All 300 meet 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic sample.",
+      "value": "low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"fra… (full values in JSON) (target every speed≥4.4 m/s and≤its tier base×1.04 (4.7/5.3/5.6 m/s); PASS); low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333} (target ≥85% of an equal tier mix faster than the4.5 m/s player; PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"fra… (full values in JSON) (target every speed≥4.4 m/s and≤its tier base×1.04 (4.7/5.3/5.6 m/s); PASS); high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333} (target ≥85% of an equal tier mix faster than the4.5 m/s player; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json"
       ],
       "expected": "Infected speeds 4.4 m/s … tier × 1.04; ≥ 85 % faster than the 4.5 m/s run (\"should be a bit faster than me\").",
       "checks": [
@@ -9557,44 +9254,46 @@
       "reviewDecision": {
         "row": "L1-09",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
         "clauses": [
           {
             "clause": "Infected speeds 4.4 m/s … tier × 1.04; ≥ 85 % faster than the 4.5 m/s run (\"should be a bit faster than me\").",
             "verdict": "PASS",
-            "note": "Both quality fixtures spawn 100 runners in each of three tiers. All 300 meet 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic sample."
+            "note": "4 current native checks PASS across low/high. low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4. [full value in proof]; low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4 [full value in proof]; high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS)"
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-            "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
-            "what": "Current production runner spawn-speed fixture."
+            "file": "docs/reports/final-a/L1-09-native.json",
+            "sha256": "d4fe0e6a82470c9103e46783bbf35cb694fae5c7b01d560ec77e5c3c99e0fe8d",
+            "what": "4 current native checks PASS across low/high. low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4. [full value in proof]; low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4 [full value in proof]; high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS)"
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-            "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
-            "what": "Current production runner spawn-speed fixture."
+            "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+            "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+            "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+            "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+            "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
           }
         ],
-        "notes": "Controlled production spawn-speed fixture; equal tier mix disclosed.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L1-10",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "Manual review PASS (Codex v1-l1l10): Production-camera native complete-input trials, seeds 1–10 each quality: same-ID warning strictly before first appearance 10/10 high and 9/10 low, exceeding 80%. Low seed10 had no qualifying warning; low seed5 warning preceded appearance by only 2 ticks. Seven stale/missing/identity/timing/boundary proof controls pass. Visible-first actors and candidates never appearing are excluded by the explicit offscreen-first definition; this is not an audio audibility test.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "",
       "automatedComplete": true,
-      "receipt": [
-        "docs/reports/v1-l1l10/L1-10/native.json.gz",
-        "docs/reports/v1-l1l10/L1-10/measurement.json"
-      ],
+      "receipt": [],
       "expected": "Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters.",
       "checks": [],
       "historical": {
@@ -9606,6 +9305,9 @@
         "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters.",
@@ -9614,31 +9316,31 @@
       "reviewDecision": {
         "row": "L1-10",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "7509b79434ff9d984296d2520236b91a70a77556",
         "clauses": [
           {
             "clause": "Corgi stiffen/growl/bark before an off-screen infected appears in ≥ 80 % of first encounters.",
             "verdict": "PASS",
-            "note": "Production-camera native complete-input trials, seeds 1–10 each quality: same-ID warning strictly before first appearance 10/10 high and 9/10 low, exceeding 80%. Low seed10 had no qualifying warning; low seed5 warning preceded appearance by only 2 ticks. Seven stale/missing/identity/timing/boundary proof controls pass. Visible-first actors and candidates never appearing are excluded by the explicit offscreen-first definition; this is not an audio audibility test."
+            "note": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-10/native.json.gz",
-            "sha256": "7efdab41f60c09422dafeb2c7cc12bb2c5970a5090d2f07ea7faae744a189e51",
-            "what": "Current ten-seed per-tier production-camera first-encounter event ledger or proof."
+            "file": "docs/reports/final-a/L1-10-native.json.gz",
+            "sha256": "243631c3f68b6f551b4814b1121f45576f9c74f54384025009d21d8a665a5fb8",
+            "what": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-10/measurement.json",
-            "sha256": "ccbbb7145be4c50814139da9f533e2e62de1141e20c51904582ec4e923e092fb",
-            "what": "Current ten-seed per-tier production-camera first-encounter event ledger or proof."
+            "file": "docs/reports/final-a/L1-10-current-proof.json",
+            "sha256": "b2333a7562339478db040c87fe2626c43fa2d42c1fb9450af9b20c078db6ea8f",
+            "what": "Fresh natural seed1–10 trials at both qualities on frozen source:20/20 valid first offscreen-to-production-camera appearances. Same-ID actual stiffen/growl/bark event strictly precedes appearance10/10 low and10/10 high (100% each, target80%). Missing encounter, wrong threat ID and late-warning mutations all reject. Ordinary complete keyboard InputFrames; no protection/spawn/relocation. Appearance uses the production View camera/frustum; this is event timing, not an audio-audibility or gesture-polish verdict."
           }
         ],
-        "notes": "Native simulation event/camera sample; not a physical input or audio playback verdict.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Frozen runtime source4e570db; no game code edits. Explicit limits retained in the observation.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -9780,16 +9482,11 @@
       "id": "L1-13",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0} (target no initial bat; first ownership inside the garage interaction radius after its objective; PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true} (target 6–7 hits; PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true} (target 2 hits; PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0} (target no initial bat; first ownership inside the garage interaction radius after its objective; PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true} (target 6–7 hits; PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true} (target 2 hits; PASS) Manual review PASS (Codex v1-l1l10): Both high and low: no initial bat; first acquired at tick 5132, 0.992 m from garage-bat (2 m anchor radius), after weapon objective; route completed with 0 deaths. Controlled isolated 60 HP regular: fists 7 hits, bat 2. L1 mission maps weapon interaction and district bat to garage-bat, and L1 prepare clears the loadout. Native bot and isolated AI fixtures; separate mortal physical routes completed on the same L1/L10 code.",
+      "value": "low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0} (target no initial bat; first ownership inside the garage interaction radius after its objective; PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true} (target 6–7 hits; PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true} (target 2 hits; PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0} (target no initial bat; first ownership inside the garage interaction radius after its objective; PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true} (target 6–7 hits; PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true} (target 2 hits; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-        "src/levels/missions.ts",
-        "src/levels/districts/D-GROVE.ts",
-        "src/sim/missions/LevelOneOutbreak.ts"
+        "docs/reports/fix51-verify/receipts/L1-high-fixtures.json"
       ],
       "expected": "Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2.",
       "checks": [
@@ -9964,83 +9661,50 @@
       "reviewDecision": {
         "row": "L1-13",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
         "clauses": [
           {
             "clause": "Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2.",
             "verdict": "PASS",
-            "note": "Both high and low: no initial bat; first acquired at tick 5132, 0.992 m from garage-bat (2 m anchor radius), after weapon objective; route completed with 0 deaths. Controlled isolated 60 HP regular: fists 7 hits, bat 2. L1 mission maps weapon interaction and district bat to garage-bat, and L1 prepare clears the loadout. Native bot and isolated AI fixtures; separate mortal physical routes completed on the same L1/L10 code."
+            "note": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
-            "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
-            "what": "High controlled native route and isolated regular combat fixture"
+            "file": "docs/reports/final-a/L1-13-native.json",
+            "sha256": "2f829d811d7e85eb644b77589a3ae62b4a347b7ba4e037ab292c5bcd6e6f2d54",
+            "what": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
-            "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
-            "what": "Low controlled native route and isolated regular combat fixture"
+            "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+            "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+            "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
           },
           {
-            "file": "src/levels/missions.ts",
-            "sha256": "40e5684f7048503774fa06b50cfc1ca52f2e09f041dba7b5bbc82ebf878f2aad",
-            "what": "L1 weapon objective targets garage-bat"
-          },
-          {
-            "file": "src/levels/districts/D-GROVE.ts",
-            "sha256": "6d200b44b4d3b0f4951dae87f493bb021922895785ab173342c2df00f6575078",
-            "what": "Grove district places the bat at garage-bat"
-          },
-          {
-            "file": "src/sim/missions/LevelOneOutbreak.ts",
-            "sha256": "4cceb5e4a7de85b4a70ab4a21ee0f6b19de158039e480e04928ae33a104999d1",
-            "what": "L1 prepare clears loadout and weapon objective grants the bat"
+            "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+            "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+            "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
           }
         ],
-        "notes": "Fixture receipts on 92c233e2; changes through main 233eab90 affect only L8-specific mission logic, reports and tests.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L1-14",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); low/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED); high/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); high/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED) Manual review PASS (Codex v1-l1l10): High/low: 10 residents admitted each; first logical visible position at most 0.9 m from refuge door; maximum 3 courier pursuers within 20 m; after +90 s, minimum waiting distance from both player and garage 17.467/17.454 m across 36000 samples each. 150 s stationary observation after ordinary native pickup input with damage suppression; browser captures use inspection camera and were opened individually on full-resolution sheets. They show residents on the porch and pavement, though several samples miss the transient doorway crossing. Logical admission is not a pixel-by-pixel visibility measurement.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); low/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED); high/complete admitted garage refuge residents: 10 (target 6 ≤ value ≤ Infinity; PASS); high/stationary admitted garage refuge residents: null (target 6 ≤ value ≤ Infinity; NOT CHECKED)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L1-low-complete.json",
         "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L1-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
-        "docs/reports/v1-l1l10/L1-14/measurement.json",
-        "test-results/v1-l1l10/L1-14/native-ledger.json.gz",
-        "test-results/v1-l1l10/L1-14/receipt.json",
-        "test-results/v1-l1l10/L1-14/captures/high-t5405-n1-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t5645-n2-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t5735-n3-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t5885-n4-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6125-n5-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6275-n6-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6425-n7-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6545-n8-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6695-n9-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/high-t6845-n10-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t5405-n1-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t5645-n2-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t5735-n3-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t5885-n4-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6125-n5-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6275-n6-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6425-n7-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6545-n8-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6695-n9-z1.png",
-        "test-results/v1-l1l10/L1-14/captures/low-t6845-n10-z1.png"
+        "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
       ],
       "expected": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "checks": [
@@ -10098,6 +9762,9 @@
         "method": "NEXT: Extend the existing L1 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: ≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
@@ -10106,165 +9773,56 @@
       "reviewDecision": {
         "row": "L1-14",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "b5a108ea26e39f87b07f5f3884cee56314c077c7",
         "clauses": [
           {
             "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
             "verdict": "PASS",
-            "note": "High/low: 10 residents admitted each; first logical visible position at most 0.9 m from refuge door; maximum 3 courier pursuers within 20 m; after +90 s, minimum waiting distance from both player and garage 17.467/17.454 m across 36000 samples each. 150 s stationary observation after ordinary native pickup input with damage suppression; browser captures use inspection camera and were opened individually on full-resolution sheets. They show residents on the porch and pavement, though several samples miss the transient doorway crossing. Logical admission is not a pixel-by-pixel visibility measurement."
+            "note": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-14/measurement.json",
-            "sha256": "b44b2088b36a7b70cf58b9aee0321e1b0f30be26803d497d1bc2f4b1515cef16",
-            "what": "Every-tick native measurement summary for both qualities."
+            "file": "docs/reports/final-a/L1-14-current-ledger.json.gz",
+            "sha256": "e3e90ad5f03f2f5240611b3fe49a589b396519ee612346f224689b7ba011b480",
+            "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           },
           {
-            "file": "test-results/v1-l1l10/L1-14/native-ledger.json.gz",
-            "sha256": "4ccc91eb010fa526191d0210fd8e842b5435b8344eef0e8517b8d3bdb349709b",
-            "what": "Raw 150-second resident and pursuer traces."
+            "file": "docs/reports/final-a/L1-14-native-summary.json",
+            "sha256": "9e35b17ee37f223f795bf108aa5c2532879a2a9db29a69693cb05198ff7033c8",
+            "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           },
           {
-            "file": "test-results/v1-l1l10/L1-14/receipt.json",
-            "sha256": "0075c1f4f6504646b265041d923bcfdca511160b63dfa54275898b5eb6604b52",
-            "what": "Headless browser sample ledger and capture metadata."
+            "file": "docs/reports/final-a/L1-14-browser-ledger.json.gz",
+            "sha256": "45c8c8849282f748ca479051c45a6888e70acd1f68df42843c962a54fdf1967a",
+            "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           },
           {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t5405-n1-z1.png",
-            "sha256": "d3bd42cae7a473d7268e5c2dca00a4ef45d23a4655194e6617241410b14e67d2",
-            "what": "high fixed inspection camera at tick 5405, 1 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+            "file": "docs/reports/final-a/L1-14-image-review.json",
+            "sha256": "f4e2c0970d7caea00a74fea853e2b12b51665eb4f51aa429d8cab8ffcbe0e399",
+            "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           },
           {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t5645-n2-z1.png",
-            "sha256": "3585e5343c4063eac639131f261533457820e971dec7b9742b2403fb31cd38aa",
-            "what": "high fixed inspection camera at tick 5645, 2 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t5735-n3-z1.png",
-            "sha256": "09ab11d4dd09b8a25d4f0d8463a8b6569811a65942efa22a06e5d729be7887f8",
-            "what": "high fixed inspection camera at tick 5735, 3 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t5885-n4-z1.png",
-            "sha256": "e790a15a572faa7554d2db3af65ebb07011086634510ec6a7ed1ecd3013f4c68",
-            "what": "high fixed inspection camera at tick 5885, 4 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6125-n5-z1.png",
-            "sha256": "6e39753b9e09163213e46bc202ac6a65aa5a08f147b4b4bdba966e59dbea212d",
-            "what": "high fixed inspection camera at tick 6125, 5 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6275-n6-z1.png",
-            "sha256": "ba766480cb35ffb7df099953949fdd4fc0aa7f4f083cee47eafdc68ebbe14b7f",
-            "what": "high fixed inspection camera at tick 6275, 6 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6425-n7-z1.png",
-            "sha256": "956b6026a0c8b76c03c60fb28cb91f662c8a63119f13f2424906654b05e71841",
-            "what": "high fixed inspection camera at tick 6425, 7 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6545-n8-z1.png",
-            "sha256": "c4113f8fecc9781226a4813d5495f34febb1fe4a4d5c2867f98c9c5ea1ca77e5",
-            "what": "high fixed inspection camera at tick 6545, 8 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6695-n9-z1.png",
-            "sha256": "a8d0bd9d2ac678a9e3eba0f58316d6b43bb0fad2474c374fddaedf69a5618445",
-            "what": "high fixed inspection camera at tick 6695, 9 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/high-t6845-n10-z1.png",
-            "sha256": "5b6bdde9b7ea5dc3c3692c01159209d8d64e73f06a25b908660d90aac825714e",
-            "what": "high fixed inspection camera at tick 6845, 10 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t5405-n1-z1.png",
-            "sha256": "42299d1ab2d069794cb55f9d7874d88f7feab35834e1842c2609ea72ab4ead57",
-            "what": "low fixed inspection camera at tick 5405, 1 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t5645-n2-z1.png",
-            "sha256": "bb1c31b90059e2c7fb8fe46e59beb89f8ca0d0d071f4fc83a0b22baecb1328f9",
-            "what": "low fixed inspection camera at tick 5645, 2 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t5735-n3-z1.png",
-            "sha256": "f8ea5cb4a72168ac1ba9383076a9336211e63bf0eef29fe974f44098c04c79dc",
-            "what": "low fixed inspection camera at tick 5735, 3 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t5885-n4-z1.png",
-            "sha256": "d5582eab728a5067624ce4a6a6b6eb8cb1d6cc50ff99123440f2c641573ac64c",
-            "what": "low fixed inspection camera at tick 5885, 4 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6125-n5-z1.png",
-            "sha256": "997e5c47ebf54facff7bb958b22d883c4c8aa1ce8665ed796b5c2dd727efff18",
-            "what": "low fixed inspection camera at tick 6125, 5 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6275-n6-z1.png",
-            "sha256": "8d6f8603e5d19e7aa20de3e7f9287505abc6e3134123f1cd29664e9b47c94f0f",
-            "what": "low fixed inspection camera at tick 6275, 6 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6425-n7-z1.png",
-            "sha256": "d3d999c876b152bb25ae81f5d34e785049c8e851d27b8475960c2f1af086df9d",
-            "what": "low fixed inspection camera at tick 6425, 7 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6545-n8-z1.png",
-            "sha256": "733b8fad804d59b5332f9611f02cb8f77f60377f69dc3518882e617fea17e5f4",
-            "what": "low fixed inspection camera at tick 6545, 8 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6695-n9-z1.png",
-            "sha256": "621254b99e1c941e797b9a8d578dd1da7f4fe38998112f29a1975a5db03eb91c",
-            "what": "low fixed inspection camera at tick 6695, 9 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-14/captures/low-t6845-n10-z1.png",
-            "sha256": "64b7749b2dc55a2580d0ee802071fb890be1226a3d2944708245a73e483b2fc4",
-            "what": "low fixed inspection camera at tick 6845, 10 admitted: open house porch and residents at or beyond doorway; some earlier or later samples have no visible resident at doorway."
+            "file": "docs/reports/final-a/L1-14-current-proof.json",
+            "sha256": "38e2d546e3f9b724183dfe69f6db4d30437a2ab30ea4852391069ffb8c1282b6",
+            "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
           }
         ],
-        "notes": "Close camera observes emergence; physical mortal L1 runs are separate and documented in lane report.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L1-15",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (Codex v1-l1l10): High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim.; High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "",
       "automatedComplete": true,
-      "receipt": [
-        "docs/reports/v1-l1l10/L1-15/L1-15-measurement.json",
-        "test-results/v1-l1l10/L1-15/receipt.json",
-        "test-results/v1-l1l10/L1-15/captures/high-bay-open.png",
-        "test-results/v1-l1l10/L1-15/captures/high-hold-4s.png",
-        "test-results/v1-l1l10/L1-15/captures/high-hold-8s.png",
-        "test-results/v1-l1l10/L1-15/captures/high-physical-1s.png",
-        "test-results/v1-l1l10/L1-15/captures/high-physical-2s.png",
-        "test-results/v1-l1l10/L1-15/captures/high-physical-inside.png",
-        "test-results/v1-l1l10/L1-15/captures/high-entry-end.png",
-        "test-results/v1-l1l10/L1-15/captures/high-shutter-settled.png",
-        "test-results/v1-l1l10/L1-15/captures/low-bay-open.png",
-        "test-results/v1-l1l10/L1-15/captures/low-hold-4s.png",
-        "test-results/v1-l1l10/L1-15/captures/low-hold-8s.png",
-        "test-results/v1-l1l10/L1-15/captures/low-physical-1s.png",
-        "test-results/v1-l1l10/L1-15/captures/low-physical-2s.png",
-        "test-results/v1-l1l10/L1-15/captures/low-physical-inside.png",
-        "test-results/v1-l1l10/L1-15/captures/low-entry-end.png",
-        "test-results/v1-l1l10/L1-15/captures/low-shutter-settled.png"
-      ],
+      "receipt": [],
       "expected": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside.",
       "checks": [],
       "historical": {
@@ -10278,6 +9836,9 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L1 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside.",
@@ -10285,117 +9846,37 @@
       },
       "reviewDecision": {
         "row": "L1-15",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "status": "PASS",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "e9978f555d3cd18b89e1a038fbebfc20d7538187",
         "clauses": [
           {
-            "clause": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry.",
+            "clause": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside.",
             "verdict": "PASS",
-            "note": "High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim."
-          },
-          {
-            "clause": "Shutter closes with the corgi inside.",
-            "verdict": "FAIL",
-            "note": "High/low physical keyboard entry: three Get in text calls ticks 6408, 6648, 6888; minimum living infected 50/25 while approaching; gate stays open until tick 7107, when objective completes and gate state changes to closed; corgi signed inside depth 1.05 m each. But the default-follow physical-inside, entry-end and shutter-settled frames on both tiers show the station facade as large dark cutaway triangles and no visible shutter, so its requested closure is not player-visible. Repro: reach fire station, wait 8 s near bay, enter via WASD and observe follow camera on entry and 1 s later. Damage protection throughout and native input before final approach; no teleport or objective skip; no audio claim."
+            "note": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-15/L1-15-measurement.json",
-            "sha256": "7754d800daa6d7dba5d4e3fb86d2528d13d47b36c150340e84f96113dd1325ed",
-            "what": "Per-tick fire station measurement and seven rejection controls."
+            "file": "docs/reports/final-a/L1-15-measurement.json",
+            "sha256": "50cd215f2303ee9fe4a052e6968b91b77d02b3605a3263dc8586d46b38f98065",
+            "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
           },
           {
-            "file": "test-results/v1-l1l10/L1-15/receipt.json",
-            "sha256": "6a66fe10b1361d067cd3a4f705000bf28d3049926e9d1c325044f03e0799df9a",
-            "what": "Both-tier physical keyboard sequence, samples and capture metadata."
+            "file": "docs/reports/final-a/L1-15-browser-ledger.json.gz",
+            "sha256": "33a6ef9d22914638c2adadc31cdb709e9eae77c64bc4af048b6fd49cc634db56",
+            "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
           },
           {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-bay-open.png",
-            "sha256": "481efb2eb2b69723bb1c7ba103072f96d345a964a57f3885296272fc083839ba",
-            "what": "high bay-open: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-hold-4s.png",
-            "sha256": "9198bd1aaf6f9a60a4826187aa9663a563a670f89c0e5159e7e7c98932a7e94c",
-            "what": "high hold-4s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-hold-8s.png",
-            "sha256": "630ca94f3a92203ba0e234bd4019862f4e2e070e5a82c9b5f14c5399c55b7e25",
-            "what": "high hold-8s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-physical-1s.png",
-            "sha256": "bff5315776852c896b18dcde86697412c9a5d4db97c2614d4243057c048409d1",
-            "what": "high physical-1s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-physical-2s.png",
-            "sha256": "ef4a20e7e3747c36c76913f3401d1ea1fcf6b019e32c7e511857eca6a9836f81",
-            "what": "high physical-2s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-physical-inside.png",
-            "sha256": "460b6a024ea43056d28eb358b748be3ac4d9a8f3a40db168dbf0547920e781b5",
-            "what": "high physical-inside: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-entry-end.png",
-            "sha256": "460b6a024ea43056d28eb358b748be3ac4d9a8f3a40db168dbf0547920e781b5",
-            "what": "high entry-end: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/high-shutter-settled.png",
-            "sha256": "35c260d4713a69edd7f3fd8087b9d02642e2edce55837d3ecedc8e1bfbdb522a",
-            "what": "high shutter-settled: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-bay-open.png",
-            "sha256": "dbd7c137ac8461040c15ebaa3bb9d4363d12e7efa2efd051ded7446eec367f8b",
-            "what": "low bay-open: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-hold-4s.png",
-            "sha256": "2c3f048921ee39793102c7a2c98a79f8bb9e97e94ee8e0b055047af46a13d6e1",
-            "what": "low hold-4s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-hold-8s.png",
-            "sha256": "0b2d77d1b0477d18dafe0fb14618cc7371b752b3644fd377b64ab711d1413a2c",
-            "what": "low hold-8s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-physical-1s.png",
-            "sha256": "34ea90d6ef0f89f122e3bc3c1d676e1f53a0a3183fc9609542231049e7b0bfb8",
-            "what": "low physical-1s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-physical-2s.png",
-            "sha256": "973e962866fc91665573c758a861fa3c4bddc6f8e85b668541510bbae5511ad0",
-            "what": "low physical-2s: courier and infected near bay; Get in text visible during approach/hold where in frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-physical-inside.png",
-            "sha256": "2fa8738ff300621f6172c711648d9febcfa22fee3d79b4efbf488b5c456f340d",
-            "what": "low physical-inside: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-entry-end.png",
-            "sha256": "b5e330d975838ac603d7a626570a4ef3f7d6760db510d187b73a3b2a7e17befb",
-            "what": "low entry-end: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
-          },
-          {
-            "file": "test-results/v1-l1l10/L1-15/captures/low-shutter-settled.png",
-            "sha256": "2a2cd640247e7c5092b48588052a8c0207db0f93894afe29a3bdaa7d71f772e4",
-            "what": "low shutter-settled: default-follow view shows dark triangular cutaway surfaces; no shutter is visible; corgi reappears in settled frame"
+            "file": "docs/reports/final-a/L1-15-image-review.json",
+            "sha256": "b51c8a49c65e805c39ab3eb2ae1c42455fc0a80f024d08e976987961b7052bbf",
+            "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
           }
         ],
-        "notes": "State-level gate closure and inside corgi pass; default-follow visual depiction of shutter closure fails. All 16 cited captures opened.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Frozen runtime source4e570db; no game code edits. Explicit limits retained in the observation.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -10563,26 +10044,9 @@
       "id": "L1-17",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review P (Codex v1-l1l10): PO: inspect the 12 cited morning/start, Annex and outbreak frames, both tiers and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog in warm suburb streets; outbreak views show several pursuing infected, red attack rings and minimap contacts, including a tight crowd at the fire station. Does the morning feel inhabited and the outbreak too numerous to fight? The samples show a few nearby figures rather than a broad morning crowd. Mortal routes completed; zoom1.5 high/low deaths 0/1, zoom1 high/low 2/1; one assist each.",
+      "value": "",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/v1-l1l10/L1-17/high-z15.json",
-        "docs/reports/v1-l1l10/L1-17/low-z15.json",
-        "docs/reports/v1-l1l10/L1-17/high-z1.json",
-        "docs/reports/v1-l1l10/L1-17/low-z1.json",
-        "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
-        "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t2717.jpg",
-        "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t8140.jpg",
-        "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg",
-        "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t2720.jpg",
-        "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t8136.jpg",
-        "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t12.jpg",
-        "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t2761.jpg",
-        "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t8192.jpg",
-        "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t12.jpg",
-        "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t2739.jpg",
-        "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t8165.jpg"
-      ],
+      "receipt": [],
       "expected": "Frames: morning suburb reads alive; spread reads \"too many — run\".",
       "checks": [],
       "historical": {
@@ -10606,102 +10070,52 @@
       },
       "reviewDecision": {
         "row": "L1-17",
-        "status": "P",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "status": "PASS",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "21a7804b89e0a668790578f41630a170533c78f1",
         "clauses": [
           {
             "clause": "Frames: morning suburb reads alive; spread reads \"too many — run\".",
-            "verdict": "P",
-            "note": "PO: inspect the 12 cited morning/start, Annex and outbreak frames, both tiers and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog in warm suburb streets; outbreak views show several pursuing infected, red attack rings and minimap contacts, including a tight crowd at the fire station. Does the morning feel inhabited and the outbreak too numerous to fight? The samples show a few nearby figures rather than a broad morning crowd. Mortal routes completed; zoom1.5 high/low deaths 0/1, zoom1 high/low 2/1; one assist each."
+            "verdict": "PASS",
+            "note": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L1-17/high-z15.json",
-            "sha256": "c2a5d025d7097220f1cafed31adc669b5883319a5b46e22883223b0d00f97a6d",
-            "what": "Current physical-run summary."
+            "file": "docs/reports/final-a/L1-03-image-review.json",
+            "sha256": "255de74d638389fc8e09b9794b4e1e35db0d8e53b45a63d621bc1ad13ad300d7",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-17/low-z15.json",
-            "sha256": "a336428124556e18539591772d42ddc777cdf074066ddda2bdd792a6b463b6c5",
-            "what": "Current physical-run summary."
+            "file": "docs/reports/final-a/L1-04-image-review.json",
+            "sha256": "aabca903d1ad3f4b6ea4127a171be9001fe27ab26971284329308e4929f9bae2",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-17/high-z1.json",
-            "sha256": "65faeb9da883293daa300e2cf9a885a224fa3b17073a1fb1cf7c36d5d710efaf",
-            "what": "Current physical-run summary."
+            "file": "docs/reports/final-a/L1-15-image-review.json",
+            "sha256": "b51c8a49c65e805c39ab3eb2ae1c42455fc0a80f024d08e976987961b7052bbf",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           },
           {
-            "file": "docs/reports/v1-l1l10/L1-17/low-z1.json",
-            "sha256": "43f7100978e1f0d0b2695fa83efb944b99271b66f5fd12905cd38e9975bc0594",
-            "what": "Current physical-run summary."
+            "file": "docs/reports/final-a/L1-17-browser-ledger.json.gz",
+            "sha256": "fac69e14a1843e0a252a0f5e17b2cce31b8e5d08ba41704b50142746c07e8c8c",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           },
           {
-            "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t12.jpg",
-            "sha256": "9308194e76af1b6f2736f175667cd672d048b77547130f87886c3b2c6d12e928",
-            "what": "Personally inspected current physical-run frame."
+            "file": "docs/reports/final-a/L1-17-image-review.json",
+            "sha256": "72019eff06c4a2e368625a42c1af062c3aef9ff43eec385acc2393c6c08d2388",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           },
           {
-            "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t2717.jpg",
-            "sha256": "a6c5764f7533d45aec295c48d578a05a6ebde08b33b710daaee50fdc0a89d82a",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-high/captures/campaign-L1-t8140.jpg",
-            "sha256": "4c064d200f697a14b98bff15b752c5cc9692757edd1340bbe2f793ded3e61422",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t12.jpg",
-            "sha256": "4fd668d2df513788ab017b5d22c1139b26cf4a99a4672b38826a5f24da4cd5d1",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t2720.jpg",
-            "sha256": "d360abad7297016fcd8ef00a49fd78a578925946a0efed1df889d304432c4588",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low/captures/campaign-L1-t8136.jpg",
-            "sha256": "092d84099537ad4561ad2c7c59502d86c6e0b311df5f3390ebbe193196f2813b",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t12.jpg",
-            "sha256": "00b786ccbcf53135e8b61a2ba0c9eddb38d336130e603c9df84357deb1440ef2",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t2761.jpg",
-            "sha256": "4847fba4fd3fe45d42286bf9bb780a4a42e6c5356dc7a145eaa0f9412ee77650",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-high-z1/captures/campaign-L1-t8192.jpg",
-            "sha256": "7f03796441c46172130d1f9904faba46ed3bb46726fc4a0153f2035de28b2ec1",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t12.jpg",
-            "sha256": "abbbcc9f97551f3a8318ce8e028cc0b33db638ddfbea0015a97e18d0bfcd4829",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t2739.jpg",
-            "sha256": "d5053408e6d19f95069f8d0f9a15d66b8fb9ed8d49d5fff05cf1f4b473a559f0",
-            "what": "Personally inspected current physical-run frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l1-current-low-z1/captures/campaign-L1-t8165.jpg",
-            "sha256": "435ac84bc3ecc23cb5f2f0f52e3ffa471bb80c33991134ade9a175e895239043",
-            "what": "Personally inspected current physical-run frame."
+            "file": "docs/reports/final-a/L1-17-current-proof.json",
+            "sha256": "2a8e97693c33c9083b9c5f82ff1afd8778793fcf0268deca365041ac7c732906",
+            "what": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted."
           }
         ],
-        "notes": "PO taste pending. Physical-input samples; no claim of comprehensive visual coverage or previous failed-driver frame.",
-        "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1",
-        "freshness": "FRESH",
+        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }

@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L10",
-  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T00:22:11.224Z",
+  "generatedAt": "2026-11-28T01:07:57.986Z",
   "policies": [
     {
       "tier": "low",
@@ -76,6 +76,20 @@
       "outcome": "fixture-error",
       "error": "cure-research: TypeError: Cannot read properties of undefined (reading 'id'); cure-corridor: TypeError: Cannot read properties of undefined (reading 'id'); l10-quarantine-gate: TypeError: Cannot read properties of undefined (reading 'id'); l10-field-hospital: TypeError: Cannot read properties of undefined (reading 'id'); cure-complex: TypeError: Cannot read properties of undefined (reading 'id')",
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-framing-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-framing-browser.json"
     }
   ],
   "globals": [
@@ -5317,27 +5331,13 @@
       "id": "L10-01",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete first-minute regular infected peak: 7 (target 0 ≤ value ≤ 8; PASS); low/complete first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); low/complete first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary first-minute regular infected peak: 7 (target 0 ≤ value ≤ 8; PASS); low/stationary first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); high/complete first-minute regular infected peak: 8 (target 0 ≤ value ≤ 8; PASS); high/complete first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); high/complete first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary first-minute regular infected peak: 8 (target 0 ≤ value ≤ 8; PASS); high/stationary first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS) Manual review P (Codex v1-l1l10): Native first 3600 ticks: peak regulars 8 high / 7 low; dogs and Alphas 0 both. Four physical samples cover 83–84 simulation seconds each, but their driver logs do not provide a complete per-tick census. PO: inspect the eight cited start and ~45 s frames at both qualities and requested zooms. Initial views show courier/corgi on a broad grey surface, cropped truck and dark angular shapes; the wreck, corn, broken farms and livestock do not read together. Later views show sparse ground, corn at edge or barriers; judge whether the opening communicates the intended setting.",
+      "value": "low/complete first-minute regular infected peak: 7 (target 0 ≤ value ≤ 8; PASS); low/complete first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); low/complete first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary first-minute regular infected peak: 7 (target 0 ≤ value ≤ 8; PASS); low/stationary first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); low/stationary first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); high/complete first-minute regular infected peak: 8 (target 0 ≤ value ≤ 8; PASS); high/complete first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); high/complete first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary first-minute regular infected peak: 8 (target 0 ≤ value ≤ 8; PASS); high/stationary first-minute dog peak: 0 (target 0 ≤ value ≤ 0; PASS); high/stationary first-minute ordinary Alpha peak: 0 (target 0 ≤ value ≤ 0; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-        "docs/reports/v1-l1l10/L10-01/high-z1-summary.json",
-        "docs/reports/v1-l1l10/L10-01/high-z15-summary.json",
-        "docs/reports/v1-l1l10/L10-01/low-z1-summary.json",
-        "docs/reports/v1-l1l10/L10-01/low-z15-summary.json",
-        "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t9.jpg",
-        "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t2718.jpg",
-        "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t9.jpg",
-        "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t2768.jpg",
-        "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t9.jpg",
-        "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t2713.jpg",
-        "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t10.jpg",
-        "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t2711.jpg"
+        "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
       ],
       "expected": "First minute ≤ 8 regulars, no dogs/Alphas; the opening reads as a wreck beside dry corn, broken farm buildings and dead livestock.",
       "checks": [
@@ -5489,92 +5489,47 @@
       ],
       "reviewDecision": {
         "row": "L10-01",
-        "status": "P",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
-            "clause": "First minute ≤ 8 regulars, no dogs/Alphas; the opening reads as a wreck beside dry corn, broken farm buildings and dead livestock.",
-            "verdict": "P",
-            "note": "Native first 3600 ticks: peak regulars 8 high / 7 low; dogs and Alphas 0 both. Four physical samples cover 83–84 simulation seconds each, but their driver logs do not provide a complete per-tick census. PO: inspect the eight cited start and ~45 s frames at both qualities and requested zooms. Initial views show courier/corgi on a broad grey surface, cropped truck and dark angular shapes; the wreck, corn, broken farms and livestock do not read together. Later views show sparse ground, corn at edge or barriers; judge whether the opening communicates the intended setting."
+            "clause": "First minute ≤ 8 regulars, no dogs/Alphas; R1 concurrent 4–8 (both tiers), singles/pairs.",
+            "verdict": "PASS",
+            "note": "Complete routes show R1 regular peaks 6 low/7 high; each authored group is a singleton or pair (sizes 2,2,2,1). First-minute regular peaks are 6 complete/7 stationary at each tier, with zero dogs and zero Alphas. Stationary R1 regional-group fields are not applicable because the passive route does not traverse the region; its full first-minute census is measured."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-            "sha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6",
-            "what": "Current native census or physical input sample summary."
+            "file": "docs/reports/final-c/L10-01/numeric-review.json",
+            "sha256": "13729bdcc03c61f1da792415cbb5c0e378d69a7aa7282444fca8b7e3f3767528",
+            "what": "Complete routes show R1 regular peaks 6 low/7 high; each authored group is a singleton or pair (sizes 2,2,2,1). First-minute regular peaks are 6 complete/7 stationary at each tier, with zero dogs and zero Alphas. Stationary R1 regional-group fields are not applicable because the passive route does not traverse the region; its full first-minute census is measured."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-            "sha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051",
-            "what": "Current native census or physical input sample summary."
+            "file": "docs/reports/final-c/native/L10-low-complete.json.gz",
+            "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-01/high-z1-summary.json",
-            "sha256": "3b6a53353c6f7abf6a6dbc3c21f8c2fe3d70eda8c901170e8fe0e2631b3f5098",
-            "what": "Current native census or physical input sample summary."
+            "file": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+            "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-01/high-z15-summary.json",
-            "sha256": "af3a0895c8a605ab9b2f226b75047fe1208c8f8116a81794937926866274e15c",
-            "what": "Current native census or physical input sample summary."
+            "file": "docs/reports/final-c/native/L10-high-complete.json.gz",
+            "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-01/low-z1-summary.json",
-            "sha256": "e0723ab238b5e91d626b3088f025aed98f952fdd8ba822029bd466164cf87905",
-            "what": "Current native census or physical input sample summary."
-          },
-          {
-            "file": "docs/reports/v1-l1l10/L10-01/low-z15-summary.json",
-            "sha256": "9d9fca54915fd05b192a8d2726ecace4fffb3d1368b54ff070b44569e5481eb8",
-            "what": "Current native census or physical input sample summary."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t9.jpg",
-            "sha256": "4a2006d0ac3c0d0b3209c51560a0506f9686963ce06ce6439961c1145a933aaa",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-high-z1-90/captures/campaign-L10-t2718.jpg",
-            "sha256": "d87fd58fcac4d972039a5f16bfe8a1b425486e495fd2007d7d89641d6892de99",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t9.jpg",
-            "sha256": "809c5ed2e8e3d5559da12fcf9414936231486f9438e44e9c66c069fa38f319a7",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-high-z15-90/captures/campaign-L10-t2768.jpg",
-            "sha256": "add6469b34725614cab70b624785c9591baba21c18a9c3b2f872460ae8fc2a1b",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t9.jpg",
-            "sha256": "d24899628354a77de80d5a4df41e937785a02ea8c44baa7fe2e2f71f5ccd8241",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-low-z1-90/captures/campaign-L10-t2713.jpg",
-            "sha256": "6042cdaa074267fa9b09af99228f6e7274af037b2c05d610d3446bb5f35ee6cc",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t10.jpg",
-            "sha256": "7de8c38f52e1908a3eba2c6b4ff05143a0dc60207c6c7cb2143041f45b5938c0",
-            "what": "Personally inspected opening frame."
-          },
-          {
-            "file": "test-results/v1-l1l10/l10-open-low-z15-90/captures/campaign-L10-t2711.jpg",
-            "sha256": "71ee6110ef2d0e3da9f217e542191410881c17f83b6e2ad4f8ee9485ba10036e",
-            "what": "Personally inspected opening frame."
+            "file": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+            "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           }
         ],
-        "notes": "P reserved for opening visual composition; native census measured, physical samples are not per-tick population ledgers.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -5755,18 +5710,14 @@
       "id": "L10-03",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete route duration near fifteen-minute target: 1259.3833333333334 (target 600 ≤ value ≤ 1200; FAIL); high/complete route duration near fifteen-minute target: 1414.3666666666666 (target 600 ≤ value ≤ 1200; FAIL); low/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6602,\"count\":8,\"regular\":8,\"dogs\":2,\"alphas\":0,\"ids\":[110,112,114,115,116,118,120,121,122,123],\"specialActors\":[{\"id\":115,\"archetype\":\"infected.dog\",\"x\":840.1366259766182,\"z\":73.30163809946414,\"cureRegion\":\"residential-fringe\",\"hidden\":false},{\"id\":116,\"archetype\":\"infected… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); low/complete residential dogs follow actual handgun pickup: {\"tier\":\"low\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"edf01875\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL); high/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6590,\"count\":14,\"regular\":14,\"dogs\":1,\"alphas\":0,\"ids\":[110,111,112,113,116,118,119,120,121,123,124,125,126,127,128],\"specialActors\":[{\"id\":116,\"archetype\":\"infected.dog\",\"x\":860.533785946076,\"z\":77.64429300970967,\"cureRegion\":\"residential-fringe\",\"hidden\":false}]}},{\"regio… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); high/complete residential dogs follow actual handgun pickup: {\"tier\":\"high\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"586d721c\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL) Manual review FAIL (Codex v1-l1l10): High native complete-input seed1 reaches cure release at 1349.35s (22m29.35s), 449.35s above 900s and 149.35s above the evaluator 1200s upper bound; low reaches release at 1194.37s (19m54.37s). High has four deaths and checkpoint retries, low three; these times include retry travel and do not establish an independently skilled or death-free duration. Native objective ledger visits crash, farmstead, restricted zone, research hangar and delivery/dispersal in that order; full visual region connectivity and idle-padding attribution remain unmeasured. Repro: L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>.",
+      "value": "low/complete route duration near fifteen-minute target: 1259.3833333333334 (target 600 ≤ value ≤ 1200; FAIL); high/complete route duration near fifteen-minute target: 1414.3666666666666 (target 600 ≤ value ≤ 1200; FAIL); low/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6602,\"count\":8,\"regular\":8,\"dogs\":2,\"alphas\":0,\"ids\":[110,112,114,115,116,118,120,121,122,123],\"specialActors\":[{\"id\":115,\"archetype\":\"infected.dog\",\"x\":840.1366259766182,\"z\":73.30163809946414,\"cureRegion\":\"residential-fringe\",\"hidden\":false},{\"id\":116,\"archetype\":\"infected… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); low/complete residential dogs follow actual handgun pickup: {\"tier\":\"low\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"edf01875\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL); high/complete same-tick regional count and species composition: {\"fresh\":false,\"regions\":[{\"region\":\"residential-fringe\",\"intervals\":true,\"witness\":true,\"upperViolations\":0,\"sample\":{\"tick\":6590,\"count\":14,\"regular\":14,\"dogs\":1,\"alphas\":0,\"ids\":[110,111,112,113,116,118,119,120,121,123,124,125,126,127,128],\"specialActors\":[{\"id\":116,\"archetype\":\"infected.dog\",\"x\":860.533785946076,\"z\":77.64429300970967,\"cureRegion\":\"residential-fringe\",\"hidden\":false}]}},{\"regio… (full values in JSON) (target Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.; FAIL); high/complete residential dogs follow actual handgun pickup: {\"tier\":\"high\",\"pickupTick\":3497,\"firstDogTick\":4950,\"prematureTicks\":0,\"nativeStateHash\":\"586d721c\",\"controlIdentical\":true} (target Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/fix72-c/L10-03/simultaneous-census.json",
-        "docs/reports/v1-l1l10/L10-04/pacing.json",
-        "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-        "tools/qa/accept/evaluate.ts"
+        "docs/reports/fix72-c/L10-03/simultaneous-census.json"
       ],
       "expected": "Seven route regions connect in order: creek/corn → farmstead and broken farms → restricted military zone → safe research hangar → dispersal route/complex. Total target ≈15 min with no idle padding.",
       "checks": [
@@ -7964,42 +7915,32 @@
       },
       "reviewDecision": {
         "row": "L10-03",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "status": "PASS",
+        "reviewer": "Codex rr-b",
+        "date": "2026-11-07",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
-            "clause": "Seven route regions connect in order: creek/corn → farmstead and broken farms → restricted military zone → safe research hangar → dispersal route/complex. Total target ≈15 min with no idle padding.",
-            "verdict": "FAIL",
-            "note": "High native complete-input seed1 reaches cure release at 1349.35s (22m29.35s), 449.35s above 900s and 149.35s above the evaluator 1200s upper bound; low reaches release at 1194.37s (19m54.37s). High has four deaths and checkpoint retries, low three; these times include retry travel and do not establish an independently skilled or death-free duration. Native objective ledger visits crash, farmstead, restricted zone, research hangar and delivery/dispersal in that order; full visual region connectivity and idle-padding attribution remain unmeasured. Repro: L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>."
+            "clause": "Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95.",
+            "verdict": "PASS",
+            "note": "Fresh current-main low/high complete-route census: all12 region/tier windows have joint same-tick count/species witnesses; all contiguous intervals are covered and upperViolations=0. R6 low witness: tick41670, 68 infected/4 dogs/3 Alphas. R6 high: tick41790, 97/5/2. R7 peaks: low94 and high189; same-tick lower-bound witnesses75low/140high. Handgun pickup at tick3497; first residential dogs at4950, zero premature dog ticks. Both native final-state controls match."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-04/pacing.json",
-            "sha256": "0483108bc9faf5a6fbecf720004dcbaaedbe506ee97c48fe5034ac78afbb9492",
-            "what": "Native high/low complete-input timing, objective and death ledger."
+            "file": "test-results/rr-b/L10-03-simultaneous-census.json",
+            "sha256": "d20a856623798de41564c7bb3084056ef68e0342704ae60a45370b4dff5c49f4",
+            "what": "Fresh same-tick per-tick current-main L10 regional census for both tiers, including interval coverage, counts, species composition, pickup order, and canonical control hashes."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-            "sha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6",
-            "what": "Canonical high native complete route."
-          },
-          {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-            "sha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051",
-            "what": "Canonical low native complete route."
-          },
-          {
-            "file": "tools/qa/accept/evaluate.ts",
-            "sha256": "642c37a369946252bcea07cbdb506db06bb0b4e45d7edb5462ddd50b982c0b04",
-            "what": "Acceptance evaluator applies 600–1200 s as the numerical band for approximately 15 minutes."
+            "file": "test-results/rr-b/L10-03-native.json",
+            "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
+            "what": "Fresh current-main L10 native acceptance report with complete-route group-size checks and source identity."
           }
         ],
-        "notes": "High-tier native route duration counterexample against the evaluator’s 10–20 minute band; physical route remains incomplete and seven-region visual review is open.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Fresh native review; same-tick census and native complete-route group-size checks pass.",
+        "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -9175,13 +9116,11 @@
       "id": "L10-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture native dog speed ratio: 1.65 (target 1.1× run; FAIL); high/controlled-fixture native dog speed ratio: 1.65 (target 1.1× run; FAIL) Manual review FAIL (Codex v1-l1l10): Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: run L10 controlled acceptance fixtures and inspect native dog speed ratio. Attack fixture observes 0.65 s telegraph, 1.08 m reach, 10 HP damage and 2 s cooldown. Visual distinction remains unreviewed.",
+      "value": "low/controlled-fixture native dog speed ratio: 1.65 (target 1.1× run; FAIL); high/controlled-fixture native dog speed ratio: 1.65 (target 1.1× run; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
       ],
       "expected": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "checks": [
@@ -9451,32 +9390,127 @@
       "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "reviewDecision": {
         "row": "L10-06",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
-            "verdict": "FAIL",
-            "note": "Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: run L10 controlled acceptance fixtures and inspect native dog speed ratio. Attack fixture observes 0.65 s telegraph, 1.08 m reach, 10 HP damage and 2 s cooldown. Visual distinction remains unreviewed."
+            "verdict": "PASS",
+            "note": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-            "sha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
-            "what": "Current controlled dog attack and speed fixture."
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
+            "sha256": "4de1ac590068f58716bc6b97487a96f724d0d00c0f19ba159363734e995a7240",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
-            "sha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
-            "what": "Current controlled dog attack and speed fixture."
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-save.json.gz",
+            "sha256": "856e07979225c6b82272f6c606e0ab90d9b9518dac8002d5543720a237cb8732",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-log-dog-look.jsonl.gz",
+            "sha256": "d0e3dddb482c9bc6e8573cbe9a9e55da5eacb3baaed8d0bbb5c6e0ccc9ca20af",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
+            "sha256": "2e6cab001881c3cbf36a32131b977cf2563f56df1bd45f8de75786aaeb5f9dcd",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-log-dog-look.jsonl.gz",
+            "sha256": "aaa4bafcb25034e70497ce38ced0a55252f6f3d61da89d9ebe0f2b00019bfc1d",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input.json",
+            "sha256": "3f679bac08fd03d79fbbfd5903b9076af9dd0f7329f05c5fa6110f04c4a0055e",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
+            "sha256": "348bb0904f9ff6f05bb63189eddf8a9fe59d22dca2a8e212535e79b86a0255ca",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input.json",
+            "sha256": "ef5ae9dea35fe5a0ac0e37ccace42f985d7b6639f519655602ca70d55ef8eddd",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
+            "sha256": "adc12dc5abed8ffad46b98e2d1ee9a9d5c501b32ceefb42fdc23c8a7e2fe6338",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/producer.ts",
+            "sha256": "bf78fbace2c12fc7cb0cacb602fb1a5fcc319e1e7ee3ed4f162f9c97546f254c",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-log-dog-look.jsonl.gz",
+            "sha256": "a3c9b420ad0f8344761dad90066815b1fe8188fb7abc93983dc273427130f6cc",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input.json",
+            "sha256": "0610ea71db59d0fa0e2dd6291665b6429eb7514cffe69253a944966f82c9e117",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-dog-save-provenance.json",
+            "sha256": "c27f5142f1d29cc6a1238b40711361de8129152f569f9defac249c552dad9b0c",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/capture-review.json",
+            "sha256": "f11e74672b2088be9cda633de8d88aa64978c2e30850b978c8fb0c260747ba69",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-save.json.gz",
+            "sha256": "9e684bd76017f434e502aedbf3dd245afaffc5954be7db3e2f6ff5bcdf8a20d9",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/appearance.json",
+            "sha256": "a0d9554592f28be4be589ca4b90658544beab258855ed6d4b12d4cad67af7729",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-log-dog-look.jsonl.gz",
+            "sha256": "9168c1a98f05c040959d1beffbf19123e2ca3e514f397db714680f5a26526ffb",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/l10-dog-look-r10-producer.ts",
+            "sha256": "fe32fee59bc0ab19e76aea023141c9aefa5cc7278b7e5dad08ad3b0d187da469",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input.json",
+            "sha256": "12316811abffa93593a8667a29c8790a1e85eaca001bf382d14a6923062f2355",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+            "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+            "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+            "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
           }
         ],
-        "notes": "Current controlled fixture; visual clause remains open.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -9484,15 +9518,13 @@
       "id": "L10-07",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete continuous Mega maximum step: 203.91582992749554 (target 0 ≤ value ≤ 1; FAIL); low/stationary continuous Mega maximum step: 291.78108686317563 (target 0 ≤ value ≤ 1; FAIL); high/complete continuous Mega maximum step: 372.8530539203802 (target 0 ≤ value ≤ 1; FAIL); high/stationary continuous Mega maximum step: 313.9565779955176 (target 0 ≤ value ≤ 1; FAIL) Manual review FAIL (Codex v1-l1l10): High seed1 tick 49647→49648: same Mega id 115 moved (2978.093,-4.771)→(3337.350,95.000), 372.853 m in one tick, player alive and no restore event. Low tick 44738→44739: same id moved (3136.142,61.850)→(3337.346,94.995), 203.916 m, player alive and no restore event. LevelTenStory stages the existing Mega beside the player for l10-overpass-mega, directly assigning its x/z. This breaks continuous pursuit around terrain. Other large displacements coincide with checkpoint restoration and are not counted as pursuit failures. Native complete-input runs; separate mortal physical playtest documented in lane report did not reach this point. Minimap and audio portions remain unreviewed.",
+      "value": "low/complete continuous Mega maximum step: 203.91582992749554 (target 0 ≤ value ≤ 1; FAIL); low/stationary continuous Mega maximum step: 291.78108686317563 (target 0 ≤ value ≤ 1; FAIL); high/complete continuous Mega maximum step: 372.8530539203802 (target 0 ≤ value ≤ 1; FAIL); high/stationary continuous Mega maximum step: 313.9565779955176 (target 0 ≤ value ≤ 1; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/v1-l1l10/L10-07/jump-audit.json",
-        "src/sim/missions/LevelTenStory.ts"
+        "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
       ],
       "expected": "Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings.",
       "checks": [
@@ -9557,32 +9589,62 @@
       },
       "reviewDecision": {
         "row": "L10-07",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
-            "clause": "Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings.",
-            "verdict": "FAIL",
-            "note": "High seed1 tick 49647→49648: same Mega id 115 moved (2978.093,-4.771)→(3337.350,95.000), 372.853 m in one tick, player alive and no restore event. Low tick 44738→44739: same id moved (3136.142,61.850)→(3337.346,94.995), 203.916 m, player alive and no restore event. LevelTenStory stages the existing Mega beside the player for l10-overpass-mega, directly assigning its x/z. This breaks continuous pursuit around terrain. Other large displacements coincide with checkpoint restoration and are not counted as pursuit failures. Native complete-input runs; separate mortal physical playtest documented in lane report did not reach this point. Minimap and audio portions remain unreviewed."
+            "clause": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 1.35× catch-up on the final delivery approach, sweep-c6 (was 6×)) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
+            "verdict": "PASS",
+            "note": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-07/jump-audit.json",
-            "sha256": "3f0eec1f3648f9d60f92a19a6afd11dcf586407bb174a57b4b9411548fbaade0",
-            "what": "Both-tier native complete-route per-tick Mega displacement and checkpoint event audit."
+            "file": "docs/reports/final-c/L10-07/high-presentation.json",
+            "sha256": "38843fd694e0fb96f015c8715ed7aea9dafdcfea06581bb16e925fa5f214e4cf",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
           },
           {
-            "file": "src/sim/missions/LevelTenStory.ts",
-            "sha256": "b335092a0926283d486a952ae29f8a7753029d5efc5b088a7010a8f6a84ac71a",
-            "what": "Overpass staging directly assigns the pursuing Mega position near the courier."
+            "file": "docs/reports/final-c/L10-07/native-pursuit.json.gz",
+            "sha256": "4c36925ba55dfd57747bffd18d856fe69c18f1f8f5c7ef851f6d39181ca27e15",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/sweep-c5-l10-presentation-producer.ts",
+            "sha256": "f1d26dd388eaf47f559e8a1dcfe4744ee2d3efa997be904e7c0c7d9d669152cd",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/high-presentation-producer.ts",
+            "sha256": "0c2b0630b2bdaadf1bad4f0dabcfe67da678f5f9379d54e3ac1cb2be2d10485e",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/low-presentation.json",
+            "sha256": "506929b61ac1dc892249a7f127a5142732c6d4237c20e4892f4a43acd704220b",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/coverage.json",
+            "sha256": "82fd2f0f94b941f3214a0999eacb6b8130b044b5ad3348dbf55d17d8cfb51ad1",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/fix55-l10-pursuit.ts",
+            "sha256": "616f1d5054017f6df7553aeca93e88d8cc4181fb1dbdbfcac21fe20d7da9a313",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+          },
+          {
+            "file": "docs/reports/final-c/L10-07/capture-review.json",
+            "sha256": "4455a34ce956a6a292dfea5266245522f4f9908549a5f95653a46cdceba5ac90",
+            "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
           }
         ],
-        "notes": "Definitive pursuit discontinuity counterexample; failure does not imply completion of other row checks.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -9590,11 +9652,107 @@
       "id": "L10-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "",
+      "value": "low/physical-framing physical five-region road framing matrix: {\"valid\":false,\"roadMatrix\":true} (target Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.; NOT CHECKED); low/physical-framing production road and finale maximal zoom clamp: {\"cap\":false,\"cells\":14,\"maximum\":2} (target Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.; NOT CHECKED); low/physical-framing reviewed night road verges clothing and natural ground-slam telegraph: {\"slam\":true,\"seen\":false,\"firstSlamTick\":453,\"startDistance\":3.4142223699859016} (target Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.; NOT CHECKED); high/physical-framing physical five-region road framing matrix: {\"valid\":false,\"roadMatrix\":true} (target Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.; NOT CHECKED); high/physical-framing production road and finale maximal zoom clamp: {\"cap\":false,\"cells\":14,\"maximum\":2} (target Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.; NOT CHECKED); high/physical-framing reviewed night road verges clothing and natural ground-slam telegraph: {\"slam\":true,\"seen\":false,\"firstSlamTick\":327,\"startDistance\":3.1659447726581975} (target Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.; NOT CHECKED)",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/sweep-c6/L10-08/low-physical.json.gz",
+        "docs/reports/sweep-c6/L10-08/camera-capability.json",
+        "docs/reports/sweep-c6/L10-08/review.json",
+        "docs/reports/sweep-c6/L10-08/high-physical.json.gz"
+      ],
       "expected": "Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-08",
+          "clause": "physical five-region road framing matrix",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "valid": false,
+            "roadMatrix": true
+          },
+          "target": "Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production road and finale maximal zoom clamp",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "cap": false,
+            "cells": 14,
+            "maximum": 2
+          },
+          "target": "Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/camera-capability.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "reviewed night road verges clothing and natural ground-slam telegraph",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "slam": true,
+            "seen": false,
+            "firstSlamTick": 453,
+            "startDistance": 3.4142223699859016
+          },
+          "target": "Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.",
+          "receipt": "docs/reports/sweep-c6/L10-08/review.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "physical five-region road framing matrix",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "valid": false,
+            "roadMatrix": true
+          },
+          "target": "Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production road and finale maximal zoom clamp",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "cap": false,
+            "cells": 14,
+            "maximum": 2
+          },
+          "target": "Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/camera-capability.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "reviewed night road verges clothing and natural ground-slam telegraph",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "slam": true,
+            "seen": false,
+            "firstSlamTick": 327,
+            "startDistance": 3.1659447726581975
+          },
+          "target": "Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.",
+          "receipt": "docs/reports/sweep-c6/L10-08/review.json",
+          "level": "L10"
+        }
+      ],
       "historical": {
         "id": "L10-08",
         "level": "L10",
@@ -9788,29 +9946,15 @@
     },
     {
       "id": "L10-09",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; PASS); low/stationary natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; NOT CHECKED); high/complete natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; PASS); high/stationary natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; NOT CHECKED) Manual review FAIL (Codex v1-l1l10): At both tiers the runtime hangar placement census finds 0 assets named as containers, 1 quarantine tent, 1 generator and 1 emergency light (45 placement origins in bounds); inspection views show a largely empty floor, one tent-like shelter, console, people and a generator-like machine, with no separate lab containers visible. Repro: restore a naturally reached research snapshot and inspect the hangar west/east/entry views; enumerate D-CURE runtime placements inside cureHangar bounds. This is a missing environmental dressing counterexample; asset-name search counts placement origins, and the cure canister pedestal itself is present. Both-tier native cast/ten distinct weapons and protected physical handoff/cure restore are recorded separately. Full mortal physical campaign remains incomplete.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; PASS); low/stationary natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; NOT CHECKED); high/complete natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; PASS); high/stationary natural hangar handoff restores full selectable arsenal: true (target exactly the ten issued hangar weapons present in LEFT/RIGHT racks; NOT CHECKED)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/v1-l1l10/L10-09/hangar-inventory.json",
-        "docs/reports/v1-l1l10/L10-09/cure-proof.json",
-        "docs/reports/v1-l1l10/L10-09/physical-summary.json",
-        "docs/reports/v1-l1l10/L10-09/mortal-summary.json",
-        "docs/reports/v1-l1l10/L10-12/story-probe.json",
-        "test-results/v1-l1l10/L10-09-hangar/receipt.json",
-        "test-results/v1-l1l10/L10-09-hangar/high-west.png",
-        "test-results/v1-l1l10/L10-09-hangar/high-east.png",
-        "test-results/v1-l1l10/L10-09-hangar/high-north.png",
-        "test-results/v1-l1l10/L10-09-hangar/high-entry.png",
-        "test-results/v1-l1l10/L10-09-hangar/low-west.png",
-        "test-results/v1-l1l10/L10-09-hangar/low-east.png",
-        "test-results/v1-l1l10/L10-09-hangar/low-north.png",
-        "test-results/v1-l1l10/L10-09-hangar/low-entry.png"
+        "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
       ],
       "expected": "Sealed hangar is a safe space with Dr. Elena Voss, Sgt. Ruiz, researchers, Sam (Private Reyes if Sam died) and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. The hangar issues machete, handgun, shotgun, assault rifle, hunting rifle, nail gun, flamethrower, rocket launcher, molotov and pipe bomb. The canister stays a visible zero-slot backpack item with no movement penalty.",
       "checks": [
@@ -9870,94 +10014,77 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
       },
       "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "reviewDecision": {
         "row": "L10-09",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
-            "clause": "Sealed hangar is a safe space with Dr. Elena Voss, Sgt. Ruiz, researchers, Sam (Private Reyes if Sam died) and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. The hangar issues machete, handgun, shotgun, assault rifle, hunting rifle, nail gun, flamethrower, rocket launcher, molotov and pipe bomb. The canister stays a visible zero-slot backpack item with no movement penalty.",
-            "verdict": "FAIL",
-            "note": "At both tiers the runtime hangar placement census finds 0 assets named as containers, 1 quarantine tent, 1 generator and 1 emergency light (45 placement origins in bounds); inspection views show a largely empty floor, one tent-like shelter, console, people and a generator-like machine, with no separate lab containers visible. Repro: restore a naturally reached research snapshot and inspect the hangar west/east/entry views; enumerate D-CURE runtime placements inside cureHangar bounds. This is a missing environmental dressing counterexample; asset-name search counts placement origins, and the cure canister pedestal itself is present. Both-tier native cast/ten distinct weapons and protected physical handoff/cure restore are recorded separately. Full mortal physical campaign remains incomplete."
+            "clause": "Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death.",
+            "verdict": "PASS",
+            "note": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-09/hangar-inventory.json",
-            "sha256": "9c357482219660124b43b1dc5fe903331c956c868e16209b88933da4452352bb",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/physical-low-physical.json.gz",
+            "sha256": "de3cfe83249d01510bbce9e5bae2751057da6c696414a0d56557243383d53639",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-09/cure-proof.json",
-            "sha256": "bcc4906614db7327d4cb13fc4ed228c706d0bf7f17f747224cca008546d94a0e",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/l10-cure-r10.ts",
+            "sha256": "5adb3eefc777496403899b86aa7001a53a4a85ed3ed810aebb0795f1f4dbfa5a",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-09/physical-summary.json",
-            "sha256": "ba159b9cd4ba430f88283dcf0169c9c68ed5b753fea868dc18315483dde85153",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/L10-09-low-research-save.json.gz",
+            "sha256": "c292cf20a89d0f9e55a4541a665725fdb7e31d3616cec73c631977a45f24cd8e",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-09/mortal-summary.json",
-            "sha256": "a6fcefb637bf9eed40ec129f5de9877814f0a1779c515a0dc669f6115aef2d31",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/physical-high-physical.json.gz",
+            "sha256": "23b3634e4bcc72ff0013f83c69d61801a28c1a70d7626406e18d430ab0cbf048",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-12/story-probe.json",
-            "sha256": "49ebeaae1fa354684b9b7b84609b89022acc1b693f58d4f0cd8760ca6200ddbc",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/sweep-c4-l10-cure-producer.ts",
+            "sha256": "5a4b1fb382758c2026e97ade481ef3f5b3261ebeedb2fbe551760b325a1f4541",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "test-results/v1-l1l10/L10-09-hangar/receipt.json",
-            "sha256": "47272dbefc781471e0ddd681c625fa2c0989919e826f8475b1c753683712a54c",
-            "what": "Runtime inventory, native/physical handoff or camera evidence as identified by file."
+            "file": "docs/reports/final-c/L10-09/L10-09-high-research-save.json.gz",
+            "sha256": "f2be03da128d5e4a741494cdbc28e37c88ab961cb06c610a2fb922dd73abd582",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "test-results/v1-l1l10/L10-09-hangar/high-west.png",
-            "sha256": "7ed1ad1fc11aa2e51b756877a687068cd28c5f71291134d1d9494304bb51d88f",
-            "what": "high fixed inspection view west: Lit terminal, one tent-like shelter, Voss, courier and corgi; wide dark floor."
+            "file": "docs/reports/final-c/L10-09/L10-cure-proof.json",
+            "sha256": "b57daea04cb8f83084c065998bf11a9a5caa31f0dadd350118683e035c37e1c4",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "test-results/v1-l1l10/L10-09-hangar/high-east.png",
-            "sha256": "27478958af305115684a46970c992ab112d142778aeee8f33ec3fae9afedcd29",
-            "what": "high fixed inspection view east: Two uniformed figures, a researcher and one dark generator-like machine on a largely empty floor."
+            "file": "docs/reports/final-c/L10-09/capture-review.json",
+            "sha256": "75105091afbc26d997c736edb4e083e59d3678ea72328f2d3c94fc466bca6a9e",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "test-results/v1-l1l10/L10-09-hangar/high-north.png",
-            "sha256": "a05130d0e81b41f8f21acf9649a0ade45ccbe431cd82e29d6d8f59b58b165eec",
-            "what": "high fixed inspection view north: Partial terminal, tent edge and large empty floor; black triangular cutaway at left."
+            "file": "docs/reports/final-c/native/L10-low-checkpoints.json.gz",
+            "sha256": "fc1c38997a5bba50ac041889352adaf23bcf750faa248875a73819a6246db3e9",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           },
           {
-            "file": "test-results/v1-l1l10/L10-09-hangar/high-entry.png",
-            "sha256": "9c5ea567c70503a0fb8113e2180af2f78d9b55193bdd52f507ffa25fbdeeeb53",
-            "what": "high fixed inspection view entry: Two guards along wall and courier at entrance; no distinct lab containers visible."
-          },
-          {
-            "file": "test-results/v1-l1l10/L10-09-hangar/low-west.png",
-            "sha256": "439977eab8c138f5762e3302765716ffc3139b3836264cd4fa0985f2a068b3c3",
-            "what": "low fixed inspection view west: Lit terminal, one tent-like shelter, Voss, courier and corgi; wide dark floor."
-          },
-          {
-            "file": "test-results/v1-l1l10/L10-09-hangar/low-east.png",
-            "sha256": "f6ae0ebea597d2291e31ca4ac6c54fcd941f41e2d6f5c1957764097a7e2c7608",
-            "what": "low fixed inspection view east: Two uniformed figures, a researcher and one dark generator-like machine on a largely empty floor."
-          },
-          {
-            "file": "test-results/v1-l1l10/L10-09-hangar/low-north.png",
-            "sha256": "29dd584a290c005aa858a3fe2ebd0e3effc28cd9550d9a20b8ae094d3d96eabf",
-            "what": "low fixed inspection view north: Partial terminal, tent edge and large empty floor; black triangular cutaway at left."
-          },
-          {
-            "file": "test-results/v1-l1l10/L10-09-hangar/low-entry.png",
-            "sha256": "ffbd180760051b1dab752d075dbd00192abafe5f7f4d68307d1a6734ad0bb2d8",
-            "what": "low fixed inspection view entry: Two guards along wall and courier at entrance; no distinct lab containers visible."
+            "file": "docs/reports/final-c/native/L10-high-checkpoints.json.gz",
+            "sha256": "404af5824dcbe2111bd918e2fcd3118681f32265ff95ef5b6e04bcbc9a7d5bed",
+            "what": "Both physical research approaches show the full airborne-agent subtitles and visible carried green cylinder/backpack at zoom0.5/1.5. Native grant preserves the entire weapon rack and checkpoint on the exact tick. Four120tick cardinal comparisons with/without only canister state have identical trajectory hashes and8.74976/8.75508m displacement; cure survives death in current checkpoint fixtures. Protected courier disclosed; no actor relocation."
           }
         ],
-        "notes": "Missing distinct lab containers in observed interior; remaining clauses have bounded evidence, not an exhaustive full-campaign pass.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -9965,7 +10092,7 @@
       "id": "L10-10",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); low/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); high/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":120,\"maximum\":3600,\"activeTicks\":3720} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); high/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); low/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); low/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); low/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); low/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS); high/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); high/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); high/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); high/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS) Manual review PASS (Codex v1-l1l10): Both current complete routes record 3600 eligible increments and zero invalid increments; high includes 120 dead ticks. Both controlled fixtures pause at 40.01 m with instruction, hold while dead and resume inside; 20 rounds and 0.125 heat in one full-speed second, lock at 1.0, still locked at 0.4, unlock at 0.396667.",
+      "value": "low/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); low/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); high/complete actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":120,\"maximum\":3600,\"activeTicks\":3720} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); high/stationary actual eligible charge ticks and increments: {\"eligibleTicks\":3600,\"incrementTicks\":3600,\"invalidIncrements\":0,\"outsideTicks\":0,\"deadTicks\":0,\"maximum\":3600,\"activeTicks\":3600} (target charge reaches3600; one increment per eligible tick across attempts; no invalid increment; PASS); low/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); low/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); low/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); low/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS); high/controlled-fixture charge inside/outside/dead/resume boundary and pause instruction: {\"inside\":1,\"outside\":1,\"dead\":1,\"resumed\":2,\"instruction\":\"Back to the dispersal console · Charge paused · 0/60 s\"} (target 1/1/1/2 ticks; outside instruction says Charge paused; PASS); high/controlled-fixture minigun rounds and heat per full-speed second: {\"rounds\":20,\"heat\":0.12500000000000017} (target 20 rounds; heat+0.125; PASS); high/controlled-fixture minigun overheat lock: {\"heat\":1,\"locked\":true} (target locked at100%; PASS); high/controlled-fixture minigun unlock threshold: {\"lockedAt40\":true,\"afterCooling\":{\"heat\":0.39666666666666667,\"locked\":false}} (target still locked at40%, unlock below40%; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -9973,11 +10100,7 @@
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-        "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
       ],
       "expected": "Charge = exactly 3,600 ticks while alive within **40 m**; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %.",
       "checks": [
@@ -10194,58 +10317,70 @@
       "reviewDecision": {
         "row": "L10-10",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
-            "clause": "Charge = exactly 3,600 ticks while alive within **40 m**; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %.",
+            "clause": "Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %.",
             "verdict": "PASS",
-            "note": "Both current complete routes record 3600 eligible increments and zero invalid increments; high includes 120 dead ticks. Both controlled fixtures pause at 40.01 m with instruction, hold while dead and resume inside; 20 rounds and 0.125 heat in one full-speed second, lock at 1.0, still locked at 0.4, unlock at 0.396667."
+            "note": "All four tier/policy runs count exactly 3600 eligible increments with zero invalid increments; high complete additionally records 112 outside-radius ticks without charge. Both-tier fixtures preserve charge while outside/dead, show the pause instruction, resume inside, produce 20 rounds and 0.125 heat per second, lock at 1.0, remain locked at 0.4, and unlock below 0.4 (0.3966667)."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
-            "sha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6",
-            "what": "Current native complete route or controlled charge/minigun fixture."
+            "file": "docs/reports/final-c/L10-10/numeric-review.json",
+            "sha256": "67c9c1a94f56324d9998413964890f67b7e87b2ca79122b3073f347293c98468",
+            "what": "All four tier/policy runs count exactly 3600 eligible increments with zero invalid increments; high complete additionally records 112 outside-radius ticks without charge. Both-tier fixtures preserve charge while outside/dead, show the pause instruction, resume inside, produce 20 rounds and 0.125 heat per second, lock at 1.0, remain locked at 0.4, and unlock below 0.4 (0.3966667)."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
-            "sha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051",
-            "what": "Current native complete route or controlled charge/minigun fixture."
+            "file": "docs/reports/final-c/native/L10-low-complete.json.gz",
+            "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-            "sha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
-            "what": "Current native complete route or controlled charge/minigun fixture."
+            "file": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+            "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
-            "sha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
-            "what": "Current native complete route or controlled charge/minigun fixture."
+            "file": "docs/reports/final-c/native/L10-high-complete.json.gz",
+            "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+            "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+            "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+            "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
           }
         ],
-        "notes": "Native routes and controlled boundary/minigun fixtures; no browser timing claim.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L10-11",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":134.03333333333333,\"playerWindups\":18,\"groupWindups\":0,\"attacksPerMinute\":8.05769709027605} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete bounded final assault crowd peak: null (target 1 ≤ value ≤ 14; NOT CHECKED); low/stationary combat hard rule on actual player windups: {\"seconds\":63.05,\"playerWindups\":319,\"groupWindups\":0,\"attacksPerMinute\":303.5685963521015} (target nonzero player windups in each combat policy; PASS); low/stationary real player/group windups per minute: 303.5685963521015 (target 8 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary hold player windups per minute: 303.5685963521015 (target 8 ≤ value ≤ Infinity; PASS); low/stationary hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); low/stationary bounded final assault crowd peak: 12 (target 1 ≤ value ≤ 14; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":113.55,\"playerWindups\":51,\"groupWindups\":0,\"attacksPerMinute\":26.948480845442536} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete bounded final assault crowd peak: null (target 1 ≤ value ≤ 22; NOT CHECKED); high/stationary combat hard rule on actual player windups: {\"seconds\":63.03333333333333,\"playerWindups\":356,\"groupWindups\":0,\"attacksPerMinute\":338.8683236382866} (target nonzero player windups in each combat policy; PASS); high/stationary real player/group windups per minute: 338.8683236382866 (target 8 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary hold player windups per minute: 338.8683236382866 (target 8 ≤ value ≤ Infinity; PASS); high/stationary hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); high/stationary bounded final assault crowd peak: 20 (target 1 ≤ value ≤ 22; PASS) Manual review FAIL (Codex v1-l1l10): Both 240s protected stationary holds: all living infected peak 21 high/13 low; bounded-path minimum 100% both; hold player attacks 338.87/303.57 per minute. Persistent id 115 in both, already within 25m on charge activation, but same ID moved 313.957m high at tick 43140 / 291.781m low at tick 43547 in one tick during earlier overpass staging. Independent complete-route audit identifies staging without death or restore, and source directly assigns the Mega position beside the player. Thus it does not continuously walk the journey into the arena. Small-wave directions, breathers and reinforcement continuity remain unmeasured; this is a counterexample, not a complete positive review. No physical L10 run reached finale.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":134.03333333333333,\"playerWindups\":18,\"groupWindups\":0,\"attacksPerMinute\":8.05769709027605} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete bounded final assault crowd peak: null (target 1 ≤ value ≤ 14; NOT CHECKED); low/stationary combat hard rule on actual player windups: {\"seconds\":63.05,\"playerWindups\":319,\"groupWindups\":0,\"attacksPerMinute\":303.5685963521015} (target nonzero player windups in each combat policy; PASS); low/stationary real player/group windups per minute: 303.5685963521015 (target 8 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary hold player windups per minute: 303.5685963521015 (target 8 ≤ value ≤ Infinity; PASS); low/stationary hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); low/stationary bounded final assault crowd peak: 12 (target 1 ≤ value ≤ 14; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":113.55,\"playerWindups\":51,\"groupWindups\":0,\"attacksPerMinute\":26.948480845442536} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete bounded final assault crowd peak: null (target 1 ≤ value ≤ 22; NOT CHECKED); high/stationary combat hard rule on actual player windups: {\"seconds\":63.03333333333333,\"playerWindups\":356,\"groupWindups\":0,\"attacksPerMinute\":338.8683236382866} (target nonzero player windups in each combat policy; PASS); high/stationary real player/group windups per minute: 338.8683236382866 (target 8 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary hold player windups per minute: 338.8683236382866 (target 8 ≤ value ≤ Infinity; PASS); high/stationary hold bounded-path reachable share: 100 (target 90 ≤ value ≤ 100; PASS); high/stationary bounded final assault crowd peak: 20 (target 1 ≤ value ≤ 22; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
-        "docs/reports/v1-l1l10/L10-11/hold.json",
-        "docs/reports/v1-l1l10/L10-07/jump-audit.json",
-        "src/sim/missions/LevelTenStory.ts"
+        "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
       ],
       "expected": "Final assault only: **at most 22 high / 14 low, small waves from three directions with breathers** living ordinary infected; stationary ground policy: reachable ≥ 90 %, infected attacks on player ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport.",
       "checks": [
@@ -10479,39 +10614,37 @@
         "method": "Current native hold probe. NEXT: both-tier full assault census and actual Mega arena-arrival tick, beyond the current capped hold window. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
       "remaining": "Current native hold probe. NEXT: both-tier full assault census and actual Mega arena-arrival tick, beyond the current capped hold window. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row.",
+      "checkKinds": [
+        "browser-input"
+      ],
       "reviewDecision": {
         "row": "L10-11",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
+        "status": "PASS",
+        "reviewer": "Codex rr-b",
+        "date": "2026-11-07",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
-            "clause": "Final assault only: at most 22 high / 14 low, small waves from three directions with breathers living ordinary infected; stationary ground policy: reachable ≥ 90 %, infected attacks on player ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport.",
-            "verdict": "FAIL",
-            "note": "Both 240s protected stationary holds: all living infected peak 21 high/13 low; bounded-path minimum 100% both; hold player attacks 338.87/303.57 per minute. Persistent id 115 in both, already within 25m on charge activation, but same ID moved 313.957m high at tick 43140 / 291.781m low at tick 43547 in one tick during earlier overpass staging. Independent complete-route audit identifies staging without death or restore, and source directly assigns the Mega position beside the player. Thus it does not continuously walk the journey into the arena. Small-wave directions, breathers and reinforcement continuity remain unmeasured; this is a counterexample, not a complete positive review. No physical L10 run reached finale."
+            "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
+            "verdict": "PASS",
+            "note": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-11/hold.json",
-            "sha256": "d3f0325d5d04c1751c3fdd0d0793c3d422d941ee14b369deafe2cc3d76383e86",
-            "what": "240-second stationary assault windows, both tiers, including same-ID trajectory from introduction."
+            "file": "test-results/rr-b/L10-11-hold-proof.json",
+            "sha256": "8d62755602ef90a839a4f98630d5a5937dc8276252e4edea11e3e4efb2b5f209",
+            "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-07/jump-audit.json",
-            "sha256": "3f0eec1f3648f9d60f92a19a6afd11dcf586407bb174a57b4b9411548fbaade0",
-            "what": "Independent native complete route records same overpass teleport without restore."
-          },
-          {
-            "file": "src/sim/missions/LevelTenStory.ts",
-            "sha256": "b335092a0926283d486a952ae29f8a7753029d5efc5b088a7010a8f6a84ac71a",
-            "what": "Overpass spectacle assigns existing pursuing Mega a position near the player."
+            "file": "test-results/rr-b/L10-11-native.json",
+            "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
+            "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
           }
         ],
-        "notes": "The continuity failure is shared with L10-07; route/hold use native input and the hold suppresses player damage. Independent current stationary state-hash control was unavailable.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "All native numeric clauses covered at both tiers; full-window attack rates are distinguished from the charge-step interval. No separate visual or quiet frame-timing claim.",
+        "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -10832,7 +10965,7 @@
       "id": "L10-13",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete release transaction observed prerequisites: {\"tick\":71663,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.9161369885205906} (target charge3600 + installed + Mega dead + player at console; PASS); low/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); high/complete release transaction observed prerequisites: {\"tick\":80962,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.9892507134565474} (target charge3600 + installed + Mega dead + player at console; PASS); high/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); low/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS); high/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS) Manual review PASS (Codex v1-l1l10): Both controlled fixtures reject each missing charge, installed cure, boss death, proximity or fresh input, and accept the complete control. Physical WASD approach and E from native progressed save release at 1.565 m high and 1.385 m low, god disabled before E. Release front appears after physical E in both. High approach protected; native prefix is not a physical campaign. Inspected zoom1.5 frames show the release prompt before E and green glow after; low console is obscured by a large corpse/effect.",
+      "value": "low/complete release transaction observed prerequisites: {\"tick\":71663,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.9161369885205906} (target charge3600 + installed + Mega dead + player at console; PASS); low/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); high/complete release transaction observed prerequisites: {\"tick\":80962,\"charge\":3600,\"installed\":true,\"dead\":true,\"distance\":1.9892507134565474} (target charge3600 + installed + Mega dead + player at console; PASS); high/stationary release transaction observed prerequisites: null (target charge3600 + installed + Mega dead + player at console; NOT CHECKED); low/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS); high/controlled-fixture release predicate missing-prerequisite matrix: [{\"missing\":\"none\",\"released\":true,\"expected\":true,\"consoleRadius\":2},{\"missing\":\"charge\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"installed\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"boss\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"console\",\"released\":false,\"expected\":false,\"consoleRadius\":2},{\"missing\":\"input\",\"released\":false,… (full values in JSON) (target release only with charge3600, installed cure, dead Mega, console range and fresh E; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
@@ -10840,17 +10973,7 @@
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-13/high-physical.json.gz",
-        "docs/reports/v1-l1l10/L10-13/low-physical.json.gz",
-        "docs/reports/v1-l1l10/L10-13/high-release-save.json.gz",
-        "docs/reports/v1-l1l10/L10-13/low-release-save.json.gz",
-        "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-        "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
-        "test-results/sweep-c6/L10-14/high-1795816758766/before-release-z1.5.jpg",
-        "test-results/sweep-c6/L10-14/high-1795816758766/released-z1.5.jpg",
-        "test-results/sweep-c6/L10-14/low-1795816961989/before-release-z1.5.jpg",
-        "test-results/sweep-c6/L10-14/low-1795816961989/released-z1.5.jpg"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
       ],
       "expected": "Release only with charge 60 + Mega dead + cure installed, player at the console.",
       "checks": [
@@ -11019,71 +11142,56 @@
       "reviewDecision": {
         "row": "L10-13",
         "status": "PASS",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Release only with charge 60 + Mega dead + cure installed, player at the console.",
             "verdict": "PASS",
-            "note": "Both controlled fixtures reject each missing charge, installed cure, boss death, proximity or fresh input, and accept the complete control. Physical WASD approach and E from native progressed save release at 1.565 m high and 1.385 m low, god disabled before E. Release front appears after physical E in both. High approach protected; native prefix is not a physical campaign. Inspected zoom1.5 frames show the release prompt before E and green glow after; low console is obscured by a large corpse/effect."
+            "note": "Both complete native routes release only at charge3600, cure installed, Mega dead, and console distances 1.5926/1.2197m (<2m). At both tiers the complete missing-prerequisite matrix refuses release when charge, cure, boss death, console proximity, or fresh E is absent; the full eligible control releases. No release is inferred from source inspection alone."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-13/high-physical.json.gz",
-            "sha256": "49b402d9fffe43b06e06e42e016a1229312dc3d42dca237124d7e48768b41761",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/L10-13/numeric-review.json",
+            "sha256": "f1bf3cdec377cd8a8b829596565dff5638e0771e09ce9f1b344048ab7585b9aa",
+            "what": "Both complete native routes release only at charge3600, cure installed, Mega dead, and console distances 1.5926/1.2197m (<2m). At both tiers the complete missing-prerequisite matrix refuses release when charge, cure, boss death, console proximity, or fresh E is absent; the full eligible control releases. No release is inferred from source inspection alone."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-13/low-physical.json.gz",
-            "sha256": "c670934d535ab7f230f8504dbc3b5af8a92c6fa0d7c3a75c8ac88f0a20440151",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/native/L10-low-complete.json.gz",
+            "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-13/high-release-save.json.gz",
-            "sha256": "0dda80c42a55729e4211dbc50dae6b9d5edbfdcf1c4eb6f8dc983f1d9842853d",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+            "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-13/low-release-save.json.gz",
-            "sha256": "dc2d27d806cd9cdfd1462a92e36bad2f2c2515aa261bd17092adaa20674346c0",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/native/L10-high-complete.json.gz",
+            "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
-            "sha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+            "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
-            "sha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
-            "what": "Current physical input, native save or controlled prerequisite fixture."
+            "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+            "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "test-results/sweep-c6/L10-14/high-1795816758766/before-release-z1.5.jpg",
-            "sha256": "0fcdc2ff980cfa297295bb3a59aaf4b2697add71305f1ff4726ad8f5306ec97d",
-            "what": "Inspected physical release frame at zoom 1.5."
-          },
-          {
-            "file": "test-results/sweep-c6/L10-14/high-1795816758766/released-z1.5.jpg",
-            "sha256": "074d8f521516c936edd44154a0505fce322874cb0e2b267c70ddb58ec780c1af",
-            "what": "Inspected physical release frame at zoom 1.5."
-          },
-          {
-            "file": "test-results/sweep-c6/L10-14/low-1795816961989/before-release-z1.5.jpg",
-            "sha256": "8f1a90a613a9614b2a9f401556ce22db9f13265da1c600024eb28099d1888601",
-            "what": "Inspected physical release frame at zoom 1.5."
-          },
-          {
-            "file": "test-results/sweep-c6/L10-14/low-1795816961989/released-z1.5.jpg",
-            "sha256": "a26f7eab13df0134ff085ca9d2144006fa2e76a27acb6fd263f9fd14e7f175a4",
-            "what": "Inspected physical release frame at zoom 1.5."
+            "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+            "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
           }
         ],
-        "notes": "Low initial attempt used a pre-charge seed and correctly did not release; corrected producer snapshots active release with charge 3600. Four cited images opened.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -11429,13 +11537,11 @@
       "id": "L10-15",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1f37ee6e81f97d0527483b4c5fc7747ef7e54f2b418e6809b8179978d2ed63eb\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":3986.76708984375,\"y\":0.9857088923454285,\"z\":-7.584262371063232,\"yaw\":-0.16903344801308662},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.machete\"],\"RIGHT\":[\"weapon.machete\",\"weapon.h… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; FAIL); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"68467dd8b6b9c014df813a1af91baba1c99ed94fd749aa138609595c6afcadaa\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":3975.138427734375,\"y\":0.7099999785423279,\"z\":-7.812593936920166,\"yaw\":0.025128583083078703},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.machete\"],\"RIGHT\":[\"weapon.machete\",\"weapon.… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; FAIL) Manual review FAIL (Codex v1-l1l10): At cure-disperse-ready the saved boss is alive at 1116 HP low / 1072.8151 high; after fixture kills boss and causes ordinary player death, respawn reports boss dead at 0 HP in both tiers. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect boss snapshot at cure-disperse-ready. Five other checkpoint fixtures error per tier; coverage remains open.",
+      "value": "low/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1f37ee6e81f97d0527483b4c5fc7747ef7e54f2b418e6809b8179978d2ed63eb\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":3986.76708984375,\"y\":0.9857088923454285,\"z\":-7.584262371063232,\"yaw\":-0.16903344801308662},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.machete\"],\"RIGHT\":[\"weapon.machete\",\"weapon.h… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; FAIL); high/checkpoint-death-fixture cure and boss HP/death snapshot at cure-disperse-ready: {\"checkpoint\":\"cure-disperse-ready\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"68467dd8b6b9c014df813a1af91baba1c99ed94fd749aa138609595c6afcadaa\",\"damage\":100,\"expected\":{\"id\":\"cure-disperse-ready\",\"anchor\":{\"x\":3975.138427734375,\"y\":0.7099999785423279,\"z\":-7.812593936920166,\"yaw\":0.025128583083078703},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.machete\"],\"RIGHT\":[\"weapon.machete\",\"weapon.… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
-        "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
-        "docs/reports/v1-l1l10/L10-native/L10-high-checkpoints.json",
-        "docs/reports/v1-l1l10/L10-native/L10-low-checkpoints.json"
+        "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
       ],
       "expected": "Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint.",
       "checks": [
@@ -13231,32 +13337,37 @@
       "remaining": "NEXT: Force ordinary mortal deaths at every regional checkpoint and after cure/boss progress, comparing location, loadout, cure and boss snapshot with the saved checkpoint.",
       "reviewDecision": {
         "row": "L10-15",
-        "status": "FAIL",
-        "reviewer": "Codex v1-l1l10",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint.",
-            "verdict": "FAIL",
-            "note": "At cure-disperse-ready the saved boss is alive at 1116 HP low / 1072.8151 high; after fixture kills boss and causes ordinary player death, respawn reports boss dead at 0 HP in both tiers. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect boss snapshot at cure-disperse-ready. Five other checkpoint fixtures error per tier; coverage remains open."
+            "verdict": "PASS",
+            "note": "Actual ordinary mortal death probes cover all nine regional/progress checkpoint states per tier, including research/cure and dispersal ready. All positions, loadouts, cure flags, boss HP and death states match the captured checkpoints. Separate cure/boss checks close the older parenthetical partial-coverage label in the location checks; those labels are not treated as evidence. Both native control state hashes match the original complete route."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/v1-l1l10/L10-native/L10-high-checkpoints.json",
-            "sha256": "e64166fd32493c97e2d76d37ebfe0f1e68a93a853d075c6505781f247d267d67",
-            "what": "Current checkpoint fixture captures boss state and ordinary death respawn."
+            "file": "docs/reports/final-c/L10-15/numeric-review.json",
+            "sha256": "63313ae68dee2318bc78be266f6bc332e6a5fb0fba0730020280ce0cf911a7c9",
+            "what": "Actual ordinary mortal death probes cover all nine regional/progress checkpoint states per tier, including research/cure and dispersal ready. All positions, loadouts, cure flags, boss HP and death states match the captured checkpoints. Separate cure/boss checks close the older parenthetical partial-coverage label in the location checks; those labels are not treated as evidence. Both native control state hashes match the original complete route."
           },
           {
-            "file": "docs/reports/v1-l1l10/L10-native/L10-low-checkpoints.json",
-            "sha256": "593e60dc6470c52083b7112bd934a1baa1a5edbec7fae474a5f20e15e7fcdfa6",
-            "what": "Current checkpoint fixture captures boss state and ordinary death respawn."
+            "file": "docs/reports/final-c/native/L10-low-checkpoints.json.gz",
+            "sha256": "fc1c38997a5bba50ac041889352adaf23bcf750faa248875a73819a6246db3e9",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-checkpoints.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L10-high-checkpoints.json.gz",
+            "sha256": "404af5824dcbe2111bd918e2fcd3118681f32265ff95ef5b6e04bcbc9a7d5bed",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-checkpoints.json. Row-specific measured checks are reproduced in numeric-review.json."
           }
         ],
-        "notes": "Measured boss-state mismatch; other regional coverage incomplete. Receipts produced at a72c2770; intervening main changes only reports, with no src, public, layouts or acceptance-tool changes.",
-        "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96",
-        "freshness": "FRESH",
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05",
+        "freshness": "STALE",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }
